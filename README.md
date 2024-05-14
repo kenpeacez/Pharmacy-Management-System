@@ -10,3 +10,4 @@ Main Features
 - Patient medications entry and store
 - Patient history medications view wtih overwrite function
 - Add, view, seach, update and store medications infomation in database from application
+- Ability to print medications labels based on selected medications
