@@ -20,11 +20,12 @@ Public Class Form2
         InitializeDB()
         txtSearchPatientIC.Text = Form1.txtICNo.Text
         DataGridView1.AllowUserToAddRows = False
+        DataGridView2.AllowUserToAddRows = False
         loadpastmedintoDGV()
     End Sub
     Private Sub InitializeDB()
 
-        Server = Form1.txtServerName.Text
+        Server = Form1.txtDBServerAddress.Text
         UID = Form1.txtDBUserID.Text
         PWD = Form1.txtDBPassword.Text
         DBName = Form1.txtDBName.Text
@@ -41,6 +42,9 @@ Public Class Form2
 
         Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & txtSearchPatientIC.Text & "'", conn)
         Try
+            Form1.clearSelectionIndex()
+            Form1.clearall()
+            Form1.txtICNo.Text = txtSearchPatientIC.Text
             conn.Open()
             dr = cmd.ExecuteReader
             While dr.Read()
@@ -54,6 +58,9 @@ Public Class Form2
                 DataGridView1.Rows.Add("8", dr.Item("Drug8Name"), dr.Item("Drug8Strength"), dr.Item("Drug8Unit"), dr.Item("Drug8Dose"), dr.Item("Drug8Freq"), dr.Item("Drug8Duration"), dr.Item("Drug8TotalQTY"))
                 DataGridView1.Rows.Add("9", dr.Item("Drug9Name"), dr.Item("Drug9Strength"), dr.Item("Drug9Unit"), dr.Item("Drug9Dose"), dr.Item("Drug9Freq"), dr.Item("Drug9Duration"), dr.Item("Drug9TotalQTY"))
                 DataGridView1.Rows.Add("10", dr.Item("Drug10Name"), dr.Item("Drug10Strength"), dr.Item("Drug10Unit"), dr.Item("Drug10Dose"), dr.Item("Drug10Freq"), dr.Item("Drug10Duration"), dr.Item("Drug10TotalQTY"))
+                DataGridView2.Rows.Add("1", dr.Item("Insulin1Name"), dr.Item("Insulin1Strength"), dr.Item("Insulin1Unit"), dr.Item("Insulin1MorDose"), dr.Item("Insulin1NoonDose"), dr.Item("Insulin1AfternoonDose"), dr.Item("Insulin1NightDose"), dr.Item("Insulin1Freq"), dr.Item("Insulin1Duration"), dr.Item("Insulin1TotalDose"), dr.Item("Insulin1POM"), dr.Item("Insulin1CartQTY"))
+                DataGridView2.Rows.Add("2", dr.Item("Insulin2Name"), dr.Item("Insulin2Strength"), dr.Item("Insulin2Unit"), dr.Item("Insulin2MorDose"), dr.Item("Insulin2NoonDose"), dr.Item("Insulin2AfternoonDose"), dr.Item("Insulin2NightDose"), dr.Item("Insulin2Freq"), dr.Item("Insulin2Duration"), dr.Item("Insulin2TotalDose"), dr.Item("Insulin2POM"), dr.Item("Insulin2CartQTY"))
+
                 Form1.cbDrug1.Text = dr.Item("Drug1Name")
                 Form1.cbDrug2.Text = dr.Item("Drug2Name")
                 Form1.cbDrug3.Text = dr.Item("Drug3Name")
@@ -64,6 +71,8 @@ Public Class Form2
                 Form1.cbDrug8.Text = dr.Item("Drug8Name")
                 Form1.cbDrug9.Text = dr.Item("Drug9Name")
                 Form1.cbDrug10.Text = dr.Item("Drug10Name")
+                Form1.cbInsulin1.Text = dr.Item("Insulin1Name")
+                Form1.cbInsulin2.Text = dr.Item("Insulin2Name")
 
                 Form1.txtPatientName.Text = dr.Item("Name")
 
@@ -97,6 +106,26 @@ Public Class Form2
                 Form1.txtDoseD10.Text = dr.Item("Drug10Dose")
                 Form1.txtFreqD10.Text = dr.Item("Drug10Freq")
 
+                Form1.txtIn1MorDose.Text = dr.Item("Insulin1MorDose")
+                Form1.txtIn1NoonDose.Text = dr.Item("Insulin1NoonDose")
+                Form1.txtIn1AfterNoonDose.Text = dr.Item("Insulin1AfternoonDose")
+                Form1.txtIn1NightDose.Text = dr.Item("Insulin1NightDose")
+                Form1.txtIn1TotalDose.Text = dr.Item("Insulin1TotalDose")
+                Form1.txtIn1POM.Text = dr.Item("Insulin1POM")
+                Form1.txtIn1CartQTY.Text = dr.Item("Insulin1CartQTY")
+
+                Form1.txtIn2MorDose.Text = dr.Item("Insulin2MorDose")
+                Form1.txtIn2NoonDose.Text = dr.Item("Insulin2NoonDose")
+                Form1.txtIn2AfterNoonDose.Text = dr.Item("Insulin2AfternoonDose")
+                Form1.txtIn2NightDose.Text = dr.Item("Insulin2NightDose")
+                Form1.txtIn2TotalDose.Text = dr.Item("Insulin2TotalDose")
+                Form1.txtIn2POM.Text = dr.Item("Insulin2POM")
+                Form1.txtIn2CartQTY.Text = dr.Item("Insulin2CartQTY")
+
+
+
+                Form1.checkforselecteddrugs()
+
 
                 Form1.populatevaluesD1()
                 Form1.populatevaluesD2()
@@ -108,6 +137,8 @@ Public Class Form2
                 Form1.populatevaluesD8()
                 Form1.populatevaluesD9()
                 Form1.populatevaluesD10()
+                Form1.populatevaluesInsulin1()
+                Form1.populatevaluesInsulin2()
 
             End While
             dr.Close()

@@ -26,6 +26,9 @@ Partial Class Form1
         Me.btnSave = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.lblExistingPatient = New System.Windows.Forms.Label()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.cbAddDays = New System.Windows.Forms.ComboBox()
         Me.lblGender = New System.Windows.Forms.Label()
         Me.lblAge = New System.Windows.Forms.Label()
         Me.btnCheckICMySPR = New System.Windows.Forms.Button()
@@ -36,7 +39,22 @@ Partial Class Form1
         Me.Label22 = New System.Windows.Forms.Label()
         Me.btnPrint = New System.Windows.Forms.Button()
         Me.groupInsulin = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel16 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.cbInsulin2 = New System.Windows.Forms.ComboBox()
+        Me.lblStrInsulin2 = New System.Windows.Forms.Label()
+        Me.lblUnitInsulin2 = New System.Windows.Forms.Label()
+        Me.txtIn2MorDose = New System.Windows.Forms.TextBox()
+        Me.txtIn2NoonDose = New System.Windows.Forms.TextBox()
+        Me.txtIn2AfterNoonDose = New System.Windows.Forms.TextBox()
+        Me.txtIn2NightDose = New System.Windows.Forms.TextBox()
+        Me.txtIn2Freq = New System.Windows.Forms.TextBox()
+        Me.txtIn2Duration = New System.Windows.Forms.TextBox()
+        Me.txtIn2TotalDose = New System.Windows.Forms.TextBox()
+        Me.txtIn2POM = New System.Windows.Forms.TextBox()
+        Me.txtIn2CartQTY = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label17 = New System.Windows.Forms.Label()
         Me.lblStrInsulin1 = New System.Windows.Forms.Label()
         Me.cbInsulin1 = New System.Windows.Forms.ComboBox()
         Me.lblInsulin = New System.Windows.Forms.Label()
@@ -49,29 +67,18 @@ Partial Class Form1
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
         Me.lblUnitInsulin1 = New System.Windows.Forms.Label()
-        Me.lblStrInsulin2 = New System.Windows.Forms.Label()
-        Me.lblUnitInsulin2 = New System.Windows.Forms.Label()
-        Me.cbInsulin2 = New System.Windows.Forms.ComboBox()
-        Me.txtInsulin1MorDose = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
-        Me.TextBox8 = New System.Windows.Forms.TextBox()
-        Me.TextBox9 = New System.Windows.Forms.TextBox()
-        Me.TextBox10 = New System.Windows.Forms.TextBox()
-        Me.TextBox11 = New System.Windows.Forms.TextBox()
-        Me.TextBox12 = New System.Windows.Forms.TextBox()
-        Me.TextBox13 = New System.Windows.Forms.TextBox()
-        Me.TextBox14 = New System.Windows.Forms.TextBox()
-        Me.TextBox15 = New System.Windows.Forms.TextBox()
-        Me.TextBox16 = New System.Windows.Forms.TextBox()
-        Me.TextBox20 = New System.Windows.Forms.TextBox()
-        Me.TextBox22 = New System.Windows.Forms.TextBox()
+        Me.txtIn1MorDose = New System.Windows.Forms.TextBox()
+        Me.txtIn1NoonDose = New System.Windows.Forms.TextBox()
+        Me.txtIn1AfterNoonDose = New System.Windows.Forms.TextBox()
+        Me.txtIn1NightDose = New System.Windows.Forms.TextBox()
+        Me.txtIn1Freq = New System.Windows.Forms.TextBox()
+        Me.txtIn1Duration = New System.Windows.Forms.TextBox()
+        Me.txtIn1TotalDose = New System.Windows.Forms.TextBox()
+        Me.txtIn1POM = New System.Windows.Forms.TextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.txtIn1CartQTY = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.dtpDateSeeDoctor = New System.Windows.Forms.DateTimePicker()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -224,10 +231,14 @@ Partial Class Form1
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.btnSavePrinterSettings = New System.Windows.Forms.TabPage()
+        Me.btnRestart = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.txtClinicName = New System.Windows.Forms.TextBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnSaveDBSettings = New System.Windows.Forms.Button()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.txtDBPassword = New System.Windows.Forms.TextBox()
         Me.txtDBUserID = New System.Windows.Forms.TextBox()
@@ -235,7 +246,7 @@ Partial Class Form1
         Me.lblDBUserID = New System.Windows.Forms.Label()
         Me.lblPassword = New System.Windows.Forms.Label()
         Me.lblDatabaseName = New System.Windows.Forms.Label()
-        Me.txtServerName = New System.Windows.Forms.TextBox()
+        Me.txtDBServerAddress = New System.Windows.Forms.TextBox()
         Me.txtDBName = New System.Windows.Forms.TextBox()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.stlbDatabaseConnection = New System.Windows.Forms.ToolStripStatusLabel()
@@ -247,12 +258,38 @@ Partial Class Form1
         Me.lblDeveloper = New System.Windows.Forms.Label()
         Me.PrintDoc = New System.Drawing.Printing.PrintDocument()
         Me.PPD = New System.Windows.Forms.PrintPreviewDialog()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
+        Me.PrintDocInsulin = New System.Drawing.Printing.PrintDocument()
+        Me.DataGridViewInsulin = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NoonDose = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AfternoonDose = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NightDose = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalDose = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.POM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewDrug = New System.Windows.Forms.DataGridView()
+        Me.DrugNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DrugName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Strength = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Dose = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Frequency = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Duration = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TotalQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.lblPrevSavedName = New System.Windows.Forms.Label()
+        Me.lblPrevSavedICNo = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
+        Me.TableLayoutPanel16.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -272,11 +309,13 @@ Partial Class Form1
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage4.SuspendLayout()
+        Me.btnSavePrinterSettings.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
+        CType(Me.DataGridViewInsulin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnSave
@@ -298,16 +337,19 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Controls.Add(Me.btnSavePrinterSettings)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabControl1.Location = New System.Drawing.Point(0, 33)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1562, 900)
+        Me.TabControl1.Size = New System.Drawing.Size(1562, 888)
         Me.TabControl1.TabIndex = 1
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.lblExistingPatient)
+        Me.TabPage1.Controls.Add(Me.Label24)
+        Me.TabPage1.Controls.Add(Me.cbAddDays)
         Me.TabPage1.Controls.Add(Me.lblGender)
         Me.TabPage1.Controls.Add(Me.lblAge)
         Me.TabPage1.Controls.Add(Me.btnCheckICMySPR)
@@ -336,10 +378,40 @@ Partial Class Form1
         Me.TabPage1.Location = New System.Drawing.Point(4, 31)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1554, 865)
+        Me.TabPage1.Size = New System.Drawing.Size(1554, 853)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "NEW PATIENT"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'lblExistingPatient
+        '
+        Me.lblExistingPatient.AutoSize = True
+        Me.lblExistingPatient.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblExistingPatient.ForeColor = System.Drawing.Color.Red
+        Me.lblExistingPatient.Location = New System.Drawing.Point(77, 91)
+        Me.lblExistingPatient.Name = "lblExistingPatient"
+        Me.lblExistingPatient.Size = New System.Drawing.Size(20, 18)
+        Me.lblExistingPatient.TabIndex = 40
+        Me.lblExistingPatient.Text = "   "
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(657, 67)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(48, 22)
+        Me.Label24.TabIndex = 39
+        Me.Label24.Text = "days"
+        '
+        'cbAddDays
+        '
+        Me.cbAddDays.FormattingEnabled = True
+        Me.cbAddDays.Items.AddRange(New Object() {"7", "14", "21", "30", "40", "50", "60", "90"})
+        Me.cbAddDays.Location = New System.Drawing.Point(597, 63)
+        Me.cbAddDays.MaxLength = 3
+        Me.cbAddDays.Name = "cbAddDays"
+        Me.cbAddDays.Size = New System.Drawing.Size(57, 30)
+        Me.cbAddDays.TabIndex = 38
         '
         'lblGender
         '
@@ -382,9 +454,10 @@ Partial Class Form1
         'chboxNoICNumber
         '
         Me.chboxNoICNumber.AutoSize = True
-        Me.chboxNoICNumber.Location = New System.Drawing.Point(398, 62)
+        Me.chboxNoICNumber.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chboxNoICNumber.Location = New System.Drawing.Point(394, 46)
         Me.chboxNoICNumber.Name = "chboxNoICNumber"
-        Me.chboxNoICNumber.Size = New System.Drawing.Size(197, 26)
+        Me.chboxNoICNumber.Size = New System.Drawing.Size(186, 24)
         Me.chboxNoICNumber.TabIndex = 33
         Me.chboxNoICNumber.TabStop = False
         Me.chboxNoICNumber.Text = "Tick if No IC or Baby"
@@ -434,6 +507,7 @@ Partial Class Form1
         '
         'groupInsulin
         '
+        Me.groupInsulin.Controls.Add(Me.TableLayoutPanel16)
         Me.groupInsulin.Controls.Add(Me.TableLayoutPanel4)
         Me.groupInsulin.Location = New System.Drawing.Point(7, 640)
         Me.groupInsulin.Name = "groupInsulin"
@@ -442,11 +516,176 @@ Partial Class Form1
         Me.groupInsulin.TabStop = False
         Me.groupInsulin.Text = "Insulin"
         '
+        'TableLayoutPanel16
+        '
+        Me.TableLayoutPanel16.ColumnCount = 13
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 522.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 66.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+        Me.TableLayoutPanel16.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101.0!))
+        Me.TableLayoutPanel16.Controls.Add(Me.Label19, 0, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.cbInsulin2, 1, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.lblStrInsulin2, 2, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.lblUnitInsulin2, 3, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2MorDose, 4, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2NoonDose, 5, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2AfterNoonDose, 6, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2NightDose, 7, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2Freq, 8, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2Duration, 9, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2TotalDose, 10, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2POM, 11, 0)
+        Me.TableLayoutPanel16.Controls.Add(Me.txtIn2CartQTY, 12, 0)
+        Me.TableLayoutPanel16.Location = New System.Drawing.Point(2, 120)
+        Me.TableLayoutPanel16.Name = "TableLayoutPanel16"
+        Me.TableLayoutPanel16.RowCount = 1
+        Me.TableLayoutPanel16.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41.0!))
+        Me.TableLayoutPanel16.Size = New System.Drawing.Size(1465, 38)
+        Me.TableLayoutPanel16.TabIndex = 19
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Enabled = False
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.Location = New System.Drawing.Point(3, 0)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(21, 22)
+        Me.Label19.TabIndex = 47
+        Me.Label19.Text = "2"
+        '
+        'cbInsulin2
+        '
+        Me.cbInsulin2.FormattingEnabled = True
+        Me.cbInsulin2.Location = New System.Drawing.Point(45, 3)
+        Me.cbInsulin2.Name = "cbInsulin2"
+        Me.cbInsulin2.Size = New System.Drawing.Size(516, 30)
+        Me.cbInsulin2.TabIndex = 13
+        '
+        'lblStrInsulin2
+        '
+        Me.lblStrInsulin2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblStrInsulin2.AutoSize = True
+        Me.lblStrInsulin2.Location = New System.Drawing.Point(570, 6)
+        Me.lblStrInsulin2.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblStrInsulin2.Name = "lblStrInsulin2"
+        Me.lblStrInsulin2.Size = New System.Drawing.Size(76, 29)
+        Me.lblStrInsulin2.TabIndex = 43
+        Me.lblStrInsulin2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblUnitInsulin2
+        '
+        Me.lblUnitInsulin2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblUnitInsulin2.AutoSize = True
+        Me.lblUnitInsulin2.Location = New System.Drawing.Point(658, 6)
+        Me.lblUnitInsulin2.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblUnitInsulin2.Name = "lblUnitInsulin2"
+        Me.lblUnitInsulin2.Size = New System.Drawing.Size(69, 29)
+        Me.lblUnitInsulin2.TabIndex = 44
+        '
+        'txtIn2MorDose
+        '
+        Me.txtIn2MorDose.Location = New System.Drawing.Point(736, 3)
+        Me.txtIn2MorDose.MaxLength = 4
+        Me.txtIn2MorDose.Name = "txtIn2MorDose"
+        Me.txtIn2MorDose.Size = New System.Drawing.Size(84, 28)
+        Me.txtIn2MorDose.TabIndex = 14
+        Me.txtIn2MorDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2NoonDose
+        '
+        Me.txtIn2NoonDose.Location = New System.Drawing.Point(828, 3)
+        Me.txtIn2NoonDose.MaxLength = 4
+        Me.txtIn2NoonDose.Name = "txtIn2NoonDose"
+        Me.txtIn2NoonDose.Size = New System.Drawing.Size(69, 28)
+        Me.txtIn2NoonDose.TabIndex = 15
+        Me.txtIn2NoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2AfterNoonDose
+        '
+        Me.txtIn2AfterNoonDose.Location = New System.Drawing.Point(910, 3)
+        Me.txtIn2AfterNoonDose.MaxLength = 4
+        Me.txtIn2AfterNoonDose.Name = "txtIn2AfterNoonDose"
+        Me.txtIn2AfterNoonDose.Size = New System.Drawing.Size(94, 28)
+        Me.txtIn2AfterNoonDose.TabIndex = 16
+        Me.txtIn2AfterNoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2NightDose
+        '
+        Me.txtIn2NightDose.Location = New System.Drawing.Point(1010, 3)
+        Me.txtIn2NightDose.MaxLength = 4
+        Me.txtIn2NightDose.Name = "txtIn2NightDose"
+        Me.txtIn2NightDose.Size = New System.Drawing.Size(60, 28)
+        Me.txtIn2NightDose.TabIndex = 17
+        Me.txtIn2NightDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2Freq
+        '
+        Me.txtIn2Freq.Location = New System.Drawing.Point(1076, 3)
+        Me.txtIn2Freq.MaxLength = 4
+        Me.txtIn2Freq.Name = "txtIn2Freq"
+        Me.txtIn2Freq.ReadOnly = True
+        Me.txtIn2Freq.Size = New System.Drawing.Size(48, 28)
+        Me.txtIn2Freq.TabIndex = 18
+        Me.txtIn2Freq.Text = "1"
+        Me.txtIn2Freq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2Duration
+        '
+        Me.txtIn2Duration.Location = New System.Drawing.Point(1130, 3)
+        Me.txtIn2Duration.MaxLength = 4
+        Me.txtIn2Duration.Name = "txtIn2Duration"
+        Me.txtIn2Duration.Size = New System.Drawing.Size(78, 28)
+        Me.txtIn2Duration.TabIndex = 19
+        Me.txtIn2Duration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2TotalDose
+        '
+        Me.txtIn2TotalDose.Location = New System.Drawing.Point(1214, 3)
+        Me.txtIn2TotalDose.MaxLength = 4
+        Me.txtIn2TotalDose.Name = "txtIn2TotalDose"
+        Me.txtIn2TotalDose.Size = New System.Drawing.Size(72, 28)
+        Me.txtIn2TotalDose.TabIndex = 20
+        Me.txtIn2TotalDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2POM
+        '
+        Me.txtIn2POM.Location = New System.Drawing.Point(1292, 3)
+        Me.txtIn2POM.MaxLength = 2
+        Me.txtIn2POM.Name = "txtIn2POM"
+        Me.txtIn2POM.Size = New System.Drawing.Size(61, 28)
+        Me.txtIn2POM.TabIndex = 21
+        Me.txtIn2POM.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn2CartQTY
+        '
+        Me.txtIn2CartQTY.BackColor = System.Drawing.SystemColors.Info
+        Me.txtIn2CartQTY.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtIn2CartQTY.Location = New System.Drawing.Point(1367, 3)
+        Me.txtIn2CartQTY.MaxLength = 4
+        Me.txtIn2CartQTY.Name = "txtIn2CartQTY"
+        Me.txtIn2CartQTY.Size = New System.Drawing.Size(93, 28)
+        Me.txtIn2CartQTY.TabIndex = 24
+        Me.txtIn2CartQTY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'TableLayoutPanel4
         '
         Me.TableLayoutPanel4.ColumnCount = 13
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 535.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 522.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92.0!))
@@ -454,8 +693,8 @@ Partial Class Form1
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 66.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 54.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 84.0!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101.0!))
         Me.TableLayoutPanel4.Controls.Add(Me.Label17, 11, 0)
@@ -472,38 +711,34 @@ Partial Class Form1
         Me.TableLayoutPanel4.Controls.Add(Me.Label13, 8, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.Label20, 7, 0)
         Me.TableLayoutPanel4.Controls.Add(Me.lblUnitInsulin1, 3, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.lblStrInsulin2, 2, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.lblUnitInsulin2, 3, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.cbInsulin2, 1, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.txtInsulin1MorDose, 4, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox2, 4, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox3, 5, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox4, 5, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox5, 6, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox6, 6, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox7, 7, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox8, 7, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox9, 8, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox10, 8, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox11, 9, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox12, 9, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox13, 10, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox14, 10, 2)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox15, 11, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox16, 11, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1MorDose, 4, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1NoonDose, 5, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1AfterNoonDose, 6, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1NightDose, 7, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1Freq, 8, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1Duration, 9, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1TotalDose, 10, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1POM, 11, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.Label21, 12, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox20, 12, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox22, 12, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.txtIn1CartQTY, 12, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.Label18, 0, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.Label19, 0, 2)
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(2, 38)
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(2, 27)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 3
+        Me.TableLayoutPanel4.RowCount = 2
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41.0!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(1465, 136)
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(1465, 87)
         Me.TableLayoutPanel4.TabIndex = 18
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(1292, 0)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(50, 22)
+        Me.Label17.TabIndex = 45
+        Me.Label17.Text = "POM"
         '
         'lblStrInsulin1
         '
@@ -511,18 +746,19 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrInsulin1.AutoSize = True
-        Me.lblStrInsulin1.Location = New System.Drawing.Point(583, 53)
+        Me.lblStrInsulin1.Location = New System.Drawing.Point(570, 57)
         Me.lblStrInsulin1.Margin = New System.Windows.Forms.Padding(6)
         Me.lblStrInsulin1.Name = "lblStrInsulin1"
-        Me.lblStrInsulin1.Size = New System.Drawing.Size(76, 29)
+        Me.lblStrInsulin1.Size = New System.Drawing.Size(76, 24)
         Me.lblStrInsulin1.TabIndex = 41
+        Me.lblStrInsulin1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cbInsulin1
         '
         Me.cbInsulin1.FormattingEnabled = True
-        Me.cbInsulin1.Location = New System.Drawing.Point(45, 50)
+        Me.cbInsulin1.Location = New System.Drawing.Point(45, 54)
         Me.cbInsulin1.Name = "cbInsulin1"
-        Me.cbInsulin1.Size = New System.Drawing.Size(527, 30)
+        Me.cbInsulin1.Size = New System.Drawing.Size(516, 30)
         Me.cbInsulin1.TabIndex = 0
         '
         'lblInsulin
@@ -564,7 +800,7 @@ Partial Class Form1
         'lblInStr
         '
         Me.lblInStr.AutoSize = True
-        Me.lblInStr.Location = New System.Drawing.Point(580, 0)
+        Me.lblInStr.Location = New System.Drawing.Point(567, 0)
         Me.lblInStr.Name = "lblInStr"
         Me.lblInStr.Size = New System.Drawing.Size(78, 22)
         Me.lblInStr.TabIndex = 2
@@ -573,7 +809,7 @@ Partial Class Form1
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(668, 0)
+        Me.Label16.Location = New System.Drawing.Point(655, 0)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(42, 22)
         Me.Label16.TabIndex = 10
@@ -582,7 +818,7 @@ Partial Class Form1
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(1210, 0)
+        Me.Label15.Location = New System.Drawing.Point(1214, 0)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(56, 44)
         Me.Label15.TabIndex = 9
@@ -616,6 +852,92 @@ Partial Class Form1
         Me.Label20.TabIndex = 14
         Me.Label20.Text = "Night Dose"
         '
+        'lblUnitInsulin1
+        '
+        Me.lblUnitInsulin1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblUnitInsulin1.AutoSize = True
+        Me.lblUnitInsulin1.Location = New System.Drawing.Point(658, 57)
+        Me.lblUnitInsulin1.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblUnitInsulin1.Name = "lblUnitInsulin1"
+        Me.lblUnitInsulin1.Size = New System.Drawing.Size(69, 24)
+        Me.lblUnitInsulin1.TabIndex = 42
+        '
+        'txtIn1MorDose
+        '
+        Me.txtIn1MorDose.Location = New System.Drawing.Point(736, 54)
+        Me.txtIn1MorDose.MaxLength = 4
+        Me.txtIn1MorDose.Name = "txtIn1MorDose"
+        Me.txtIn1MorDose.Size = New System.Drawing.Size(84, 28)
+        Me.txtIn1MorDose.TabIndex = 2
+        Me.txtIn1MorDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn1NoonDose
+        '
+        Me.txtIn1NoonDose.Location = New System.Drawing.Point(828, 54)
+        Me.txtIn1NoonDose.MaxLength = 4
+        Me.txtIn1NoonDose.Name = "txtIn1NoonDose"
+        Me.txtIn1NoonDose.Size = New System.Drawing.Size(69, 28)
+        Me.txtIn1NoonDose.TabIndex = 3
+        Me.txtIn1NoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn1AfterNoonDose
+        '
+        Me.txtIn1AfterNoonDose.Location = New System.Drawing.Point(910, 54)
+        Me.txtIn1AfterNoonDose.MaxLength = 4
+        Me.txtIn1AfterNoonDose.Name = "txtIn1AfterNoonDose"
+        Me.txtIn1AfterNoonDose.Size = New System.Drawing.Size(94, 28)
+        Me.txtIn1AfterNoonDose.TabIndex = 4
+        Me.txtIn1AfterNoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn1NightDose
+        '
+        Me.txtIn1NightDose.Location = New System.Drawing.Point(1010, 54)
+        Me.txtIn1NightDose.MaxLength = 4
+        Me.txtIn1NightDose.Name = "txtIn1NightDose"
+        Me.txtIn1NightDose.Size = New System.Drawing.Size(60, 28)
+        Me.txtIn1NightDose.TabIndex = 5
+        Me.txtIn1NightDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn1Freq
+        '
+        Me.txtIn1Freq.Location = New System.Drawing.Point(1076, 54)
+        Me.txtIn1Freq.MaxLength = 4
+        Me.txtIn1Freq.Name = "txtIn1Freq"
+        Me.txtIn1Freq.ReadOnly = True
+        Me.txtIn1Freq.Size = New System.Drawing.Size(48, 28)
+        Me.txtIn1Freq.TabIndex = 6
+        Me.txtIn1Freq.Text = "1"
+        Me.txtIn1Freq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn1Duration
+        '
+        Me.txtIn1Duration.Location = New System.Drawing.Point(1130, 54)
+        Me.txtIn1Duration.MaxLength = 4
+        Me.txtIn1Duration.Name = "txtIn1Duration"
+        Me.txtIn1Duration.Size = New System.Drawing.Size(74, 28)
+        Me.txtIn1Duration.TabIndex = 7
+        Me.txtIn1Duration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn1TotalDose
+        '
+        Me.txtIn1TotalDose.Location = New System.Drawing.Point(1214, 54)
+        Me.txtIn1TotalDose.MaxLength = 4
+        Me.txtIn1TotalDose.Name = "txtIn1TotalDose"
+        Me.txtIn1TotalDose.Size = New System.Drawing.Size(72, 28)
+        Me.txtIn1TotalDose.TabIndex = 8
+        Me.txtIn1TotalDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtIn1POM
+        '
+        Me.txtIn1POM.Location = New System.Drawing.Point(1292, 54)
+        Me.txtIn1POM.MaxLength = 2
+        Me.txtIn1POM.Name = "txtIn1POM"
+        Me.txtIn1POM.Size = New System.Drawing.Size(61, 28)
+        Me.txtIn1POM.TabIndex = 9
+        Me.txtIn1POM.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Label21
         '
         Me.Label21.AutoSize = True
@@ -626,217 +948,27 @@ Partial Class Form1
         Me.Label21.TabIndex = 15
         Me.Label21.Text = "Cartridge QTY"
         '
-        'lblUnitInsulin1
+        'txtIn1CartQTY
         '
-        Me.lblUnitInsulin1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblUnitInsulin1.AutoSize = True
-        Me.lblUnitInsulin1.Location = New System.Drawing.Point(671, 53)
-        Me.lblUnitInsulin1.Margin = New System.Windows.Forms.Padding(6)
-        Me.lblUnitInsulin1.Name = "lblUnitInsulin1"
-        Me.lblUnitInsulin1.Size = New System.Drawing.Size(56, 29)
-        Me.lblUnitInsulin1.TabIndex = 42
+        Me.txtIn1CartQTY.BackColor = System.Drawing.SystemColors.Info
+        Me.txtIn1CartQTY.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtIn1CartQTY.Location = New System.Drawing.Point(1367, 54)
+        Me.txtIn1CartQTY.MaxLength = 4
+        Me.txtIn1CartQTY.Name = "txtIn1CartQTY"
+        Me.txtIn1CartQTY.Size = New System.Drawing.Size(93, 28)
+        Me.txtIn1CartQTY.TabIndex = 12
+        Me.txtIn1CartQTY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'lblStrInsulin2
+        'Label18
         '
-        Me.lblStrInsulin2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblStrInsulin2.AutoSize = True
-        Me.lblStrInsulin2.Location = New System.Drawing.Point(583, 94)
-        Me.lblStrInsulin2.Margin = New System.Windows.Forms.Padding(6)
-        Me.lblStrInsulin2.Name = "lblStrInsulin2"
-        Me.lblStrInsulin2.Size = New System.Drawing.Size(76, 36)
-        Me.lblStrInsulin2.TabIndex = 43
-        '
-        'lblUnitInsulin2
-        '
-        Me.lblUnitInsulin2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblUnitInsulin2.AutoSize = True
-        Me.lblUnitInsulin2.Location = New System.Drawing.Point(671, 94)
-        Me.lblUnitInsulin2.Margin = New System.Windows.Forms.Padding(6)
-        Me.lblUnitInsulin2.Name = "lblUnitInsulin2"
-        Me.lblUnitInsulin2.Size = New System.Drawing.Size(56, 36)
-        Me.lblUnitInsulin2.TabIndex = 44
-        '
-        'cbInsulin2
-        '
-        Me.cbInsulin2.FormattingEnabled = True
-        Me.cbInsulin2.Location = New System.Drawing.Point(45, 91)
-        Me.cbInsulin2.Name = "cbInsulin2"
-        Me.cbInsulin2.Size = New System.Drawing.Size(527, 30)
-        Me.cbInsulin2.TabIndex = 13
-        '
-        'txtInsulin1MorDose
-        '
-        Me.txtInsulin1MorDose.Location = New System.Drawing.Point(736, 50)
-        Me.txtInsulin1MorDose.MaxLength = 4
-        Me.txtInsulin1MorDose.Name = "txtInsulin1MorDose"
-        Me.txtInsulin1MorDose.Size = New System.Drawing.Size(84, 28)
-        Me.txtInsulin1MorDose.TabIndex = 2
-        Me.txtInsulin1MorDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(736, 91)
-        Me.TextBox2.MaxLength = 4
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(84, 28)
-        Me.TextBox2.TabIndex = 14
-        Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Location = New System.Drawing.Point(828, 50)
-        Me.TextBox3.MaxLength = 4
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(69, 28)
-        Me.TextBox3.TabIndex = 3
-        Me.TextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox4
-        '
-        Me.TextBox4.Location = New System.Drawing.Point(828, 91)
-        Me.TextBox4.MaxLength = 4
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(69, 28)
-        Me.TextBox4.TabIndex = 15
-        Me.TextBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox5
-        '
-        Me.TextBox5.Location = New System.Drawing.Point(910, 50)
-        Me.TextBox5.MaxLength = 4
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(94, 28)
-        Me.TextBox5.TabIndex = 4
-        Me.TextBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox6
-        '
-        Me.TextBox6.Location = New System.Drawing.Point(910, 91)
-        Me.TextBox6.MaxLength = 4
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(94, 28)
-        Me.TextBox6.TabIndex = 16
-        Me.TextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox7
-        '
-        Me.TextBox7.Location = New System.Drawing.Point(1010, 50)
-        Me.TextBox7.MaxLength = 4
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(60, 28)
-        Me.TextBox7.TabIndex = 5
-        Me.TextBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox8
-        '
-        Me.TextBox8.Location = New System.Drawing.Point(1010, 91)
-        Me.TextBox8.MaxLength = 4
-        Me.TextBox8.Name = "TextBox8"
-        Me.TextBox8.Size = New System.Drawing.Size(60, 28)
-        Me.TextBox8.TabIndex = 17
-        Me.TextBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox9
-        '
-        Me.TextBox9.Location = New System.Drawing.Point(1076, 50)
-        Me.TextBox9.MaxLength = 4
-        Me.TextBox9.Name = "TextBox9"
-        Me.TextBox9.ReadOnly = True
-        Me.TextBox9.Size = New System.Drawing.Size(48, 28)
-        Me.TextBox9.TabIndex = 6
-        Me.TextBox9.Text = "1"
-        Me.TextBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox10
-        '
-        Me.TextBox10.Location = New System.Drawing.Point(1076, 91)
-        Me.TextBox10.MaxLength = 4
-        Me.TextBox10.Name = "TextBox10"
-        Me.TextBox10.ReadOnly = True
-        Me.TextBox10.Size = New System.Drawing.Size(48, 28)
-        Me.TextBox10.TabIndex = 18
-        Me.TextBox10.Text = "1"
-        Me.TextBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox11
-        '
-        Me.TextBox11.Location = New System.Drawing.Point(1130, 50)
-        Me.TextBox11.MaxLength = 4
-        Me.TextBox11.Name = "TextBox11"
-        Me.TextBox11.Size = New System.Drawing.Size(74, 28)
-        Me.TextBox11.TabIndex = 7
-        Me.TextBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox12
-        '
-        Me.TextBox12.Location = New System.Drawing.Point(1130, 91)
-        Me.TextBox12.MaxLength = 4
-        Me.TextBox12.Name = "TextBox12"
-        Me.TextBox12.Size = New System.Drawing.Size(74, 28)
-        Me.TextBox12.TabIndex = 19
-        Me.TextBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox13
-        '
-        Me.TextBox13.Location = New System.Drawing.Point(1210, 50)
-        Me.TextBox13.MaxLength = 4
-        Me.TextBox13.Name = "TextBox13"
-        Me.TextBox13.Size = New System.Drawing.Size(76, 28)
-        Me.TextBox13.TabIndex = 8
-        Me.TextBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox14
-        '
-        Me.TextBox14.Location = New System.Drawing.Point(1210, 91)
-        Me.TextBox14.MaxLength = 4
-        Me.TextBox14.Name = "TextBox14"
-        Me.TextBox14.Size = New System.Drawing.Size(76, 28)
-        Me.TextBox14.TabIndex = 20
-        Me.TextBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox15
-        '
-        Me.TextBox15.Location = New System.Drawing.Point(1292, 50)
-        Me.TextBox15.MaxLength = 4
-        Me.TextBox15.Name = "TextBox15"
-        Me.TextBox15.Size = New System.Drawing.Size(61, 28)
-        Me.TextBox15.TabIndex = 9
-        Me.TextBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox16
-        '
-        Me.TextBox16.Location = New System.Drawing.Point(1292, 91)
-        Me.TextBox16.MaxLength = 4
-        Me.TextBox16.Name = "TextBox16"
-        Me.TextBox16.Size = New System.Drawing.Size(61, 28)
-        Me.TextBox16.TabIndex = 21
-        Me.TextBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox20
-        '
-        Me.TextBox20.BackColor = System.Drawing.SystemColors.Info
-        Me.TextBox20.Location = New System.Drawing.Point(1367, 50)
-        Me.TextBox20.MaxLength = 4
-        Me.TextBox20.Name = "TextBox20"
-        Me.TextBox20.Size = New System.Drawing.Size(93, 28)
-        Me.TextBox20.TabIndex = 12
-        Me.TextBox20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'TextBox22
-        '
-        Me.TextBox22.BackColor = System.Drawing.SystemColors.Info
-        Me.TextBox22.Location = New System.Drawing.Point(1367, 91)
-        Me.TextBox22.MaxLength = 4
-        Me.TextBox22.Name = "TextBox22"
-        Me.TextBox22.Size = New System.Drawing.Size(93, 28)
-        Me.TextBox22.TabIndex = 24
-        Me.TextBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.Label18.AutoSize = True
+        Me.Label18.Enabled = False
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(3, 51)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(21, 22)
+        Me.Label18.TabIndex = 46
+        Me.Label18.Text = "1"
         '
         'Label9
         '
@@ -1056,6 +1188,7 @@ Partial Class Form1
         'txtQTYD10
         '
         Me.txtQTYD10.BackColor = System.Drawing.SystemColors.Info
+        Me.txtQTYD10.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD10.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD10.MaxLength = 3
         Me.txtQTYD10.Name = "txtQTYD10"
@@ -1182,6 +1315,7 @@ Partial Class Form1
         'txtQTYD8
         '
         Me.txtQTYD8.BackColor = System.Drawing.SystemColors.Info
+        Me.txtQTYD8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD8.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD8.MaxLength = 3
         Me.txtQTYD8.Name = "txtQTYD8"
@@ -1308,6 +1442,7 @@ Partial Class Form1
         'txtQTYD9
         '
         Me.txtQTYD9.BackColor = System.Drawing.SystemColors.Info
+        Me.txtQTYD9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD9.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD9.MaxLength = 3
         Me.txtQTYD9.Name = "txtQTYD9"
@@ -1434,6 +1569,7 @@ Partial Class Form1
         'txtQTYD6
         '
         Me.txtQTYD6.BackColor = System.Drawing.SystemColors.Info
+        Me.txtQTYD6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD6.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD6.MaxLength = 3
         Me.txtQTYD6.Name = "txtQTYD6"
@@ -1560,6 +1696,7 @@ Partial Class Form1
         'txtQTYD7
         '
         Me.txtQTYD7.BackColor = System.Drawing.SystemColors.Info
+        Me.txtQTYD7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD7.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD7.MaxLength = 3
         Me.txtQTYD7.Name = "txtQTYD7"
@@ -1681,6 +1818,7 @@ Partial Class Form1
         '
         'txtQTYD4
         '
+        Me.txtQTYD4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD4.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD4.MaxLength = 3
         Me.txtQTYD4.Name = "txtQTYD4"
@@ -1802,6 +1940,7 @@ Partial Class Form1
         '
         'txtQTYD5
         '
+        Me.txtQTYD5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD5.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD5.MaxLength = 3
         Me.txtQTYD5.Name = "txtQTYD5"
@@ -1900,6 +2039,7 @@ Partial Class Form1
         '
         'txtQTYD3
         '
+        Me.txtQTYD3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD3.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD3.MaxLength = 3
         Me.txtQTYD3.Name = "txtQTYD3"
@@ -1974,6 +2114,7 @@ Partial Class Form1
         '
         'txtQTYD2
         '
+        Me.txtQTYD2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD2.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD2.MaxLength = 3
         Me.txtQTYD2.Name = "txtQTYD2"
@@ -2142,6 +2283,7 @@ Partial Class Form1
         '
         'txtQTYD1
         '
+        Me.txtQTYD1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtQTYD1.Location = New System.Drawing.Point(1184, 3)
         Me.txtQTYD1.MaxLength = 3
         Me.txtQTYD1.Name = "txtQTYD1"
@@ -2222,6 +2364,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(1140, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Padding = New System.Windows.Forms.Padding(18, 20, 0, 10)
@@ -2302,7 +2445,7 @@ Partial Class Form1
         'dtpDateSaved
         '
         Me.dtpDateSaved.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpDateSaved.Location = New System.Drawing.Point(71, 110)
+        Me.dtpDateSaved.Location = New System.Drawing.Point(71, 114)
         Me.dtpDateSaved.Name = "dtpDateSaved"
         Me.dtpDateSaved.Size = New System.Drawing.Size(165, 28)
         Me.dtpDateSaved.TabIndex = 3
@@ -2346,7 +2489,7 @@ Partial Class Form1
         Me.TabPage2.Location = New System.Drawing.Point(4, 31)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1554, 865)
+        Me.TabPage2.Size = New System.Drawing.Size(1554, 853)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "DRUGS"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -2359,7 +2502,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2376,9 +2519,9 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(474, 3)
+        Me.btnDelete.Location = New System.Drawing.Point(465, 3)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(123, 33)
+        Me.btnDelete.Size = New System.Drawing.Size(132, 33)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2391,7 +2534,7 @@ Partial Class Form1
         Me.btnAddDrug.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddDrug.Location = New System.Drawing.Point(3, 3)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(223, 33)
+        Me.btnAddDrug.Size = New System.Drawing.Size(217, 33)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2401,7 +2544,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(352, 3)
+        Me.btnClear.Location = New System.Drawing.Point(343, 3)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(116, 33)
         Me.btnClear.TabIndex = 12
@@ -2413,9 +2556,9 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(232, 3)
+        Me.btnUpdate.Location = New System.Drawing.Point(226, 3)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(114, 33)
+        Me.btnUpdate.Size = New System.Drawing.Size(111, 33)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -2653,42 +2796,47 @@ Partial Class Form1
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.DataGridView2)
+        Me.TabPage3.Controls.Add(Me.lblPrevSavedICNo)
+        Me.TabPage3.Controls.Add(Me.lblPrevSavedName)
+        Me.TabPage3.Controls.Add(Me.Label26)
+        Me.TabPage3.Controls.Add(Me.Label25)
+        Me.TabPage3.Controls.Add(Me.DataGridViewInsulin)
+        Me.TabPage3.Controls.Add(Me.DataGridViewDrug)
         Me.TabPage3.Location = New System.Drawing.Point(4, 31)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(1554, 865)
+        Me.TabPage3.Size = New System.Drawing.Size(1554, 853)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "LOG"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'DataGridView2
+        'btnSavePrinterSettings
         '
-        Me.DataGridView2.AllowUserToAddRows = False
-        Me.DataGridView2.AllowUserToDeleteRows = False
-        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(3, 61)
-        Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.ReadOnly = True
-        Me.DataGridView2.RowHeadersWidth = 51
-        Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(1093, 423)
-        Me.DataGridView2.TabIndex = 0
+        Me.btnSavePrinterSettings.Controls.Add(Me.btnRestart)
+        Me.btnSavePrinterSettings.Controls.Add(Me.GroupBox3)
+        Me.btnSavePrinterSettings.Controls.Add(Me.GroupBox2)
+        Me.btnSavePrinterSettings.Location = New System.Drawing.Point(4, 31)
+        Me.btnSavePrinterSettings.Name = "btnSavePrinterSettings"
+        Me.btnSavePrinterSettings.Padding = New System.Windows.Forms.Padding(3)
+        Me.btnSavePrinterSettings.Size = New System.Drawing.Size(1554, 853)
+        Me.btnSavePrinterSettings.TabIndex = 3
+        Me.btnSavePrinterSettings.Text = "Database"
+        Me.btnSavePrinterSettings.UseVisualStyleBackColor = True
         '
-        'TabPage4
+        'btnRestart
         '
-        Me.TabPage4.Controls.Add(Me.GroupBox3)
-        Me.TabPage4.Controls.Add(Me.GroupBox2)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 31)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(1554, 865)
-        Me.TabPage4.TabIndex = 3
-        Me.TabPage4.Text = "Database"
-        Me.TabPage4.UseVisualStyleBackColor = True
+        Me.btnRestart.Location = New System.Drawing.Point(1359, 775)
+        Me.btnRestart.Name = "btnRestart"
+        Me.btnRestart.Size = New System.Drawing.Size(168, 58)
+        Me.btnRestart.TabIndex = 2
+        Me.btnRestart.Text = "Restart Application"
+        Me.btnRestart.UseVisualStyleBackColor = True
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Button1)
+        Me.GroupBox3.Controls.Add(Me.Label23)
+        Me.GroupBox3.Controls.Add(Me.txtClinicName)
         Me.GroupBox3.Location = New System.Drawing.Point(8, 251)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(577, 109)
@@ -2696,8 +2844,34 @@ Partial Class Form1
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Printer Settings"
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(441, 70)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(127, 33)
+        Me.Button1.TabIndex = 2
+        Me.Button1.Text = "Save"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(6, 30)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(106, 22)
+        Me.Label23.TabIndex = 1
+        Me.Label23.Text = "Clinic Name"
+        '
+        'txtClinicName
+        '
+        Me.txtClinicName.Location = New System.Drawing.Point(181, 27)
+        Me.txtClinicName.Name = "txtClinicName"
+        Me.txtClinicName.Size = New System.Drawing.Size(387, 28)
+        Me.txtClinicName.TabIndex = 0
+        '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.btnSaveDBSettings)
         Me.GroupBox2.Controls.Add(Me.TableLayoutPanel3)
         Me.GroupBox2.Location = New System.Drawing.Point(8, 6)
         Me.GroupBox2.Name = "GroupBox2"
@@ -2705,6 +2879,15 @@ Partial Class Form1
         Me.GroupBox2.TabIndex = 0
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Database Connection Configuration"
+        '
+        'btnSaveDBSettings
+        '
+        Me.btnSaveDBSettings.Location = New System.Drawing.Point(441, 200)
+        Me.btnSaveDBSettings.Name = "btnSaveDBSettings"
+        Me.btnSaveDBSettings.Size = New System.Drawing.Size(127, 33)
+        Me.btnSaveDBSettings.TabIndex = 1
+        Me.btnSaveDBSettings.Text = "Save"
+        Me.btnSaveDBSettings.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel3
         '
@@ -2717,7 +2900,7 @@ Partial Class Form1
         Me.TableLayoutPanel3.Controls.Add(Me.lblDBUserID, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.lblPassword, 0, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.lblDatabaseName, 0, 3)
-        Me.TableLayoutPanel3.Controls.Add(Me.txtServerName, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.txtDBServerAddress, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.txtDBName, 1, 3)
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 40)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
@@ -2746,7 +2929,6 @@ Partial Class Form1
         Me.txtDBUserID.Name = "txtDBUserID"
         Me.txtDBUserID.Size = New System.Drawing.Size(387, 28)
         Me.txtDBUserID.TabIndex = 5
-        Me.txtDBUserID.Text = "root"
         '
         'lblServerName
         '
@@ -2784,14 +2966,13 @@ Partial Class Form1
         Me.lblDatabaseName.TabIndex = 3
         Me.lblDatabaseName.Text = "Database Name"
         '
-        'txtServerName
+        'txtDBServerAddress
         '
-        Me.txtServerName.Location = New System.Drawing.Point(178, 3)
-        Me.txtServerName.MaxLength = 20
-        Me.txtServerName.Name = "txtServerName"
-        Me.txtServerName.Size = New System.Drawing.Size(387, 28)
-        Me.txtServerName.TabIndex = 4
-        Me.txtServerName.Text = "127.0.0.1"
+        Me.txtDBServerAddress.Location = New System.Drawing.Point(178, 3)
+        Me.txtDBServerAddress.MaxLength = 20
+        Me.txtDBServerAddress.Name = "txtDBServerAddress"
+        Me.txtDBServerAddress.Size = New System.Drawing.Size(387, 28)
+        Me.txtDBServerAddress.TabIndex = 4
         '
         'txtDBName
         '
@@ -2800,13 +2981,12 @@ Partial Class Form1
         Me.txtDBName.Name = "txtDBName"
         Me.txtDBName.Size = New System.Drawing.Size(387, 28)
         Me.txtDBName.TabIndex = 7
-        Me.txtDBName.Text = "database_pharmacy"
         '
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.stlbDatabaseConnection, Me.pbrDatabaseConnection, Me.ToolStripStatusLabel2, Me.stlbPrinterName, Me.ToolStripStatusLabel1, Me.stlbMainStatus})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 919)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 923)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1574, 26)
         Me.StatusStrip1.TabIndex = 2
@@ -2858,7 +3038,7 @@ Partial Class Form1
         Me.lblDeveloper.AutoSize = True
         Me.lblDeveloper.BackColor = System.Drawing.Color.White
         Me.lblDeveloper.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDeveloper.Location = New System.Drawing.Point(1215, 920)
+        Me.lblDeveloper.Location = New System.Drawing.Point(1218, 923)
         Me.lblDeveloper.Name = "lblDeveloper"
         Me.lblDeveloper.Size = New System.Drawing.Size(275, 25)
         Me.lblDeveloper.TabIndex = 4
@@ -2877,36 +3057,238 @@ Partial Class Form1
         Me.PPD.Name = "PPD"
         Me.PPD.Visible = False
         '
-        'Label17
+        'PrintDocInsulin
         '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(1292, 0)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(50, 22)
-        Me.Label17.TabIndex = 45
-        Me.Label17.Text = "POM"
         '
-        'Label18
+        'DataGridViewInsulin
         '
-        Me.Label18.AutoSize = True
-        Me.Label18.Enabled = False
-        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(3, 47)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(21, 22)
-        Me.Label18.TabIndex = 46
-        Me.Label18.Text = "1"
+        Me.DataGridViewInsulin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridViewInsulin.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
+        Me.DataGridViewInsulin.Location = New System.Drawing.Point(29, 475)
+        Me.DataGridViewInsulin.Name = "DataGridViewInsulin"
+        Me.DataGridViewInsulin.ReadOnly = True
+        Me.DataGridViewInsulin.RowHeadersWidth = 51
+        Me.DataGridViewInsulin.RowTemplate.Height = 24
+        Me.DataGridViewInsulin.Size = New System.Drawing.Size(1268, 147)
+        Me.DataGridViewInsulin.TabIndex = 9
         '
-        'Label19
+        'DataGridViewTextBoxColumn1
         '
-        Me.Label19.AutoSize = True
-        Me.Label19.Enabled = False
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(3, 88)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(21, 22)
-        Me.Label19.TabIndex = 47
-        Me.Label19.Text = "2"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "No."
+        Me.DataGridViewTextBoxColumn1.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridViewTextBoxColumn1.Width = 35
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Insulin Name"
+        Me.DataGridViewTextBoxColumn2.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.Width = 300
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Strength"
+        Me.DataGridViewTextBoxColumn3.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.DataGridViewTextBoxColumn3.Width = 60
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Unit"
+        Me.DataGridViewTextBoxColumn4.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        Me.DataGridViewTextBoxColumn4.Width = 45
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Morning Dose"
+        Me.DataGridViewTextBoxColumn5.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        Me.DataGridViewTextBoxColumn5.Width = 60
+        '
+        'NoonDose
+        '
+        Me.NoonDose.HeaderText = "Noon Dose"
+        Me.NoonDose.MinimumWidth = 6
+        Me.NoonDose.Name = "NoonDose"
+        Me.NoonDose.ReadOnly = True
+        Me.NoonDose.Width = 50
+        '
+        'AfternoonDose
+        '
+        Me.AfternoonDose.HeaderText = "Afternoon Dose"
+        Me.AfternoonDose.MinimumWidth = 6
+        Me.AfternoonDose.Name = "AfternoonDose"
+        Me.AfternoonDose.ReadOnly = True
+        Me.AfternoonDose.Width = 60
+        '
+        'NightDose
+        '
+        Me.NightDose.HeaderText = "Night Dose"
+        Me.NightDose.MinimumWidth = 6
+        Me.NightDose.Name = "NightDose"
+        Me.NightDose.ReadOnly = True
+        Me.NightDose.Width = 50
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Frequency"
+        Me.DataGridViewTextBoxColumn6.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        Me.DataGridViewTextBoxColumn6.Width = 50
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Duration"
+        Me.DataGridViewTextBoxColumn7.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 50
+        '
+        'TotalDose
+        '
+        Me.TotalDose.HeaderText = "Total Dose"
+        Me.TotalDose.MinimumWidth = 6
+        Me.TotalDose.Name = "TotalDose"
+        Me.TotalDose.ReadOnly = True
+        Me.TotalDose.Width = 50
+        '
+        'POM
+        '
+        Me.POM.HeaderText = "POM"
+        Me.POM.MinimumWidth = 6
+        Me.POM.Name = "POM"
+        Me.POM.ReadOnly = True
+        Me.POM.Width = 50
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.HeaderText = "Cart QTY"
+        Me.DataGridViewTextBoxColumn8.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        Me.DataGridViewTextBoxColumn8.Width = 50
+        '
+        'DataGridViewDrug
+        '
+        Me.DataGridViewDrug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridViewDrug.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DrugNo, Me.DrugName, Me.Strength, Me.Unit, Me.Dose, Me.Frequency, Me.Duration, Me.TotalQTY})
+        Me.DataGridViewDrug.Location = New System.Drawing.Point(29, 92)
+        Me.DataGridViewDrug.Name = "DataGridViewDrug"
+        Me.DataGridViewDrug.ReadOnly = True
+        Me.DataGridViewDrug.RowHeadersWidth = 51
+        Me.DataGridViewDrug.RowTemplate.Height = 24
+        Me.DataGridViewDrug.Size = New System.Drawing.Size(1268, 361)
+        Me.DataGridViewDrug.TabIndex = 8
+        '
+        'DrugNo
+        '
+        Me.DrugNo.HeaderText = "No."
+        Me.DrugNo.MinimumWidth = 6
+        Me.DrugNo.Name = "DrugNo"
+        Me.DrugNo.ReadOnly = True
+        Me.DrugNo.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DrugNo.Width = 35
+        '
+        'DrugName
+        '
+        Me.DrugName.HeaderText = "Drug Name"
+        Me.DrugName.MinimumWidth = 6
+        Me.DrugName.Name = "DrugName"
+        Me.DrugName.ReadOnly = True
+        Me.DrugName.Width = 450
+        '
+        'Strength
+        '
+        Me.Strength.HeaderText = "Strength"
+        Me.Strength.MinimumWidth = 6
+        Me.Strength.Name = "Strength"
+        Me.Strength.ReadOnly = True
+        Me.Strength.Width = 60
+        '
+        'Unit
+        '
+        Me.Unit.HeaderText = "Unit"
+        Me.Unit.MinimumWidth = 6
+        Me.Unit.Name = "Unit"
+        Me.Unit.ReadOnly = True
+        Me.Unit.Width = 45
+        '
+        'Dose
+        '
+        Me.Dose.HeaderText = "Dose"
+        Me.Dose.MinimumWidth = 6
+        Me.Dose.Name = "Dose"
+        Me.Dose.ReadOnly = True
+        Me.Dose.Width = 60
+        '
+        'Frequency
+        '
+        Me.Frequency.HeaderText = "Frequency"
+        Me.Frequency.MinimumWidth = 6
+        Me.Frequency.Name = "Frequency"
+        Me.Frequency.ReadOnly = True
+        Me.Frequency.Width = 60
+        '
+        'Duration
+        '
+        Me.Duration.HeaderText = "Duration"
+        Me.Duration.MinimumWidth = 6
+        Me.Duration.Name = "Duration"
+        Me.Duration.ReadOnly = True
+        Me.Duration.Width = 60
+        '
+        'TotalQTY
+        '
+        Me.TotalQTY.HeaderText = "Total Quantity"
+        Me.TotalQTY.MinimumWidth = 6
+        Me.TotalQTY.Name = "TotalQTY"
+        Me.TotalQTY.ReadOnly = True
+        Me.TotalQTY.Width = 50
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(25, 14)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(203, 22)
+        Me.Label25.TabIndex = 10
+        Me.Label25.Text = "Previous Saved Name : "
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(25, 47)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(201, 22)
+        Me.Label26.TabIndex = 11
+        Me.Label26.Text = "Previous Saved IC No. :"
+        '
+        'lblPrevSavedName
+        '
+        Me.lblPrevSavedName.AutoSize = True
+        Me.lblPrevSavedName.Location = New System.Drawing.Point(225, 14)
+        Me.lblPrevSavedName.Name = "lblPrevSavedName"
+        Me.lblPrevSavedName.Size = New System.Drawing.Size(25, 22)
+        Me.lblPrevSavedName.TabIndex = 12
+        Me.lblPrevSavedName.Text = "   "
+        '
+        'lblPrevSavedICNo
+        '
+        Me.lblPrevSavedICNo.AutoSize = True
+        Me.lblPrevSavedICNo.Location = New System.Drawing.Point(225, 47)
+        Me.lblPrevSavedICNo.Name = "lblPrevSavedICNo"
+        Me.lblPrevSavedICNo.Size = New System.Drawing.Size(25, 22)
+        Me.lblPrevSavedICNo.TabIndex = 13
+        Me.lblPrevSavedICNo.Text = "   "
         '
         'Form1
         '
@@ -2915,7 +3297,7 @@ Partial Class Form1
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.LightPink
-        Me.ClientSize = New System.Drawing.Size(1574, 945)
+        Me.ClientSize = New System.Drawing.Size(1574, 949)
         Me.Controls.Add(Me.lblDeveloper)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.TabControl1)
@@ -2926,6 +3308,8 @@ Partial Class Form1
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.groupInsulin.ResumeLayout(False)
+        Me.TableLayoutPanel16.ResumeLayout(False)
+        Me.TableLayoutPanel16.PerformLayout()
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2959,13 +3343,17 @@ Partial Class Form1
         Me.TableLayoutPanel1.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        Me.btnSavePrinterSettings.ResumeLayout(False)
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
+        CType(Me.DataGridViewInsulin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2994,7 +3382,7 @@ Partial Class Form1
     Friend WithEvents btnAddDrug As Button
     Friend WithEvents lblSearch As Label
     Friend WithEvents txtSearchDrug As TextBox
-    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents btnSavePrinterSettings As TabPage
     Friend WithEvents dtpDateCollection As DateTimePicker
     Friend WithEvents lblDatetoSeeDoctor As Label
     Friend WithEvents GroupBox1 As GroupBox
@@ -3025,9 +3413,8 @@ Partial Class Form1
     Friend WithEvents lblDBUserID As Label
     Friend WithEvents lblPassword As Label
     Friend WithEvents lblDatabaseName As Label
-    Friend WithEvents txtServerName As TextBox
+    Friend WithEvents txtDBServerAddress As TextBox
     Friend WithEvents txtDBName As TextBox
-    Friend WithEvents DataGridView2 As DataGridView
     Friend WithEvents btnUpdate As Button
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
@@ -3144,24 +3531,24 @@ Partial Class Form1
     Friend WithEvents lblStrInsulin2 As Label
     Friend WithEvents lblUnitInsulin2 As Label
     Friend WithEvents cbInsulin2 As ComboBox
-    Friend WithEvents txtInsulin1MorDose As TextBox
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents TextBox6 As TextBox
-    Friend WithEvents TextBox7 As TextBox
-    Friend WithEvents TextBox8 As TextBox
-    Friend WithEvents TextBox9 As TextBox
-    Friend WithEvents TextBox10 As TextBox
-    Friend WithEvents TextBox11 As TextBox
-    Friend WithEvents TextBox12 As TextBox
-    Friend WithEvents TextBox13 As TextBox
-    Friend WithEvents TextBox14 As TextBox
-    Friend WithEvents TextBox15 As TextBox
-    Friend WithEvents TextBox16 As TextBox
-    Friend WithEvents TextBox20 As TextBox
-    Friend WithEvents TextBox22 As TextBox
+    Friend WithEvents txtIn1MorDose As TextBox
+    Friend WithEvents txtIn2MorDose As TextBox
+    Friend WithEvents txtIn1NoonDose As TextBox
+    Friend WithEvents txtIn2NoonDose As TextBox
+    Friend WithEvents txtIn1AfterNoonDose As TextBox
+    Friend WithEvents txtIn2AfterNoonDose As TextBox
+    Friend WithEvents txtIn1NightDose As TextBox
+    Friend WithEvents txtIn2NightDose As TextBox
+    Friend WithEvents txtIn1Freq As TextBox
+    Friend WithEvents txtIn2Freq As TextBox
+    Friend WithEvents txtIn1Duration As TextBox
+    Friend WithEvents txtIn2Duration As TextBox
+    Friend WithEvents txtIn1TotalDose As TextBox
+    Friend WithEvents txtIn2TotalDose As TextBox
+    Friend WithEvents txtIn1POM As TextBox
+    Friend WithEvents txtIn2POM As TextBox
+    Friend WithEvents txtIn1CartQTY As TextBox
+    Friend WithEvents txtIn2CartQTY As TextBox
     Friend WithEvents cbDrug2 As ComboBox
     Friend WithEvents cbDrug4 As ComboBox
     Friend WithEvents cbDrug5 As ComboBox
@@ -3198,4 +3585,41 @@ Partial Class Form1
     Friend WithEvents Label17 As Label
     Friend WithEvents Label18 As Label
     Friend WithEvents Label19 As Label
+    Friend WithEvents TableLayoutPanel16 As TableLayoutPanel
+    Friend WithEvents cbAddDays As ComboBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents txtClinicName As TextBox
+    Friend WithEvents btnSaveDBSettings As Button
+    Friend WithEvents btnRestart As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents PrintDocInsulin As Printing.PrintDocument
+    Friend WithEvents Label24 As Label
+    Friend WithEvents lblExistingPatient As Label
+    Friend WithEvents DataGridViewInsulin As DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
+    Friend WithEvents NoonDose As DataGridViewTextBoxColumn
+    Friend WithEvents AfternoonDose As DataGridViewTextBoxColumn
+    Friend WithEvents NightDose As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
+    Friend WithEvents TotalDose As DataGridViewTextBoxColumn
+    Friend WithEvents POM As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn8 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewDrug As DataGridView
+    Friend WithEvents DrugNo As DataGridViewTextBoxColumn
+    Friend WithEvents DrugName As DataGridViewTextBoxColumn
+    Friend WithEvents Strength As DataGridViewTextBoxColumn
+    Friend WithEvents Unit As DataGridViewTextBoxColumn
+    Friend WithEvents Dose As DataGridViewTextBoxColumn
+    Friend WithEvents Frequency As DataGridViewTextBoxColumn
+    Friend WithEvents Duration As DataGridViewTextBoxColumn
+    Friend WithEvents TotalQTY As DataGridViewTextBoxColumn
+    Friend WithEvents lblPrevSavedICNo As Label
+    Friend WithEvents lblPrevSavedName As Label
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label25 As Label
 End Class

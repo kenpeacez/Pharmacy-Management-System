@@ -4,6 +4,11 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports MySql.Data.MySqlClient
 Imports System.Drawing.Printing
 Imports System.Text.RegularExpressions
+Imports Google.Protobuf
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports System.Configuration
+Imports System.Windows.Forms.PropertyGridInternal
+Imports Google.Protobuf.WellKnownTypes
 
 
 Public Class Form1
@@ -20,6 +25,7 @@ Public Class Form1
     Dim DBStatus As Boolean
 
     Private currentPage As Integer = 1
+    Private currentPageInsulin As Integer = 1
 
 
     Dim RemarkD1 As String
@@ -55,6 +61,10 @@ Public Class Form1
     Dim ConsumeUnitD9 As String
     Dim ConsumeMethodD10 As String
     Dim ConsumeUnitD10 As String
+    Dim ConsumeMethodIn1 As String
+    Dim ConsumeUnitIn1 As String
+    Dim ConsumeMethodIn2 As String
+    Dim ConsumeUnitIn2 As String
 
     Dim Drug1Selected As Boolean = False
     Dim Drug2Selected As Boolean = False
@@ -66,6 +76,8 @@ Public Class Form1
     Dim Drug8Selected As Boolean = False
     Dim Drug9Selected As Boolean = False
     Dim Drug10Selected As Boolean = False
+    Dim Insulin1Selected As Boolean = False
+    Dim Insulin2Selected As Boolean = False
 
 
     Private disableTextChanged As Boolean = False
@@ -90,24 +102,84 @@ Public Class Form1
         loaddatafromdb()
         loadInsulindatafromdb()
         'Fiveth Function
+        loadLogDGV()
+
 
     End Sub
 
     Public Sub InitializeAll()
-
-        'Initialize Duration at NEW Patient Tab
-        dtpDateCollection.Value = DateAdd("m", 1, Now().Date)
+        Dim days
+        ' dtpDateCollection.Value = DateAdd("m", 1, Now().Date)
+        ' days = dtpDateCollection.Value - dtpDateSaved.Value
+        ' txtDurationMaster.Text = days.days + 1 & " days"
+        'calculateDurationMaster()
         btnIOU.Enabled = False
-        InitializeDB()
+        cbAddDays.SelectedIndex = 3
         GetDefaultPrinterName()
         disabledrug2to10()
-
+        getUserSavedSettingsData()
         btnCheckICMySPR.Enabled = False
+        InitializeDB()
+    End Sub
+    Private Sub SetandSaveDBSettings()
+        Dim sender As Object
+        Dim e As EventArgs
+        'Server settings
+        Dim DBServerAddress As String = My.Settings.dbServerAddress
+        Dim DBServerAddressNew As String
+        DBServerAddressNew = txtDBServerAddress.Text
+        My.Settings.dbServerAddress = DBServerAddressNew
+        'My.Settings.Save()
+
+        Dim DBUserID As String = My.Settings.dbUserID
+        Dim DBUserIDNew As String
+        DBUserIDNew = txtDBUserID.Text
+        My.Settings.dbUserID = DBUserIDNew
+        'My.Settings.Save()
+
+        Dim DBPassword As String = My.Settings.dbPassword
+        Dim DBPasswordNew As String
+        DBPasswordNew = txtDBPassword.Text
+        My.Settings.dbPassword = DBPasswordNew
+        ' My.Settings.Save()
+
+        Dim DBName As String = My.Settings.dbName
+        Dim DBNameNew As String
+        DBNameNew = txtDBName.Text
+        My.Settings.dbName = DBNameNew
+
+        My.Settings.Save()
+
+        MsgBox("Saved Database Settings")
+        MsgBox("Attempting to Reload Application..")
+        Form1_Load(sender, e)
+    End Sub
+    Private Sub SetandSavePrinterSettings()
+        Dim ClinicName As String = My.Settings.ClinicName
+        Dim ClinicNameNew As String
+        ClinicNameNew = txtClinicName.Text
+        My.Settings.ClinicName = ClinicNameNew
+        My.Settings.Save()
+        MsgBox("Saved Printer Settings")
+    End Sub
+    Public Sub getUserSavedSettingsData()
+        txtDBServerAddress.Text = My.Settings.dbServerAddress
+        txtDBUserID.Text = My.Settings.dbUserID
+        txtDBPassword.Text = My.Settings.dbPassword
+        txtDBName.Text = My.Settings.dbName
+        txtClinicName.Text = My.Settings.ClinicName
+    End Sub
+    Public Sub calculateDurationMaster()
+        Dim days
+        'Initialize Duration at NEW Patient Tab
+
+        days = dtpDateCollection.Value - dtpDateSaved.Value
+        txtDurationMaster.Text = days.days + 1 & " days"
     End Sub
 
     Private Sub InitializeDB()
 
-        Server = txtServerName.Text
+        Server = txtDBServerAddress.Text
         UID = txtDBUserID.Text
         PWD = txtDBPassword.Text
         DBName = txtDBName.Text
@@ -146,16 +218,21 @@ Public Class Form1
         If cbDrug1.Text = "" AndAlso cbInsulin1.Text = "" Then
             MsgBox("Nothing to print")
             Return
-             
         End If
 
-        PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
-        PrintDoc.DefaultPageSettings.Landscape = False
+        If Drug1Selected Then
+            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
+            PrintDoc.DefaultPageSettings.Landscape = False
 
-        PPD.Document = PrintDoc
-        PPD.ShowDialog()
-        currentPage = 1
-        'PrintDoc.Print()
+            PPD.Document = PrintDoc
+            PPD.ShowDialog()
+            currentPage = 1
+            'PrintDoc.Print()
+        End If
+
+        If Insulin1Selected Then
+            printInsulin()
+        End If
     End Sub
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
         print()
@@ -163,7 +240,7 @@ Public Class Form1
 
     Private Sub PrintDoc_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDoc.PrintPage
         'Set Custom Names
-        Dim ClinicName As String = "FARMASI KLINIK KESIHATAN "
+        Dim ClinicName As String = txtClinicName.Text
         'Set Control Print Variable
         Dim stopprintflag As Boolean = False
         'Set Fonts
@@ -179,7 +256,7 @@ Public Class Form1
         centre.Alignment = StringAlignment.Center
         right.Alignment = StringAlignment.Far
 
-        'Draw Rectangles
+        'Draw Rectangles FOR Drug Prescriptions
         Dim Rect1 As New Rectangle(5, 5, 305, 185) '(margin, margin, width, height) 'Border
         Dim Rect2 As New Rectangle(5, 20, 305, 45)
         Dim Rect3 As New Rectangle(5, 45, 305, 20)
@@ -211,6 +288,9 @@ Public Class Form1
             e.Graphics.DrawRectangle(Pens.Black, Rect7)
             e.Graphics.DrawRectangle(Pens.White, Rect8) 'Remark margin
             e.Graphics.DrawRectangle(Pens.White, Rect9)
+
+            'e.Graphics.Clear(Color.White)
+
 
             e.Graphics.DrawString(ClinicName, f8, Brushes.Black, Rect1, centre)
 
@@ -349,19 +429,204 @@ Public Class Form1
             End Select
             ' Increment the page counter
             currentPage += 1
+            ' e.Graphics.Clear(Color.White) 'Clear the print page
+
+
+
+
+
 
             If currentPage <= 10 And stopprintflag = False Then
                 ' Set to true to continue printing
                 e.HasMorePages = True
             Else
+
+                ' Set to false to stop printing
+                e.HasMorePages = False
+                Return
+            End If
+
+
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.OkCancel, "Print Error")
+
+        End Try
+
+
+    End Sub
+    Private Sub PrintDocInsulin_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDocInsulin.PrintPage
+        Try
+
+
+            If Insulin1Selected = False Then
+                Return
+            End If
+            If Insulin2Selected Then
+                currentPageInsulin += 1
+            End If
+
+            'Initialize printing parameters
+            'Set Custom Names
+            Dim ClinicName As String = txtClinicName.Text
+            'Set Control Print Variable
+            Dim stopprintflag As Boolean = False
+            If Insulin2Selected = False Then
+                stopprintflag = True
+            End If
+            'Set Fonts
+            Dim f8 As New Font("Arial", 8, FontStyle.Italic)
+            Dim f8a As New Font("Arial", 8, FontStyle.Bold)
+            Dim f8b As New Font("Arial", 10, FontStyle.Bold)
+            'Set Alignments
+            Dim left As New StringFormat
+            Dim centre As New StringFormat
+            Dim right As New StringFormat
+
+            left.Alignment = StringAlignment.Near
+            centre.Alignment = StringAlignment.Center
+            right.Alignment = StringAlignment.Far
+            Dim Rect1a As New Rectangle(5, 5, 305, 185) '(x location, y location, width, height) 'Border
+            Dim Rect2a As New Rectangle(5, 20, 305, 45)
+
+            Dim Rect3a As New Rectangle(5, 45, 305, 20)
+            Dim Rect4a As New Rectangle(6, 70, 300, 25)
+
+            Dim Rect5a As New Rectangle(5, 100, 305, 46) 'Cara 
+            Dim Rect6a As New Rectangle(6, 104, 300, 40) 'Cara margin
+
+            Dim Rect7a As New Rectangle(5, 146, 305, 25)
+            Dim Rect8a As New Rectangle(6, 151, 300, 18) 'Remark margin
+
+
+            Dim Rect9a As New Rectangle(180, 175, 100, 13) 'Jumlah
+
+            Dim combinedwords As String
+            Dim comamorning As String = " "
+            Dim comanoon As String = " "
+            Dim comaafternoon As String = " "
+            Dim unitpagi As String = " unit pagi"
+            Dim unittghari As String = " unit tengahari"
+            Dim unitpetang As String = " unit petang"
+            Dim unitmalam As String = " unit malam"
+
+            Dim In1MorDose = txtIn1MorDose.Text
+            Dim In1NoonDose = txtIn1NoonDose.Text
+            Dim In1AfterNoonDose = txtIn1AfterNoonDose.Text
+            Dim In1NightDose = txtIn1NightDose.Text
+
+            If In1MorDose <> "" Then
+                If In1NoonDose <> "" Then
+                    comamorning = ", "
+                End If
+                If In1AfterNoonDose <> "" Then
+                    comamorning = ", "
+                End If
+                If In1NightDose <> "" Then
+                    comamorning = ", "
+                End If
+
+            End If
+            If In1NoonDose <> "" Then
+                If In1AfterNoonDose <> "" Then
+                    comanoon = ", " & vbNewLine
+                End If
+                If In1NightDose <> "" Then
+                    comanoon = ", " & vbNewLine
+                End If
+            End If
+            If In1AfterNoonDose <> "" Then
+                If In1NightDose <> "" Then
+                    comaafternoon = ", "
+                End If
+            End If
+            unitpagi = unitpagi & comamorning
+            unittghari = unittghari & comanoon
+            unitpetang = unitpetang & comaafternoon
+
+            combinedwords = "Suntik " & In1MorDose & unitpagi & In1NoonDose & unittghari & In1AfterNoonDose & unitpetang & In1NightDose & unitmalam
+
+            If In1MorDose = "" Then
+                unitpagi = Nothing
+                In1MorDose = Nothing
+                combinedwords = "Suntik " & In1NoonDose & unittghari & In1AfterNoonDose & unitpetang & In1NightDose & unitmalam
+            End If
+            If In1NoonDose = "" Then
+                unittghari = Nothing
+                In1NoonDose = Nothing
+                combinedwords = "Suntik " & In1MorDose & unitpagi & In1AfterNoonDose & unitpetang & In1NightDose & unitmalam
+            End If
+            If In1AfterNoonDose = "" Then
+                unitpetang = Nothing
+                In1AfterNoonDose = Nothing
+                combinedwords = "Suntik " & In1MorDose & unitpagi & In1NoonDose & unittghari & In1NightDose & unitmalam
+            End If
+            If In1NightDose = "" Then
+                unitmalam = Nothing
+                In1NightDose = Nothing
+                combinedwords = "Suntik " & In1MorDose & unitpagi & In1NoonDose & unittghari & In1AfterNoonDose & unitpetang
+            End If
+
+
+
+
+            e.Graphics.DrawRectangle(Pens.Black, Rect1a)
+            e.Graphics.DrawRectangle(Pens.Black, Rect2a)
+            e.Graphics.DrawRectangle(Pens.Black, Rect3a) 'Date
+            e.Graphics.DrawRectangle(Pens.White, Rect4a) 'insulin name margin
+            e.Graphics.DrawRectangle(Pens.Black, Rect5a) 'Cara 
+            e.Graphics.DrawRectangle(Pens.White, Rect6a) 'Cara margin
+            e.Graphics.DrawRectangle(Pens.Black, Rect7a) 'Remark
+            e.Graphics.DrawRectangle(Pens.White, Rect8a) 'Remark margin
+            e.Graphics.DrawRectangle(Pens.White, Rect9a)
+
+            'e.Graphics.Clear(Color.White)
+
+
+            e.Graphics.DrawString(ClinicName, f8, Brushes.Black, Rect1a, centre)
+
+            e.Graphics.DrawString("NAMA : " & txtPatientName.Text, f8a, Brushes.Black, Rect2a, left)
+            e.Graphics.DrawString("TARIKH : " & dtpDateSaved.Value.ToString("dd MMMM yyyy"), f8a, Brushes.Black, Rect3a, left)
+
+            Select Case currentPageInsulin
+                Case 1
+                    e.Graphics.DrawString(cbInsulin1.Text, f8a, Brushes.Black, Rect4a, centre)
+                    e.Graphics.DrawString(combinedwords, f8b, Brushes.Black, Rect6a, centre)
+                    e.Graphics.DrawString(RemarkIn1, f8a, Brushes.Black, Rect8a, centre)
+                    e.Graphics.DrawString("Jumlah Katrij: " & txtIn1CartQTY.Text, f8a, Brushes.Black, Rect9a, left)
+               ' e.Graphics.DrawLine(Pens.Black, 5, 5, 305, 305)
+                'e.Graphics.DrawString("Ambil ", f8a, Brushes.Black, 200, 200, left)
+                Case 2
+
+            End Select
+
+
+
+
+            currentPageInsulin += 1
+            'Checking for more pages
+            If currentPageInsulin <= 2 And stopprintflag = False Then
+                ' Set to true to continue printing
+                e.HasMorePages = True
+            Else
+
                 ' Set to false to stop printing
                 e.HasMorePages = False
                 Return
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.OkCancel, "Print Error")
 
         End Try
+    End Sub
+    Public Sub printInsulin()
+
+        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
+        PrintDocInsulin.DefaultPageSettings.Landscape = False
+
+        PPD.Document = PrintDocInsulin
+        PPD.ShowDialog()
+        currentPageInsulin = 1
+        'PrintDoc.Print()
 
 
     End Sub
@@ -386,18 +651,21 @@ Public Class Form1
 
         Try
             'Patient Name validation
-            If stPatientName = "" Then
-                MsgBox("Error. Name cannot be empty")
-                Return
+            If chboxNoICNumber.Checked = False Then
+                If stPatientName = "" Then
+                    MsgBox("Error. Name cannot be empty")
+                    Return
+                End If
+                'Patient IC Validation
+                If stIC.Length < 14 Then
+                    MsgBox("Error. IC No. must be 12 digits")
+                    Return
+                ElseIf Regex.IsMatch(stIC, ICRegexPattern) = False Then
+                    MsgBox("Error. IC No. Regex Formatting is Invalid. Please check and try again")
+                    Return
+                End If
             End If
-            'Patient IC Validation
-            If stIC.Length < 14 Then
-                MsgBox("Error. IC No. must be 12 digits")
-                Return
-            ElseIf Regex.IsMatch(stIC, ICRegexPattern) = False Then
-                MsgBox("Error. IC No. Regex Formatting is Invalid. Please check and try again")
-                Return
-            End If
+
             'Patient Drug Prescription Validation
             If cbDrug1.SelectedIndex >= 0 Then
                 If txtDoseD1.Text = "" Or txtFreqD1.Text = "" Or txtDurationD1.Text = "" Or txtQTYD1.Text = "" Or CDbl(txtQTYD1.Text) = 0 Then
@@ -485,7 +753,9 @@ Public Class Form1
             `Drug7Name`,`Drug7Strength`,`Drug7Unit`,`Drug7Dose`,`Drug7Freq`,`Drug7Duration`,`Drug7TotalQTY`,
             `Drug8Name`,`Drug8Strength`,`Drug8Unit`,`Drug8Dose`,`Drug8Freq`,`Drug8Duration`,`Drug8TotalQTY`,
             `Drug9Name`,`Drug9Strength`,`Drug9Unit`,`Drug9Dose`,`Drug9Freq`,`Drug9Duration`,`Drug9TotalQTY`,
-            `Drug10Name`,`Drug10Strength`,`Drug10Unit`,`Drug10Dose`,`Drug10Freq`,`Drug10Duration`,`Drug10TotalQTY`)
+            `Drug10Name`,`Drug10Strength`,`Drug10Unit`,`Drug10Dose`,`Drug10Freq`,`Drug10Duration`,`Drug10TotalQTY`,
+            `Insulin1Name`,`Insulin1Strength`,`Insulin1Unit`,`Insulin1MorDose`,`Insulin1NoonDose`,`Insulin1AfternoonDose`,`Insulin1NightDose`,`Insulin1Freq`,`Insulin1Duration`,`Insulin1TotalDose`,`Insulin1POM`,`Insulin1CartQTY`,
+            `Insulin2Name`,`Insulin2Strength`,`Insulin2Unit`,`Insulin2MorDose`,`Insulin2NoonDose`,`Insulin2AfternoonDose`,`Insulin2NightDose`,`Insulin2Freq`,`Insulin2Duration`,`Insulin2TotalDose`,`Insulin2POM`,`Insulin2CartQTY`)
                                          VALUES 
             (@Name,@ICNo,@Date,@DateCollection,@DateSeeDoctor,
             @Drug1Name,@Drug1Strength,@Drug1Unit,@Drug1Dose,@Drug1Freq,@Drug1Duration,@Drug1TotalQTY,
@@ -497,7 +767,10 @@ Public Class Form1
             @Drug7Name,@Drug7Strength,@Drug7Unit,@Drug7Dose,@Drug7Freq,@Drug7Duration,@Drug7TotalQTY,
             @Drug8Name,@Drug8Strength,@Drug8Unit,@Drug8Dose,@Drug8Freq,@Drug8Duration,@Drug8TotalQTY,
             @Drug9Name,@Drug9Strength,@Drug9Unit,@Drug9Dose,@Drug9Freq,@Drug9Duration,@Drug9TotalQTY,
-            @Drug10Name,@Drug10Strength,@Drug10Unit,@Drug10Dose,@Drug10Freq,@Drug10Duration,@Drug10TotalQTY)", conn)
+            @Drug10Name,@Drug10Strength,@Drug10Unit,@Drug10Dose,@Drug10Freq,@Drug10Duration,@Drug10TotalQTY,
+            @Insulin1Name,@Insulin1Strength,@Insulin1Unit,@Insulin1MorDose,@Insulin1NoonDose,@Insulin1AfternoonDose,@Insulin1NightDose,@Insulin1Freq,@Insulin1Duration,@Insulin1TotalDose,@Insulin1POM,@Insulin1CartQTY,
+            @Insulin2Name,@Insulin2Strength,@Insulin2Unit,@Insulin2MorDose,@Insulin2NoonDose,@Insulin2AfternoonDose,@Insulin2NightDose,@Insulin2Freq,@Insulin2Duration,@Insulin2TotalDose,@Insulin2POM,@Insulin2CartQTY)
+            ", conn)
             'Patient Info
             cmd.Parameters.Clear()
             cmd.Parameters.AddWithValue("@Name", txtPatientName.Text)
@@ -505,8 +778,8 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Date", dtpDateSaved.Text)
             cmd.Parameters.AddWithValue("@DateCollection", dtpDateCollection.Text)
             cmd.Parameters.AddWithValue("@DateSeeDoctor", dtpDateSeeDoctor.Text)
-            'Drug 1
 
+            'Drug 1
             cmd.Parameters.AddWithValue("@Drug1Name", cbDrug1.Text)
             cmd.Parameters.AddWithValue("@Drug1Strength", lblStrD1.Text)
             cmd.Parameters.AddWithValue("@Drug1Unit", lblUnitD1.Text)
@@ -516,7 +789,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug1TotalQTY", txtQTYD1.Text)
 
             'Drug 2
-
             cmd.Parameters.AddWithValue("@Drug2Name", cbDrug2.Text)
             cmd.Parameters.AddWithValue("@Drug2Strength", lblStrD2.Text)
             cmd.Parameters.AddWithValue("@Drug2Unit", lblUnitD2.Text)
@@ -526,7 +798,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug2TotalQTY", txtQTYD2.Text)
 
             'Drug 3
-
             cmd.Parameters.AddWithValue("@Drug3Name", cbDrug3.Text)
             cmd.Parameters.AddWithValue("@Drug3Strength", lblStrD3.Text)
             cmd.Parameters.AddWithValue("@Drug3Unit", lblUnitD3.Text)
@@ -536,7 +807,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug3TotalQTY", txtQTYD3.Text)
 
             'Drug 4
-
             cmd.Parameters.AddWithValue("@Drug4Name", cbDrug4.Text)
             cmd.Parameters.AddWithValue("@Drug4Strength", lblStrD4.Text)
             cmd.Parameters.AddWithValue("@Drug4Unit", lblUnitD4.Text)
@@ -546,7 +816,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug4TotalQTY", txtQTYD4.Text)
 
             'Drug 5
-
             cmd.Parameters.AddWithValue("@Drug5Name", cbDrug5.Text)
             cmd.Parameters.AddWithValue("@Drug5Strength", lblStrD5.Text)
             cmd.Parameters.AddWithValue("@Drug5Unit", lblUnitD5.Text)
@@ -556,7 +825,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug5TotalQTY", txtQTYD5.Text)
 
             'Drug 6
-
             cmd.Parameters.AddWithValue("@Drug6Name", cbDrug6.Text)
             cmd.Parameters.AddWithValue("@Drug6Strength", lblStrD6.Text)
             cmd.Parameters.AddWithValue("@Drug6Unit", lblUnitD6.Text)
@@ -566,7 +834,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug6TotalQTY", txtQTYD6.Text)
 
             'Drug 7
-
             cmd.Parameters.AddWithValue("@Drug7Name", cbDrug7.Text)
             cmd.Parameters.AddWithValue("@Drug7Strength", lblStrD7.Text)
             cmd.Parameters.AddWithValue("@Drug7Unit", lblUnitD7.Text)
@@ -576,7 +843,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug7TotalQTY", txtQTYD7.Text)
 
             'Drug 8
-
             cmd.Parameters.AddWithValue("@Drug8Name", cbDrug8.Text)
             cmd.Parameters.AddWithValue("@Drug8Strength", lblStrD8.Text)
             cmd.Parameters.AddWithValue("@Drug8Unit", lblUnitD8.Text)
@@ -586,7 +852,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug8TotalQTY", txtQTYD8.Text)
 
             'Drug 9
-
             cmd.Parameters.AddWithValue("@Drug9Name", cbDrug9.Text)
             cmd.Parameters.AddWithValue("@Drug9Strength", lblStrD9.Text)
             cmd.Parameters.AddWithValue("@Drug9Unit", lblUnitD9.Text)
@@ -596,7 +861,6 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug9TotalQTY", txtQTYD9.Text)
 
             'Drug 10
-
             cmd.Parameters.AddWithValue("@Drug10Name", cbDrug10.Text)
             cmd.Parameters.AddWithValue("@Drug10Strength", lblStrD10.Text)
             cmd.Parameters.AddWithValue("@Drug10Unit", lblUnitD10.Text)
@@ -605,8 +869,33 @@ Public Class Form1
             cmd.Parameters.AddWithValue("@Drug10Duration", txtDurationD10.Text)
             cmd.Parameters.AddWithValue("@Drug10TotalQTY", txtQTYD10.Text)
 
+            'Insulin 1
+            cmd.Parameters.AddWithValue("@Insulin1Name", cbInsulin1.Text)
+            cmd.Parameters.AddWithValue("@Insulin1Strength", lblStrInsulin1.Text)
+            cmd.Parameters.AddWithValue("@Insulin1Unit", lblUnitInsulin1.Text)
+            cmd.Parameters.AddWithValue("@Insulin1MorDose", txtIn1MorDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin1NoonDose", txtIn1NoonDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin1AfternoonDose", txtIn1AfterNoonDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin1NightDose", txtIn1NightDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin1Freq", txtIn1Freq.Text)
+            cmd.Parameters.AddWithValue("@Insulin1Duration", txtIn1Duration.Text)
+            cmd.Parameters.AddWithValue("@Insulin1TotalDose", txtIn1TotalDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin1POM", txtIn1POM.Text)
+            cmd.Parameters.AddWithValue("@Insulin1CartQTY", txtIn1CartQTY.Text)
 
-
+            'Insulin 2
+            cmd.Parameters.AddWithValue("@Insulin2Name", cbInsulin2.Text)
+            cmd.Parameters.AddWithValue("@Insulin2Strength", lblStrInsulin2.Text)
+            cmd.Parameters.AddWithValue("@Insulin2Unit", lblUnitInsulin2.Text)
+            cmd.Parameters.AddWithValue("@Insulin2MorDose", txtIn2MorDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin2NoonDose", txtIn2NoonDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin2AfternoonDose", txtIn2AfterNoonDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin2NightDose", txtIn2NightDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin2Freq", txtIn2Freq.Text)
+            cmd.Parameters.AddWithValue("@Insulin2Duration", txtIn2Duration.Text)
+            cmd.Parameters.AddWithValue("@Insulin2TotalDose", txtIn2TotalDose.Text)
+            cmd.Parameters.AddWithValue("@Insulin2POM", txtIn2POM.Text)
+            cmd.Parameters.AddWithValue("@Insulin2CartQTY", txtIn2CartQTY.Text)
 
             Dim i = cmd.ExecuteNonQuery
             If i > 0 Then
@@ -614,17 +903,15 @@ Public Class Form1
 
                 MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
                 stlbMainStatus.Text = "Saved Successfully for " & stPatientName & ", IC No: " & stIC
+                loadLogDGV()
                 loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
-
-
-
 
             Else
                 MsgBox("Save Failed.")
             End If
         Catch ex As Exception
             conn.Close()
-
+            MsgBox(ex.Message)
             If ex.Message.Contains("Duplicate") Then
                 Select Case MsgBox("Existing Patient. Do you want to overwrite with current data?", MsgBoxStyle.YesNo, "Confirmation")
                     Case MsgBoxResult.Yes
@@ -640,7 +927,6 @@ Public Class Form1
 
                                 MsgBox("Old Data saved to History for " & stPatientName & ", IC No.: " & stIC)
                                 stlbMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
-
 
                             Else
                                 MsgBox("Save Failed.")
@@ -662,7 +948,9 @@ Public Class Form1
                             `Drug7Name`=@Drug7Name,`Drug7Strength`=@Drug7Strength,`Drug7Unit`=@Drug7Unit,`Drug7Dose`=@Drug7Dose,`Drug7Freq`=@Drug7Freq,`Drug7Duration`=@Drug7Duration,`Drug7TotalQTY`=@Drug7TotalQTY,
                             `Drug8Name`=@Drug8Name,`Drug8Strength`=@Drug8Strength,`Drug8Unit`=@Drug8Unit,`Drug8Dose`=@Drug8Dose,`Drug8Freq`=@Drug8Freq,`Drug8Duration`=@Drug8Duration,`Drug8TotalQTY`=@Drug8TotalQTY,
                             `Drug9Name`=@Drug9Name,`Drug9Strength`=@Drug9Strength,`Drug9Unit`=@Drug9Unit,`Drug9Dose`=@Drug9Dose,`Drug9Freq`=@Drug9Freq,`Drug9Duration`=@Drug9Duration,`Drug9TotalQTY`=@Drug9TotalQTY,
-                            `Drug10Name`=@Drug10Name,`Drug10Strength`=@Drug10Strength,`Drug10Unit`=@Drug10Unit,`Drug10Dose`=@Drug10Dose,`Drug10Freq`=@Drug10Freq,`Drug10Duration`=@Drug10Duration,`Drug10TotalQTY`=@Drug10TotalQTY WHERE `ICNo`=@ICNo", conn)
+                            `Drug10Name`=@Drug10Name,`Drug10Strength`=@Drug10Strength,`Drug10Unit`=@Drug10Unit,`Drug10Dose`=@Drug10Dose,`Drug10Freq`=@Drug10Freq,`Drug10Duration`=@Drug10Duration,`Drug10TotalQTY`=@Drug10TotalQTY,
+                            `Insulin1Name`=@Insulin1Name,`Insulin1Strength`=@Insulin1Strength,`Insulin1Unit`=@Insulin1Unit,`Insulin1MorDose`=@Insulin1MorDose,`Insulin1NoonDose`=@Insulin1NoonDose,`Insulin1AfternoonDose`=@Insulin1AfternoonDose,`Insulin1NightDose`=@Insulin1NightDose,`Insulin1Freq`=@Insulin1Freq,`Insulin1Duration`=@Insulin1Duration,`Insulin1TotalDose`=@Insulin1TotalDose,`Insulin1POM`=@Insulin1POM,`Insulin1CartQTY`=@Insulin1CartQTY,
+                            `Insulin2Name`=@Insulin2Name,`Insulin2Strength`=@Insulin2Strength,`Insulin2Unit`=@Insulin2Unit,`Insulin2MorDose`=@Insulin2MorDose,`Insulin2NoonDose`=@Insulin2NoonDose,`Insulin2AfternoonDose`=@Insulin2AfternoonDose,`Insulin2NightDose`=@Insulin2NightDose,`Insulin2Freq`=@Insulin2Freq,`Insulin2Duration`=@Insulin2Duration,`Insulin2TotalDose`=@Insulin2TotalDose,`Insulin2POM`=@Insulin2POM,`Insulin2CartQTY`=@Insulin2CartQTY WHERE `ICNo`=@ICNo", conn)
                             cmd2.Parameters.Clear()
                             cmd2.Parameters.AddWithValue("@Name", txtPatientName.Text)
                             cmd2.Parameters.AddWithValue("@ICNo", txtICNo.Text)
@@ -678,7 +966,6 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug1Duration", txtDurationD1.Text)
                             cmd2.Parameters.AddWithValue("@Drug1TotalQTY", txtQTYD1.Text)
                             'Drug 2
-
                             cmd2.Parameters.AddWithValue("@Drug2Name", cbDrug2.Text)
                             cmd2.Parameters.AddWithValue("@Drug2Strength", lblStrD2.Text)
                             cmd2.Parameters.AddWithValue("@Drug2Unit", lblUnitD2.Text)
@@ -686,9 +973,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug2Freq", txtFreqD2.Text)
                             cmd2.Parameters.AddWithValue("@Drug2Duration", txtDurationD2.Text)
                             cmd2.Parameters.AddWithValue("@Drug2TotalQTY", txtQTYD2.Text)
-
                             'Drug 3
-
                             cmd2.Parameters.AddWithValue("@Drug3Name", cbDrug3.Text)
                             cmd2.Parameters.AddWithValue("@Drug3Strength", lblStrD3.Text)
                             cmd2.Parameters.AddWithValue("@Drug3Unit", lblUnitD3.Text)
@@ -696,9 +981,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug3Freq", txtFreqD3.Text)
                             cmd2.Parameters.AddWithValue("@Drug3Duration", txtDurationD3.Text)
                             cmd2.Parameters.AddWithValue("@Drug3TotalQTY", txtQTYD3.Text)
-
                             'Drug 4
-
                             cmd2.Parameters.AddWithValue("@Drug4Name", cbDrug4.Text)
                             cmd2.Parameters.AddWithValue("@Drug4Strength", lblStrD4.Text)
                             cmd2.Parameters.AddWithValue("@Drug4Unit", lblUnitD4.Text)
@@ -706,9 +989,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug4Freq", txtFreqD4.Text)
                             cmd2.Parameters.AddWithValue("@Drug4Duration", txtDurationD4.Text)
                             cmd2.Parameters.AddWithValue("@Drug4TotalQTY", txtQTYD4.Text)
-
                             'Drug 5
-
                             cmd2.Parameters.AddWithValue("@Drug5Name", cbDrug5.Text)
                             cmd2.Parameters.AddWithValue("@Drug5Strength", lblStrD5.Text)
                             cmd2.Parameters.AddWithValue("@Drug5Unit", lblUnitD5.Text)
@@ -716,9 +997,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug5Freq", txtFreqD5.Text)
                             cmd2.Parameters.AddWithValue("@Drug5Duration", txtDurationD5.Text)
                             cmd2.Parameters.AddWithValue("@Drug5TotalQTY", txtQTYD5.Text)
-
                             'Drug 6
-
                             cmd2.Parameters.AddWithValue("@Drug6Name", cbDrug6.Text)
                             cmd2.Parameters.AddWithValue("@Drug6Strength", lblStrD6.Text)
                             cmd2.Parameters.AddWithValue("@Drug6Unit", lblUnitD6.Text)
@@ -726,9 +1005,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug6Freq", txtFreqD6.Text)
                             cmd2.Parameters.AddWithValue("@Drug6Duration", txtDurationD6.Text)
                             cmd2.Parameters.AddWithValue("@Drug6TotalQTY", txtQTYD6.Text)
-
                             'Drug 7
-
                             cmd2.Parameters.AddWithValue("@Drug7Name", cbDrug7.Text)
                             cmd2.Parameters.AddWithValue("@Drug7Strength", lblStrD7.Text)
                             cmd2.Parameters.AddWithValue("@Drug7Unit", lblUnitD7.Text)
@@ -736,9 +1013,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug7Freq", txtFreqD7.Text)
                             cmd2.Parameters.AddWithValue("@Drug7Duration", txtDurationD7.Text)
                             cmd2.Parameters.AddWithValue("@Drug7TotalQTY", txtQTYD7.Text)
-
                             'Drug 8
-
                             cmd2.Parameters.AddWithValue("@Drug8Name", cbDrug8.Text)
                             cmd2.Parameters.AddWithValue("@Drug8Strength", lblStrD8.Text)
                             cmd2.Parameters.AddWithValue("@Drug8Unit", lblUnitD8.Text)
@@ -746,9 +1021,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug8Freq", txtFreqD8.Text)
                             cmd2.Parameters.AddWithValue("@Drug8Duration", txtDurationD8.Text)
                             cmd2.Parameters.AddWithValue("@Drug8TotalQTY", txtQTYD8.Text)
-
                             'Drug 9
-
                             cmd2.Parameters.AddWithValue("@Drug9Name", cbDrug9.Text)
                             cmd2.Parameters.AddWithValue("@Drug9Strength", lblStrD9.Text)
                             cmd2.Parameters.AddWithValue("@Drug9Unit", lblUnitD9.Text)
@@ -756,9 +1029,7 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug9Freq", txtFreqD9.Text)
                             cmd2.Parameters.AddWithValue("@Drug9Duration", txtDurationD9.Text)
                             cmd2.Parameters.AddWithValue("@Drug9TotalQTY", txtQTYD9.Text)
-
                             'Drug 10
-
                             cmd2.Parameters.AddWithValue("@Drug10Name", cbDrug10.Text)
                             cmd2.Parameters.AddWithValue("@Drug10Strength", lblStrD10.Text)
                             cmd2.Parameters.AddWithValue("@Drug10Unit", lblUnitD10.Text)
@@ -766,6 +1037,32 @@ Public Class Form1
                             cmd2.Parameters.AddWithValue("@Drug10Freq", txtFreqD10.Text)
                             cmd2.Parameters.AddWithValue("@Drug10Duration", txtDurationD10.Text)
                             cmd2.Parameters.AddWithValue("@Drug10TotalQTY", txtQTYD10.Text)
+                            'Insulin 1
+                            cmd2.Parameters.AddWithValue("@Insulin1Name", cbInsulin1.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1Strength", lblStrInsulin1.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1Unit", lblUnitInsulin1.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1MorDose", txtIn1MorDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1NoonDose", txtIn1NoonDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1AfternoonDose", txtIn1AfterNoonDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1NightDose", txtIn1NightDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1Freq", txtIn1Freq.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1Duration", txtIn1Duration.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1TotalDose", txtIn1TotalDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1POM", txtIn1POM.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin1CartQTY", txtIn1CartQTY.Text)
+                            'Insulin 2
+                            cmd2.Parameters.AddWithValue("@Insulin2Name", cbInsulin2.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2Strength", lblStrInsulin2.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2Unit", lblUnitInsulin2.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2MorDose", txtIn2MorDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2NoonDose", txtIn2NoonDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2AfternoonDose", txtIn2AfterNoonDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2NightDose", txtIn2NightDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2Freq", txtIn2Freq.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2Duration", txtIn2Duration.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2TotalDose", txtIn2TotalDose.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2POM", txtIn2POM.Text)
+                            cmd2.Parameters.AddWithValue("@Insulin2CartQTY", txtIn2CartQTY.Text)
 
                             conn.Open()
                             Dim i = cmd2.ExecuteNonQuery
@@ -774,6 +1071,8 @@ Public Class Form1
                                 MsgBox("Successfully Updated Data.")
                                 MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
                                 stlbMainStatus.Text = "Overwrite Successfully for " & stPatientName & ", IC No: " & stIC
+                                loadLogDGV()
+
 
                             End If
 
@@ -1044,7 +1343,7 @@ Public Class Form1
             While dr.Read()
                 If dr.Item("ICNo") = txtICNo.Text Then
                     btnIOU.Enabled = True
-
+                    lblExistingPatient.Text = "Existing Patient Found!"
                 End If
             End While
             conn.Close()
@@ -1175,9 +1474,7 @@ Public Class Form1
 
     End Sub
     Public Sub populatevaluesInsulin1()
-
         Try
-
             If cbInsulin1.Text Is "" Then
                 lblStrInsulin1.Text = ""
                 Return
@@ -1191,37 +1488,56 @@ Public Class Form1
                 lblStrInsulin1.Text = dr.Item("Strength")
                 lblUnitInsulin1.Text = dr.Item("Unit")
 
-                RemarkD1 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD1 = "Makan "
-                    ConsumeUnitD1 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD1 = "Suntik "
-                    ConsumeUnitD1 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD1 = "Minum "
-                    ConsumeUnitD1 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD1 = "Kumur dalam mulut "
-                    ConsumeUnitD1 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD1 = "Ambil "
-                    ConsumeUnitD1 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD1 = "Minum "
-                    ConsumeUnitD1 = " paket "
-                ElseIf dr.Item("DosageForm") = "Packet" Then
-                    ConsumeMethodD1 = "Minum "
-                    ConsumeUnitD1 = " paket "
+                RemarkIn1 = dr.Item("Remark")
+
+                If dr.Item("DosageForm") = "Fridge Item" Then
+                    ConsumeMethodIn1 = "Suntik "
+                    ConsumeUnitIn1 = " unit "
+
                 End If
             End While
             dr.Close()
 
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            lblStrInsulin1.Text = ""
+            lblUnitInsulin1.Text = ""
+
+        Finally
+            dr.Dispose()
+            conn.Close()
+        End Try
+
+    End Sub
+    Public Sub populatevaluesInsulin2()
+        Try
+            If cbInsulin2.Text Is "" Then
+                lblStrInsulin2.Text = ""
+                Return
+            End If
+
+            conn.Open()
+            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbInsulin2.Text & "'", conn)
+            dr = cmd.ExecuteReader
+            While dr.Read()
+
+                lblStrInsulin2.Text = dr.Item("Strength")
+                lblUnitInsulin2.Text = dr.Item("Unit")
+
+                RemarkIn2 = dr.Item("Remark")
+
+                If dr.Item("DosageForm") = "Fridge Item" Then
+                    ConsumeMethodIn2 = "Suntik "
+                    ConsumeUnitIn2 = " unit "
+
+                End If
+            End While
+            dr.Close()
 
         Catch ex As Exception
             MsgBox(ex.Message)
-            lblStrD1.Text = ""
-            lblUnitD1.Text = ""
+            lblStrInsulin2.Text = ""
+            lblUnitInsulin2.Text = ""
 
         Finally
             dr.Dispose()
@@ -1883,6 +2199,95 @@ Public Class Form1
             txtQTYD10.Text = ""
         End Try
     End Sub
+    Public Sub calculatedrugIn1()
+        Dim In1TotalDose As Double
+        Dim In1CartQTY As Double
+        Dim In1MorDose As Double
+        Dim In1NoonDose As Double
+        Dim In1AfterNoonDose As Double
+        Dim In1NightDose As Double
+        If txtIn1MorDose.Text = "" Then
+            In1MorDose = -2
+        Else
+            In1MorDose = txtIn1MorDose.Text
+        End If
+        If txtIn1NoonDose.Text = "" Then
+            In1NoonDose = -2
+        Else
+            In1NoonDose = txtIn1NoonDose.Text
+        End If
+        If txtIn1AfterNoonDose.Text = "" Then
+            In1AfterNoonDose = -2
+        Else
+            In1AfterNoonDose = txtIn1AfterNoonDose.Text
+        End If
+        If txtIn1NightDose.Text = "" Then
+            In1NightDose = -2
+        Else
+            In1NightDose = txtIn1NightDose.Text
+        End If
+
+
+        Try
+
+            In1TotalDose = ((In1MorDose + 2) * CDbl(txtIn1Duration.Text)) + ((In1NoonDose + 2) * CDbl(txtIn1Duration.Text)) + ((In1AfterNoonDose + 2) * CDbl(txtIn1Duration.Text)) + ((In1NightDose + 2) * CDbl(txtIn1Duration.Text))
+            txtIn1TotalDose.Text = In1TotalDose
+            In1CartQTY = In1TotalDose / CDbl(lblStrInsulin1.Text)
+            If In1TotalDose = 0 Then
+                txtIn1CartQTY.Clear()
+                txtIn1TotalDose.Clear()
+            Else txtIn1CartQTY.Text = Math.Ceiling(In1CartQTY)
+            End If
+
+        Catch ex As Exception
+            'If In1TotalDose <= 0 Or ToString(In1TotalDose) = "" Then
+            txtIn1CartQTY.Clear()
+            'End If
+
+        End Try
+    End Sub
+    Public Sub calculatedrugIn2()
+        Dim In2TotalDose As Double
+        Dim In2CartQTY As Double
+        Dim In2MorDose As Double
+        Dim In2NoonDose As Double
+        Dim In2AfterNoonDose As Double
+        Dim In2NightDose As Double
+        If txtIn2MorDose.Text = "" Then
+            In2MorDose = -2
+        Else
+            In2MorDose = txtIn2MorDose.Text
+        End If
+        If txtIn2NoonDose.Text = "" Then
+            In2NoonDose = -2
+        Else
+            In2NoonDose = txtIn2NoonDose.Text
+        End If
+        If txtIn2AfterNoonDose.Text = "" Then
+            In2AfterNoonDose = -2
+        Else
+            In2AfterNoonDose = txtIn2AfterNoonDose.Text
+        End If
+        If txtIn2NightDose.Text = "" Then
+            In2NightDose = -2
+        Else
+            In2NightDose = txtIn2NightDose.Text
+        End If
+        Try
+            In2TotalDose = ((In2MorDose + 2) * CDbl(txtIn2Duration.Text)) + ((In2NoonDose + 2) * CDbl(txtIn2Duration.Text)) + ((In2AfterNoonDose + 2) * CDbl(txtIn2Duration.Text)) + ((In2NightDose + 2) * CDbl(txtIn2Duration.Text))
+            txtIn2TotalDose.Text = In2TotalDose
+            In2CartQTY = In2TotalDose / CDbl(lblStrInsulin2.Text)
+            If In2TotalDose = 0 Then
+                txtIn2CartQTY.Clear()
+                txtIn2TotalDose.Clear()
+            Else txtIn2CartQTY.Text = Math.Ceiling(In2CartQTY)
+            End If
+
+
+        Catch ex As Exception
+            txtIn2CartQTY.Clear()
+        End Try
+    End Sub
     Public Sub calculateDurationD1()
         Try
             Dim DurationDays As TimeSpan 'Declare Variable named Duration with TimeSpan as the datatype
@@ -1986,10 +2391,31 @@ Public Class Form1
 
         End Try
     End Sub
+    Public Sub calculateDurationIn1()
+        Try
+            Dim DurationDays As TimeSpan 'Declare Variable named Duration with TimeSpan as the datatype
+            DurationDays = dtpDateCollection.Value - dtpDateSaved.Value 'Perform the calculation of two dates
+            txtDurationMaster.Text = DurationDays.Days + 1 & " days"
+            txtIn1Duration.Text = DurationDays.Days + 1
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Public Sub calculateDurationIn2()
+        Try
+            Dim DurationDays As TimeSpan 'Declare Variable named Duration with TimeSpan as the datatype
+            DurationDays = dtpDateCollection.Value - dtpDateSaved.Value 'Perform the calculation of two dates
+            txtDurationMaster.Text = DurationDays.Days + 1 & " days"
+            txtIn2Duration.Text = DurationDays.Days + 1
+        Catch ex As Exception
+
+        End Try
+    End Sub
 
 
 
     Private Sub dtpDateCollection_ValueChanged(sender As Object, e As EventArgs) Handles dtpDateCollection.ValueChanged
+        calculateDurationMaster()
         If Drug1Selected Then
             calculateDurationD1()
         End If
@@ -2020,6 +2446,12 @@ Public Class Form1
         If Drug10Selected Then
             calculateDurationD10()
         End If
+        If Insulin1Selected Then
+            calculateDurationIn1()
+        End If
+        If Insulin2Selected Then
+            calculateDurationIn2()
+        End If
 
     End Sub
 
@@ -2028,6 +2460,7 @@ Public Class Form1
         'Drug 1
         lblStrD1.Text = ""
         lblUnitD1.Text = ""
+        lblPreCatagoryD1.Text = ""
         txtDoseD1.Clear()
         txtFreqD1.Clear()
         txtDurationD1.Clear()
@@ -2040,6 +2473,7 @@ Public Class Form1
         'Drug 2
         lblStrD2.Text = ""
         lblUnitD2.Text = ""
+        lblPreCatagoryD2.Text = ""
         txtDoseD2.Clear()
         txtFreqD2.Clear()
         txtDurationD2.Clear()
@@ -2052,6 +2486,7 @@ Public Class Form1
         'Drug 3
         lblStrD3.Text = ""
         lblUnitD3.Text = ""
+        lblPreCatagoryD3.Text = ""
         txtDoseD3.Clear()
         txtFreqD3.Clear()
         txtDurationD3.Clear()
@@ -2064,6 +2499,7 @@ Public Class Form1
         'Drug 4
         lblStrD4.Text = ""
         lblUnitD4.Text = ""
+        lblPreCatagoryD4.Text = ""
         txtDoseD4.Clear()
         txtFreqD4.Clear()
         txtDurationD4.Clear()
@@ -2076,6 +2512,7 @@ Public Class Form1
         'Drug 5
         lblStrD5.Text = ""
         lblUnitD5.Text = ""
+        lblPreCatagoryD5.Text = ""
         txtDoseD5.Clear()
         txtFreqD5.Clear()
         txtDurationD5.Clear()
@@ -2088,6 +2525,7 @@ Public Class Form1
         'Drug 6
         lblStrD6.Text = ""
         lblUnitD6.Text = ""
+        lblPreCatagoryD6.Text = ""
         txtDoseD6.Clear()
         txtFreqD6.Clear()
         txtDurationD6.Clear()
@@ -2100,6 +2538,7 @@ Public Class Form1
         'Drug 7
         lblStrD7.Text = ""
         lblUnitD7.Text = ""
+        lblPreCatagoryD7.Text = ""
         txtDoseD7.Clear()
         txtFreqD7.Clear()
         txtDurationD7.Clear()
@@ -2112,6 +2551,7 @@ Public Class Form1
         'Drug 8
         lblStrD8.Text = ""
         lblUnitD8.Text = ""
+        lblPreCatagoryD8.Text = ""
         txtDoseD8.Clear()
         txtFreqD8.Clear()
         txtDurationD8.Clear()
@@ -2124,6 +2564,7 @@ Public Class Form1
         'Drug 9
         lblStrD9.Text = ""
         lblUnitD9.Text = ""
+        lblPreCatagoryD9.Text = ""
         txtDoseD9.Clear()
         txtFreqD9.Clear()
         txtDurationD9.Clear()
@@ -2136,11 +2577,38 @@ Public Class Form1
         'Drug 10
         lblStrD10.Text = ""
         lblUnitD10.Text = ""
+        lblPreCatagoryD10.Text = ""
         txtDoseD10.Clear()
         txtFreqD10.Clear()
         txtDurationD10.Clear()
         txtQTYD10.Clear()
         Drug10Selected = False
+    End Sub
+    Public Sub cleardruginputsIn1()
+        'Clear the drugs text boxes
+        'Insulin 1
+        lblStrInsulin1.Text = ""
+        lblUnitInsulin1.Text = ""
+        txtIn1MorDose.Clear()
+        txtIn1NoonDose.Clear()
+        txtIn1AfterNoonDose.Clear()
+        txtIn1NightDose.Clear()
+        txtIn1Duration.Clear()
+        txtIn1POM.Clear()
+        Insulin1Selected = False
+    End Sub
+    Public Sub cleardruginputsIn2()
+        'Clear the drugs text boxes
+        'Insulin 2
+        lblStrInsulin2.Text = ""
+        lblUnitInsulin2.Text = ""
+        txtIn2MorDose.Clear()
+        txtIn2NoonDose.Clear()
+        txtIn2AfterNoonDose.Clear()
+        txtIn2NightDose.Clear()
+        txtIn2Duration.Clear()
+        txtIn2POM.Clear()
+        Insulin2Selected = False
     End Sub
     'Disable Drug 2 to 10 input for control
     Public Sub disabledrug2to10()
@@ -2153,17 +2621,38 @@ Public Class Form1
         cbDrug8.Enabled = False
         cbDrug9.Enabled = False
         cbDrug10.Enabled = False
+        cbInsulin2.Enabled = False
 
+    End Sub
+    Public Sub clearSelectionIndex()
+        cbDrug1.SelectedIndex = -1
+        cbDrug2.SelectedIndex = -1
+        cbDrug3.SelectedIndex = -1
+        cbDrug4.SelectedIndex = -1
+        cbDrug5.SelectedIndex = -1
+        cbDrug6.SelectedIndex = -1
+        cbDrug7.SelectedIndex = -1
+        cbDrug8.SelectedIndex = -1
+        cbDrug9.SelectedIndex = -1
+        cbDrug10.SelectedIndex = -1
+        cbInsulin1.SelectedIndex = -1
+        cbInsulin2.SelectedIndex = -1
+    End Sub
+    Private Sub Form1_Shown(sender As Object, e As System.EventArgs) Handles Me.Shown
+        unhighlightallcb()
+        'MsgBox("Executed")
+        cbDrug1.SelectionLength = 0
     End Sub
     'Drug 1
     Private Sub cbDrug1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug1.SelectedIndexChanged
+        cbDrug1.SelectionLength = cbDrug1.Text.Length
+        unhighlightallcb()
         populatevaluesD1()
         calculatedrugD1()
-        lbDrugNumber1.Focus()
-        unhighlightallcb()
         calculateDurationD1()
         Drug1Selected = True
         cbDrug2.Enabled = True
+        txtDoseD1.Focus()
     End Sub
 
     Private Sub cbDrug1_TextChanged(sender As Object, e As EventArgs) Handles cbDrug1.TextChanged
@@ -2173,9 +2662,9 @@ Public Class Form1
     Private Sub cbDrug2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug2.SelectedIndexChanged
         populatevaluesD2()
         calculatedrugD2()
-        lbDrugNumber2.Focus()
         unhighlightallcb()
         calculateDurationD2()
+        txtDoseD2.Focus()
         Drug2Selected = True
         cbDrug3.Enabled = True
     End Sub
@@ -2187,9 +2676,9 @@ Public Class Form1
     Private Sub cbDrug3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug3.SelectedIndexChanged
         PopulatevaluesD3()
         calculatedrugD3()
-        lbDrugNumber3.Focus()
         unhighlightallcb()
         calculateDurationD3()
+        txtDoseD3.Focus()
         Drug3Selected = True
         cbDrug4.Enabled = True
     End Sub
@@ -2204,6 +2693,7 @@ Public Class Form1
         lbDrugNumber4.Focus()
         unhighlightallcb()
         calculateDurationD4()
+        txtDoseD4.Focus()
         Drug4Selected = True
         cbDrug5.Enabled = True
     End Sub
@@ -2215,9 +2705,9 @@ Public Class Form1
     Private Sub cbDrug5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug5.SelectedIndexChanged
         populatevaluesD5()
         calculatedrugD5()
-        lbDrugNumber5.Focus()
         unhighlightallcb()
         calculateDurationD5()
+        txtDoseD5.Focus()
         Drug5Selected = True
         cbDrug6.Enabled = True
     End Sub
@@ -2229,9 +2719,9 @@ Public Class Form1
     Private Sub cbDrug6_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug6.SelectedIndexChanged
         populatevaluesD6()
         calculatedrugD6()
-        lbDrugNumber6.Focus()
         unhighlightallcb()
         calculateDurationD6()
+        txtDoseD6.Focus()
         Drug6Selected = True
         cbDrug7.Enabled = True
     End Sub
@@ -2243,9 +2733,9 @@ Public Class Form1
     Private Sub cbDrug7_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug7.SelectedIndexChanged
         populatevaluesD7()
         calculatedrugD7()
-        lbDrugNumber7.Focus()
         unhighlightallcb()
         calculateDurationD7()
+        txtDoseD7.Focus()
         Drug7Selected = True
         cbDrug8.Enabled = True
     End Sub
@@ -2257,9 +2747,9 @@ Public Class Form1
     Private Sub cbDrug8_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug8.SelectedIndexChanged
         populatevaluesD8()
         calculatedrugD8()
-        lbDrugNumber8.Focus()
         unhighlightallcb()
         calculateDurationD8()
+        txtDoseD8.Focus()
         Drug8Selected = True
         cbDrug9.Enabled = True
     End Sub
@@ -2271,9 +2761,9 @@ Public Class Form1
     Private Sub cbDrug9_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug9.SelectedIndexChanged
         populatevaluesD9()
         calculatedrugD9()
-        lbDrugNumber9.Focus()
         unhighlightallcb()
         calculateDurationD9()
+        txtDoseD9.Focus()
         Drug9Selected = True
         cbDrug10.Enabled = True
     End Sub
@@ -2285,16 +2775,116 @@ Public Class Form1
     Private Sub cbDrug10_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug10.SelectedIndexChanged
         populatevaluesD10()
         calculatedrugD10()
-        lbDrugNumber10.Focus()
         unhighlightallcb()
-        Drug10Selected = True
         calculateDurationD10()
+        txtDoseD10.Focus()
+        Drug10Selected = True
     End Sub
 
     Private Sub cbDrug10_TextChanged(sender As Object, e As EventArgs) Handles cbDrug10.TextChanged
         cleardruginputsD10()
     End Sub
-
+    Public Sub checkforselecteddrugs()
+        If cbDrug1.SelectedIndex >= 0 Then
+            Drug1Selected = True
+        Else Drug1Selected = False
+        End If
+        If cbDrug2.SelectedIndex >= 0 Then
+            Drug2Selected = True
+            cbDrug2.Enabled = True
+        Else Drug2Selected = False
+            cbDrug2.Enabled = False
+        End If
+        If cbDrug3.SelectedIndex >= 0 Then
+            Drug3Selected = True
+            cbDrug3.Enabled = True
+        Else Drug3Selected = False
+            cbDrug3.Enabled = False
+        End If
+        If cbDrug4.SelectedIndex >= 0 Then
+            Drug4Selected = True
+            cbDrug4.Enabled = True
+        Else Drug4Selected = False
+            cbDrug4.Enabled = False
+        End If
+        If cbDrug5.SelectedIndex >= 0 Then
+            Drug5Selected = True
+            cbDrug5.Enabled = True
+        Else Drug5Selected = False
+            cbDrug5.Enabled = False
+        End If
+        If cbDrug6.SelectedIndex >= 0 Then
+            Drug6Selected = True
+            cbDrug6.Enabled = True
+        Else Drug6Selected = False
+            cbDrug6.Enabled = False
+        End If
+        If cbDrug7.SelectedIndex >= 0 Then
+            Drug7Selected = True
+            cbDrug7.Enabled = True
+        End If
+        If cbDrug8.SelectedIndex >= 0 Then
+            Drug8Selected = True
+            cbDrug8.Enabled = True
+        Else Drug8Selected = False
+            cbDrug8.Enabled = False
+        End If
+        If cbDrug9.SelectedIndex >= 0 Then
+            Drug9Selected = True
+            cbDrug9.Enabled = True
+        Else Drug9Selected = False
+            cbDrug9.Enabled = False
+        End If
+        If cbDrug10.SelectedIndex >= 0 Then
+            Drug10Selected = True
+            cbDrug10.Enabled = True
+        Else Drug10Selected = False
+            cbDrug10.Enabled = False
+        End If
+        If cbInsulin1.SelectedIndex >= 0 Then
+            Insulin1Selected = True
+            cbInsulin1.Enabled = True
+        Else Insulin1Selected = False
+            'cbInsulin1.Enabled = False
+        End If
+        If cbInsulin2.SelectedIndex >= 0 Then
+            Insulin2Selected = True
+            cbInsulin2.Enabled = True
+        Else Insulin2Selected = False
+            cbInsulin2.Enabled = False
+        End If
+        'Enable next drug selection
+        If cbDrug1.SelectedIndex >= 0 Then
+            cbDrug2.Enabled = True
+        End If
+        If cbDrug2.SelectedIndex >= 0 Then
+            cbDrug3.Enabled = True
+        End If
+        If cbDrug3.SelectedIndex >= 0 Then
+            cbDrug4.Enabled = True
+        End If
+        If cbDrug4.SelectedIndex >= 0 Then
+            cbDrug5.Enabled = True
+        End If
+        If cbDrug5.SelectedIndex >= 0 Then
+            cbDrug6.Enabled = True
+        End If
+        If cbDrug6.SelectedIndex >= 0 Then
+            cbDrug7.Enabled = True
+        End If
+        If cbDrug7.SelectedIndex >= 0 Then
+            cbDrug8.Enabled = True
+        End If
+        If cbDrug8.SelectedIndex >= 0 Then
+            cbDrug9.Enabled = True
+        End If
+        If cbDrug9.SelectedIndex >= 0 Then
+            cbDrug10.Enabled = True
+        End If
+        If cbInsulin1.SelectedIndex >= 0 Then
+            cbInsulin2.Enabled = True
+        End If
+    End Sub
 
 
     'Check for Validations 'START
@@ -2481,7 +3071,88 @@ Public Class Form1
             e.Handled = True
         End If
     End Sub
-
+    'Insulin 1
+    Private Sub txtIn1MorDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1MorDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn1NoonDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1NoonDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn1AfterNoonDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1AfterNoonDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn1NightDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1NightDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn1Duration_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1Duration.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn1TotalDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1TotalDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn1POM_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1POM.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn1CartQTY_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn1CartQTY.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    'Insulin 2
+    Private Sub txtIn2MorDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2MorDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn2NoonDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2NoonDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn2AfterNoonDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2AfterNoonDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn2NightDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2NightDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn2Duration_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2Duration.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn2TotalDose_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2TotalDose.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn2POM_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2POM.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtIn2CartQTY_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtIn2CartQTY.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
     'Check for Validations 'END
     'Check for Text Changes 'Start
     'Drug 1
@@ -2611,6 +3282,10 @@ Public Class Form1
 
     'Check for Text Changes 'End
     Public Sub clearall()
+        txtPatientName.Clear()
+        txtICNo.Clear()
+        cbAddDays.SelectedIndex = 3
+        chboxNoICNumber.Checked = False
         cleardruginputsD1()
         cleardruginputsD2()
         cleardruginputsD3()
@@ -2631,6 +3306,12 @@ Public Class Form1
         cbDrug8.Text = ""
         cbDrug9.Text = ""
         cbDrug10.Text = ""
+        cbInsulin1.Text = ""
+        cbInsulin2.Text = ""
+
+        checkforselecteddrugs()
+        disabledrug2to10()
+
     End Sub
     Public Sub unhighlightallcb()
         cbDrug1.SelectionLength = 0
@@ -2648,69 +3329,69 @@ Public Class Form1
     Private Sub txtICNo_TextChanged(sender As Object, e As EventArgs) Handles txtICNo.TextChanged
         ' Check if the length of the textbox text is equal to or greater than 6 or 9
         btnIOU.Enabled = False
+        lblExistingPatient.Text = ""
         lblAge.Text = "Age"
         lblGender.Text = "Gender"
-        If Not disableTextChanged Then
-            If txtICNo.TextLength = 6 Then
-                ' Insert "-" at the position after the sixth and ninth character
-                txtICNo.Text = txtICNo.Text.Insert(6, "-")
+        If chboxNoICNumber.Checked = False Then
+            If Not disableTextChanged Then
+                If txtICNo.TextLength = 6 Then
+                    ' Insert "-" at the position after the sixth and ninth character
+                    txtICNo.Text = txtICNo.Text.Insert(6, "-")
 
-                ' Set the cursor position to after the "-" character
-                txtICNo.SelectionStart = txtICNo.TextLength
-            End If
-            If txtICNo.TextLength = 9 Then
-                ' Insert "-" at the position after the sixth and ninth character
-                txtICNo.Text = txtICNo.Text.Insert(9, "-")
-
-                ' Set the cursor position to after the "-" character
-                txtICNo.SelectionStart = txtICNo.TextLength
-
-            End If
-
-        End If
-        If txtICNo.TextLength < 5 Then
-            disableTextChanged = False
-        End If
-        If txtICNo.TextLength < 14 Then
-            btnCheckICMySPR.Enabled = False
-        End If
-        If txtICNo.TextLength = 14 Then
-            Try
-                checkICfromDB()
-                Dim ICRegexPattern As String = "^((\d{2}(?!0229))|([02468][048]|[13579][26])(?=0229))(0[1-9]|1[0-2])(0[1-9]|[12]\d|(?<!02)30|(?<!02|4|6|9|11)31)-(\d{2})-(\d{4})$"
-                If Regex.IsMatch(txtICNo.Text, ICRegexPattern) = False Then
-                    MsgBox("IC Number incorrect Regex format. Please check again.")
+                    ' Set the cursor position to after the "-" character
+                    txtICNo.SelectionStart = txtICNo.TextLength
                 End If
-                btnCheckICMySPR.Enabled = True
-                Dim DOB As String
-                Dim DOBDate As Date
-                Dim Gender As String
+                If txtICNo.TextLength = 9 Then
+                    ' Insert "-" at the position after the sixth and ninth character
+                    txtICNo.Text = txtICNo.Text.Insert(9, "-")
 
-                DOB = ExtractDOB()
+                    ' Set the cursor position to after the "-" character
+                    txtICNo.SelectionStart = txtICNo.TextLength
 
-                DOBDate = DateTime.Parse(DOB)
-                Dim currentDate As Date = Date.Today
-
-                ' Calculate the difference in years
-                Dim age As Integer = currentDate.Year - DOBDate.Year
-
-                ' Check if the birthday has occurred this year
-                If currentDate < DOBDate.AddYears(age) Then
-                    age -= 1
                 End If
-                lblAge.Text = "Age: " & age
-                Gender = ExtractGender()
-                lblGender.Text = "Gender: " & Gender
 
-            Catch ex As Exception
-                'MsgBox(ex.Message)'
-            End Try
+            End If
+            If txtICNo.TextLength < 5 Then
+                disableTextChanged = False
+            End If
+            If txtICNo.TextLength < 14 Then
+                btnCheckICMySPR.Enabled = False
+            End If
+            If txtICNo.TextLength = 14 Then
+                Try
+                    checkICfromDB()
+                    Dim ICRegexPattern As String = "^((\d{2}(?!0229))|([02468][048]|[13579][26])(?=0229))(0[1-9]|1[0-2])(0[1-9]|[12]\d|(?<!02)30|(?<!02|4|6|9|11)31)-(\d{2})-(\d{4})$"
+                    If Regex.IsMatch(txtICNo.Text, ICRegexPattern) = False Then
+                        MsgBox("IC Number incorrect Regex format. Please check again.")
+                    End If
+                    btnCheckICMySPR.Enabled = True
+                    Dim DOB As String
+                    Dim DOBDate As Date
+                    Dim Gender As String
 
+                    DOB = ExtractDOB()
 
+                    DOBDate = DateTime.Parse(DOB)
+                    Dim currentDate As Date = Date.Today
 
+                    ' Calculate the difference in years
+                    Dim age As Integer = currentDate.Year - DOBDate.Year
 
+                    ' Check if the birthday has occurred this year
+                    If currentDate < DOBDate.AddYears(age) Then
+                        age -= 1
+                    End If
+                    lblAge.Text = "Age: " & age
+                    Gender = ExtractGender()
+                    lblGender.Text = "Gender: " & Gender
 
+                Catch ex As Exception
+                    'MsgBox(ex.Message)'
+                End Try
+
+            End If
         End If
+
 
     End Sub
 
@@ -2809,4 +3490,205 @@ Public Class Form1
             btnSave.Text = "Save only"
         End If
     End Sub
+
+    Private Sub cbInsulin1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbInsulin1.SelectedIndexChanged
+        populatevaluesInsulin1()
+        Insulin1Selected = True
+        cbInsulin2.Enabled = True
+        calculateDurationIn1()
+    End Sub
+
+    Private Sub cbInsulin2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbInsulin2.SelectedIndexChanged
+        populatevaluesInsulin2()
+        Insulin2Selected = True
+        calculateDurationIn2()
+    End Sub
+
+    Private Sub cbInsulin1_TextChanged(sender As Object, e As EventArgs) Handles cbInsulin1.TextChanged
+        cleardruginputsIn1()
+    End Sub
+
+    Private Sub cbInsulin2_TextChanged(sender As Object, e As EventArgs) Handles cbInsulin2.TextChanged
+        cleardruginputsIn2()
+    End Sub
+    'Insulin 1 Calculate
+    Private Sub txtIn1MorDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn1MorDose.TextChanged
+        calculatedrugIn1()
+    End Sub
+
+    Private Sub txtIn1NoonDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn1NoonDose.TextChanged
+        calculatedrugIn1()
+    End Sub
+
+    Private Sub txtIn1AfterNoonDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn1AfterNoonDose.TextChanged
+        calculatedrugIn1()
+    End Sub
+
+    Private Sub txtIn1NightDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn1NightDose.TextChanged
+        calculatedrugIn1()
+    End Sub
+
+    Private Sub txtIn1Duration_TextChanged(sender As Object, e As EventArgs) Handles txtIn1Duration.TextChanged
+        calculatedrugIn1()
+    End Sub
+    'Insulin 2 Calculate
+    Private Sub txtIn2MorDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn2MorDose.TextChanged
+        calculatedrugIn2()
+    End Sub
+
+    Private Sub txtIn2NoonDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn2NoonDose.TextChanged
+        calculatedrugIn2()
+    End Sub
+
+    Private Sub txtIn2AfterNoonDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn2AfterNoonDose.TextChanged
+        calculatedrugIn2()
+    End Sub
+
+    Private Sub txtIn2NightDose_TextChanged(sender As Object, e As EventArgs) Handles txtIn2NightDose.TextChanged
+        calculatedrugIn2()
+    End Sub
+
+    Private Sub txtIn2Duration_TextChanged(sender As Object, e As EventArgs) Handles txtIn2Duration.TextChanged
+        calculatedrugIn2()
+    End Sub
+
+    Private Sub cbAddDays_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbAddDays.SelectedIndexChanged
+        Dim days
+        If cbAddDays.SelectedIndex = 0 Then
+            dtpDateCollection.Value = Now().Date.AddDays(7)
+        End If
+        If cbAddDays.SelectedIndex = 1 Then
+            dtpDateCollection.Value = Now().Date.AddDays(14)
+        End If
+        If cbAddDays.SelectedIndex = 2 Then
+            dtpDateCollection.Value = Now().Date.AddDays(21)
+        End If
+        If cbAddDays.SelectedIndex = 3 Then
+            dtpDateCollection.Value = Now().Date.AddDays(30)
+        End If
+        If cbAddDays.SelectedIndex = 4 Then
+            dtpDateCollection.Value = Now().Date.AddDays(40)
+        End If
+        If cbAddDays.SelectedIndex = 5 Then
+            dtpDateCollection.Value = Now().Date.AddDays(50)
+        End If
+        If cbAddDays.SelectedIndex = 6 Then
+            dtpDateCollection.Value = Now().Date.AddDays(60)
+        End If
+        If cbAddDays.SelectedIndex = 7 Then
+            dtpDateCollection.Value = Now().Date.AddDays(90)
+        End If
+
+
+        days = dtpDateCollection.Value - dtpDateSaved.Value
+        txtDurationMaster.Text = days.days + 1 & " days"
+
+    End Sub
+
+    Private Sub btnSaveDBSettings_Click(sender As Object, e As EventArgs) Handles btnSaveDBSettings.Click
+        SetandSaveDBSettings()
+    End Sub
+
+    Private Sub btnRestart_Click(sender As Object, e As EventArgs) Handles btnRestart.Click
+        Application.Restart()
+    End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+        SetandSavePrinterSettings()
+    End Sub
+
+    Private Sub txtIn1POM_TextChanged(sender As Object, e As EventArgs) Handles txtIn1POM.TextChanged
+        calculatedrugIn1()
+        Try
+            If txtIn1POM.Text = "" Then
+                calculatedrugIn1()
+            End If
+            txtIn1CartQTY.Text = txtIn1CartQTY.Text - txtIn1POM.Text
+            If txtIn1CartQTY.Text < 0 Then
+                txtIn1CartQTY.Text = 0
+            End If
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+    Private Sub txtIn2POM_TextChanged(sender As Object, e As EventArgs) Handles txtIn2POM.TextChanged
+        calculatedrugIn2()
+        Try
+            If txtIn1POM.Text = "" Then
+                calculatedrugIn2()
+            End If
+            txtIn2CartQTY.Text = txtIn2CartQTY.Text - txtIn2POM.Text
+            If txtIn2CartQTY.Text < 0 Then
+                txtIn2CartQTY.Text = 0
+            End If
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+    Private Sub cbAddDays_TextChanged(sender As Object, e As EventArgs) Handles cbAddDays.TextChanged
+        Try
+            Dim days
+            dtpDateCollection.Value = Now().Date.AddDays(cbAddDays.Text)
+            days = dtpDateCollection.Value - dtpDateSaved.Value
+            txtDurationMaster.Text = days.days + 1 & " days"
+        Catch ex As Exception
+            Dim days
+            dtpDateCollection.Value = Now().Date.AddDays(0)
+            days = dtpDateCollection.Value - dtpDateSaved.Value
+            txtDurationMaster.Text = days.days + 1 & " days"
+        End Try
+
+    End Sub
+
+    Private Sub cbAddDays_KeyPress(sender As Object, e As KeyPressEventArgs) Handles cbAddDays.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    'LOG TAB
+    Public Sub loadLogDGV()
+        DataGridViewDrug.Rows.Clear()
+        DataGridViewInsulin.Rows.Clear()
+        Dim dt As New DataTable
+
+        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
+        Dim cmd As New MySqlCommand(" SELECT * FROM `prescribeddrugs` WHERE (SELECT MAX(Timestamp) FROM `prescribeddrugs`) ORDER BY Timestamp DESC LIMIT 1; ", conn)
+        Try
+
+            conn.Open()
+            dr = cmd.ExecuteReader
+            While dr.Read()
+                DataGridViewDrug.Rows.Add("1", dr.Item("Drug1Name"), dr.Item("Drug1Strength"), dr.Item("Drug1Unit"), dr.Item("Drug1Dose"), dr.Item("Drug1Freq"), dr.Item("Drug1Duration"), dr.Item("Drug1TotalQTY"))
+                DataGridViewDrug.Rows.Add("2", dr.Item("Drug2Name"), dr.Item("Drug2Strength"), dr.Item("Drug2Unit"), dr.Item("Drug2Dose"), dr.Item("Drug2Freq"), dr.Item("Drug2Duration"), dr.Item("Drug2TotalQTY"))
+                DataGridViewDrug.Rows.Add("3", dr.Item("Drug3Name"), dr.Item("Drug3Strength"), dr.Item("Drug3Unit"), dr.Item("Drug3Dose"), dr.Item("Drug3Freq"), dr.Item("Drug3Duration"), dr.Item("Drug3TotalQTY"))
+                DataGridViewDrug.Rows.Add("4", dr.Item("Drug4Name"), dr.Item("Drug4Strength"), dr.Item("Drug4Unit"), dr.Item("Drug4Dose"), dr.Item("Drug4Freq"), dr.Item("Drug4Duration"), dr.Item("Drug4TotalQTY"))
+                DataGridViewDrug.Rows.Add("5", dr.Item("Drug5Name"), dr.Item("Drug5Strength"), dr.Item("Drug5Unit"), dr.Item("Drug5Dose"), dr.Item("Drug5Freq"), dr.Item("Drug5Duration"), dr.Item("Drug5TotalQTY"))
+                DataGridViewDrug.Rows.Add("6", dr.Item("Drug6Name"), dr.Item("Drug6Strength"), dr.Item("Drug6Unit"), dr.Item("Drug6Dose"), dr.Item("Drug6Freq"), dr.Item("Drug6Duration"), dr.Item("Drug6TotalQTY"))
+                DataGridViewDrug.Rows.Add("7", dr.Item("Drug7Name"), dr.Item("Drug7Strength"), dr.Item("Drug7Unit"), dr.Item("Drug7Dose"), dr.Item("Drug7Freq"), dr.Item("Drug7Duration"), dr.Item("Drug7TotalQTY"))
+                DataGridViewDrug.Rows.Add("8", dr.Item("Drug8Name"), dr.Item("Drug8Strength"), dr.Item("Drug8Unit"), dr.Item("Drug8Dose"), dr.Item("Drug8Freq"), dr.Item("Drug8Duration"), dr.Item("Drug8TotalQTY"))
+                DataGridViewDrug.Rows.Add("9", dr.Item("Drug9Name"), dr.Item("Drug9Strength"), dr.Item("Drug9Unit"), dr.Item("Drug9Dose"), dr.Item("Drug9Freq"), dr.Item("Drug9Duration"), dr.Item("Drug9TotalQTY"))
+                DataGridViewDrug.Rows.Add("10", dr.Item("Drug10Name"), dr.Item("Drug10Strength"), dr.Item("Drug10Unit"), dr.Item("Drug10Dose"), dr.Item("Drug10Freq"), dr.Item("Drug10Duration"), dr.Item("Drug10TotalQTY"))
+                DataGridViewInsulin.Rows.Add("1", dr.Item("Insulin1Name"), dr.Item("Insulin1Strength"), dr.Item("Insulin1Unit"), dr.Item("Insulin1MorDose"), dr.Item("Insulin1NoonDose"), dr.Item("Insulin1AfternoonDose"), dr.Item("Insulin1NightDose"), dr.Item("Insulin1Freq"), dr.Item("Insulin1Duration"), dr.Item("Insulin1TotalDose"), dr.Item("Insulin1POM"), dr.Item("Insulin1CartQTY"))
+                DataGridViewInsulin.Rows.Add("2", dr.Item("Insulin2Name"), dr.Item("Insulin2Strength"), dr.Item("Insulin2Unit"), dr.Item("Insulin2MorDose"), dr.Item("Insulin2NoonDose"), dr.Item("Insulin2AfternoonDose"), dr.Item("Insulin2NightDose"), dr.Item("Insulin2Freq"), dr.Item("Insulin2Duration"), dr.Item("Insulin2TotalDose"), dr.Item("Insulin2POM"), dr.Item("Insulin2CartQTY"))
+
+                lblPrevSavedName.Text = dr.Item("Name")
+                lblPrevSavedICNo.Text = dr.Item("ICNo")
+
+            End While
+            dr.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            dr.Dispose()
+            conn.Close()
+        End Try
+
+
+    End Sub
+
 End Class

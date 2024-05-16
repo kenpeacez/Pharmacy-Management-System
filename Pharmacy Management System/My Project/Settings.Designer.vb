@@ -54,40 +54,64 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("127.0.0.1")>  _
-        Public ReadOnly Property dbServerAddress() As String
+        Public Property dbServerAddress() As String
             Get
                 Return CType(Me("dbServerAddress"),String)
             End Get
+            Set
+                Me("dbServerAddress") = value
+            End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("root")>  _
-        Public ReadOnly Property dbUserID() As String
+        Public Property dbUserID() As String
             Get
                 Return CType(Me("dbUserID"),String)
             End Get
+            Set
+                Me("dbUserID") = value
+            End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public ReadOnly Property dbPassword() As String
+        Public Property dbPassword() As String
             Get
                 Return CType(Me("dbPassword"),String)
             End Get
+            Set
+                Me("dbPassword") = value
+            End Set
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("database_pharmacy")>  _
-        Public ReadOnly Property dbName() As String
+        Public Property dbName() As String
             Get
                 Return CType(Me("dbName"),String)
             End Get
+            Set
+                Me("dbName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ClinicName() As String
+            Get
+                Return CType(Me("ClinicName"),String)
+            End Get
+            Set
+                Me("ClinicName") = value
+            End Set
         End Property
     End Class
 End Namespace
