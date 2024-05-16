@@ -2,6 +2,7 @@ Pharmacy Management System
 
 Developed using VB.NET in Visual Studio 2022
 Optimized for use in Malaysia Country
+This project is still under active development as of May 2024.
 
 Main Features
 - Ability to save patients basic information such as Name, Identification (IC No)
