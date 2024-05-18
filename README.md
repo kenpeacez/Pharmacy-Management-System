@@ -20,7 +20,9 @@ Pictures of Application
 ![image](https://github.com/kenpeacez/Pharmacy-Management-System/assets/28534332/da965863-4676-42ba-a3c3-f98a468c573d)
 ![image](https://github.com/kenpeacez/Pharmacy-Management-System/assets/28534332/457d4e1e-7ba2-4524-80c9-99f4b1e0b59e)
 
-Print Labels
+Print Labels 
+
+
 ![image](https://github.com/kenpeacez/Pharmacy-Management-System/assets/28534332/a0b166f5-1a73-4f97-ba9e-edfa4b3ca124)
 ![image](https://github.com/kenpeacez/Pharmacy-Management-System/assets/28534332/42ac4c0d-0bda-40e6-aada-8d7ffc2eac04)
 
