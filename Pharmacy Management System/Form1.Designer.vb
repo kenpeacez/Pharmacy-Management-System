@@ -231,34 +231,10 @@ Partial Class Form1
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.btnSavePrinterSettings = New System.Windows.Forms.TabPage()
-        Me.btnRestart = New System.Windows.Forms.Button()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.txtClinicName = New System.Windows.Forms.TextBox()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.btnSaveDBSettings = New System.Windows.Forms.Button()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.txtDBPassword = New System.Windows.Forms.TextBox()
-        Me.txtDBUserID = New System.Windows.Forms.TextBox()
-        Me.lblServerName = New System.Windows.Forms.Label()
-        Me.lblDBUserID = New System.Windows.Forms.Label()
-        Me.lblPassword = New System.Windows.Forms.Label()
-        Me.lblDatabaseName = New System.Windows.Forms.Label()
-        Me.txtDBServerAddress = New System.Windows.Forms.TextBox()
-        Me.txtDBName = New System.Windows.Forms.TextBox()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.stlbDatabaseConnection = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.pbrDatabaseConnection = New System.Windows.Forms.ToolStripProgressBar()
-        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.stlbPrinterName = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.stlbMainStatus = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.lblDeveloper = New System.Windows.Forms.Label()
-        Me.PrintDoc = New System.Drawing.Printing.PrintDocument()
-        Me.PPD = New System.Windows.Forms.PrintPreviewDialog()
-        Me.PrintDocInsulin = New System.Drawing.Printing.PrintDocument()
+        Me.lblPrevSavedICNo = New System.Windows.Forms.Label()
+        Me.lblPrevSavedName = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.DataGridViewInsulin = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -282,10 +258,70 @@ Partial Class Form1
         Me.Frequency = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Duration = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.lblPrevSavedName = New System.Windows.Forms.Label()
-        Me.lblPrevSavedICNo = New System.Windows.Forms.Label()
+        Me.btnSavePrinterSettings = New System.Windows.Forms.TabPage()
+        Me.lblPatientNameDB = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.btnSearchDB = New System.Windows.Forms.Button()
+        Me.txtICNoDB = New System.Windows.Forms.TextBox()
+        Me.dgvPatientInsulinHistory = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn19 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn20 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvPatientDrugHistory = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn23 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn24 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn25 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn26 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn27 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn28 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn29 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvDateSelector = New System.Windows.Forms.DataGridView()
+        Me.No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateAdded = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateCollection = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Timestamp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.btnRestart = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnSaveDBSettings = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.txtDBPassword = New System.Windows.Forms.TextBox()
+        Me.txtDBUserID = New System.Windows.Forms.TextBox()
+        Me.lblServerName = New System.Windows.Forms.Label()
+        Me.lblDBUserID = New System.Windows.Forms.Label()
+        Me.lblPassword = New System.Windows.Forms.Label()
+        Me.lblDatabaseName = New System.Windows.Forms.Label()
+        Me.txtDBServerAddress = New System.Windows.Forms.TextBox()
+        Me.txtDBName = New System.Windows.Forms.TextBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.txtClinicName = New System.Windows.Forms.TextBox()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.stlbDatabaseConnection = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.pbrDatabaseConnection = New System.Windows.Forms.ToolStripProgressBar()
+        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.stlbPrinterName = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.stlbMainStatus = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblDeveloper = New System.Windows.Forms.Label()
+        Me.PrintDoc = New System.Drawing.Printing.PrintDocument()
+        Me.PPD = New System.Windows.Forms.PrintPreviewDialog()
+        Me.PrintDocInsulin = New System.Drawing.Printing.PrintDocument()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
@@ -309,13 +345,17 @@ Partial Class Form1
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        Me.btnSavePrinterSettings.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.TableLayoutPanel3.SuspendLayout()
-        Me.StatusStrip1.SuspendLayout()
         CType(Me.DataGridViewInsulin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.btnSavePrinterSettings.SuspendLayout()
+        CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvPatientDrugHistory, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvDateSelector, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage4.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnSave
@@ -338,6 +378,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.btnSavePrinterSettings)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabControl1.Location = New System.Drawing.Point(0, 33)
         Me.TabControl1.Name = "TabControl1"
@@ -2502,7 +2543,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 141.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2519,9 +2560,9 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(465, 3)
+        Me.btnDelete.Location = New System.Drawing.Point(461, 3)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(132, 33)
+        Me.btnDelete.Size = New System.Drawing.Size(136, 33)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2534,7 +2575,7 @@ Partial Class Form1
         Me.btnAddDrug.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddDrug.Location = New System.Drawing.Point(3, 3)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(217, 33)
+        Me.btnAddDrug.Size = New System.Drawing.Size(215, 33)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2544,7 +2585,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(343, 3)
+        Me.btnClear.Location = New System.Drawing.Point(339, 3)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(116, 33)
         Me.btnClear.TabIndex = 12
@@ -2556,9 +2597,9 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(226, 3)
+        Me.btnUpdate.Location = New System.Drawing.Point(224, 3)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(111, 33)
+        Me.btnUpdate.Size = New System.Drawing.Size(109, 33)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -2778,12 +2819,11 @@ Partial Class Form1
         '
         'Column5
         '
-        Me.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         Me.Column5.HeaderText = "PRESCRIBER CATEGORY"
         Me.Column5.MinimumWidth = 6
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
-        Me.Column5.Width = 238
+        Me.Column5.Width = 120
         '
         'Column6
         '
@@ -2810,11 +2850,248 @@ Partial Class Form1
         Me.TabPage3.Text = "LOG"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'lblPrevSavedICNo
+        '
+        Me.lblPrevSavedICNo.AutoSize = True
+        Me.lblPrevSavedICNo.Location = New System.Drawing.Point(225, 47)
+        Me.lblPrevSavedICNo.Name = "lblPrevSavedICNo"
+        Me.lblPrevSavedICNo.Size = New System.Drawing.Size(25, 22)
+        Me.lblPrevSavedICNo.TabIndex = 13
+        Me.lblPrevSavedICNo.Text = "   "
+        '
+        'lblPrevSavedName
+        '
+        Me.lblPrevSavedName.AutoSize = True
+        Me.lblPrevSavedName.Location = New System.Drawing.Point(225, 14)
+        Me.lblPrevSavedName.Name = "lblPrevSavedName"
+        Me.lblPrevSavedName.Size = New System.Drawing.Size(25, 22)
+        Me.lblPrevSavedName.TabIndex = 12
+        Me.lblPrevSavedName.Text = "   "
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(25, 47)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(201, 22)
+        Me.Label26.TabIndex = 11
+        Me.Label26.Text = "Previous Saved IC No. :"
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(25, 14)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(203, 22)
+        Me.Label25.TabIndex = 10
+        Me.Label25.Text = "Previous Saved Name : "
+        '
+        'DataGridViewInsulin
+        '
+        Me.DataGridViewInsulin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridViewInsulin.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
+        Me.DataGridViewInsulin.Location = New System.Drawing.Point(29, 475)
+        Me.DataGridViewInsulin.Name = "DataGridViewInsulin"
+        Me.DataGridViewInsulin.ReadOnly = True
+        Me.DataGridViewInsulin.RowHeadersVisible = False
+        Me.DataGridViewInsulin.RowHeadersWidth = 51
+        Me.DataGridViewInsulin.RowTemplate.Height = 24
+        Me.DataGridViewInsulin.Size = New System.Drawing.Size(1403, 147)
+        Me.DataGridViewInsulin.TabIndex = 9
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.HeaderText = "No."
+        Me.DataGridViewTextBoxColumn1.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridViewTextBoxColumn1.Width = 35
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Insulin Name"
+        Me.DataGridViewTextBoxColumn2.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.Width = 400
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Strength"
+        Me.DataGridViewTextBoxColumn3.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.DataGridViewTextBoxColumn3.Width = 60
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Unit"
+        Me.DataGridViewTextBoxColumn4.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        Me.DataGridViewTextBoxColumn4.Width = 50
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Morning Dose"
+        Me.DataGridViewTextBoxColumn5.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        Me.DataGridViewTextBoxColumn5.Width = 70
+        '
+        'NoonDose
+        '
+        Me.NoonDose.HeaderText = "Noon Dose"
+        Me.NoonDose.MinimumWidth = 6
+        Me.NoonDose.Name = "NoonDose"
+        Me.NoonDose.ReadOnly = True
+        Me.NoonDose.Width = 60
+        '
+        'AfternoonDose
+        '
+        Me.AfternoonDose.HeaderText = "Afternoon Dose"
+        Me.AfternoonDose.MinimumWidth = 6
+        Me.AfternoonDose.Name = "AfternoonDose"
+        Me.AfternoonDose.ReadOnly = True
+        Me.AfternoonDose.Width = 70
+        '
+        'NightDose
+        '
+        Me.NightDose.HeaderText = "Night Dose"
+        Me.NightDose.MinimumWidth = 6
+        Me.NightDose.Name = "NightDose"
+        Me.NightDose.ReadOnly = True
+        Me.NightDose.Width = 60
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Frequency"
+        Me.DataGridViewTextBoxColumn6.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        Me.DataGridViewTextBoxColumn6.Width = 60
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Duration"
+        Me.DataGridViewTextBoxColumn7.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 60
+        '
+        'TotalDose
+        '
+        Me.TotalDose.HeaderText = "Total Dose"
+        Me.TotalDose.MinimumWidth = 6
+        Me.TotalDose.Name = "TotalDose"
+        Me.TotalDose.ReadOnly = True
+        Me.TotalDose.Width = 60
+        '
+        'POM
+        '
+        Me.POM.HeaderText = "POM"
+        Me.POM.MinimumWidth = 6
+        Me.POM.Name = "POM"
+        Me.POM.ReadOnly = True
+        Me.POM.Width = 60
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.HeaderText = "Cart QTY"
+        Me.DataGridViewTextBoxColumn8.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        Me.DataGridViewTextBoxColumn8.Width = 60
+        '
+        'DataGridViewDrug
+        '
+        Me.DataGridViewDrug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridViewDrug.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DrugNo, Me.DrugName, Me.Strength, Me.Unit, Me.Dose, Me.Frequency, Me.Duration, Me.TotalQTY})
+        Me.DataGridViewDrug.Location = New System.Drawing.Point(29, 92)
+        Me.DataGridViewDrug.Name = "DataGridViewDrug"
+        Me.DataGridViewDrug.ReadOnly = True
+        Me.DataGridViewDrug.RowHeadersVisible = False
+        Me.DataGridViewDrug.RowHeadersWidth = 51
+        Me.DataGridViewDrug.RowTemplate.Height = 24
+        Me.DataGridViewDrug.Size = New System.Drawing.Size(1403, 361)
+        Me.DataGridViewDrug.TabIndex = 8
+        '
+        'DrugNo
+        '
+        Me.DrugNo.HeaderText = "No."
+        Me.DrugNo.MinimumWidth = 6
+        Me.DrugNo.Name = "DrugNo"
+        Me.DrugNo.ReadOnly = True
+        Me.DrugNo.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DrugNo.Width = 35
+        '
+        'DrugName
+        '
+        Me.DrugName.HeaderText = "Drug Name"
+        Me.DrugName.MinimumWidth = 6
+        Me.DrugName.Name = "DrugName"
+        Me.DrugName.ReadOnly = True
+        Me.DrugName.Width = 600
+        '
+        'Strength
+        '
+        Me.Strength.HeaderText = "Strength"
+        Me.Strength.MinimumWidth = 6
+        Me.Strength.Name = "Strength"
+        Me.Strength.ReadOnly = True
+        Me.Strength.Width = 70
+        '
+        'Unit
+        '
+        Me.Unit.HeaderText = "Unit"
+        Me.Unit.MinimumWidth = 6
+        Me.Unit.Name = "Unit"
+        Me.Unit.ReadOnly = True
+        Me.Unit.Width = 70
+        '
+        'Dose
+        '
+        Me.Dose.HeaderText = "Dose"
+        Me.Dose.MinimumWidth = 6
+        Me.Dose.Name = "Dose"
+        Me.Dose.ReadOnly = True
+        Me.Dose.Width = 70
+        '
+        'Frequency
+        '
+        Me.Frequency.HeaderText = "Frequency"
+        Me.Frequency.MinimumWidth = 6
+        Me.Frequency.Name = "Frequency"
+        Me.Frequency.ReadOnly = True
+        Me.Frequency.Width = 70
+        '
+        'Duration
+        '
+        Me.Duration.HeaderText = "Duration"
+        Me.Duration.MinimumWidth = 6
+        Me.Duration.Name = "Duration"
+        Me.Duration.ReadOnly = True
+        Me.Duration.Width = 70
+        '
+        'TotalQTY
+        '
+        Me.TotalQTY.HeaderText = "Total Quantity"
+        Me.TotalQTY.MinimumWidth = 6
+        Me.TotalQTY.Name = "TotalQTY"
+        Me.TotalQTY.ReadOnly = True
+        Me.TotalQTY.Width = 70
+        '
         'btnSavePrinterSettings
         '
-        Me.btnSavePrinterSettings.Controls.Add(Me.btnRestart)
-        Me.btnSavePrinterSettings.Controls.Add(Me.GroupBox3)
-        Me.btnSavePrinterSettings.Controls.Add(Me.GroupBox2)
+        Me.btnSavePrinterSettings.Controls.Add(Me.Label28)
+        Me.btnSavePrinterSettings.Controls.Add(Me.lblPatientNameDB)
+        Me.btnSavePrinterSettings.Controls.Add(Me.Label27)
+        Me.btnSavePrinterSettings.Controls.Add(Me.btnSearchDB)
+        Me.btnSavePrinterSettings.Controls.Add(Me.txtICNoDB)
+        Me.btnSavePrinterSettings.Controls.Add(Me.dgvPatientInsulinHistory)
+        Me.btnSavePrinterSettings.Controls.Add(Me.dgvPatientDrugHistory)
+        Me.btnSavePrinterSettings.Controls.Add(Me.dgvDateSelector)
         Me.btnSavePrinterSettings.Location = New System.Drawing.Point(4, 31)
         Me.btnSavePrinterSettings.Name = "btnSavePrinterSettings"
         Me.btnSavePrinterSettings.Padding = New System.Windows.Forms.Padding(3)
@@ -2823,57 +3100,328 @@ Partial Class Form1
         Me.btnSavePrinterSettings.Text = "Database"
         Me.btnSavePrinterSettings.UseVisualStyleBackColor = True
         '
+        'lblPatientNameDB
+        '
+        Me.lblPatientNameDB.AutoSize = True
+        Me.lblPatientNameDB.Location = New System.Drawing.Point(84, 51)
+        Me.lblPatientNameDB.Name = "lblPatientNameDB"
+        Me.lblPatientNameDB.Size = New System.Drawing.Size(30, 22)
+        Me.lblPatientNameDB.TabIndex = 15
+        Me.lblPatientNameDB.Text = "    "
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(10, 51)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(72, 22)
+        Me.Label27.TabIndex = 14
+        Me.Label27.Text = "Name : "
+        '
+        'btnSearchDB
+        '
+        Me.btnSearchDB.Location = New System.Drawing.Point(293, 9)
+        Me.btnSearchDB.Name = "btnSearchDB"
+        Me.btnSearchDB.Size = New System.Drawing.Size(95, 34)
+        Me.btnSearchDB.TabIndex = 13
+        Me.btnSearchDB.Text = "Search"
+        Me.btnSearchDB.UseVisualStyleBackColor = True
+        '
+        'txtICNoDB
+        '
+        Me.txtICNoDB.BackColor = System.Drawing.SystemColors.Info
+        Me.txtICNoDB.Location = New System.Drawing.Point(84, 10)
+        Me.txtICNoDB.MaxLength = 14
+        Me.txtICNoDB.Name = "txtICNoDB"
+        Me.txtICNoDB.Size = New System.Drawing.Size(191, 28)
+        Me.txtICNoDB.TabIndex = 12
+        '
+        'dgvPatientInsulinHistory
+        '
+        Me.dgvPatientInsulinHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvPatientInsulinHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10, Me.DataGridViewTextBoxColumn11, Me.DataGridViewTextBoxColumn12, Me.DataGridViewTextBoxColumn13, Me.DataGridViewTextBoxColumn14, Me.DataGridViewTextBoxColumn15, Me.DataGridViewTextBoxColumn16, Me.DataGridViewTextBoxColumn17, Me.DataGridViewTextBoxColumn18, Me.DataGridViewTextBoxColumn19, Me.DataGridViewTextBoxColumn20, Me.DataGridViewTextBoxColumn21})
+        Me.dgvPatientInsulinHistory.Location = New System.Drawing.Point(8, 699)
+        Me.dgvPatientInsulinHistory.Name = "dgvPatientInsulinHistory"
+        Me.dgvPatientInsulinHistory.ReadOnly = True
+        Me.dgvPatientInsulinHistory.RowHeadersVisible = False
+        Me.dgvPatientInsulinHistory.RowHeadersWidth = 51
+        Me.dgvPatientInsulinHistory.RowTemplate.Height = 24
+        Me.dgvPatientInsulinHistory.Size = New System.Drawing.Size(1403, 137)
+        Me.dgvPatientInsulinHistory.TabIndex = 11
+        '
+        'DataGridViewTextBoxColumn9
+        '
+        Me.DataGridViewTextBoxColumn9.HeaderText = "No."
+        Me.DataGridViewTextBoxColumn9.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.DataGridViewTextBoxColumn9.ReadOnly = True
+        Me.DataGridViewTextBoxColumn9.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridViewTextBoxColumn9.Width = 35
+        '
+        'DataGridViewTextBoxColumn10
+        '
+        Me.DataGridViewTextBoxColumn10.HeaderText = "Insulin Name"
+        Me.DataGridViewTextBoxColumn10.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
+        Me.DataGridViewTextBoxColumn10.ReadOnly = True
+        Me.DataGridViewTextBoxColumn10.Width = 400
+        '
+        'DataGridViewTextBoxColumn11
+        '
+        Me.DataGridViewTextBoxColumn11.HeaderText = "Strength"
+        Me.DataGridViewTextBoxColumn11.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
+        Me.DataGridViewTextBoxColumn11.ReadOnly = True
+        Me.DataGridViewTextBoxColumn11.Width = 60
+        '
+        'DataGridViewTextBoxColumn12
+        '
+        Me.DataGridViewTextBoxColumn12.HeaderText = "Unit"
+        Me.DataGridViewTextBoxColumn12.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn12.Name = "DataGridViewTextBoxColumn12"
+        Me.DataGridViewTextBoxColumn12.ReadOnly = True
+        Me.DataGridViewTextBoxColumn12.Width = 50
+        '
+        'DataGridViewTextBoxColumn13
+        '
+        Me.DataGridViewTextBoxColumn13.HeaderText = "Morning Dose"
+        Me.DataGridViewTextBoxColumn13.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
+        Me.DataGridViewTextBoxColumn13.ReadOnly = True
+        Me.DataGridViewTextBoxColumn13.Width = 70
+        '
+        'DataGridViewTextBoxColumn14
+        '
+        Me.DataGridViewTextBoxColumn14.HeaderText = "Noon Dose"
+        Me.DataGridViewTextBoxColumn14.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
+        Me.DataGridViewTextBoxColumn14.ReadOnly = True
+        Me.DataGridViewTextBoxColumn14.Width = 60
+        '
+        'DataGridViewTextBoxColumn15
+        '
+        Me.DataGridViewTextBoxColumn15.HeaderText = "Afternoon Dose"
+        Me.DataGridViewTextBoxColumn15.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn15.Name = "DataGridViewTextBoxColumn15"
+        Me.DataGridViewTextBoxColumn15.ReadOnly = True
+        Me.DataGridViewTextBoxColumn15.Width = 70
+        '
+        'DataGridViewTextBoxColumn16
+        '
+        Me.DataGridViewTextBoxColumn16.HeaderText = "Night Dose"
+        Me.DataGridViewTextBoxColumn16.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn16.Name = "DataGridViewTextBoxColumn16"
+        Me.DataGridViewTextBoxColumn16.ReadOnly = True
+        Me.DataGridViewTextBoxColumn16.Width = 60
+        '
+        'DataGridViewTextBoxColumn17
+        '
+        Me.DataGridViewTextBoxColumn17.HeaderText = "Frequency"
+        Me.DataGridViewTextBoxColumn17.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn17.Name = "DataGridViewTextBoxColumn17"
+        Me.DataGridViewTextBoxColumn17.ReadOnly = True
+        Me.DataGridViewTextBoxColumn17.Width = 60
+        '
+        'DataGridViewTextBoxColumn18
+        '
+        Me.DataGridViewTextBoxColumn18.HeaderText = "Duration"
+        Me.DataGridViewTextBoxColumn18.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
+        Me.DataGridViewTextBoxColumn18.ReadOnly = True
+        Me.DataGridViewTextBoxColumn18.Width = 60
+        '
+        'DataGridViewTextBoxColumn19
+        '
+        Me.DataGridViewTextBoxColumn19.HeaderText = "Total Dose"
+        Me.DataGridViewTextBoxColumn19.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn19.Name = "DataGridViewTextBoxColumn19"
+        Me.DataGridViewTextBoxColumn19.ReadOnly = True
+        Me.DataGridViewTextBoxColumn19.Width = 60
+        '
+        'DataGridViewTextBoxColumn20
+        '
+        Me.DataGridViewTextBoxColumn20.HeaderText = "POM"
+        Me.DataGridViewTextBoxColumn20.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn20.Name = "DataGridViewTextBoxColumn20"
+        Me.DataGridViewTextBoxColumn20.ReadOnly = True
+        Me.DataGridViewTextBoxColumn20.Width = 60
+        '
+        'DataGridViewTextBoxColumn21
+        '
+        Me.DataGridViewTextBoxColumn21.HeaderText = "Cart QTY"
+        Me.DataGridViewTextBoxColumn21.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn21.Name = "DataGridViewTextBoxColumn21"
+        Me.DataGridViewTextBoxColumn21.ReadOnly = True
+        Me.DataGridViewTextBoxColumn21.Width = 60
+        '
+        'dgvPatientDrugHistory
+        '
+        Me.dgvPatientDrugHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvPatientDrugHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn22, Me.DataGridViewTextBoxColumn23, Me.DataGridViewTextBoxColumn24, Me.DataGridViewTextBoxColumn25, Me.DataGridViewTextBoxColumn26, Me.DataGridViewTextBoxColumn27, Me.DataGridViewTextBoxColumn28, Me.DataGridViewTextBoxColumn29})
+        Me.dgvPatientDrugHistory.Location = New System.Drawing.Point(8, 324)
+        Me.dgvPatientDrugHistory.Name = "dgvPatientDrugHistory"
+        Me.dgvPatientDrugHistory.ReadOnly = True
+        Me.dgvPatientDrugHistory.RowHeadersVisible = False
+        Me.dgvPatientDrugHistory.RowHeadersWidth = 51
+        Me.dgvPatientDrugHistory.RowTemplate.Height = 24
+        Me.dgvPatientDrugHistory.Size = New System.Drawing.Size(1403, 361)
+        Me.dgvPatientDrugHistory.TabIndex = 10
+        '
+        'DataGridViewTextBoxColumn22
+        '
+        Me.DataGridViewTextBoxColumn22.HeaderText = "No."
+        Me.DataGridViewTextBoxColumn22.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn22.Name = "DataGridViewTextBoxColumn22"
+        Me.DataGridViewTextBoxColumn22.ReadOnly = True
+        Me.DataGridViewTextBoxColumn22.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridViewTextBoxColumn22.Width = 35
+        '
+        'DataGridViewTextBoxColumn23
+        '
+        Me.DataGridViewTextBoxColumn23.HeaderText = "Drug Name"
+        Me.DataGridViewTextBoxColumn23.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn23.Name = "DataGridViewTextBoxColumn23"
+        Me.DataGridViewTextBoxColumn23.ReadOnly = True
+        Me.DataGridViewTextBoxColumn23.Width = 600
+        '
+        'DataGridViewTextBoxColumn24
+        '
+        Me.DataGridViewTextBoxColumn24.HeaderText = "Strength"
+        Me.DataGridViewTextBoxColumn24.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn24.Name = "DataGridViewTextBoxColumn24"
+        Me.DataGridViewTextBoxColumn24.ReadOnly = True
+        Me.DataGridViewTextBoxColumn24.Width = 70
+        '
+        'DataGridViewTextBoxColumn25
+        '
+        Me.DataGridViewTextBoxColumn25.HeaderText = "Unit"
+        Me.DataGridViewTextBoxColumn25.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn25.Name = "DataGridViewTextBoxColumn25"
+        Me.DataGridViewTextBoxColumn25.ReadOnly = True
+        Me.DataGridViewTextBoxColumn25.Width = 70
+        '
+        'DataGridViewTextBoxColumn26
+        '
+        Me.DataGridViewTextBoxColumn26.HeaderText = "Dose"
+        Me.DataGridViewTextBoxColumn26.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn26.Name = "DataGridViewTextBoxColumn26"
+        Me.DataGridViewTextBoxColumn26.ReadOnly = True
+        Me.DataGridViewTextBoxColumn26.Width = 70
+        '
+        'DataGridViewTextBoxColumn27
+        '
+        Me.DataGridViewTextBoxColumn27.HeaderText = "Frequency"
+        Me.DataGridViewTextBoxColumn27.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn27.Name = "DataGridViewTextBoxColumn27"
+        Me.DataGridViewTextBoxColumn27.ReadOnly = True
+        Me.DataGridViewTextBoxColumn27.Width = 70
+        '
+        'DataGridViewTextBoxColumn28
+        '
+        Me.DataGridViewTextBoxColumn28.HeaderText = "Duration"
+        Me.DataGridViewTextBoxColumn28.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn28.Name = "DataGridViewTextBoxColumn28"
+        Me.DataGridViewTextBoxColumn28.ReadOnly = True
+        Me.DataGridViewTextBoxColumn28.Width = 70
+        '
+        'DataGridViewTextBoxColumn29
+        '
+        Me.DataGridViewTextBoxColumn29.HeaderText = "Total Quantity"
+        Me.DataGridViewTextBoxColumn29.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn29.Name = "DataGridViewTextBoxColumn29"
+        Me.DataGridViewTextBoxColumn29.ReadOnly = True
+        Me.DataGridViewTextBoxColumn29.Width = 70
+        '
+        'dgvDateSelector
+        '
+        Me.dgvDateSelector.AllowUserToAddRows = False
+        Me.dgvDateSelector.AllowUserToDeleteRows = False
+        Me.dgvDateSelector.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvDateSelector.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.ID, Me.DateAdded, Me.DateCollection, Me.DateSeeDoctor, Me.Timestamp})
+        Me.dgvDateSelector.Location = New System.Drawing.Point(9, 88)
+        Me.dgvDateSelector.Name = "dgvDateSelector"
+        Me.dgvDateSelector.ReadOnly = True
+        Me.dgvDateSelector.RowHeadersVisible = False
+        Me.dgvDateSelector.RowHeadersWidth = 51
+        Me.dgvDateSelector.RowTemplate.Height = 24
+        Me.dgvDateSelector.Size = New System.Drawing.Size(1058, 219)
+        Me.dgvDateSelector.TabIndex = 0
+        '
+        'No
+        '
+        Me.No.HeaderText = "No."
+        Me.No.MinimumWidth = 6
+        Me.No.Name = "No"
+        Me.No.ReadOnly = True
+        Me.No.Width = 40
+        '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.MinimumWidth = 6
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        Me.ID.Width = 40
+        '
+        'DateAdded
+        '
+        Me.DateAdded.HeaderText = "Date Added"
+        Me.DateAdded.MinimumWidth = 6
+        Me.DateAdded.Name = "DateAdded"
+        Me.DateAdded.ReadOnly = True
+        Me.DateAdded.Width = 130
+        '
+        'DateCollection
+        '
+        Me.DateCollection.HeaderText = "Date Collection"
+        Me.DateCollection.MinimumWidth = 6
+        Me.DateCollection.Name = "DateCollection"
+        Me.DateCollection.ReadOnly = True
+        Me.DateCollection.Width = 200
+        '
+        'DateSeeDoctor
+        '
+        Me.DateSeeDoctor.HeaderText = "Date See Doctor"
+        Me.DateSeeDoctor.MinimumWidth = 6
+        Me.DateSeeDoctor.Name = "DateSeeDoctor"
+        Me.DateSeeDoctor.ReadOnly = True
+        Me.DateSeeDoctor.Width = 200
+        '
+        'Timestamp
+        '
+        Me.Timestamp.HeaderText = "Timestamp Recorded"
+        Me.Timestamp.MinimumWidth = 6
+        Me.Timestamp.Name = "Timestamp"
+        Me.Timestamp.ReadOnly = True
+        Me.Timestamp.Width = 200
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.btnRestart)
+        Me.TabPage4.Controls.Add(Me.GroupBox2)
+        Me.TabPage4.Controls.Add(Me.GroupBox3)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(1554, 853)
+        Me.TabPage4.TabIndex = 4
+        Me.TabPage4.Text = "Settings"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
         'btnRestart
         '
-        Me.btnRestart.Location = New System.Drawing.Point(1359, 775)
+        Me.btnRestart.Location = New System.Drawing.Point(688, 49)
         Me.btnRestart.Name = "btnRestart"
         Me.btnRestart.Size = New System.Drawing.Size(168, 58)
         Me.btnRestart.TabIndex = 2
         Me.btnRestart.Text = "Restart Application"
         Me.btnRestart.UseVisualStyleBackColor = True
         '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.Button1)
-        Me.GroupBox3.Controls.Add(Me.Label23)
-        Me.GroupBox3.Controls.Add(Me.txtClinicName)
-        Me.GroupBox3.Location = New System.Drawing.Point(8, 251)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(577, 109)
-        Me.GroupBox3.TabIndex = 1
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Printer Settings"
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(441, 70)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(127, 33)
-        Me.Button1.TabIndex = 2
-        Me.Button1.Text = "Save"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(6, 30)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(106, 22)
-        Me.Label23.TabIndex = 1
-        Me.Label23.Text = "Clinic Name"
-        '
-        'txtClinicName
-        '
-        Me.txtClinicName.Location = New System.Drawing.Point(181, 27)
-        Me.txtClinicName.Name = "txtClinicName"
-        Me.txtClinicName.Size = New System.Drawing.Size(387, 28)
-        Me.txtClinicName.TabIndex = 0
-        '
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.btnSaveDBSettings)
         Me.GroupBox2.Controls.Add(Me.TableLayoutPanel3)
-        Me.GroupBox2.Location = New System.Drawing.Point(8, 6)
+        Me.GroupBox2.Location = New System.Drawing.Point(23, 36)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(577, 239)
         Me.GroupBox2.TabIndex = 0
@@ -2982,6 +3530,43 @@ Partial Class Form1
         Me.txtDBName.Size = New System.Drawing.Size(387, 28)
         Me.txtDBName.TabIndex = 7
         '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Button1)
+        Me.GroupBox3.Controls.Add(Me.Label23)
+        Me.GroupBox3.Controls.Add(Me.txtClinicName)
+        Me.GroupBox3.Location = New System.Drawing.Point(23, 302)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(577, 109)
+        Me.GroupBox3.TabIndex = 1
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Printer Settings"
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(441, 70)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(127, 33)
+        Me.Button1.TabIndex = 2
+        Me.Button1.Text = "Save"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(6, 30)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(106, 22)
+        Me.Label23.TabIndex = 1
+        Me.Label23.Text = "Clinic Name"
+        '
+        'txtClinicName
+        '
+        Me.txtClinicName.Location = New System.Drawing.Point(181, 27)
+        Me.txtClinicName.Name = "txtClinicName"
+        Me.txtClinicName.Size = New System.Drawing.Size(387, 28)
+        Me.txtClinicName.TabIndex = 0
+        '
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
@@ -3060,235 +3645,14 @@ Partial Class Form1
         'PrintDocInsulin
         '
         '
-        'DataGridViewInsulin
+        'Label28
         '
-        Me.DataGridViewInsulin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridViewInsulin.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
-        Me.DataGridViewInsulin.Location = New System.Drawing.Point(29, 475)
-        Me.DataGridViewInsulin.Name = "DataGridViewInsulin"
-        Me.DataGridViewInsulin.ReadOnly = True
-        Me.DataGridViewInsulin.RowHeadersWidth = 51
-        Me.DataGridViewInsulin.RowTemplate.Height = 24
-        Me.DataGridViewInsulin.Size = New System.Drawing.Size(1268, 147)
-        Me.DataGridViewInsulin.TabIndex = 9
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.HeaderText = "No."
-        Me.DataGridViewTextBoxColumn1.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        Me.DataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridViewTextBoxColumn1.Width = 35
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Insulin Name"
-        Me.DataGridViewTextBoxColumn2.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        Me.DataGridViewTextBoxColumn2.Width = 300
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Strength"
-        Me.DataGridViewTextBoxColumn3.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.ReadOnly = True
-        Me.DataGridViewTextBoxColumn3.Width = 60
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.HeaderText = "Unit"
-        Me.DataGridViewTextBoxColumn4.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.ReadOnly = True
-        Me.DataGridViewTextBoxColumn4.Width = 45
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Morning Dose"
-        Me.DataGridViewTextBoxColumn5.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
-        Me.DataGridViewTextBoxColumn5.Width = 60
-        '
-        'NoonDose
-        '
-        Me.NoonDose.HeaderText = "Noon Dose"
-        Me.NoonDose.MinimumWidth = 6
-        Me.NoonDose.Name = "NoonDose"
-        Me.NoonDose.ReadOnly = True
-        Me.NoonDose.Width = 50
-        '
-        'AfternoonDose
-        '
-        Me.AfternoonDose.HeaderText = "Afternoon Dose"
-        Me.AfternoonDose.MinimumWidth = 6
-        Me.AfternoonDose.Name = "AfternoonDose"
-        Me.AfternoonDose.ReadOnly = True
-        Me.AfternoonDose.Width = 60
-        '
-        'NightDose
-        '
-        Me.NightDose.HeaderText = "Night Dose"
-        Me.NightDose.MinimumWidth = 6
-        Me.NightDose.Name = "NightDose"
-        Me.NightDose.ReadOnly = True
-        Me.NightDose.Width = 50
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Frequency"
-        Me.DataGridViewTextBoxColumn6.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.ReadOnly = True
-        Me.DataGridViewTextBoxColumn6.Width = 50
-        '
-        'DataGridViewTextBoxColumn7
-        '
-        Me.DataGridViewTextBoxColumn7.HeaderText = "Duration"
-        Me.DataGridViewTextBoxColumn7.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
-        Me.DataGridViewTextBoxColumn7.ReadOnly = True
-        Me.DataGridViewTextBoxColumn7.Width = 50
-        '
-        'TotalDose
-        '
-        Me.TotalDose.HeaderText = "Total Dose"
-        Me.TotalDose.MinimumWidth = 6
-        Me.TotalDose.Name = "TotalDose"
-        Me.TotalDose.ReadOnly = True
-        Me.TotalDose.Width = 50
-        '
-        'POM
-        '
-        Me.POM.HeaderText = "POM"
-        Me.POM.MinimumWidth = 6
-        Me.POM.Name = "POM"
-        Me.POM.ReadOnly = True
-        Me.POM.Width = 50
-        '
-        'DataGridViewTextBoxColumn8
-        '
-        Me.DataGridViewTextBoxColumn8.HeaderText = "Cart QTY"
-        Me.DataGridViewTextBoxColumn8.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
-        Me.DataGridViewTextBoxColumn8.ReadOnly = True
-        Me.DataGridViewTextBoxColumn8.Width = 50
-        '
-        'DataGridViewDrug
-        '
-        Me.DataGridViewDrug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridViewDrug.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DrugNo, Me.DrugName, Me.Strength, Me.Unit, Me.Dose, Me.Frequency, Me.Duration, Me.TotalQTY})
-        Me.DataGridViewDrug.Location = New System.Drawing.Point(29, 92)
-        Me.DataGridViewDrug.Name = "DataGridViewDrug"
-        Me.DataGridViewDrug.ReadOnly = True
-        Me.DataGridViewDrug.RowHeadersWidth = 51
-        Me.DataGridViewDrug.RowTemplate.Height = 24
-        Me.DataGridViewDrug.Size = New System.Drawing.Size(1268, 361)
-        Me.DataGridViewDrug.TabIndex = 8
-        '
-        'DrugNo
-        '
-        Me.DrugNo.HeaderText = "No."
-        Me.DrugNo.MinimumWidth = 6
-        Me.DrugNo.Name = "DrugNo"
-        Me.DrugNo.ReadOnly = True
-        Me.DrugNo.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DrugNo.Width = 35
-        '
-        'DrugName
-        '
-        Me.DrugName.HeaderText = "Drug Name"
-        Me.DrugName.MinimumWidth = 6
-        Me.DrugName.Name = "DrugName"
-        Me.DrugName.ReadOnly = True
-        Me.DrugName.Width = 450
-        '
-        'Strength
-        '
-        Me.Strength.HeaderText = "Strength"
-        Me.Strength.MinimumWidth = 6
-        Me.Strength.Name = "Strength"
-        Me.Strength.ReadOnly = True
-        Me.Strength.Width = 60
-        '
-        'Unit
-        '
-        Me.Unit.HeaderText = "Unit"
-        Me.Unit.MinimumWidth = 6
-        Me.Unit.Name = "Unit"
-        Me.Unit.ReadOnly = True
-        Me.Unit.Width = 45
-        '
-        'Dose
-        '
-        Me.Dose.HeaderText = "Dose"
-        Me.Dose.MinimumWidth = 6
-        Me.Dose.Name = "Dose"
-        Me.Dose.ReadOnly = True
-        Me.Dose.Width = 60
-        '
-        'Frequency
-        '
-        Me.Frequency.HeaderText = "Frequency"
-        Me.Frequency.MinimumWidth = 6
-        Me.Frequency.Name = "Frequency"
-        Me.Frequency.ReadOnly = True
-        Me.Frequency.Width = 60
-        '
-        'Duration
-        '
-        Me.Duration.HeaderText = "Duration"
-        Me.Duration.MinimumWidth = 6
-        Me.Duration.Name = "Duration"
-        Me.Duration.ReadOnly = True
-        Me.Duration.Width = 60
-        '
-        'TotalQTY
-        '
-        Me.TotalQTY.HeaderText = "Total Quantity"
-        Me.TotalQTY.MinimumWidth = 6
-        Me.TotalQTY.Name = "TotalQTY"
-        Me.TotalQTY.ReadOnly = True
-        Me.TotalQTY.Width = 50
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(25, 14)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(203, 22)
-        Me.Label25.TabIndex = 10
-        Me.Label25.Text = "Previous Saved Name : "
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(25, 47)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(201, 22)
-        Me.Label26.TabIndex = 11
-        Me.Label26.Text = "Previous Saved IC No. :"
-        '
-        'lblPrevSavedName
-        '
-        Me.lblPrevSavedName.AutoSize = True
-        Me.lblPrevSavedName.Location = New System.Drawing.Point(225, 14)
-        Me.lblPrevSavedName.Name = "lblPrevSavedName"
-        Me.lblPrevSavedName.Size = New System.Drawing.Size(25, 22)
-        Me.lblPrevSavedName.TabIndex = 12
-        Me.lblPrevSavedName.Text = "   "
-        '
-        'lblPrevSavedICNo
-        '
-        Me.lblPrevSavedICNo.AutoSize = True
-        Me.lblPrevSavedICNo.Location = New System.Drawing.Point(225, 47)
-        Me.lblPrevSavedICNo.Name = "lblPrevSavedICNo"
-        Me.lblPrevSavedICNo.Size = New System.Drawing.Size(25, 22)
-        Me.lblPrevSavedICNo.TabIndex = 13
-        Me.lblPrevSavedICNo.Text = "   "
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(8, 11)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(70, 22)
+        Me.Label28.TabIndex = 16
+        Me.Label28.Text = "IC No. :"
         '
         'Form1
         '
@@ -3344,16 +3708,21 @@ Partial Class Form1
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
+        CType(Me.DataGridViewInsulin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).EndInit()
         Me.btnSavePrinterSettings.ResumeLayout(False)
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
+        Me.btnSavePrinterSettings.PerformLayout()
+        CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvPatientDrugHistory, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvDateSelector, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage4.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel3.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
-        CType(Me.DataGridViewInsulin, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3416,12 +3785,6 @@ Partial Class Form1
     Friend WithEvents txtDBServerAddress As TextBox
     Friend WithEvents txtDBName As TextBox
     Friend WithEvents btnUpdate As Button
-    Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As DataGridViewTextBoxColumn
-    Friend WithEvents Column3 As DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As DataGridViewTextBoxColumn
-    Friend WithEvents Column5 As DataGridViewTextBoxColumn
-    Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents lblRemark As Label
     Friend WithEvents lblPrescriberCategory As Label
@@ -3596,6 +3959,33 @@ Partial Class Form1
     Friend WithEvents Label24 As Label
     Friend WithEvents lblExistingPatient As Label
     Friend WithEvents DataGridViewInsulin As DataGridView
+    Friend WithEvents DataGridViewDrug As DataGridView
+    Friend WithEvents lblPrevSavedICNo As Label
+    Friend WithEvents lblPrevSavedName As Label
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label25 As Label
+    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents dgvDateSelector As DataGridView
+    Friend WithEvents DrugNo As DataGridViewTextBoxColumn
+    Friend WithEvents DrugName As DataGridViewTextBoxColumn
+    Friend WithEvents Strength As DataGridViewTextBoxColumn
+    Friend WithEvents Unit As DataGridViewTextBoxColumn
+    Friend WithEvents Dose As DataGridViewTextBoxColumn
+    Friend WithEvents Frequency As DataGridViewTextBoxColumn
+    Friend WithEvents Duration As DataGridViewTextBoxColumn
+    Friend WithEvents TotalQTY As DataGridViewTextBoxColumn
+    Friend WithEvents dgvPatientInsulinHistory As DataGridView
+    Friend WithEvents dgvPatientDrugHistory As DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn22 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn23 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn24 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn25 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn26 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn27 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn28 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn29 As DataGridViewTextBoxColumn
+    Friend WithEvents btnSearchDB As Button
+    Friend WithEvents txtICNoDB As TextBox
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
@@ -3609,17 +3999,32 @@ Partial Class Form1
     Friend WithEvents TotalDose As DataGridViewTextBoxColumn
     Friend WithEvents POM As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn8 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewDrug As DataGridView
-    Friend WithEvents DrugNo As DataGridViewTextBoxColumn
-    Friend WithEvents DrugName As DataGridViewTextBoxColumn
-    Friend WithEvents Strength As DataGridViewTextBoxColumn
-    Friend WithEvents Unit As DataGridViewTextBoxColumn
-    Friend WithEvents Dose As DataGridViewTextBoxColumn
-    Friend WithEvents Frequency As DataGridViewTextBoxColumn
-    Friend WithEvents Duration As DataGridViewTextBoxColumn
-    Friend WithEvents TotalQTY As DataGridViewTextBoxColumn
-    Friend WithEvents lblPrevSavedICNo As Label
-    Friend WithEvents lblPrevSavedName As Label
-    Friend WithEvents Label26 As Label
-    Friend WithEvents Label25 As Label
+    Friend WithEvents DataGridViewTextBoxColumn9 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn10 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn11 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn15 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn16 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn17 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn18 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn19 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn20 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn21 As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents lblPatientNameDB As Label
+    Friend WithEvents Label27 As Label
+    Friend WithEvents No As DataGridViewTextBoxColumn
+    Friend WithEvents ID As DataGridViewTextBoxColumn
+    Friend WithEvents DateAdded As DataGridViewTextBoxColumn
+    Friend WithEvents DateCollection As DataGridViewTextBoxColumn
+    Friend WithEvents DateSeeDoctor As DataGridViewTextBoxColumn
+    Friend WithEvents Timestamp As DataGridViewTextBoxColumn
+    Friend WithEvents Label28 As Label
 End Class

@@ -4,11 +4,8 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports MySql.Data.MySqlClient
 Imports System.Drawing.Printing
 Imports System.Text.RegularExpressions
-Imports Google.Protobuf
-Imports Microsoft.VisualBasic.ApplicationServices
-Imports System.Configuration
-Imports System.Windows.Forms.PropertyGridInternal
-Imports Google.Protobuf.WellKnownTypes
+Imports System.Text
+Imports System.Globalization
 
 
 Public Class Form1
@@ -81,6 +78,7 @@ Public Class Form1
 
 
     Private disableTextChanged As Boolean = False
+    Private disableTextChangedDB As Boolean = False
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Form Initialization / First Load
@@ -120,6 +118,8 @@ Public Class Form1
         getUserSavedSettingsData()
         btnCheckICMySPR.Enabled = False
         InitializeDB()
+        DataGridViewDrug.AllowUserToAddRows = False
+        DataGridViewInsulin.AllowUserToAddRows = False
     End Sub
     Private Sub SetandSaveDBSettings()
         Dim sender As Object
@@ -225,9 +225,9 @@ Public Class Form1
             PrintDoc.DefaultPageSettings.Landscape = False
 
             PPD.Document = PrintDoc
-            PPD.ShowDialog()
+            'PPD.ShowDialog()
             currentPage = 1
-            'PrintDoc.Print()
+            PrintDoc.Print()
         End If
 
         If Insulin1Selected Then
@@ -624,9 +624,9 @@ Public Class Form1
         PrintDocInsulin.DefaultPageSettings.Landscape = False
 
         PPD.Document = PrintDocInsulin
-        PPD.ShowDialog()
+        'PPD.ShowDialog()
         currentPageInsulin = 1
-        'PrintDoc.Print()
+        PrintDocInsulin.Print()
 
 
     End Sub
@@ -934,8 +934,74 @@ Public Class Form1
                                 Return
                             End If
 
-                            'Overwrite the current data in prescribeddrugs table
+                        Catch exx As Exception
+                            conn.Close()
+                            MsgBox(exx.Message)
+                            If exx.Message.Contains("Duplicate") Then 'Duplicated ID detected
+                                'goto here
+Redo:
+                                Dim getDuplicatedID As String = exx.Message
+                                Dim getNewID As Integer
+                                Dim keepAddcount As Boolean = True
+                                While keepAddcount 'Attempt to keep increasing ID value until can UPDATE MySQL
+                                    Try
+                                        getDuplicatedID = getNumeric(getDuplicatedID) 'get the id value
+                                        MsgBox("Duplicated ID: " & getDuplicatedID)
+                                        getNewID = getDuplicatedID + 1 'increment id value
+                                        MsgBox("New ID: " & getNewID)
+                                        Dim cmd3 As New MySqlCommand("UPDATE `prescribeddrugshistory` SET `ID` = '" & getNewID & "' WHERE `prescribeddrugshistory`.`ID` = " & getDuplicatedID, conn)
+                                        conn.Open()
+                                        cmd3.Parameters.Clear()
+                                        Dim i3 = cmd3.ExecuteNonQuery
+                                        If i3 > 0 Then
+                                            conn.Close()
+                                            keepAddcount = False
+                                            MsgBox("Resolved Duplicated ID")
+                                            'stlbMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
 
+                                        Else
+                                            MsgBox("Resolving ID Failed.")
+                                            conn.Close()
+                                            Return
+                                        End If
+                                    Catch ex1 As Exception
+                                        MsgBox(ex1.Message)
+                                        getDuplicatedID += 1 'increment new id again since id still occupied
+                                        'keepAddcount = True
+                                        conn.Close()
+                                    End Try
+                                End While
+                                Try
+                                    'Saves the old data to history database in prescribeddrugshistory table
+                                    Dim cmd As New MySqlCommand("INSERT INTO `prescribeddrugshistory` SELECT * FROM `prescribeddrugs` WHERE ICNo = '" & txtICNo.Text & "'", conn)
+                                    conn.Open()
+                                    cmd.Parameters.Clear()
+                                    Dim i2 = cmd.ExecuteNonQuery
+                                    If i2 > 0 Then
+                                        conn.Close()
+
+                                        MsgBox("Old Data saved to History for " & stPatientName & ", IC No.: " & stIC)
+                                        stlbMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
+
+                                    Else
+                                        MsgBox("Save Failed.")
+                                        conn.Close()
+                                        Return
+                                    End If
+                                Catch ex2 As Exception
+                                    conn.Close()
+                                    GoTo Redo
+                                End Try
+
+                            End If
+
+                            conn.Close()
+
+                        End Try
+
+                        Try
+                            'Overwrite the current data in prescribeddrugs table
+                            'UPDATE `prescribeddrugshistory` SET `ID` = '4' WHERE `prescribeddrugshistory`.`ID` = 5;
                             '"UPDATE `drugtable` SET `Strength`=@Strength,`Unit`=@Unit,`DosageForm`=@DosageForm,`PrescriberCategory`=@PrescriberCategory,`Remark`=@Remark WHERE `DrugName`=@DrugName", conn
                             Dim cmd2 As New MySqlCommand("UPDATE `prescribeddrugs` SET 
                             `Name`=@Name,`Date`=@Date,`DateCollection`=@DateCollection,`DateSeeDoctor`=@DateSeeDoctor,
@@ -1075,14 +1141,10 @@ Public Class Form1
 
 
                             End If
-
-
-
-                        Catch exx As Exception
-                            MsgBox(exx.Message)
-                            conn.Close()
-                            Return
+                        Catch exxx As Exception
+                            MsgBox(exxx.Message)
                         End Try
+
 
                     Case MsgBoxResult.No
                         conn.Close()
@@ -1095,10 +1157,16 @@ Public Class Form1
         Finally
 
         End Try
-
-
-
     End Sub
+    Public Function getNumeric(value As String) As String
+        Dim output As StringBuilder = New StringBuilder
+        For i = 0 To value.Length - 1
+            If IsNumeric(value(i)) Then
+                output.Append(value(i))
+            End If
+        Next
+        Return output.ToString()
+    End Function
 
     Public Sub Add()
         'Add button at Drugs Tab to Save Data entered in the Text Boxes
@@ -1583,7 +1651,7 @@ Public Class Form1
                     ConsumeUnitD1 = " paket "
                 ElseIf dr.Item("DosageForm") = "Packet" Then
                     ConsumeMethodD1 = "Minum "
-                ConsumeUnitD1 = " paket "
+                    ConsumeUnitD1 = " paket "
                 End If
             End While
             dr.Close()
@@ -3405,6 +3473,8 @@ Public Class Form1
         End If
     End Sub
 
+
+
     Private Sub btnIOU_Click(sender As Object, e As EventArgs) Handles btnIOU.Click
         Form2.Show()
     End Sub
@@ -3691,4 +3761,142 @@ Public Class Form1
 
     End Sub
 
+    Public Sub loadDatabaseDGV()
+        dgvDateSelector.Rows.Clear()
+        dgvPatientDrugHistory.Rows.Clear()
+        dgvPatientInsulinHistory.Rows.Clear()
+        'check if txtICDB is empty
+        If txtICNoDB.Text = "" Then
+            MsgBox("Please enter the IC No. at Search box")
+            Return
+        End If
+
+        Dim timestamp As String
+
+        Dim dt As New DataTable
+        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
+        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
+        Dim count As Integer = 0
+        Dim cmd As New MySqlCommand(" SELECT * FROM `prescribeddrugs` WHERE ICNo = '" & txtICNoDB.Text & "' UNION " & "SELECT * FROM `prescribeddrugshistory` WHERE ICNo = '" & txtICNoDB.Text & "'", conn)
+        Try
+
+            conn.Open()
+            dr = cmd.ExecuteReader
+
+            While dr.Read()
+                count += 1
+                dgvDateSelector.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
+
+            End While
+            'timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
+
+
+            lblPatientNameDB.Text = dr.Item("Name")
+            dr.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            dr.Dispose()
+            conn.Close()
+        End Try
+
+
+    End Sub
+    Public Sub loadDatabaseDGV2()
+        dgvPatientDrugHistory.Rows.Clear()
+        dgvPatientInsulinHistory.Rows.Clear()
+        Dim timestamp As String
+        timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
+        Dim inputTime As String = timestamp
+        Dim format As String = "d/M/yyyy h:mm:ss tt"
+        Dim provider As CultureInfo = CultureInfo.InvariantCulture
+
+        Dim parsedTime As DateTime = DateTime.ParseExact(inputTime, format, provider)
+        Dim outputTime As String = parsedTime.ToString("yyyy-M-dd HH:mm:ss")
+        'MsgBox(timestamp)
+        Dim dt As New DataTable
+        'MsgBox(outputTime)
+        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
+        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
+        Dim cmd As New MySqlCommand(" SELECT * FROM `prescribeddrugs` WHERE ICNo = '" & txtICNoDB.Text & "'" & " AND " & "Timestamp = '" & outputTime & "'" & " UNION " & "SELECT * FROM `prescribeddrugshistory` WHERE ICNo = '" & txtICNoDB.Text & "'" & " AND " & "Timestamp ='" & outputTime & "' LIMIT 1", conn)
+        Try
+
+            conn.Open()
+            dr = cmd.ExecuteReader
+            While dr.Read()
+                dgvPatientDrugHistory.Rows.Add("1", dr.Item("Drug1Name"), dr.Item("Drug1Strength"), dr.Item("Drug1Unit"), dr.Item("Drug1Dose"), dr.Item("Drug1Freq"), dr.Item("Drug1Duration"), dr.Item("Drug1TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("2", dr.Item("Drug2Name"), dr.Item("Drug2Strength"), dr.Item("Drug2Unit"), dr.Item("Drug2Dose"), dr.Item("Drug2Freq"), dr.Item("Drug2Duration"), dr.Item("Drug2TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("3", dr.Item("Drug3Name"), dr.Item("Drug3Strength"), dr.Item("Drug3Unit"), dr.Item("Drug3Dose"), dr.Item("Drug3Freq"), dr.Item("Drug3Duration"), dr.Item("Drug3TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("4", dr.Item("Drug4Name"), dr.Item("Drug4Strength"), dr.Item("Drug4Unit"), dr.Item("Drug4Dose"), dr.Item("Drug4Freq"), dr.Item("Drug4Duration"), dr.Item("Drug4TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("5", dr.Item("Drug5Name"), dr.Item("Drug5Strength"), dr.Item("Drug5Unit"), dr.Item("Drug5Dose"), dr.Item("Drug5Freq"), dr.Item("Drug5Duration"), dr.Item("Drug5TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("6", dr.Item("Drug6Name"), dr.Item("Drug6Strength"), dr.Item("Drug6Unit"), dr.Item("Drug6Dose"), dr.Item("Drug6Freq"), dr.Item("Drug6Duration"), dr.Item("Drug6TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("7", dr.Item("Drug7Name"), dr.Item("Drug7Strength"), dr.Item("Drug7Unit"), dr.Item("Drug7Dose"), dr.Item("Drug7Freq"), dr.Item("Drug7Duration"), dr.Item("Drug7TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("8", dr.Item("Drug8Name"), dr.Item("Drug8Strength"), dr.Item("Drug8Unit"), dr.Item("Drug8Dose"), dr.Item("Drug8Freq"), dr.Item("Drug8Duration"), dr.Item("Drug8TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("9", dr.Item("Drug9Name"), dr.Item("Drug9Strength"), dr.Item("Drug9Unit"), dr.Item("Drug9Dose"), dr.Item("Drug9Freq"), dr.Item("Drug9Duration"), dr.Item("Drug9TotalQTY"))
+                dgvPatientDrugHistory.Rows.Add("10", dr.Item("Drug10Name"), dr.Item("Drug10Strength"), dr.Item("Drug10Unit"), dr.Item("Drug10Dose"), dr.Item("Drug10Freq"), dr.Item("Drug10Duration"), dr.Item("Drug10TotalQTY"))
+                dgvPatientInsulinHistory.Rows.Add("1", dr.Item("Insulin1Name"), dr.Item("Insulin1Strength"), dr.Item("Insulin1Unit"), dr.Item("Insulin1MorDose"), dr.Item("Insulin1NoonDose"), dr.Item("Insulin1AfternoonDose"), dr.Item("Insulin1NightDose"), dr.Item("Insulin1Freq"), dr.Item("Insulin1Duration"), dr.Item("Insulin1TotalDose"), dr.Item("Insulin1POM"), dr.Item("Insulin1CartQTY"))
+                dgvPatientInsulinHistory.Rows.Add("2", dr.Item("Insulin2Name"), dr.Item("Insulin2Strength"), dr.Item("Insulin2Unit"), dr.Item("Insulin2MorDose"), dr.Item("Insulin2NoonDose"), dr.Item("Insulin2AfternoonDose"), dr.Item("Insulin2NightDose"), dr.Item("Insulin2Freq"), dr.Item("Insulin2Duration"), dr.Item("Insulin2TotalDose"), dr.Item("Insulin2POM"), dr.Item("Insulin2CartQTY"))
+
+
+
+            End While
+            dr.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            dr.Dispose()
+            conn.Close()
+        End Try
+
+
+    End Sub
+
+    Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvDateSelector.CellClick
+        'txtDrugName.Text = dgvDateSelector.CurrentRow.Cells(0).Value
+        'txtStrength.Text = dgvDateSelector.CurrentRow.Cells(1).Value
+        'txtUnit.Text = dgvDateSelector.CurrentRow.Cells(2).Value
+        'txtDosageForm.Text = dgvDateSelector.CurrentRow.Cells(3).Value
+        'Dim timestamp As String
+        'timestamp = dgvDateSelector.CurrentRow.Cells(4).Value
+        'MsgBox(timestamp)
+        loadDatabaseDGV2()
+
+    End Sub
+
+    Private Sub btnSearchDB_Click(sender As Object, e As EventArgs) Handles btnSearchDB.Click
+        loadDatabaseDGV()
+    End Sub
+
+    Private Sub txtICNoDB_TextChanged(sender As Object, e As EventArgs) Handles txtICNoDB.TextChanged
+
+        If Not disableTextChangedDB Then
+            If txtICNoDB.TextLength = 6 Then
+                ' Insert "-" at the position after the sixth and ninth character
+                txtICNoDB.Text = txtICNoDB.Text.Insert(6, "-")
+
+                ' Set the cursor position to after the "-" character
+                txtICNoDB.SelectionStart = txtICNoDB.TextLength
+            End If
+            If txtICNoDB.TextLength = 9 Then
+                ' Insert "-" at the position after the sixth and ninth character
+                txtICNoDB.Text = txtICNoDB.Text.Insert(9, "-")
+
+                ' Set the cursor position to after the "-" character
+                txtICNoDB.SelectionStart = txtICNoDB.TextLength
+
+            End If
+
+        End If
+        If txtICNoDB.TextLength < 5 Then
+            disableTextChangedDB = False
+        End If
+    End Sub
+    Private Sub txtICNoDB_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtICNoDB.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+        If Asc(e.KeyChar) = 8 Then
+            disableTextChangedDB = True
+        End If
+    End Sub
 End Class

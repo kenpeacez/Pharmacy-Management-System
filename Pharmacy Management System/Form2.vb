@@ -122,7 +122,7 @@ Public Class Form2
                 Form1.txtIn2POM.Text = dr.Item("Insulin2POM")
                 Form1.txtIn2CartQTY.Text = dr.Item("Insulin2CartQTY")
 
-
+                lblDatePastMed.Text = dr.Item("Date")
 
                 Form1.checkforselecteddrugs()
 
