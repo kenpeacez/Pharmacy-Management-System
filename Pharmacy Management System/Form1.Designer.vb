@@ -231,10 +231,8 @@ Partial Class Form1
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.lblPrevSavedICNo = New System.Windows.Forms.Label()
-        Me.lblPrevSavedName = New System.Windows.Forms.Label()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.Label25 = New System.Windows.Forms.Label()
+        Me.TabControl2 = New System.Windows.Forms.TabControl()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.DataGridViewInsulin = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -249,6 +247,7 @@ Partial Class Form1
         Me.TotalDose = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.POM = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lblPrevSavedName = New System.Windows.Forms.Label()
         Me.DataGridViewDrug = New System.Windows.Forms.DataGridView()
         Me.DrugNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DrugName = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -258,7 +257,12 @@ Partial Class Form1
         Me.Frequency = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Duration = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TotalQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lblPrevSavedICNo = New System.Windows.Forms.Label()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.btnSavePrinterSettings = New System.Windows.Forms.TabPage()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.lblPatientNameDB = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.btnSearchDB = New System.Windows.Forms.Button()
@@ -307,6 +311,10 @@ Partial Class Form1
         Me.txtDBServerAddress = New System.Windows.Forms.TextBox()
         Me.txtDBName = New System.Windows.Forms.TextBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.cboxDefaultPrinters = New System.Windows.Forms.ComboBox()
+        Me.lblDefaultPrinterAtSetting = New System.Windows.Forms.Label()
+        Me.Label29 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.txtClinicName = New System.Windows.Forms.TextBox()
@@ -321,7 +329,6 @@ Partial Class Form1
         Me.PrintDoc = New System.Drawing.Printing.PrintDocument()
         Me.PPD = New System.Windows.Forms.PrintPreviewDialog()
         Me.PrintDocInsulin = New System.Drawing.Printing.PrintDocument()
-        Me.Label28 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
@@ -345,6 +352,8 @@ Partial Class Form1
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
+        Me.TabControl2.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
         CType(Me.DataGridViewInsulin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.btnSavePrinterSettings.SuspendLayout()
@@ -1043,8 +1052,6 @@ Partial Class Form1
         'cboxEnablePrintPDF
         '
         Me.cboxEnablePrintPDF.AutoSize = True
-        Me.cboxEnablePrintPDF.Checked = True
-        Me.cboxEnablePrintPDF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cboxEnablePrintPDF.Location = New System.Drawing.Point(923, 21)
         Me.cboxEnablePrintPDF.Name = "cboxEnablePrintPDF"
         Me.cboxEnablePrintPDF.Size = New System.Drawing.Size(217, 26)
@@ -2494,7 +2501,7 @@ Partial Class Form1
         'lbICNo
         '
         Me.lbICNo.AutoSize = True
-        Me.lbICNo.Location = New System.Drawing.Point(9, 63)
+        Me.lbICNo.Location = New System.Drawing.Point(7, 64)
         Me.lbICNo.Name = "lbICNo"
         Me.lbICNo.Size = New System.Drawing.Size(60, 22)
         Me.lbICNo.TabIndex = 3
@@ -2514,7 +2521,7 @@ Partial Class Form1
         'lbName
         '
         Me.lbName.AutoSize = True
-        Me.lbName.Location = New System.Drawing.Point(12, 11)
+        Me.lbName.Location = New System.Drawing.Point(8, 15)
         Me.lbName.Name = "lbName"
         Me.lbName.Size = New System.Drawing.Size(57, 22)
         Me.lbName.TabIndex = 1
@@ -2543,7 +2550,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 141.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2560,9 +2567,9 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(461, 3)
+        Me.btnDelete.Location = New System.Drawing.Point(453, 3)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(136, 33)
+        Me.btnDelete.Size = New System.Drawing.Size(144, 33)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2575,7 +2582,7 @@ Partial Class Form1
         Me.btnAddDrug.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddDrug.Location = New System.Drawing.Point(3, 3)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(215, 33)
+        Me.btnAddDrug.Size = New System.Drawing.Size(209, 33)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2585,7 +2592,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(339, 3)
+        Me.btnClear.Location = New System.Drawing.Point(331, 3)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(116, 33)
         Me.btnClear.TabIndex = 12
@@ -2597,9 +2604,9 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(224, 3)
+        Me.btnUpdate.Location = New System.Drawing.Point(218, 3)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(109, 33)
+        Me.btnUpdate.Size = New System.Drawing.Size(107, 33)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -2836,12 +2843,7 @@ Partial Class Form1
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.lblPrevSavedICNo)
-        Me.TabPage3.Controls.Add(Me.lblPrevSavedName)
-        Me.TabPage3.Controls.Add(Me.Label26)
-        Me.TabPage3.Controls.Add(Me.Label25)
-        Me.TabPage3.Controls.Add(Me.DataGridViewInsulin)
-        Me.TabPage3.Controls.Add(Me.DataGridViewDrug)
+        Me.TabPage3.Controls.Add(Me.TabControl2)
         Me.TabPage3.Location = New System.Drawing.Point(4, 31)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
@@ -2850,47 +2852,37 @@ Partial Class Form1
         Me.TabPage3.Text = "LOG"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'lblPrevSavedICNo
+        'TabControl2
         '
-        Me.lblPrevSavedICNo.AutoSize = True
-        Me.lblPrevSavedICNo.Location = New System.Drawing.Point(225, 47)
-        Me.lblPrevSavedICNo.Name = "lblPrevSavedICNo"
-        Me.lblPrevSavedICNo.Size = New System.Drawing.Size(25, 22)
-        Me.lblPrevSavedICNo.TabIndex = 13
-        Me.lblPrevSavedICNo.Text = "   "
+        Me.TabControl2.Controls.Add(Me.TabPage5)
+        Me.TabControl2.Controls.Add(Me.TabPage6)
+        Me.TabControl2.Location = New System.Drawing.Point(9, 2)
+        Me.TabControl2.Name = "TabControl2"
+        Me.TabControl2.SelectedIndex = 0
+        Me.TabControl2.Size = New System.Drawing.Size(1539, 845)
+        Me.TabControl2.TabIndex = 14
         '
-        'lblPrevSavedName
+        'TabPage5
         '
-        Me.lblPrevSavedName.AutoSize = True
-        Me.lblPrevSavedName.Location = New System.Drawing.Point(225, 14)
-        Me.lblPrevSavedName.Name = "lblPrevSavedName"
-        Me.lblPrevSavedName.Size = New System.Drawing.Size(25, 22)
-        Me.lblPrevSavedName.TabIndex = 12
-        Me.lblPrevSavedName.Text = "   "
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(25, 47)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(201, 22)
-        Me.Label26.TabIndex = 11
-        Me.Label26.Text = "Previous Saved IC No. :"
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(25, 14)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(203, 22)
-        Me.Label25.TabIndex = 10
-        Me.Label25.Text = "Previous Saved Name : "
+        Me.TabPage5.Controls.Add(Me.DataGridViewInsulin)
+        Me.TabPage5.Controls.Add(Me.lblPrevSavedName)
+        Me.TabPage5.Controls.Add(Me.DataGridViewDrug)
+        Me.TabPage5.Controls.Add(Me.lblPrevSavedICNo)
+        Me.TabPage5.Controls.Add(Me.Label25)
+        Me.TabPage5.Controls.Add(Me.Label26)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(1531, 810)
+        Me.TabPage5.TabIndex = 0
+        Me.TabPage5.Text = "Previous Patient"
+        Me.TabPage5.UseVisualStyleBackColor = True
         '
         'DataGridViewInsulin
         '
         Me.DataGridViewInsulin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridViewInsulin.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
-        Me.DataGridViewInsulin.Location = New System.Drawing.Point(29, 475)
+        Me.DataGridViewInsulin.Location = New System.Drawing.Point(9, 452)
         Me.DataGridViewInsulin.Name = "DataGridViewInsulin"
         Me.DataGridViewInsulin.ReadOnly = True
         Me.DataGridViewInsulin.RowHeadersVisible = False
@@ -3004,11 +2996,20 @@ Partial Class Form1
         Me.DataGridViewTextBoxColumn8.ReadOnly = True
         Me.DataGridViewTextBoxColumn8.Width = 60
         '
+        'lblPrevSavedName
+        '
+        Me.lblPrevSavedName.AutoSize = True
+        Me.lblPrevSavedName.Location = New System.Drawing.Point(216, 16)
+        Me.lblPrevSavedName.Name = "lblPrevSavedName"
+        Me.lblPrevSavedName.Size = New System.Drawing.Size(25, 22)
+        Me.lblPrevSavedName.TabIndex = 12
+        Me.lblPrevSavedName.Text = "   "
+        '
         'DataGridViewDrug
         '
         Me.DataGridViewDrug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridViewDrug.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DrugNo, Me.DrugName, Me.Strength, Me.Unit, Me.Dose, Me.Frequency, Me.Duration, Me.TotalQTY})
-        Me.DataGridViewDrug.Location = New System.Drawing.Point(29, 92)
+        Me.DataGridViewDrug.Location = New System.Drawing.Point(9, 85)
         Me.DataGridViewDrug.Name = "DataGridViewDrug"
         Me.DataGridViewDrug.ReadOnly = True
         Me.DataGridViewDrug.RowHeadersVisible = False
@@ -3082,6 +3083,43 @@ Partial Class Form1
         Me.TotalQTY.ReadOnly = True
         Me.TotalQTY.Width = 70
         '
+        'lblPrevSavedICNo
+        '
+        Me.lblPrevSavedICNo.AutoSize = True
+        Me.lblPrevSavedICNo.Location = New System.Drawing.Point(216, 48)
+        Me.lblPrevSavedICNo.Name = "lblPrevSavedICNo"
+        Me.lblPrevSavedICNo.Size = New System.Drawing.Size(25, 22)
+        Me.lblPrevSavedICNo.TabIndex = 13
+        Me.lblPrevSavedICNo.Text = "   "
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(9, 16)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(203, 22)
+        Me.Label25.TabIndex = 10
+        Me.Label25.Text = "Previous Saved Name : "
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(6, 47)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(201, 22)
+        Me.Label26.TabIndex = 11
+        Me.Label26.Text = "Previous Saved IC No. :"
+        '
+        'TabPage6
+        '
+        Me.TabPage6.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage6.Size = New System.Drawing.Size(1531, 810)
+        Me.TabPage6.TabIndex = 1
+        Me.TabPage6.Text = "Records"
+        Me.TabPage6.UseVisualStyleBackColor = True
+        '
         'btnSavePrinterSettings
         '
         Me.btnSavePrinterSettings.Controls.Add(Me.Label28)
@@ -3099,6 +3137,15 @@ Partial Class Form1
         Me.btnSavePrinterSettings.TabIndex = 3
         Me.btnSavePrinterSettings.Text = "Database"
         Me.btnSavePrinterSettings.UseVisualStyleBackColor = True
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(8, 11)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(70, 22)
+        Me.Label28.TabIndex = 16
+        Me.Label28.Text = "IC No. :"
         '
         'lblPatientNameDB
         '
@@ -3532,19 +3579,58 @@ Partial Class Form1
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Label30)
+        Me.GroupBox3.Controls.Add(Me.cboxDefaultPrinters)
+        Me.GroupBox3.Controls.Add(Me.lblDefaultPrinterAtSetting)
+        Me.GroupBox3.Controls.Add(Me.Label29)
         Me.GroupBox3.Controls.Add(Me.Button1)
         Me.GroupBox3.Controls.Add(Me.Label23)
         Me.GroupBox3.Controls.Add(Me.txtClinicName)
-        Me.GroupBox3.Location = New System.Drawing.Point(23, 302)
+        Me.GroupBox3.Location = New System.Drawing.Point(23, 290)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(577, 109)
+        Me.GroupBox3.Size = New System.Drawing.Size(605, 209)
         Me.GroupBox3.TabIndex = 1
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Printer Settings"
         '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(6, 125)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(198, 22)
+        Me.Label30.TabIndex = 6
+        Me.Label30.Text = "Change Default Printer:"
+        '
+        'cboxDefaultPrinters
+        '
+        Me.cboxDefaultPrinters.FormattingEnabled = True
+        Me.cboxDefaultPrinters.Location = New System.Drawing.Point(210, 122)
+        Me.cboxDefaultPrinters.Name = "cboxDefaultPrinters"
+        Me.cboxDefaultPrinters.Size = New System.Drawing.Size(387, 30)
+        Me.cboxDefaultPrinters.TabIndex = 5
+        '
+        'lblDefaultPrinterAtSetting
+        '
+        Me.lblDefaultPrinterAtSetting.AutoSize = True
+        Me.lblDefaultPrinterAtSetting.Location = New System.Drawing.Point(210, 90)
+        Me.lblDefaultPrinterAtSetting.Name = "lblDefaultPrinterAtSetting"
+        Me.lblDefaultPrinterAtSetting.Size = New System.Drawing.Size(30, 22)
+        Me.lblDefaultPrinterAtSetting.TabIndex = 4
+        Me.lblDefaultPrinterAtSetting.Text = "    "
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(17, 88)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(187, 22)
+        Me.Label29.TabIndex = 3
+        Me.Label29.Text = "Default Printer Name :"
+        '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(441, 70)
+        Me.Button1.Location = New System.Drawing.Point(444, 170)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(127, 33)
         Me.Button1.TabIndex = 2
@@ -3556,15 +3642,15 @@ Partial Class Form1
         Me.Label23.AutoSize = True
         Me.Label23.Location = New System.Drawing.Point(6, 30)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(106, 22)
+        Me.Label23.Size = New System.Drawing.Size(116, 22)
         Me.Label23.TabIndex = 1
-        Me.Label23.Text = "Clinic Name"
+        Me.Label23.Text = "Clinic Name :"
         '
         'txtClinicName
         '
-        Me.txtClinicName.Location = New System.Drawing.Point(181, 27)
+        Me.txtClinicName.Location = New System.Drawing.Point(128, 27)
         Me.txtClinicName.Name = "txtClinicName"
-        Me.txtClinicName.Size = New System.Drawing.Size(387, 28)
+        Me.txtClinicName.Size = New System.Drawing.Size(469, 28)
         Me.txtClinicName.TabIndex = 0
         '
         'StatusStrip1
@@ -3645,15 +3731,6 @@ Partial Class Form1
         'PrintDocInsulin
         '
         '
-        'Label28
-        '
-        Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(8, 11)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(70, 22)
-        Me.Label28.TabIndex = 16
-        Me.Label28.Text = "IC No. :"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
@@ -3665,7 +3742,6 @@ Partial Class Form1
         Me.Controls.Add(Me.lblDeveloper)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.TabControl1)
-        Me.DoubleBuffered = True
         Me.Name = "Form1"
         Me.Text = "Pharmacy Management System"
         Me.TabControl1.ResumeLayout(False)
@@ -3707,7 +3783,9 @@ Partial Class Form1
         Me.TableLayoutPanel1.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
-        Me.TabPage3.PerformLayout()
+        Me.TabControl2.ResumeLayout(False)
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage5.PerformLayout()
         CType(Me.DataGridViewInsulin, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).EndInit()
         Me.btnSavePrinterSettings.ResumeLayout(False)
@@ -4027,4 +4105,11 @@ Partial Class Form1
     Friend WithEvents DateSeeDoctor As DataGridViewTextBoxColumn
     Friend WithEvents Timestamp As DataGridViewTextBoxColumn
     Friend WithEvents Label28 As Label
+    Friend WithEvents TabControl2 As TabControl
+    Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents TabPage6 As TabPage
+    Friend WithEvents lblDefaultPrinterAtSetting As Label
+    Friend WithEvents Label29 As Label
+    Friend WithEvents cboxDefaultPrinters As ComboBox
+    Friend WithEvents Label30 As Label
 End Class

@@ -6,6 +6,7 @@ Imports System.Drawing.Printing
 Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System.Globalization
+Imports System.Runtime.InteropServices
 
 
 Public Class Form1
@@ -111,9 +112,11 @@ Public Class Form1
         ' days = dtpDateCollection.Value - dtpDateSaved.Value
         ' txtDurationMaster.Text = days.days + 1 & " days"
         'calculateDurationMaster()
+        cboxEnablePrintPDF.Checked = My.Settings.EnablePrintAfterSave
         btnIOU.Enabled = False
         cbAddDays.SelectedIndex = 3
         GetDefaultPrinterName()
+        getDefaultPrinters()
         disabledrug2to10()
         getUserSavedSettingsData()
         btnCheckICMySPR.Enabled = False
@@ -160,7 +163,19 @@ Public Class Form1
         ClinicNameNew = txtClinicName.Text
         My.Settings.ClinicName = ClinicNameNew
         My.Settings.Save()
+        'Set Default Printer
+        Dim selectedPrinter As String = cboxDefaultPrinters.SelectedItem
+        If selectedPrinter IsNot Nothing Then
+            If SetDefaultPrinter(selectedPrinter) Then
+                MessageBox.Show($"Default printer set to: {selectedPrinter}")
+            Else
+                MessageBox.Show("Failed to set default printer.")
+            End If
+        Else
+            MessageBox.Show("Please select a printer from the list.")
+        End If
         MsgBox("Saved Printer Settings")
+        GetDefaultPrinterName()
     End Sub
     Public Sub getUserSavedSettingsData()
         txtDBServerAddress.Text = My.Settings.dbServerAddress
@@ -212,6 +227,7 @@ Public Class Form1
         Dim defaultPrinterName As String = printerSettings.PrinterName
 
         stlbPrinterName.Text = defaultPrinterName
+        lblDefaultPrinterAtSetting.Text = defaultPrinterName
     End Sub
 
     Public Sub print()
@@ -225,9 +241,9 @@ Public Class Form1
             PrintDoc.DefaultPageSettings.Landscape = False
 
             PPD.Document = PrintDoc
-            'PPD.ShowDialog()
+            PPD.ShowDialog()
             currentPage = 1
-            PrintDoc.Print()
+            'PrintDoc.Print()
         End If
 
         If Insulin1Selected Then
@@ -462,9 +478,7 @@ Public Class Form1
             If Insulin1Selected = False Then
                 Return
             End If
-            If Insulin2Selected Then
-                currentPageInsulin += 1
-            End If
+
 
             'Initialize printing parameters
             'Set Custom Names
@@ -500,7 +514,7 @@ Public Class Form1
 
 
             Dim Rect9a As New Rectangle(180, 175, 100, 13) 'Jumlah
-
+            'Insulin 1
             Dim combinedwords As String
             Dim comamorning As String = " "
             Dim comanoon As String = " "
@@ -566,6 +580,73 @@ Public Class Form1
                 In1NightDose = Nothing
                 combinedwords = "Suntik " & In1MorDose & unitpagi & In1NoonDose & unittghari & In1AfterNoonDose & unitpetang
             End If
+            'Insulin 2
+
+            Dim combinedwords2 As String
+            Dim comamorning2 As String = " "
+            Dim comanoon2 As String = " "
+            Dim comaafternoon2 As String = " "
+            Dim unitpagi2 As String = " unit pagi"
+            Dim unittghari2 As String = " unit tengahari"
+            Dim unitpetang2 As String = " unit petang"
+            Dim unitmalam2 As String = " unit malam"
+
+            Dim In2MorDose = txtIn2MorDose.Text
+            Dim In2NoonDose = txtIn2NoonDose.Text
+            Dim In2AfterNoonDose = txtIn2AfterNoonDose.Text
+            Dim In2NightDose = txtIn2NightDose.Text
+
+            If In2MorDose <> "" Then
+                If In2NoonDose <> "" Then
+                    comamorning2 = ", "
+                End If
+                If In2AfterNoonDose <> "" Then
+                    comamorning2 = ", "
+                End If
+                If In2NightDose <> "" Then
+                    comamorning2 = ", "
+                End If
+
+            End If
+            If In2NoonDose <> "" Then
+                If In2AfterNoonDose <> "" Then
+                    comanoon2 = ", " & vbNewLine
+                End If
+                If In2NightDose <> "" Then
+                    comanoon2 = ", " & vbNewLine
+                End If
+            End If
+            If In2AfterNoonDose <> "" Then
+                If In2NightDose <> "" Then
+                    comaafternoon2 = ", "
+                End If
+            End If
+            unitpagi2 = unitpagi2 & comamorning2
+            unittghari2 = unittghari2 & comanoon2
+            unitpetang2 = unitpetang2 & comaafternoon2
+
+            combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2NoonDose & unittghari2 & In2AfterNoonDose & unitpetang2 & In2NightDose & unitmalam2
+
+            If In2MorDose = "" Then
+                unitpagi2 = Nothing
+                In2MorDose = Nothing
+                combinedwords2 = "Suntik " & In2NoonDose & unittghari2 & In2AfterNoonDose & unitpetang2 & In2NightDose & unitmalam2
+            End If
+            If In2NoonDose = "" Then
+                unittghari2 = Nothing
+                In2NoonDose = Nothing
+                combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2AfterNoonDose & unitpetang2 & In2NightDose & unitmalam2
+            End If
+            If In2AfterNoonDose = "" Then
+                unitpetang2 = Nothing
+                In2AfterNoonDose = Nothing
+                combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2NoonDose & unittghari2 & In2NightDose & unitmalam2
+            End If
+            If In2NightDose = "" Then
+                unitmalam2 = Nothing
+                In2NightDose = Nothing
+                combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2NoonDose & unittghari2 & In2AfterNoonDose & unitpetang2
+            End If
 
 
 
@@ -594,9 +675,12 @@ Public Class Form1
                     e.Graphics.DrawString(combinedwords, f8b, Brushes.Black, Rect6a, centre)
                     e.Graphics.DrawString(RemarkIn1, f8a, Brushes.Black, Rect8a, centre)
                     e.Graphics.DrawString("Jumlah Katrij: " & txtIn1CartQTY.Text, f8a, Brushes.Black, Rect9a, left)
-               ' e.Graphics.DrawLine(Pens.Black, 5, 5, 305, 305)
-                'e.Graphics.DrawString("Ambil ", f8a, Brushes.Black, 200, 200, left)
+
                 Case 2
+                    e.Graphics.DrawString(cbInsulin2.Text, f8a, Brushes.Black, Rect4a, centre)
+                    e.Graphics.DrawString(combinedwords2, f8b, Brushes.Black, Rect6a, centre)
+                    e.Graphics.DrawString(RemarkIn2, f8a, Brushes.Black, Rect8a, centre)
+                    e.Graphics.DrawString("Jumlah Katrij: " & txtIn2CartQTY.Text, f8a, Brushes.Black, Rect9a, left)
 
             End Select
 
@@ -624,11 +708,26 @@ Public Class Form1
         PrintDocInsulin.DefaultPageSettings.Landscape = False
 
         PPD.Document = PrintDocInsulin
-        'PPD.ShowDialog()
+        PPD.ShowDialog()
         currentPageInsulin = 1
-        PrintDocInsulin.Print()
+        'PrintDocInsulin.Print()
 
 
+    End Sub
+
+    ' Import the necessary methods to set the default printer
+    <DllImport("winspool.drv", CharSet:=CharSet.Auto, SetLastError:=True)>
+    Public Shared Function SetDefaultPrinter(ByVal pszPrinter As String) As Boolean
+    End Function
+
+    Public Sub getDefaultPrinters()
+
+        ' Populate the ComboBox with installed printers
+        For Each printer As String In PrinterSettings.InstalledPrinters
+            cboxDefaultPrinters.Items.Add(printer)
+        Next
+        ' Optionally, select the current default printer
+        cboxDefaultPrinters.SelectedItem = New PrinterSettings().PrinterName
     End Sub
 
 
@@ -1155,7 +1254,9 @@ Redo:
             End If
             conn.Close()
         Finally
-
+            If cboxEnablePrintPDF.Checked Then
+                print()
+            End If
         End Try
     End Sub
     Public Function getNumeric(value As String) As String
@@ -3559,6 +3660,12 @@ Redo:
         If cboxEnablePrintPDF.Checked = False Then
             btnSave.Text = "Save only"
         End If
+        Dim EnablePrintAfterSave As Boolean = My.Settings.EnablePrintAfterSave
+        Dim EnablePrintAfterSaveNew As Boolean
+        EnablePrintAfterSaveNew = cboxEnablePrintPDF.Checked
+        My.Settings.EnablePrintAfterSave = EnablePrintAfterSaveNew
+        My.Settings.Save()
+
     End Sub
 
     Private Sub cbInsulin1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbInsulin1.SelectedIndexChanged
@@ -3899,4 +4006,6 @@ Redo:
             disableTextChangedDB = True
         End If
     End Sub
+
+
 End Class
