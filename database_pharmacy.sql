@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 03:23 PM
+-- Generation Time: May 18, 2024 at 03:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,15 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `database_pharmacy`
 --
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `all`
--- (See below for the actual view)
---
-CREATE TABLE `all` (
-);
 
 -- --------------------------------------------------------
 
@@ -208,13 +199,14 @@ INSERT INTO `drugtable` (`ID`, `DrugName`, `Strength`, `Unit`, `DosageForm`, `Pr
 --
 
 CREATE TABLE `prescribeddrugs` (
-  `IDMainTable` int(11) NOT NULL,
+  `ID` int(255) NOT NULL,
+  `HistoryID` int(255) NOT NULL,
   `Name` varchar(300) NOT NULL,
   `ICNo` varchar(20) NOT NULL,
   `Date` varchar(25) NOT NULL,
   `DateCollection` varchar(25) NOT NULL,
   `DateSeeDoctor` varchar(25) NOT NULL,
-  `Timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `Timestamp` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `Drug1Name` varchar(100) NOT NULL,
   `Drug1Strength` varchar(11) NOT NULL,
   `Drug1Unit` varchar(10) NOT NULL,
@@ -315,12 +307,12 @@ CREATE TABLE `prescribeddrugs` (
 -- Dumping data for table `prescribeddrugs`
 --
 
-INSERT INTO `prescribeddrugs` (`IDMainTable`, `Name`, `ICNo`, `Date`, `DateCollection`, `DateSeeDoctor`, `Timestamp`, `Drug1Name`, `Drug1Strength`, `Drug1Unit`, `Drug1Dose`, `Drug1Freq`, `Drug1Duration`, `Drug1TotalQTY`, `Drug2Name`, `Drug2Strength`, `Drug2Unit`, `Drug2Dose`, `Drug2Freq`, `Drug2Duration`, `Drug2TotalQTY`, `Drug3Name`, `Drug3Strength`, `Drug3Unit`, `Drug3Dose`, `Drug3Freq`, `Drug3Duration`, `Drug3TotalQTY`, `Drug4Name`, `Drug4Strength`, `Drug4Unit`, `Drug4Dose`, `Drug4Freq`, `Drug4Duration`, `Drug4TotalQTY`, `Drug5Name`, `Drug5Strength`, `Drug5Unit`, `Drug5Dose`, `Drug5Freq`, `Drug5Duration`, `Drug5TotalQTY`, `Drug6Name`, `Drug6Strength`, `Drug6Unit`, `Drug6Dose`, `Drug6Freq`, `Drug6Duration`, `Drug6TotalQTY`, `Drug7Name`, `Drug7Strength`, `Drug7Unit`, `Drug7Dose`, `Drug7Freq`, `Drug7Duration`, `Drug7TotalQTY`, `Drug8Name`, `Drug8Strength`, `Drug8Unit`, `Drug8Dose`, `Drug8Freq`, `Drug8Duration`, `Drug8TotalQTY`, `Drug9Name`, `Drug9Strength`, `Drug9Unit`, `Drug9Dose`, `Drug9Freq`, `Drug9Duration`, `Drug9TotalQTY`, `Drug10Name`, `Drug10Strength`, `Drug10Unit`, `Drug10Dose`, `Drug10Freq`, `Drug10Duration`, `Drug10TotalQTY`, `Insulin1Name`, `Insulin1Strength`, `Insulin1Unit`, `Insulin1MorDose`, `Insulin1NoonDose`, `Insulin1AfternoonDose`, `Insulin1NightDose`, `Insulin1Freq`, `Insulin1Duration`, `Insulin1TotalDose`, `Insulin1POM`, `Insulin1CartQTY`, `Insulin2Name`, `Insulin2Strength`, `Insulin2Unit`, `Insulin2MorDose`, `Insulin2NoonDose`, `Insulin2AfternoonDose`, `Insulin2NightDose`, `Insulin2Freq`, `Insulin2Duration`, `Insulin2TotalDose`, `Insulin2POM`, `Insulin2CartQTY`) VALUES
-(0, 'TESTING 1', '111111-11-1111', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 05:39:40.532799', 'Acarbose 50mg Tablet', '50', 'mg', '50', '1', '30', '30', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '300', '1', '30', '30', 'Metformin HCl 500 mg Tablet', '500', 'mg', '1000', '1', '30', '60', 'Gemfibrozil 300mg Capsule', '300', 'mg', '600', '1', '30', '60', 'Vildagliptin 50mg Tablet', '50', 'mg', '100', '1', '30', '60', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin regular (Actrapid) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', '', '', '', '', '', '', '', '1', '', '', '', ''),
-(0, 'TESTING 2', '111111-11-1112', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 05:44:44.650066', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '300', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Atenolol 50 mg Tablet', '50', 'mg', '100', '1', '30', '60', 'Hydrochlorothiazide 25mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Chlorpheniramine Maleate 4mg Tablet', '4', 'mg', '8', '1', '30', '60', 'Simvastatin 40 mg Tablet', '40', 'mg', '80', '1', '30', '60', 'Perindopril 4 mg Tablet', '4', 'mg', '8', '1', '30', '60', 'Spironolactone 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Calcium Lactate 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', 'Insulin Recombinant Synthetic Human, Intermediate-Acting (Insugen-N) 100IU/ml Penfill', '300', 'unit/pc', '12', '12', '', '', '1', '30', '840', '', '3'),
-(0, 'TESTING 3', '111111-11-1113', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 05:47:21.228504', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '2', '30', '120', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '2', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '2', '30', '120', 'Atenolol 100 mg Tablet', '100', 'mg', '200', '2', '30', '120', 'Gliclazide 80 mg Tablet', '80', 'mg', '160', '2', '30', '120', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin isophane (Insulatard) 100 IU/mL Penfill', '300', 'unit/pc', '', '', '', '12', '1', '30', '420', '', '2', 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', '12', '12', '12', '', '1', '30', '1260', '1', '4'),
-(0, 'TESTING 4', '111111-11-1114', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 05:49:56.350125', 'Amlodipine 5 mg Tablet', '5', 'mg', '12', '1', '30', '72', 'Atorvastatin 20 mg Tablet', '20', 'mg', '2', '2', '30', '6', 'Amlodipine 10 mg Tablet', '10', 'mg', '12', '1', '30', '36', 'Ascorbic Acid 100mg Tablet', '100', 'mg', '1', '1', '30', '0.3', 'Atenolol 100 mg Tablet', '100', 'mg', '500', '2', '30', '300', 'Amoxicillin (Amoxycillin) 250mg Capsule', '250', 'mg', '2', '1', '30', '0.24', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '25', '2', '30', '60', 'Albendazole 200mg Tablet', '200', 'mg', '22', '1', '30', '3.3', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin regular (Actrapid) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', 'Insulin isophane (Insulatard) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '', '3'),
-(0, 'TESTING 5', '111111-11-1115', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 08:11:53.857441', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Amoxicillin (Amoxycillin) 250mg Capsule', '250', 'mg', '500', '2', '30', '120', 'Calcium Carbonate 500 mg Tablet', '500', 'mg', '1000', '1', '30', '60', 'Ascorbic Acid 100mg Tablet', '100', 'mg', '200', '1', '30', '60', 'Benzhexol 2 mg Tablet', '2', 'mg', '4', '2', '30', '120', 'Gliclazide 30 mg Modified Release Tablet', '30', 'mg', '60', '3', '30', '180', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin glargine (Basalog One) 100 IU/mL Prefilled Pen', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', 'Insulin Recombinant Synthetic Human, Intermediate-Acting (Insugen-N) 100IU/ml Penfill', '300', 'unit/pc', '', '12', '', '12', '1', '30', '840', '1', '2');
+INSERT INTO `prescribeddrugs` (`ID`, `HistoryID`, `Name`, `ICNo`, `Date`, `DateCollection`, `DateSeeDoctor`, `Timestamp`, `Drug1Name`, `Drug1Strength`, `Drug1Unit`, `Drug1Dose`, `Drug1Freq`, `Drug1Duration`, `Drug1TotalQTY`, `Drug2Name`, `Drug2Strength`, `Drug2Unit`, `Drug2Dose`, `Drug2Freq`, `Drug2Duration`, `Drug2TotalQTY`, `Drug3Name`, `Drug3Strength`, `Drug3Unit`, `Drug3Dose`, `Drug3Freq`, `Drug3Duration`, `Drug3TotalQTY`, `Drug4Name`, `Drug4Strength`, `Drug4Unit`, `Drug4Dose`, `Drug4Freq`, `Drug4Duration`, `Drug4TotalQTY`, `Drug5Name`, `Drug5Strength`, `Drug5Unit`, `Drug5Dose`, `Drug5Freq`, `Drug5Duration`, `Drug5TotalQTY`, `Drug6Name`, `Drug6Strength`, `Drug6Unit`, `Drug6Dose`, `Drug6Freq`, `Drug6Duration`, `Drug6TotalQTY`, `Drug7Name`, `Drug7Strength`, `Drug7Unit`, `Drug7Dose`, `Drug7Freq`, `Drug7Duration`, `Drug7TotalQTY`, `Drug8Name`, `Drug8Strength`, `Drug8Unit`, `Drug8Dose`, `Drug8Freq`, `Drug8Duration`, `Drug8TotalQTY`, `Drug9Name`, `Drug9Strength`, `Drug9Unit`, `Drug9Dose`, `Drug9Freq`, `Drug9Duration`, `Drug9TotalQTY`, `Drug10Name`, `Drug10Strength`, `Drug10Unit`, `Drug10Dose`, `Drug10Freq`, `Drug10Duration`, `Drug10TotalQTY`, `Insulin1Name`, `Insulin1Strength`, `Insulin1Unit`, `Insulin1MorDose`, `Insulin1NoonDose`, `Insulin1AfternoonDose`, `Insulin1NightDose`, `Insulin1Freq`, `Insulin1Duration`, `Insulin1TotalDose`, `Insulin1POM`, `Insulin1CartQTY`, `Insulin2Name`, `Insulin2Strength`, `Insulin2Unit`, `Insulin2MorDose`, `Insulin2NoonDose`, `Insulin2AfternoonDose`, `Insulin2NightDose`, `Insulin2Freq`, `Insulin2Duration`, `Insulin2TotalDose`, `Insulin2POM`, `Insulin2CartQTY`) VALUES
+(1, 0, 'TESTING 1', '111111-11-1111', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 13:39:40', 'Acarbose 50mg Tablet', '50', 'mg', '50', '1', '30', '30', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '300', '1', '30', '30', 'Metformin HCl 500 mg Tablet', '500', 'mg', '1000', '1', '30', '60', 'Gemfibrozil 300mg Capsule', '300', 'mg', '600', '1', '30', '60', 'Vildagliptin 50mg Tablet', '50', 'mg', '100', '1', '30', '60', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin regular (Actrapid) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', '', '', '', '', '', '', '', '1', '', '', '', ''),
+(2, 0, 'TESTING 2', '111111-11-1112', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 13:44:44', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '300', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Atenolol 50 mg Tablet', '50', 'mg', '100', '1', '30', '60', 'Hydrochlorothiazide 25mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Chlorpheniramine Maleate 4mg Tablet', '4', 'mg', '8', '1', '30', '60', 'Simvastatin 40 mg Tablet', '40', 'mg', '80', '1', '30', '60', 'Perindopril 4 mg Tablet', '4', 'mg', '8', '1', '30', '60', 'Spironolactone 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Calcium Lactate 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', 'Insulin Recombinant Synthetic Human, Intermediate-Acting (Insugen-N) 100IU/ml Penfill', '300', 'unit/pc', '12', '12', '', '', '1', '30', '840', '', '3'),
+(3, 0, 'TESTING 3', '111111-11-1113', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 13:47:21', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '2', '30', '120', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '2', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '2', '30', '120', 'Atenolol 100 mg Tablet', '100', 'mg', '200', '2', '30', '120', 'Gliclazide 80 mg Tablet', '80', 'mg', '160', '2', '30', '120', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin isophane (Insulatard) 100 IU/mL Penfill', '300', 'unit/pc', '', '', '', '12', '1', '30', '420', '', '2', 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', '12', '12', '12', '', '1', '30', '1260', '1', '4'),
+(4, 0, 'TESTING 4', '111111-11-1114', '18/5/2024', 'Monday, 17 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-18 08:09:12', 'Amlodipine 5 mg Tablet', '5', 'mg', '12', '1', '30', '72', 'Atorvastatin 20 mg Tablet', '20', 'mg', '2', '2', '30', '6', 'Amlodipine 10 mg Tablet', '10', 'mg', '12', '1', '30', '36', 'Ascorbic Acid 100mg Tablet', '100', 'mg', '100', '1', '30', '30', 'Atenolol 100 mg Tablet', '100', 'mg', '500', '2', '30', '300', 'Amoxicillin (Amoxycillin) 250mg Capsule', '250', 'mg', '250', '1', '30', '30', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '25', '2', '30', '60', 'Albendazole 200mg Tablet', '200', 'mg', '400', '1', '30', '60', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin regular (Actrapid) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', 'Insulin isophane (Insulatard) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '', '3'),
+(5, 0, 'TESTING 5', '111111-11-1115', '18/5/2024', 'Monday, 17 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-18 09:04:26', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Acarbose 50mg Tablet', '50', 'mg', '100', '2', '30', '120', 'Amlodipine 10 mg Tablet', '10', 'mg', '10', '2', '30', '60', 'Acarbose 50mg Tablet', '50', 'mg', '50', '1', '30', '30', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin glargine (Basalog One) 100 IU/mL Prefilled Pen', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '1', '2', 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', '12', '', '12', '', '1', '30', '840', '', '3');
 
 -- --------------------------------------------------------
 
@@ -329,13 +321,14 @@ INSERT INTO `prescribeddrugs` (`IDMainTable`, `Name`, `ICNo`, `Date`, `DateColle
 --
 
 CREATE TABLE `prescribeddrugshistory` (
-  `ID` int(11) NOT NULL,
+  `PrevID` int(255) NOT NULL,
+  `ID` int(255) NOT NULL,
   `Name` varchar(300) NOT NULL,
   `ICNo` varchar(20) NOT NULL,
   `Date` varchar(25) NOT NULL,
   `DateCollection` varchar(25) NOT NULL,
   `DateSeeDoctor` varchar(25) NOT NULL,
-  `Timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `Timestamp` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `Drug1Name` varchar(100) NOT NULL,
   `Drug1Strength` varchar(11) NOT NULL,
   `Drug1Unit` varchar(10) NOT NULL,
@@ -436,58 +429,44 @@ CREATE TABLE `prescribeddrugshistory` (
 -- Dumping data for table `prescribeddrugshistory`
 --
 
-INSERT INTO `prescribeddrugshistory` (`ID`, `Name`, `ICNo`, `Date`, `DateCollection`, `DateSeeDoctor`, `Timestamp`, `Drug1Name`, `Drug1Strength`, `Drug1Unit`, `Drug1Dose`, `Drug1Freq`, `Drug1Duration`, `Drug1TotalQTY`, `Drug2Name`, `Drug2Strength`, `Drug2Unit`, `Drug2Dose`, `Drug2Freq`, `Drug2Duration`, `Drug2TotalQTY`, `Drug3Name`, `Drug3Strength`, `Drug3Unit`, `Drug3Dose`, `Drug3Freq`, `Drug3Duration`, `Drug3TotalQTY`, `Drug4Name`, `Drug4Strength`, `Drug4Unit`, `Drug4Dose`, `Drug4Freq`, `Drug4Duration`, `Drug4TotalQTY`, `Drug5Name`, `Drug5Strength`, `Drug5Unit`, `Drug5Dose`, `Drug5Freq`, `Drug5Duration`, `Drug5TotalQTY`, `Drug6Name`, `Drug6Strength`, `Drug6Unit`, `Drug6Dose`, `Drug6Freq`, `Drug6Duration`, `Drug6TotalQTY`, `Drug7Name`, `Drug7Strength`, `Drug7Unit`, `Drug7Dose`, `Drug7Freq`, `Drug7Duration`, `Drug7TotalQTY`, `Drug8Name`, `Drug8Strength`, `Drug8Unit`, `Drug8Dose`, `Drug8Freq`, `Drug8Duration`, `Drug8TotalQTY`, `Drug9Name`, `Drug9Strength`, `Drug9Unit`, `Drug9Dose`, `Drug9Freq`, `Drug9Duration`, `Drug9TotalQTY`, `Drug10Name`, `Drug10Strength`, `Drug10Unit`, `Drug10Dose`, `Drug10Freq`, `Drug10Duration`, `Drug10TotalQTY`, `Insulin1Name`, `Insulin1Strength`, `Insulin1Unit`, `Insulin1MorDose`, `Insulin1NoonDose`, `Insulin1AfternoonDose`, `Insulin1NightDose`, `Insulin1Freq`, `Insulin1Duration`, `Insulin1TotalDose`, `Insulin1POM`, `Insulin1CartQTY`, `Insulin2Name`, `Insulin2Strength`, `Insulin2Unit`, `Insulin2MorDose`, `Insulin2NoonDose`, `Insulin2AfternoonDose`, `Insulin2NightDose`, `Insulin2Freq`, `Insulin2Duration`, `Insulin2TotalDose`, `Insulin2POM`, `Insulin2CartQTY`) VALUES
-(19, 'TESTING 5', '111111-11-1115', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 06:28:55.326085', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Finasteride 5mg Tablet', '5', 'mg', '10', '1', '30', '60', 'Diclofenac 50mg Tablet', '50', 'mg', '100', '1', '30', '60', 'Ethambutol HCl 400 mg Tablet', '400', 'mg', '400', '1', '30', '30', 'Acarbose 50mg Tablet', '50', 'mg', '100', '1', '30', '60', 'Acarbose 50mg Tablet', '50', 'mg', '50', '1', '30', '30', 'Acarbose 50mg Tablet', '50', 'mg', '50', '1', '30', '30', 'Acarbose 50mg Tablet', '50', 'mg', '100', '1', '30', '60', 'Paracetamol 250mg/5ml Syrup', '50', 'mg/ml', '100', '1', '30', '60', 'MDI Salbutamol 100mcg/dose Inhaler', '1', 'sedut', '1', '1', '30', '30', '', '', '', 0, 0, 0, 0, 1, '', 0, 0, 0, '', '', '', 0, 0, 0, 0, 1, '', 0, 0, 0),
-(20, '1', '111111-11-1115', '16/5/2024', 'Saturday, 15 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-16 08:08:26.529572', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Amoxicillin (Amoxycillin) 250mg Capsule', '250', 'mg', '500', '2', '30', '120', 'Calcium Carbonate 500 mg Tablet', '500', 'mg', '1000', '1', '30', '60', 'Ascorbic Acid 100mg Tablet', '100', 'mg', '200', '1', '30', '60', 'Benzhexol 2 mg Tablet', '2', 'mg', '4', '2', '30', '120', 'Gliclazide 30 mg Modified Release Tablet', '30', 'mg', '60', '3', '30', '180', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin glargine (Basalog One) 100 IU/mL Prefilled Pen', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 1, 2, 'Insulin Recombinant Synthetic Human, Intermediate-Acting (Insugen-N) 100IU/ml Penfill', '300', 'unit/pc', 0, 12, 0, 12, 1, '30', 840, 1, 2);
-
--- --------------------------------------------------------
-
---
--- Structure for view `all`
---
-DROP TABLE IF EXISTS `all`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `all`  AS SELECT `drugtable`.`ID` AS `ID`, `drugtable`.`Drug Name` AS `Drug Name`, `drugtable`.`Strength` AS `Strength`, `drugtable`.`Unit` AS `Unit`, `drugtable`.`Dosage Form` AS `Dosage Form`, `drugtable`.`Prescriber Category` AS `Prescriber Category`, `drugtable`.`Remark` AS `Remark` FROM `drugtable` ;
+INSERT INTO `prescribeddrugshistory` (`PrevID`, `ID`, `Name`, `ICNo`, `Date`, `DateCollection`, `DateSeeDoctor`, `Timestamp`, `Drug1Name`, `Drug1Strength`, `Drug1Unit`, `Drug1Dose`, `Drug1Freq`, `Drug1Duration`, `Drug1TotalQTY`, `Drug2Name`, `Drug2Strength`, `Drug2Unit`, `Drug2Dose`, `Drug2Freq`, `Drug2Duration`, `Drug2TotalQTY`, `Drug3Name`, `Drug3Strength`, `Drug3Unit`, `Drug3Dose`, `Drug3Freq`, `Drug3Duration`, `Drug3TotalQTY`, `Drug4Name`, `Drug4Strength`, `Drug4Unit`, `Drug4Dose`, `Drug4Freq`, `Drug4Duration`, `Drug4TotalQTY`, `Drug5Name`, `Drug5Strength`, `Drug5Unit`, `Drug5Dose`, `Drug5Freq`, `Drug5Duration`, `Drug5TotalQTY`, `Drug6Name`, `Drug6Strength`, `Drug6Unit`, `Drug6Dose`, `Drug6Freq`, `Drug6Duration`, `Drug6TotalQTY`, `Drug7Name`, `Drug7Strength`, `Drug7Unit`, `Drug7Dose`, `Drug7Freq`, `Drug7Duration`, `Drug7TotalQTY`, `Drug8Name`, `Drug8Strength`, `Drug8Unit`, `Drug8Dose`, `Drug8Freq`, `Drug8Duration`, `Drug8TotalQTY`, `Drug9Name`, `Drug9Strength`, `Drug9Unit`, `Drug9Dose`, `Drug9Freq`, `Drug9Duration`, `Drug9TotalQTY`, `Drug10Name`, `Drug10Strength`, `Drug10Unit`, `Drug10Dose`, `Drug10Freq`, `Drug10Duration`, `Drug10TotalQTY`, `Insulin1Name`, `Insulin1Strength`, `Insulin1Unit`, `Insulin1MorDose`, `Insulin1NoonDose`, `Insulin1AfternoonDose`, `Insulin1NightDose`, `Insulin1Freq`, `Insulin1Duration`, `Insulin1TotalDose`, `Insulin1POM`, `Insulin1CartQTY`, `Insulin2Name`, `Insulin2Strength`, `Insulin2Unit`, `Insulin2MorDose`, `Insulin2NoonDose`, `Insulin2AfternoonDose`, `Insulin2NightDose`, `Insulin2Freq`, `Insulin2Duration`, `Insulin2TotalDose`, `Insulin2POM`, `Insulin2CartQTY`) VALUES
+(5, 59, 'TESTING 5', '111111-11-1115', '18/5/2024', 'Monday, 17 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-18 08:06:23', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '600', '1', '30', '60', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '600', '1', '30', '60', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '600', '1', '30', '60', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '300', '1', '30', '30', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin glargine (Basalog One) 100 IU/mL Prefilled Pen', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 1, 2, 'Insulin isophane (Insulatard) 100 IU/mL Penfill', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 0, 3),
+(5, 60, 'TESTING 5', '111111-11-1115', '18/5/2024', 'Monday, 17 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-18 08:58:07', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '600', '1', '30', '60', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin glargine (Basalog One) 100 IU/mL Prefilled Pen', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 1, 2, 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 0, 3),
+(5, 61, 'TESTING 5', '111111-11-1115', '18/5/2024', 'Monday, 17 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-18 08:58:07', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Amitriptyline HCl 25 mg Tablet', '25', 'mg', '50', '1', '30', '60', 'Acetylsalicylic Acid 300 mg Soluble Tablet', '300', 'mg', '600', '1', '30', '60', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin glargine (Basalog One) 100 IU/mL Prefilled Pen', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 1, 2, 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 0, 3),
+(5, 62, 'TESTING 5', '111111-11-1115', '18/5/2024', 'Monday, 17 June, 2024', 'Wednesday, 19 June, 2024', '2024-05-18 09:03:58', 'Acetylsalicylic Acid 100 mg & Glycine 45 mg Tablet', '1', 'Tablet', '1', '1', '30', '30', 'Allopurinol 300 mg Tablet', '300', 'mg', '600', '1', '30', '60', 'Acarbose 50mg Tablet', '50', 'mg', '100', '2', '30', '120', 'Amlodipine 10 mg Tablet', '10', 'mg', '10', '2', '30', '60', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Insulin glargine (Basalog One) 100 IU/mL Prefilled Pen', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 1, 2, 'Insulin regular/isophane (Mixtard-30) 100 IU/mL Penfill', '300', 'unit/pc', 12, 0, 12, 0, 1, '30', 840, 0, 3);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `drugtable`
---
-ALTER TABLE `drugtable`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `prescribeddrugs`
 --
 ALTER TABLE `prescribeddrugs`
-  ADD PRIMARY KEY (`ICNo`);
-ALTER TABLE `prescribeddrugs` ADD FULLTEXT KEY `Drug1Name` (`Drug1Name`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `ICNo` (`ICNo`);
 
 --
 -- Indexes for table `prescribeddrugshistory`
 --
 ALTER TABLE `prescribeddrugshistory`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Name` (`Name`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `drugtable`
+-- AUTO_INCREMENT for table `prescribeddrugs`
 --
-ALTER TABLE `drugtable`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
+ALTER TABLE `prescribeddrugs`
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `prescribeddrugshistory`
 --
 ALTER TABLE `prescribeddrugshistory`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
