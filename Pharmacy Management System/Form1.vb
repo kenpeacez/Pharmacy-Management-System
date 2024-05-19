@@ -24,6 +24,8 @@ Public Class Form1
 
     Private currentPage As Integer = 1
     Private currentPageInsulin As Integer = 1
+    Dim NoOfItemsRecord As Integer = 0
+    Dim NoOfItemsRecordInsulin As Integer = 0
 
 
     Dim RemarkD1 As String
@@ -81,6 +83,9 @@ Public Class Form1
     Private disableTextChanged As Boolean = False
     Private disableTextChangedDB As Boolean = False
 
+    Dim notyetinitialize As Boolean = True
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Form Initialization / First Load
         InitializeAll()
@@ -102,17 +107,16 @@ Public Class Form1
         loadInsulindatafromdb()
         'Fiveth Function
         loadLogDGV()
+        loadDGVRecords()
 
-
+        notyetinitialize = False
     End Sub
 
     Public Sub InitializeAll()
-        Dim days
-        ' dtpDateCollection.Value = DateAdd("m", 1, Now().Date)
-        ' days = dtpDateCollection.Value - dtpDateSaved.Value
-        ' txtDurationMaster.Text = days.days + 1 & " days"
-        'calculateDurationMaster()
+
+        dtpRecordsDateSelector.Value = Today
         cboxEnablePrintPDF.Checked = My.Settings.EnablePrintAfterSave
+        cboxAutoClear.Checked = My.Settings.AutoClear
         btnIOU.Enabled = False
         cbAddDays.SelectedIndex = 3
         GetDefaultPrinterName()
@@ -123,6 +127,8 @@ Public Class Form1
         InitializeDB()
         DataGridViewDrug.AllowUserToAddRows = False
         DataGridViewInsulin.AllowUserToAddRows = False
+        dgvPatientDrugHistory.AllowUserToAddRows = False
+        dgvPatientInsulinHistory.AllowUserToAddRows = False
     End Sub
     Private Sub SetandSaveDBSettings()
         Dim sender As Object
@@ -243,6 +249,7 @@ Public Class Form1
             PPD.Document = PrintDoc
             PPD.ShowDialog()
             currentPage = 1
+
             'PrintDoc.Print()
         End If
 
@@ -325,7 +332,7 @@ Public Class Form1
                     End If
                     'Check for Blank Selection of Drug
 
-
+                    NoOfItemsRecord = 1
                     e.Graphics.DrawString(cbDrug1.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD1 & (CDbl(txtDoseD1.Text) / CDbl(lblStrD1.Text)) & ConsumeUnitD1 & txtFreqD1.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD1, f8a, Brushes.Black, Rect8, centre)
@@ -339,7 +346,7 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 2
                     e.Graphics.DrawString(cbDrug2.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD2 & (CDbl(txtDoseD2.Text) / CDbl(lblStrD2.Text)) & ConsumeUnitD2 & txtFreqD2.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD2, f8a, Brushes.Black, Rect8, centre)
@@ -352,7 +359,7 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 3
                     e.Graphics.DrawString(cbDrug3.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD3 & (CDbl(txtDoseD3.Text) / CDbl(lblStrD3.Text)) & ConsumeUnitD3 & txtFreqD3.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD3, f8a, Brushes.Black, Rect8, centre)
@@ -365,7 +372,7 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 4
                     e.Graphics.DrawString(cbDrug4.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD4 & (CDbl(txtDoseD4.Text) / CDbl(lblStrD4.Text)) & ConsumeUnitD4 & txtFreqD4.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD4, f8a, Brushes.Black, Rect8, centre)
@@ -378,7 +385,7 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 5
                     e.Graphics.DrawString(cbDrug5.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD5 & (CDbl(txtDoseD5.Text) / CDbl(lblStrD5.Text)) & ConsumeUnitD5 & txtFreqD5.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD5, f8a, Brushes.Black, Rect8, centre)
@@ -391,7 +398,7 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 6
                     e.Graphics.DrawString(cbDrug6.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD6 & (CDbl(txtDoseD6.Text) / CDbl(lblStrD6.Text)) & ConsumeUnitD6 & txtFreqD6.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD6, f8a, Brushes.Black, Rect8, centre)
@@ -404,7 +411,7 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 7
                     e.Graphics.DrawString(cbDrug7.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD7 & (CDbl(txtDoseD7.Text) / CDbl(lblStrD7.Text)) & ConsumeUnitD7 & txtFreqD7.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD7, f8a, Brushes.Black, Rect8, centre)
@@ -417,7 +424,7 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 8
                     e.Graphics.DrawString(cbDrug8.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD8 & (CDbl(txtDoseD8.Text) / CDbl(lblStrD8.Text)) & ConsumeUnitD8 & txtFreqD8.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD8, f8a, Brushes.Black, Rect8, centre)
@@ -430,13 +437,14 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
-
+                    NoOfItemsRecord = 9
                     e.Graphics.DrawString(cbDrug9.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD9 & (CDbl(txtDoseD9.Text) / CDbl(lblStrD9.Text)) & ConsumeUnitD9 & txtFreqD9.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD9, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD9.Text, f8a, Brushes.Black, Rect9, left)
                 Case 10
-
+                    NoOfItemsRecord = 10
+                    'MsgBox("Drug Items: " & NoOfItemsRecord)
                     e.Graphics.DrawString(cbDrug10.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD10 & (CDbl(txtDoseD10.Text) / CDbl(lblStrD10.Text)) & ConsumeUnitD10 & txtFreqD10.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD10, f8a, Brushes.Black, Rect8, centre)
@@ -447,11 +455,6 @@ Public Class Form1
             currentPage += 1
             ' e.Graphics.Clear(Color.White) 'Clear the print page
 
-
-
-
-
-
             If currentPage <= 10 And stopprintflag = False Then
                 ' Set to true to continue printing
                 e.HasMorePages = True
@@ -459,6 +462,7 @@ Public Class Form1
 
                 ' Set to false to stop printing
                 e.HasMorePages = False
+
                 Return
             End If
 
@@ -474,20 +478,20 @@ Public Class Form1
     Private Sub PrintDocInsulin_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDocInsulin.PrintPage
         Try
 
-
+            'Perform checking on insulin selections
             If Insulin1Selected = False Then
                 Return
             End If
-
+            Dim stopprintflag As Boolean = False
+            If Insulin2Selected = False Then
+                stopprintflag = True
+            End If
 
             'Initialize printing parameters
             'Set Custom Names
             Dim ClinicName As String = txtClinicName.Text
             'Set Control Print Variable
-            Dim stopprintflag As Boolean = False
-            If Insulin2Selected = False Then
-                stopprintflag = True
-            End If
+
             'Set Fonts
             Dim f8 As New Font("Arial", 8, FontStyle.Italic)
             Dim f8a As New Font("Arial", 8, FontStyle.Bold)
@@ -671,12 +675,15 @@ Public Class Form1
 
             Select Case currentPageInsulin
                 Case 1
+                    NoOfItemsRecordInsulin = 1
+                    'MsgBox("Insulin Items: " & NoOfItemsRecord)
                     e.Graphics.DrawString(cbInsulin1.Text, f8a, Brushes.Black, Rect4a, centre)
                     e.Graphics.DrawString(combinedwords, f8b, Brushes.Black, Rect6a, centre)
                     e.Graphics.DrawString(RemarkIn1, f8a, Brushes.Black, Rect8a, centre)
                     e.Graphics.DrawString("Jumlah Katrij: " & txtIn1CartQTY.Text, f8a, Brushes.Black, Rect9a, left)
 
                 Case 2
+                    NoOfItemsRecordInsulin = 2
                     e.Graphics.DrawString(cbInsulin2.Text, f8a, Brushes.Black, Rect4a, centre)
                     e.Graphics.DrawString(combinedwords2, f8b, Brushes.Black, Rect6a, centre)
                     e.Graphics.DrawString(RemarkIn2, f8a, Brushes.Black, Rect8a, centre)
@@ -692,10 +699,14 @@ Public Class Form1
             If currentPageInsulin <= 2 And stopprintflag = False Then
                 ' Set to true to continue printing
                 e.HasMorePages = True
+
+                'MsgBox("Insulin Items: " & NoOfItemsRecord)
             Else
 
                 ' Set to false to stop printing
                 e.HasMorePages = False
+
+
                 Return
             End If
         Catch ex As Exception
@@ -999,18 +1010,24 @@ Public Class Form1
             Dim i = cmd.ExecuteNonQuery
             If i > 0 Then
                 conn.Close()
-
-                MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
+                If cboxEnablePrintPDF.Checked Then
+                    print()
+                End If
+                addRecordTab()
+                'MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
                 stlbMainStatus.Text = "Saved Successfully for " & stPatientName & ", IC No: " & stIC
                 loadLogDGV()
                 loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
-
+                chboxNoICNumber.Checked = False
+                If cboxAutoClear.Checked Then
+                    clearall()
+                End If
             Else
                 MsgBox("Save Failed.")
             End If
         Catch ex As Exception
             conn.Close()
-            MsgBox(ex.Message)
+            'MsgBox(ex.Message)
             If ex.Message.Contains("Duplicate") Then
                 Select Case MsgBox("Existing Patient. Do you want to overwrite with current data?", MsgBoxStyle.YesNo, "Confirmation")
                     Case MsgBoxResult.Yes
@@ -1024,11 +1041,11 @@ Public Class Form1
                             If i2 > 0 Then
                                 conn.Close()
 
-                                MsgBox("Old Data saved to History for " & stPatientName & ", IC No.: " & stIC)
-                                stlbMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
+                                'MsgBox("Old Data saved to History for " & stPatientName & ", IC No.: " & stIC)
+                                'stlbMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
 
                             Else
-                                MsgBox("Save Failed.")
+                                MsgBox("Save to `prescribeddrugshistory` table failed.")
                                 conn.Close()
                                 Return
                             End If
@@ -1232,12 +1249,21 @@ Redo:
                             conn.Open()
                             Dim i = cmd2.ExecuteNonQuery
                             If i > 0 Then
+
                                 conn.Close()
-                                MsgBox("Successfully Updated Data.")
-                                MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
+                                If cboxEnablePrintPDF.Checked Then
+                                    print()
+                                End If
+                                addRecordTab()
+                                'MsgBox("Successfully Updated Data.")
+                                'MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
                                 stlbMainStatus.Text = "Overwrite Successfully for " & stPatientName & ", IC No: " & stIC
                                 loadLogDGV()
-
+                                'loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
+                                chboxNoICNumber.Checked = False
+                                If cboxAutoClear.Checked Then
+                                    clearall()
+                                End If
 
                             End If
                         Catch exxx As Exception
@@ -1254,9 +1280,75 @@ Redo:
             End If
             conn.Close()
         Finally
-            If cboxEnablePrintPDF.Checked Then
-                print()
+
+        End Try
+    End Sub
+    Public Sub addRecordTab()
+        Dim newpatientBool As Integer = 0
+        Dim IOUBool As Integer = 0
+        'MsgBox("Drug Items : " & NoOfItemsRecord)
+        'MsgBox("Insulin Items : " & NoOfItemsRecordInsulin)
+        Dim totalitems As Integer = NoOfItemsRecord + NoOfItemsRecordInsulin
+        If cboxIOU.Checked Then
+            IOUBool = 1
+            cboxIOU.Checked = False
+        Else
+            newpatientBool = 1
+        End If
+        'Add button at Drugs Tab to Save Data entered in the Text Boxes
+        Try
+            conn.Open()
+
+            Dim cmd As New MySqlCommand("INSERT INTO `records` (`Name`,`ICNo`,`NewPatient`,`IOU`,`NoOfItems`,`DateCollection`,`DateSeeDoctor`) VALUES (@Name,@ICNo,@NewPatient,@IOU,@NoOfItems,@DateCollection,@DateSeeDoctor)", conn)
+            cmd.Parameters.Clear()
+            cmd.Parameters.AddWithValue("@Name", txtPatientName.Text)
+            cmd.Parameters.AddWithValue("@ICNo", txtICNo.Text)
+            cmd.Parameters.AddWithValue("@NewPatient", newpatientBool)
+            cmd.Parameters.AddWithValue("@IOU", IOUBool)
+            cmd.Parameters.AddWithValue("@NoOfItems", totalitems)
+            cmd.Parameters.AddWithValue("@DateCollection", dtpDateCollection.Text)
+            cmd.Parameters.AddWithValue("@DateSeeDoctor", dtpDateSeeDoctor.Text)
+
+            Dim i = cmd.ExecuteNonQuery
+            If i > 0 Then
+                'MsgBox("Records Successfully Saved.")
+                conn.Close()
+                loadDGVRecords()
+            Else
+                'MsgBox("Records Save Failed.")
             End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+    Public Sub loadDGVRecords()
+        dgvRecords.Rows.Clear()
+        'Data Grid View Method to Get Data from MYSQL Database
+        Dim count As Integer = 0
+        Dim originalDateString As String = dtpRecordsDateSelector.Value
+        Dim parsedDate As DateTime = DateTime.Parse(originalDateString)
+        Dim formattedDateString As String = parsedDate.ToString("yyyy-MM-dd")
+        ' Parse the input date string
+
+
+        Try
+
+            conn.Open()
+            Dim cmd As New MySqlCommand("SELECT * FROM `records` WHERE Timestamp like '%" & formattedDateString & "%'", conn)
+            dr = cmd.ExecuteReader
+
+            While dr.Read
+                count += 1
+                dgvRecords.Rows.Add(count, dr.Item("Name"), dr.Item("ICNo"), dr.Item("NewPatient"), dr.Item("IOU"), dr.Item("NoOfItems"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
+
+            End While
+            dr.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
         End Try
     End Sub
     Public Function getNumeric(value As String) As String
@@ -1494,7 +1586,9 @@ Redo:
             txtICNo.AutoCompleteCustomSource = col
             txtICNo.AutoCompleteMode = AutoCompleteMode.Suggest
 
-
+            txtICNoDB.AutoCompleteSource = AutoCompleteSource.CustomSource
+            txtICNoDB.AutoCompleteCustomSource = col
+            txtICNoDB.AutoCompleteMode = AutoCompleteMode.Suggest
 
             txtPatientName.AutoCompleteSource = AutoCompleteSource.CustomSource
             txtPatientName.AutoCompleteCustomSource = col2
@@ -3875,6 +3969,7 @@ Redo:
         'check if txtICDB is empty
         If txtICNoDB.Text = "" Then
             MsgBox("Please enter the IC No. at Search box")
+            lblPatientNameDB.Text = ""
             Return
         End If
 
@@ -3945,7 +4040,6 @@ Redo:
                 dgvPatientInsulinHistory.Rows.Add("2", dr.Item("Insulin2Name"), dr.Item("Insulin2Strength"), dr.Item("Insulin2Unit"), dr.Item("Insulin2MorDose"), dr.Item("Insulin2NoonDose"), dr.Item("Insulin2AfternoonDose"), dr.Item("Insulin2NightDose"), dr.Item("Insulin2Freq"), dr.Item("Insulin2Duration"), dr.Item("Insulin2TotalDose"), dr.Item("Insulin2POM"), dr.Item("Insulin2CartQTY"))
 
 
-
             End While
             dr.Close()
         Catch ex As Exception
@@ -3975,7 +4069,7 @@ Redo:
     End Sub
 
     Private Sub txtICNoDB_TextChanged(sender As Object, e As EventArgs) Handles txtICNoDB.TextChanged
-
+        lblPatientNameDB.Text = ""
         If Not disableTextChangedDB Then
             If txtICNoDB.TextLength = 6 Then
                 ' Insert "-" at the position after the sixth and ninth character
@@ -4007,5 +4101,33 @@ Redo:
         End If
     End Sub
 
+    Private Sub dtpRecordsDateSelector_ValueChanged(sender As Object, e As EventArgs) Handles dtpRecordsDateSelector.ValueChanged
+        If notyetinitialize Then
+            Return
+        Else
+            loadDGVRecords()
+        End If
+
+
+    End Sub
+
+    Private Sub cboxAutoClear_CheckedChanged(sender As Object, e As EventArgs) Handles cboxAutoClear.CheckedChanged
+        Dim AutoClear As Boolean = My.Settings.AutoClear
+        Dim AutoClearNew As Boolean
+        AutoClearNew = cboxAutoClear.Checked
+        My.Settings.AutoClear = AutoClearNew
+        My.Settings.Save()
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Dim emailAddress As String = "kenpeacezx@gmail.com"
+        Dim subject As String = "Inquiry on the Pharmacy Management System / Github"
+
+        ' Create the mailto link
+        Dim mailtoLink As String = $"mailto:{emailAddress}?subject={Uri.EscapeDataString(subject)}"
+
+        ' Open the default email client with the mailto link
+        Process.Start(New ProcessStartInfo(mailtoLink) With {.UseShellExecute = True})
+    End Sub
 
 End Class

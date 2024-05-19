@@ -125,6 +125,18 @@ Namespace My
                 Me("EnablePrintAfterSave") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AutoClear() As Boolean
+            Get
+                Return CType(Me("AutoClear"),Boolean)
+            End Get
+            Set
+                Me("AutoClear") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
