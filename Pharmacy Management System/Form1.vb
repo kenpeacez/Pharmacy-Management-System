@@ -41,6 +41,19 @@ Public Class Form1
     Dim RemarkIn1 As String
     Dim RemarkIn2 As String
 
+    Dim DefaultMaxQTYD1 As Integer = 0
+    Dim DefaultMaxQTYD2 As Integer = 0
+    Dim DefaultMaxQTYD3 As Integer = 0
+    Dim DefaultMaxQTYD4 As Integer = 0
+    Dim DefaultMaxQTYD5 As Integer = 0
+    Dim DefaultMaxQTYD6 As Integer = 0
+    Dim DefaultMaxQTYD7 As Integer = 0
+    Dim DefaultMaxQTYD8 As Integer = 0
+    Dim DefaultMaxQTYD9 As Integer = 0
+    Dim DefaultMaxQTYD10 As Integer = 0
+
+
+
     Dim ConsumeMethodD1 As String
     Dim ConsumeUnitD1 As String
     Dim ConsumeMethodD2 As String
@@ -115,6 +128,11 @@ Public Class Form1
     Public Sub InitializeAll()
 
         dtpRecordsDateSelector.Value = Today
+        dtpRecordsDateSelector.MaxDate = Today
+        dtpRecordsDateSelectorEnd.MaxDate = Today
+        dtpRecordsDateSelectorEnd.Value = Today
+
+
         cboxEnablePrintPDF.Checked = My.Settings.EnablePrintAfterSave
         cboxAutoClear.Checked = My.Settings.AutoClear
         btnIOU.Enabled = False
@@ -235,6 +253,34 @@ Public Class Form1
         stlbPrinterName.Text = defaultPrinterName
         lblDefaultPrinterAtSetting.Text = defaultPrinterName
     End Sub
+    Public Sub printPreview()
+
+        If cbDrug1.Text = "" AndAlso cbInsulin1.Text = "" Then
+            MsgBox("Nothing to print")
+            Return
+        End If
+
+        If Drug1Selected Then
+            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
+            PrintDoc.DefaultPageSettings.Landscape = False
+
+
+            CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
+            PPD.Document = PrintDoc
+            PPD.ShowDialog()
+            currentPage = 1
+
+            'PrintDoc.Print()
+        End If
+
+        If Insulin1Selected Then
+            printPreviewInsulin()
+        End If
+    End Sub
+
+    Private Sub btnPrintPreview_Click(sender As Object, e As EventArgs) Handles btnPrintPreview.Click
+        printPreview()
+    End Sub
 
     Public Sub print()
         If cbDrug1.Text = "" AndAlso cbInsulin1.Text = "" Then
@@ -246,11 +292,12 @@ Public Class Form1
             PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
             PrintDoc.DefaultPageSettings.Landscape = False
 
+
             PPD.Document = PrintDoc
-            PPD.ShowDialog()
+            'PPD.ShowDialog()
             currentPage = 1
 
-            'PrintDoc.Print()
+            PrintDoc.Print()
         End If
 
         If Insulin1Selected Then
@@ -330,11 +377,22 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD1.Contains("Minum ") And ConsumeUnitD1.Contains("ml") Then
+                        Dim consumedose = txtDoseD1.Text / lblStrD1.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD1.Text / lblStrD1.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
+
+
+
                     'Check for Blank Selection of Drug
 
                     NoOfItemsRecord = 1
                     e.Graphics.DrawString(cbDrug1.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD1 & (CDbl(txtDoseD1.Text) / CDbl(lblStrD1.Text)) & ConsumeUnitD1 & txtFreqD1.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD1 & consumedosefinal & ConsumeUnitD1 & txtFreqD1.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD1, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD1.Text, f8a, Brushes.Black, Rect9, left)
 
@@ -344,11 +402,18 @@ Public Class Form1
                         currentPage += 1
                         e.HasMorePages = False
                         stopprintflag = True
-
+                    End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD2.Contains("Minum ") And ConsumeUnitD2.Contains("ml") Then
+                        Dim consumedose = txtDoseD2.Text / lblStrD2.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD2.Text / lblStrD2.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
                     End If
                     NoOfItemsRecord = 2
                     e.Graphics.DrawString(cbDrug2.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD2 & (CDbl(txtDoseD2.Text) / CDbl(lblStrD2.Text)) & ConsumeUnitD2 & txtFreqD2.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD2 & consumedosefinal & ConsumeUnitD2 & txtFreqD2.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD2, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD2.Text, f8a, Brushes.Black, Rect9, left)
                 Case 3
@@ -359,9 +424,17 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD3.Contains("Minum ") And ConsumeUnitD3.Contains("ml") Then
+                        Dim consumedose = txtDoseD3.Text / lblStrD3.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD3.Text / lblStrD3.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 3
                     e.Graphics.DrawString(cbDrug3.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD3 & (CDbl(txtDoseD3.Text) / CDbl(lblStrD3.Text)) & ConsumeUnitD3 & txtFreqD3.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD3 & consumedosefinal & ConsumeUnitD3 & txtFreqD3.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD3, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD3.Text, f8a, Brushes.Black, Rect9, left)
                 Case 4
@@ -372,9 +445,17 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD4.Contains("Minum ") And ConsumeUnitD4.Contains("ml") Then
+                        Dim consumedose = txtDoseD4.Text / lblStrD4.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD4.Text / lblStrD4.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 4
                     e.Graphics.DrawString(cbDrug4.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD4 & (CDbl(txtDoseD4.Text) / CDbl(lblStrD4.Text)) & ConsumeUnitD4 & txtFreqD4.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD4 & consumedosefinal & ConsumeUnitD4 & txtFreqD4.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD4, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD4.Text, f8a, Brushes.Black, Rect9, left)
                 Case 5
@@ -385,9 +466,17 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD5.Contains("Minum ") And ConsumeUnitD5.Contains("ml") Then
+                        Dim consumedose = txtDoseD5.Text / lblStrD5.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD5.Text / lblStrD5.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 5
                     e.Graphics.DrawString(cbDrug5.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD5 & (CDbl(txtDoseD5.Text) / CDbl(lblStrD5.Text)) & ConsumeUnitD5 & txtFreqD5.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD5 & consumedosefinal & ConsumeUnitD5 & txtFreqD5.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD5, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD5.Text, f8a, Brushes.Black, Rect9, left)
                 Case 6
@@ -398,9 +487,17 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD6.Contains("Minum ") And ConsumeUnitD6.Contains("ml") Then
+                        Dim consumedose = txtDoseD6.Text / lblStrD6.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD6.Text / lblStrD6.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 6
                     e.Graphics.DrawString(cbDrug6.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD6 & (CDbl(txtDoseD6.Text) / CDbl(lblStrD6.Text)) & ConsumeUnitD6 & txtFreqD6.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD6 & consumedosefinal & ConsumeUnitD6 & txtFreqD6.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD6, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD6.Text, f8a, Brushes.Black, Rect9, left)
                 Case 7
@@ -411,9 +508,17 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD7.Contains("Minum ") And ConsumeUnitD7.Contains("ml") Then
+                        Dim consumedose = txtDoseD7.Text / lblStrD7.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD7.Text / lblStrD7.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 7
                     e.Graphics.DrawString(cbDrug7.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD7 & (CDbl(txtDoseD7.Text) / CDbl(lblStrD7.Text)) & ConsumeUnitD7 & txtFreqD7.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD7 & consumedosefinal & ConsumeUnitD7 & txtFreqD7.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD7, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD7.Text, f8a, Brushes.Black, Rect9, left)
                 Case 8
@@ -424,9 +529,17 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD8.Contains("Minum ") And ConsumeUnitD8.Contains("ml") Then
+                        Dim consumedose = txtDoseD8.Text / lblStrD8.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD8.Text / lblStrD8.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 8
                     e.Graphics.DrawString(cbDrug8.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD8 & (CDbl(txtDoseD8.Text) / CDbl(lblStrD8.Text)) & ConsumeUnitD8 & txtFreqD8.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD8 & consumedosefinal & ConsumeUnitD8 & txtFreqD8.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD8, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD8.Text, f8a, Brushes.Black, Rect9, left)
                 Case 9
@@ -437,16 +550,32 @@ Public Class Form1
                         stopprintflag = True
 
                     End If
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD9.Contains("Minum ") And ConsumeUnitD9.Contains("ml") Then
+                        Dim consumedose = txtDoseD9.Text / lblStrD9.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD9.Text / lblStrD9.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 9
                     e.Graphics.DrawString(cbDrug9.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD9 & (CDbl(txtDoseD9.Text) / CDbl(lblStrD9.Text)) & ConsumeUnitD9 & txtFreqD9.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD9 & consumedosefinal & ConsumeUnitD9 & txtFreqD9.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD9, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD9.Text, f8a, Brushes.Black, Rect9, left)
                 Case 10
+                    Dim consumedosefinal As String = ""
+                    If ConsumeMethodD10.Contains("Minum ") And ConsumeUnitD10.Contains("ml") Then
+                        Dim consumedose = txtDoseD10.Text / lblStrD10.Text
+                        consumedosefinal = Math.Round(consumedose, 1)
+                    Else
+                        Dim consumedose = txtDoseD10.Text / lblStrD10.Text
+                        consumedosefinal = ConvertToFraction(consumedose)
+                    End If
                     NoOfItemsRecord = 10
                     'MsgBox("Drug Items: " & NoOfItemsRecord)
                     e.Graphics.DrawString(cbDrug10.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD10 & (CDbl(txtDoseD10.Text) / CDbl(lblStrD10.Text)) & ConsumeUnitD10 & txtFreqD10.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    e.Graphics.DrawString(ConsumeMethodD10 & consumedosefinal & ConsumeUnitD10 & txtFreqD10.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD10, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD10.Text, f8a, Brushes.Black, Rect9, left)
 
@@ -475,6 +604,28 @@ Public Class Form1
 
 
     End Sub
+    Function ConvertToFraction(ByVal consumedose As Double) As String
+        consumedose = Math.Round(consumedose, 2)
+        If consumedose Mod 1 = 0.5 Then
+            If consumedose < 1 Then
+                Return String.Format("½", Math.Floor(consumedose))
+            End If
+            ' Return the integer part and 1/2
+            Return String.Format("{0} ½", Math.Floor(consumedose))
+        ElseIf consumedose Mod 1 = 0.75 Then
+            If consumedose < 1 Then
+                Return String.Format("¾", Math.Floor(consumedose))
+            End If
+            Return String.Format("{0} ¾", Math.Floor(consumedose))
+        ElseIf consumedose Mod 1 = 0.25 Then
+            If consumedose < 1 Then
+                Return String.Format("¼", Math.Floor(consumedose))
+            End If
+            Return String.Format("{0} ¼", Math.Floor(consumedose))
+        Else
+            Return consumedose.ToString
+        End If
+    End Function
     Private Sub PrintDocInsulin_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDocInsulin.PrintPage
         Try
 
@@ -691,9 +842,6 @@ Public Class Form1
 
             End Select
 
-
-
-
             currentPageInsulin += 1
             'Checking for more pages
             If currentPageInsulin <= 2 And stopprintflag = False Then
@@ -706,7 +854,6 @@ Public Class Form1
                 ' Set to false to stop printing
                 e.HasMorePages = False
 
-
                 Return
             End If
         Catch ex As Exception
@@ -718,6 +865,20 @@ Public Class Form1
         PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
         PrintDocInsulin.DefaultPageSettings.Landscape = False
 
+
+        PPD.Document = PrintDocInsulin
+        'PPD.ShowDialog()
+        currentPageInsulin = 1
+        PrintDocInsulin.Print()
+
+
+    End Sub
+    Public Sub printPreviewInsulin()
+
+        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
+        PrintDocInsulin.DefaultPageSettings.Landscape = False
+
+        CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
         PPD.Document = PrintDocInsulin
         PPD.ShowDialog()
         currentPageInsulin = 1
@@ -1326,24 +1487,38 @@ Redo:
         dgvRecords.Rows.Clear()
         'Data Grid View Method to Get Data from MYSQL Database
         Dim count As Integer = 0
+        'Parse the input date string
+        dtpRecordsDateSelectorEnd.MinDate = dtpRecordsDateSelector.Value
         Dim originalDateString As String = dtpRecordsDateSelector.Value
         Dim parsedDate As DateTime = DateTime.Parse(originalDateString)
-        Dim formattedDateString As String = parsedDate.ToString("yyyy-MM-dd")
-        ' Parse the input date string
+        Dim startdate As String = parsedDate.ToString("yyyy-MM-dd")
 
+        Dim originalDateString2 As String = dtpRecordsDateSelectorEnd.Value
+        Dim parsedDate2 As DateTime = DateTime.Parse(originalDateString2)
+        Dim enddate As String = parsedDate2.ToString("yyyy-MM-dd")
+        'Declare initial count variables for new patients, iou, no of items
+        Dim newpatientcount = 0
+        Dim ioucount = 0
+        Dim noofitems = 0
 
         Try
 
             conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM `records` WHERE Timestamp like '%" & formattedDateString & "%'", conn)
+            Dim cmd As New MySqlCommand("SELECT * FROM `records` WHERE (CAST(Timestamp AS date) BETWEEN '" & startdate & "' AND '" & enddate & "')", conn)
             dr = cmd.ExecuteReader
 
             While dr.Read
                 count += 1
                 dgvRecords.Rows.Add(count, dr.Item("Name"), dr.Item("ICNo"), dr.Item("NewPatient"), dr.Item("IOU"), dr.Item("NoOfItems"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
-
+                newpatientcount = newpatientcount + CInt(dr.Item("NewPatient"))
+                ioucount = ioucount + CInt(dr.Item("IOU"))
+                noofitems = noofitems + CInt(dr.Item("NoOfItems"))
             End While
             dr.Dispose()
+            lblNewPatientTotal.Text = newpatientcount
+            lblIOUTotal.Text = ioucount
+            lblNoOfItemsTotal.Text = noofitems
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -1371,13 +1546,14 @@ Redo:
 
             conn.Open()
 
-            Dim cmd As New MySqlCommand("INSERT INTO `drugtable` (`DrugName`,`Strength`,`Unit`,`DosageForm`,`PrescriberCategory`,`Remark`) VALUES (@DrugName,@Strength,@Unit,@DosageForm,@PrescriberCategory,@Remark)", conn)
+            Dim cmd As New MySqlCommand("INSERT INTO `drugtable` (`DrugName`,`Strength`,`Unit`,`DosageForm`,`PrescriberCategory`,`DefaultMaxQTY`,`Remark`) VALUES (@DrugName,@Strength,@Unit,@DosageForm,@PrescriberCategory,@DefaultMaxQTY,@Remark)", conn)
             cmd.Parameters.Clear()
             cmd.Parameters.AddWithValue("@DrugName", txtDrugName.Text)
             cmd.Parameters.AddWithValue("@Strength", CDbl(txtStrength.Text))
             cmd.Parameters.AddWithValue("@Unit", txtUnit.Text)
             cmd.Parameters.AddWithValue("@DosageForm", txtDosageForm.Text)
             cmd.Parameters.AddWithValue("@PrescriberCategory", txtPrescriberCategory.Text)
+            cmd.Parameters.AddWithValue("@DefaulMaxQTY", txtDefaultMaxQTY.Text)
             cmd.Parameters.AddWithValue("@Remark", txtRemark.Text)
 
             Dim i = cmd.ExecuteNonQuery
@@ -1404,7 +1580,11 @@ Redo:
         txtUnit.Clear()
         txtDosageForm.Clear()
         txtPrescriberCategory.Clear()
+        txtDefaultMaxQTY.Clear()
         txtRemark.Clear()
+        txtSearchDrug.Clear()
+        btnAddDrug.Enabled = True
+        txtDrugName.ReadOnly = False
     End Sub
 
     Public Sub DGV_Load()
@@ -1417,7 +1597,7 @@ Redo:
             dr = cmd.ExecuteReader
 
             While dr.Read
-                DataGridView1.Rows.Add(dr.Item("DrugName"), dr.Item("Strength"), dr.Item("Unit"), dr.Item("DosageForm"), dr.Item("PrescriberCategory"), dr.Item("Remark"))
+                DataGridView1.Rows.Add(dr.Item("DrugName"), dr.Item("Strength"), dr.Item("Unit"), dr.Item("DosageForm"), dr.Item("PrescriberCategory"), dr.Item("DefaultMaxQTY"), dr.Item("Remark"))
 
             End While
             dr.Dispose()
@@ -1431,6 +1611,8 @@ Redo:
 
 
     Public Sub Edit()
+        Dim sender As Object
+        Dim e As EventArgs
         'Add button at Database Tab to Save Data entered into Text Boxes
         Try
             If txtDrugName.Text = "" Then
@@ -1440,13 +1622,14 @@ Redo:
 
             conn.Open()
 
-            Dim cmd As New MySqlCommand("UPDATE `drugtable` SET `Strength`=@Strength,`Unit`=@Unit,`DosageForm`=@DosageForm,`PrescriberCategory`=@PrescriberCategory,`Remark`=@Remark WHERE `DrugName`=@DrugName", conn)
+            Dim cmd As New MySqlCommand("UPDATE `drugtable` SET `Strength`=@Strength,`Unit`=@Unit,`DosageForm`=@DosageForm,`PrescriberCategory`=@PrescriberCategory,`DefaultMaxQTY`=@DefaultMaxQTY,`Remark`=@Remark WHERE `DrugName`=@DrugName", conn)
             cmd.Parameters.Clear()
             cmd.Parameters.AddWithValue("@DrugName", txtDrugName.Text)
             cmd.Parameters.AddWithValue("@Strength", CDec(txtStrength.Text))
             cmd.Parameters.AddWithValue("@Unit", txtUnit.Text)
             cmd.Parameters.AddWithValue("@DosageForm", txtDosageForm.Text)
             cmd.Parameters.AddWithValue("@PrescriberCategory", txtPrescriberCategory.Text)
+            cmd.Parameters.AddWithValue("@DefaultMaxQTY", txtDefaultMaxQTY.Text)
             cmd.Parameters.AddWithValue("@Remark", txtRemark.Text)
 
             Dim i = cmd.ExecuteNonQuery
@@ -1456,6 +1639,7 @@ Redo:
 
                 drugclear()
                 DGV_Load()
+                txtSearchDrug_TextChanged(sender, e)
                 txtDrugName.ReadOnly = False
                 btnAddDrug.Enabled = True
 
@@ -1471,7 +1655,6 @@ Redo:
 
     Private Sub btnAddDrug_Click(sender As Object, e As EventArgs) Handles btnAddDrug.Click
         Add()
-
     End Sub
 
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
@@ -1479,6 +1662,9 @@ Redo:
     End Sub
 
     Private Sub DataGridView1_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentDoubleClick
+        Modify()
+    End Sub
+    Public Sub Modify()
         Select Case MsgBox("Do you want to Modify the Selected Item?", MsgBoxStyle.YesNoCancel, "Confirmation")
             Case MsgBoxResult.Yes
                 'Take values from the DGV table
@@ -1487,7 +1673,8 @@ Redo:
                 txtUnit.Text = DataGridView1.CurrentRow.Cells(2).Value
                 txtDosageForm.Text = DataGridView1.CurrentRow.Cells(3).Value
                 txtPrescriberCategory.Text = DataGridView1.CurrentRow.Cells(4).Value
-                txtRemark.Text = DataGridView1.CurrentRow.Cells(5).Value
+                txtDefaultMaxQTY.Text = DataGridView1.CurrentRow.Cells(5).Value
+                txtRemark.Text = DataGridView1.CurrentRow.Cells(6).Value
 
                 txtDrugName.ReadOnly = True
                 btnAddDrug.Enabled = False
@@ -1552,7 +1739,7 @@ Redo:
             dr = cmd.ExecuteReader
 
             While dr.Read
-                DataGridView1.Rows.Add(dr.Item("DrugName"), dr.Item("Strength"), dr.Item("Unit"), dr.Item("DosageForm"), dr.Item("PrescriberCategory"), dr.Item("Remark"))
+                DataGridView1.Rows.Add(dr.Item("DrugName"), dr.Item("Strength"), dr.Item("Unit"), dr.Item("DosageForm"), dr.Item("PrescriberCategory"), dr.Item("DefaultMaxQTY"), dr.Item("Remark"))
 
             End While
             dr.Dispose()
@@ -1836,7 +2023,7 @@ Redo:
                     ConsumeMethodD1 = "Minum "
                     ConsumeUnitD1 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD1 = "Kumur dalam mulut "
+                    ConsumeMethodD1 = "Kumur "
                     ConsumeUnitD1 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD1 = "Ambil "
@@ -1848,6 +2035,12 @@ Redo:
                     ConsumeMethodD1 = "Minum "
                     ConsumeUnitD1 = " paket "
                 End If
+
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD1 = CInt(dr.Item("DefaultMaxQTY"))
+                End If
+
             End While
             dr.Close()
 
@@ -1892,7 +2085,7 @@ Redo:
                     ConsumeMethodD2 = "Minum "
                     ConsumeUnitD2 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD2 = "Kumur dalam mulut "
+                    ConsumeMethodD2 = "Kumur "
                     ConsumeUnitD2 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD2 = "Ambil "
@@ -1900,6 +2093,11 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD2 = "Minum "
                     ConsumeUnitD2 = " paket "
+                End If
+
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD2 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -1947,7 +2145,7 @@ Redo:
                     ConsumeMethodD3 = "Minum "
                     ConsumeUnitD3 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD3 = "Kumur dalam mulut "
+                    ConsumeMethodD3 = "Kumur "
                     ConsumeUnitD3 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD3 = "Ambil "
@@ -1955,6 +2153,10 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD3 = "Minum "
                     ConsumeUnitD3 = " paket "
+                End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD3 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -2001,7 +2203,7 @@ Redo:
                     ConsumeMethodD4 = "Minum "
                     ConsumeUnitD4 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD4 = "Kumur dalam mulut "
+                    ConsumeMethodD4 = "Kumur "
                     ConsumeUnitD4 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD4 = "Ambil "
@@ -2009,6 +2211,10 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD4 = "Minum "
                     ConsumeUnitD4 = " paket "
+                End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD4 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -2054,7 +2260,7 @@ Redo:
                     ConsumeMethodD5 = "Minum "
                     ConsumeUnitD5 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD5 = "Kumur dalam mulut "
+                    ConsumeMethodD5 = "Kumur "
                     ConsumeUnitD5 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD5 = "Ambil "
@@ -2062,6 +2268,10 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD5 = "Minum "
                     ConsumeUnitD5 = " paket "
+                End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD5 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -2107,7 +2317,7 @@ Redo:
                     ConsumeMethodD6 = "Minum "
                     ConsumeUnitD6 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD6 = "Kumur dalam mulut "
+                    ConsumeMethodD6 = "Kumur "
                     ConsumeUnitD6 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD6 = "Ambil "
@@ -2115,6 +2325,10 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD6 = "Minum "
                     ConsumeUnitD6 = " paket "
+                End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD6 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -2160,7 +2374,7 @@ Redo:
                     ConsumeMethodD7 = "Minum "
                     ConsumeUnitD7 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD7 = "Kumur dalam mulut "
+                    ConsumeMethodD7 = "Kumur "
                     ConsumeUnitD7 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD7 = "Ambil "
@@ -2168,6 +2382,10 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD7 = "Minum "
                     ConsumeUnitD7 = " paket "
+                End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD7 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -2213,7 +2431,7 @@ Redo:
                     ConsumeMethodD8 = "Minum "
                     ConsumeUnitD8 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD8 = "Kumur dalam mulut "
+                    ConsumeMethodD8 = "Kumur "
                     ConsumeUnitD8 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD8 = "Ambil "
@@ -2221,6 +2439,10 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD8 = "Minum "
                     ConsumeUnitD8 = " paket "
+                End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD8 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -2266,7 +2488,7 @@ Redo:
                     ConsumeMethodD9 = "Minum "
                     ConsumeUnitD9 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD9 = "Kumur dalam mulut "
+                    ConsumeMethodD9 = "Kumur "
                     ConsumeUnitD9 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD9 = "Ambil "
@@ -2274,6 +2496,10 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD9 = "Minum "
                     ConsumeUnitD9 = " paket "
+                End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD9 = CInt(dr.Item("DefaultMaxQTY"))
                 End If
             End While
             dr.Close()
@@ -2319,7 +2545,7 @@ Redo:
                     ConsumeMethodD10 = "Minum "
                     ConsumeUnitD10 = " ml "
                 ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD10 = "Kumur dalam mulut "
+                    ConsumeMethodD10 = "Kumur "
                     ConsumeUnitD10 = " ml "
                 ElseIf dr.Item("DosageForm") = "Inhaler" Then
                     ConsumeMethodD10 = "Ambil "
@@ -2328,6 +2554,11 @@ Redo:
                     ConsumeMethodD10 = "Minum "
                     ConsumeUnitD10 = " paket "
                 End If
+                'check for max default QTY if present
+                If dr.Item("DefaultMaxQTY") <> "" Then
+                    DefaultMaxQTYD10 = CInt(dr.Item("DefaultMaxQTY"))
+                End If
+
             End While
             dr.Close()
 
@@ -2351,6 +2582,10 @@ Redo:
             TotalQTYD1 = (CDbl(txtDoseD1.Text) * CDbl(txtFreqD1.Text) * CDbl(txtDurationD1.Text)) / CDbl(lblStrD1.Text)
             txtQTYD1.Text = Math.Round(TotalQTYD1, 2)
 
+            If DefaultMaxQTYD1 > 0 Then
+                txtQTYD1.Text = DefaultMaxQTYD1
+            End If
+
         Catch ex As Exception
             txtQTYD1.Text = ""
         End Try
@@ -2363,6 +2598,10 @@ Redo:
             TotalQTYD2 = (CDbl(txtDoseD2.Text) * CDbl(txtFreqD2.Text) * CDbl(txtDurationD2.Text)) / CDbl(lblStrD2.Text)
             txtQTYD2.Text = Math.Round(TotalQTYD2, 2)
 
+            If DefaultMaxQTYD2 > 0 Then
+                txtQTYD2.Text = DefaultMaxQTYD2
+            End If
+
         Catch ex As Exception
             txtQTYD2.Text = ""
         End Try
@@ -2374,6 +2613,9 @@ Redo:
             TotalQTYD3 = (CDbl(txtDoseD3.Text) * CDbl(txtFreqD3.Text) * CDbl(txtDurationD3.Text)) / CDbl(lblStrD3.Text)
             txtQTYD3.Text = Math.Round(TotalQTYD3, 2)
 
+            If DefaultMaxQTYD3 > 0 Then
+                txtQTYD3.Text = DefaultMaxQTYD3
+            End If
         Catch ex As Exception
             txtQTYD3.Text = ""
         End Try
@@ -2386,6 +2628,9 @@ Redo:
             TotalQTYD4 = (CDbl(txtDoseD4.Text) * CDbl(txtFreqD4.Text) * CDbl(txtDurationD4.Text)) / CDbl(lblStrD4.Text)
             txtQTYD4.Text = Math.Round(TotalQTYD4, 2)
 
+            If DefaultMaxQTYD4 > 0 Then
+                txtQTYD4.Text = DefaultMaxQTYD4
+            End If
         Catch ex As Exception
             txtQTYD4.Text = ""
         End Try
@@ -2398,6 +2643,9 @@ Redo:
             TotalQTYD5 = (CDbl(txtDoseD5.Text) * CDbl(txtFreqD5.Text) * CDbl(txtDurationD5.Text)) / CDbl(lblStrD5.Text)
             txtQTYD5.Text = Math.Round(TotalQTYD5, 2)
 
+            If DefaultMaxQTYD5 > 0 Then
+                txtQTYD5.Text = DefaultMaxQTYD5
+            End If
         Catch ex As Exception
             txtQTYD5.Text = ""
         End Try
@@ -2409,6 +2657,10 @@ Redo:
         Try
             TotalQTYD6 = (CDbl(txtDoseD6.Text) * CDbl(txtFreqD6.Text) * CDbl(txtDurationD6.Text)) / CDbl(lblStrD6.Text)
             txtQTYD6.Text = Math.Round(TotalQTYD6, 2)
+
+            If DefaultMaxQTYD6 > 0 Then
+                txtQTYD6.Text = DefaultMaxQTYD6
+            End If
 
         Catch ex As Exception
             txtQTYD6.Text = ""
@@ -2422,6 +2674,10 @@ Redo:
             TotalQTYD7 = (CDbl(txtDoseD7.Text) * CDbl(txtFreqD7.Text) * CDbl(txtDurationD7.Text)) / CDbl(lblStrD7.Text)
             txtQTYD7.Text = Math.Round(TotalQTYD7, 2)
 
+            If DefaultMaxQTYD7 > 0 Then
+                txtQTYD7.Text = DefaultMaxQTYD7
+            End If
+
         Catch ex As Exception
             txtQTYD7.Text = ""
         End Try
@@ -2433,6 +2689,10 @@ Redo:
         Try
             TotalQTYD8 = (CDbl(txtDoseD8.Text) * CDbl(txtFreqD8.Text) * CDbl(txtDurationD8.Text)) / CDbl(lblStrD8.Text)
             txtQTYD8.Text = Math.Round(TotalQTYD8, 2)
+
+            If DefaultMaxQTYD8 > 0 Then
+                txtQTYD8.Text = DefaultMaxQTYD8
+            End If
 
         Catch ex As Exception
             txtQTYD8.Text = ""
@@ -2446,6 +2706,9 @@ Redo:
             TotalQTYD9 = (CDbl(txtDoseD9.Text) * CDbl(txtFreqD9.Text) * CDbl(txtDurationD9.Text)) / CDbl(lblStrD9.Text)
             txtQTYD9.Text = Math.Round(TotalQTYD9, 2)
 
+            If DefaultMaxQTYD9 > 0 Then
+                txtQTYD9.Text = DefaultMaxQTYD9
+            End If
         Catch ex As Exception
             txtQTYD9.Text = ""
         End Try
@@ -2457,6 +2720,10 @@ Redo:
         Try
             TotalQTYD10 = (CDbl(txtDoseD10.Text) * CDbl(txtFreqD10.Text) * CDbl(txtDurationD10.Text)) / CDbl(lblStrD10.Text)
             txtQTYD10.Text = Math.Round(TotalQTYD10, 2)
+
+            If DefaultMaxQTYD10 > 0 Then
+                txtQTYD10.Text = DefaultMaxQTYD10
+            End If
 
         Catch ex As Exception
             txtQTYD10.Text = ""
@@ -3047,74 +3314,100 @@ Redo:
     Private Sub cbDrug10_TextChanged(sender As Object, e As EventArgs) Handles cbDrug10.TextChanged
         cleardruginputsD10()
     End Sub
+    Public Sub resetselecteddrugindex()
+        cbDrug1.SelectedIndex = -1
+        cbDrug2.SelectedIndex = -1
+        cbDrug3.SelectedIndex = -1
+        cbDrug4.SelectedIndex = -1
+        cbDrug5.SelectedIndex = -1
+        cbDrug6.SelectedIndex = -1
+        cbDrug7.SelectedIndex = -1
+        cbDrug8.SelectedIndex = -1
+        cbDrug9.SelectedIndex = -1
+        cbDrug10.SelectedIndex = -1
+        cbInsulin1.SelectedIndex = -1
+        cbInsulin2.SelectedIndex = -1
+    End Sub
     Public Sub checkforselecteddrugs()
         If cbDrug1.SelectedIndex >= 0 Then
             Drug1Selected = True
         Else Drug1Selected = False
+
         End If
         If cbDrug2.SelectedIndex >= 0 Then
             Drug2Selected = True
             cbDrug2.Enabled = True
         Else Drug2Selected = False
             cbDrug2.Enabled = False
+
         End If
         If cbDrug3.SelectedIndex >= 0 Then
             Drug3Selected = True
             cbDrug3.Enabled = True
         Else Drug3Selected = False
             cbDrug3.Enabled = False
+
         End If
         If cbDrug4.SelectedIndex >= 0 Then
             Drug4Selected = True
             cbDrug4.Enabled = True
         Else Drug4Selected = False
             cbDrug4.Enabled = False
+
         End If
         If cbDrug5.SelectedIndex >= 0 Then
             Drug5Selected = True
             cbDrug5.Enabled = True
         Else Drug5Selected = False
             cbDrug5.Enabled = False
+
         End If
         If cbDrug6.SelectedIndex >= 0 Then
             Drug6Selected = True
             cbDrug6.Enabled = True
         Else Drug6Selected = False
             cbDrug6.Enabled = False
+
         End If
         If cbDrug7.SelectedIndex >= 0 Then
             Drug7Selected = True
             cbDrug7.Enabled = True
+
         End If
         If cbDrug8.SelectedIndex >= 0 Then
             Drug8Selected = True
             cbDrug8.Enabled = True
         Else Drug8Selected = False
             cbDrug8.Enabled = False
+
         End If
         If cbDrug9.SelectedIndex >= 0 Then
             Drug9Selected = True
             cbDrug9.Enabled = True
         Else Drug9Selected = False
             cbDrug9.Enabled = False
+
         End If
         If cbDrug10.SelectedIndex >= 0 Then
             Drug10Selected = True
             cbDrug10.Enabled = True
         Else Drug10Selected = False
             cbDrug10.Enabled = False
+
         End If
         If cbInsulin1.SelectedIndex >= 0 Then
             Insulin1Selected = True
             cbInsulin1.Enabled = True
         Else Insulin1Selected = False
             'cbInsulin1.Enabled = False
+
         End If
         If cbInsulin2.SelectedIndex >= 0 Then
             Insulin2Selected = True
             cbInsulin2.Enabled = True
         Else Insulin2Selected = False
             cbInsulin2.Enabled = False
+
         End If
         'Enable next drug selection
         If cbDrug1.SelectedIndex >= 0 Then
@@ -3416,6 +3709,17 @@ Redo:
             e.Handled = True
         End If
     End Sub
+    'Drug Tab
+    Private Sub txtStrength_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtStrength.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtDefaultMaxQTY_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtDefaultMaxQTY.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
     'Check for Validations 'END
     'Check for Text Changes 'Start
     'Drug 1
@@ -3559,6 +3863,9 @@ Redo:
         cleardruginputsD8()
         cleardruginputsD9()
         cleardruginputsD10()
+        cleardruginputsIn1()
+        cleardruginputsIn2()
+
         cbDrug1.Text = ""
         cbDrug2.Text = ""
         cbDrug3.Text = ""
@@ -3571,9 +3878,26 @@ Redo:
         cbDrug10.Text = ""
         cbInsulin1.Text = ""
         cbInsulin2.Text = ""
-
+        resetselecteddrugindex()
         checkforselecteddrugs()
         disabledrug2to10()
+
+        txtDurationD1.Clear()
+        txtDurationD2.Clear()
+        txtDurationD3.Clear()
+        txtDurationD4.Clear()
+        txtDurationD5.Clear()
+        txtDurationD6.Clear()
+        txtDurationD7.Clear()
+        txtDurationD8.Clear()
+        txtDurationD9.Clear()
+        txtDurationD10.Clear()
+        txtIn1Duration.Clear()
+        txtIn2Duration.Clear()
+        txtIn1TotalDose.Clear()
+        txtIn2TotalDose.Clear()
+
+        txtICNo.Focus()
 
     End Sub
     Public Sub unhighlightallcb()
@@ -4129,5 +4453,18 @@ Redo:
         ' Open the default email client with the mailto link
         Process.Start(New ProcessStartInfo(mailtoLink) With {.UseShellExecute = True})
     End Sub
+
+    Private Sub dtpRecordsDateSelectorEnd_ValueChanged(sender As Object, e As EventArgs) Handles dtpRecordsDateSelectorEnd.ValueChanged
+        If notyetinitialize Then
+            Return
+        Else
+            loadDGVRecords()
+        End If
+    End Sub
+
+    Private Sub btnDoseGuide_Click(sender As Object, e As EventArgs) Handles btnDoseGuide.Click
+        Form3.Show()
+    End Sub
+
 
 End Class
