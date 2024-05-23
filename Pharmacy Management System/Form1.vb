@@ -1175,7 +1175,7 @@ Public Class Form1
                     print()
                 End If
                 addRecordTab()
-                'MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
+                MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
                 stlbMainStatus.Text = "Saved Successfully for " & stPatientName & ", IC No: " & stIC
                 loadLogDGV()
                 loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
@@ -1417,7 +1417,7 @@ Redo:
                                 End If
                                 addRecordTab()
                                 'MsgBox("Successfully Updated Data.")
-                                'MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
+                                MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
                                 stlbMainStatus.Text = "Overwrite Successfully for " & stPatientName & ", IC No: " & stIC
                                 loadLogDGV()
                                 'loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
@@ -1553,7 +1553,7 @@ Redo:
             cmd.Parameters.AddWithValue("@Unit", txtUnit.Text)
             cmd.Parameters.AddWithValue("@DosageForm", txtDosageForm.Text)
             cmd.Parameters.AddWithValue("@PrescriberCategory", txtPrescriberCategory.Text)
-            cmd.Parameters.AddWithValue("@DefaulMaxQTY", txtDefaultMaxQTY.Text)
+            cmd.Parameters.AddWithValue("@DefaultMaxQTY", txtDefaultMaxQTY.Text)
             cmd.Parameters.AddWithValue("@Remark", txtRemark.Text)
 
             Dim i = cmd.ExecuteNonQuery
@@ -1566,9 +1566,11 @@ Redo:
                 loaddatafromdb()
                 loadInsulindatafromdb()
             Else
+                conn.Close()
                 MsgBox("Save Failed.")
             End If
         Catch ex As Exception
+            conn.Close()
             MsgBox(ex.Message)
         End Try
 
@@ -1644,9 +1646,12 @@ Redo:
                 btnAddDrug.Enabled = True
 
             Else
+                conn.Close()
                 MsgBox("Save Failed.")
             End If
         Catch ex As Exception
+            conn.Close()
+
             MsgBox(ex.Message)
         End Try
 
@@ -1710,9 +1715,11 @@ Redo:
 
 
                     Else
+                        conn.Close()
                         MsgBox("Delete Failed.")
                     End If
                 Catch ex As Exception
+                    conn.Close()
                     MsgBox(ex.Message)
                 End Try
             Case MsgBoxResult.Cancel
