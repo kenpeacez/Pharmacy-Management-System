@@ -127,10 +127,15 @@ Public Class Form1
 
     Public Sub InitializeAll()
 
+
+
         dtpRecordsDateSelector.Value = Today
         dtpRecordsDateSelector.MaxDate = Today
         dtpRecordsDateSelectorEnd.MaxDate = Today
         dtpRecordsDateSelectorEnd.Value = Today
+
+
+
 
 
         cboxEnablePrintPDF.Checked = My.Settings.EnablePrintAfterSave
@@ -148,6 +153,7 @@ Public Class Form1
         dgvPatientDrugHistory.AllowUserToAddRows = False
         dgvPatientInsulinHistory.AllowUserToAddRows = False
     End Sub
+
     Private Sub SetandSaveDBSettings()
         Dim sender As Object
         Dim e As EventArgs
@@ -390,7 +396,7 @@ Public Class Form1
 
                     'Check for Blank Selection of Drug
 
-                    NoOfItemsRecord = 1
+
                     e.Graphics.DrawString(cbDrug1.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD1 & consumedosefinal & ConsumeUnitD1 & txtFreqD1.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD1, f8a, Brushes.Black, Rect8, centre)
@@ -411,7 +417,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD2.Text / lblStrD2.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 2
+
                     e.Graphics.DrawString(cbDrug2.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD2 & consumedosefinal & ConsumeUnitD2 & txtFreqD2.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD2, f8a, Brushes.Black, Rect8, centre)
@@ -432,7 +438,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD3.Text / lblStrD3.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 3
+
                     e.Graphics.DrawString(cbDrug3.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD3 & consumedosefinal & ConsumeUnitD3 & txtFreqD3.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD3, f8a, Brushes.Black, Rect8, centre)
@@ -453,7 +459,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD4.Text / lblStrD4.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 4
+
                     e.Graphics.DrawString(cbDrug4.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD4 & consumedosefinal & ConsumeUnitD4 & txtFreqD4.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD4, f8a, Brushes.Black, Rect8, centre)
@@ -474,7 +480,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD5.Text / lblStrD5.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 5
+
                     e.Graphics.DrawString(cbDrug5.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD5 & consumedosefinal & ConsumeUnitD5 & txtFreqD5.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD5, f8a, Brushes.Black, Rect8, centre)
@@ -495,7 +501,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD6.Text / lblStrD6.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 6
+
                     e.Graphics.DrawString(cbDrug6.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD6 & consumedosefinal & ConsumeUnitD6 & txtFreqD6.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD6, f8a, Brushes.Black, Rect8, centre)
@@ -516,7 +522,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD7.Text / lblStrD7.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 7
+
                     e.Graphics.DrawString(cbDrug7.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD7 & consumedosefinal & ConsumeUnitD7 & txtFreqD7.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD7, f8a, Brushes.Black, Rect8, centre)
@@ -537,7 +543,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD8.Text / lblStrD8.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 8
+
                     e.Graphics.DrawString(cbDrug8.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD8 & consumedosefinal & ConsumeUnitD8 & txtFreqD8.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD8, f8a, Brushes.Black, Rect8, centre)
@@ -558,7 +564,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD9.Text / lblStrD9.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 9
+
                     e.Graphics.DrawString(cbDrug9.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD9 & consumedosefinal & ConsumeUnitD9 & txtFreqD9.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD9, f8a, Brushes.Black, Rect8, centre)
@@ -572,7 +578,7 @@ Public Class Form1
                         Dim consumedose = txtDoseD10.Text / lblStrD10.Text
                         consumedosefinal = ConvertToFraction(consumedose)
                     End If
-                    NoOfItemsRecord = 10
+
                     'MsgBox("Drug Items: " & NoOfItemsRecord)
                     e.Graphics.DrawString(cbDrug10.Text, f8a, Brushes.Black, Rect4, centre)
                     e.Graphics.DrawString(ConsumeMethodD10 & consumedosefinal & ConsumeUnitD10 & txtFreqD10.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
@@ -826,7 +832,7 @@ Public Class Form1
 
             Select Case currentPageInsulin
                 Case 1
-                    NoOfItemsRecordInsulin = 1
+
                     'MsgBox("Insulin Items: " & NoOfItemsRecord)
                     e.Graphics.DrawString(cbInsulin1.Text, f8a, Brushes.Black, Rect4a, centre)
                     e.Graphics.DrawString(combinedwords, f8b, Brushes.Black, Rect6a, centre)
@@ -834,7 +840,7 @@ Public Class Form1
                     e.Graphics.DrawString("Jumlah Katrij: " & txtIn1CartQTY.Text, f8a, Brushes.Black, Rect9a, left)
 
                 Case 2
-                    NoOfItemsRecordInsulin = 2
+
                     e.Graphics.DrawString(cbInsulin2.Text, f8a, Brushes.Black, Rect4a, centre)
                     e.Graphics.DrawString(combinedwords2, f8b, Brushes.Black, Rect6a, centre)
                     e.Graphics.DrawString(RemarkIn2, f8a, Brushes.Black, Rect8a, centre)
@@ -859,6 +865,44 @@ Public Class Form1
         Catch ex As Exception
 
         End Try
+    End Sub
+    Public Sub checkforItemsToCount()
+        If cbDrug1.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug2.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug3.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug4.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug5.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug6.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug7.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug8.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug9.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug10.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbInsulin1.SelectedIndex > 0 Then
+            NoOfItemsRecordInsulin += 1
+        End If
+        If cbInsulin2.SelectedIndex > 0 Then
+            NoOfItemsRecordInsulin += 1
+        End If
     End Sub
     Public Sub printInsulin()
 
@@ -1449,6 +1493,7 @@ Redo:
         Dim IOUBool As Integer = 0
         'MsgBox("Drug Items : " & NoOfItemsRecord)
         'MsgBox("Insulin Items : " & NoOfItemsRecordInsulin)
+        checkforItemsToCount()
         Dim totalitems As Integer = NoOfItemsRecord + NoOfItemsRecordInsulin
         If cboxIOU.Checked Then
             IOUBool = 1
@@ -1763,7 +1808,7 @@ Redo:
         Dim da As New MySqlDataAdapter(cmd)
         Dim col As New AutoCompleteStringCollection
         Dim col2 As New AutoCompleteStringCollection
-        Dim DBPatientName As String
+
         Try
             da.Fill(dt)
             For i = 0 To dt.Rows.Count - 1
