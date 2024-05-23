@@ -22,8 +22,12 @@ Partial Class Form3
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form3))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -42,9 +46,6 @@ Partial Class Form3
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -64,7 +65,7 @@ Partial Class Form3
         Me.TableLayoutPanel1.ColumnCount = 3
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Label22, 0, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.Label21, 0, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.Label20, 0, 6)
@@ -99,11 +100,41 @@ Partial Class Form3
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(506, 313)
         Me.TableLayoutPanel1.TabIndex = 1
         '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.Location = New System.Drawing.Point(4, 265)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(69, 22)
+        Me.Label22.TabIndex = 20
+        Me.Label22.Text = "Internal"
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label21.Location = New System.Drawing.Point(189, 265)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(62, 22)
+        Me.Label21.TabIndex = 19
+        Me.Label21.Text = "Minum"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Location = New System.Drawing.Point(374, 265)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(54, 22)
+        Me.Label20.TabIndex = 18
+        Me.Label20.Text = "paket"
+        '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(376, 45)
+        Me.Label7.Location = New System.Drawing.Point(374, 45)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(32, 22)
         Me.Label7.TabIndex = 5
@@ -113,7 +144,7 @@ Partial Class Form3
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(190, 45)
+        Me.Label6.Location = New System.Drawing.Point(189, 45)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(63, 22)
         Me.Label6.TabIndex = 4
@@ -133,7 +164,7 @@ Partial Class Form3
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(376, 1)
+        Me.Label4.Location = New System.Drawing.Point(374, 1)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(46, 22)
         Me.Label4.TabIndex = 2
@@ -143,7 +174,7 @@ Partial Class Form3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(190, 1)
+        Me.Label3.Location = New System.Drawing.Point(189, 1)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(164, 22)
         Me.Label3.TabIndex = 1
@@ -173,7 +204,7 @@ Partial Class Form3
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(190, 89)
+        Me.Label9.Location = New System.Drawing.Point(189, 89)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(60, 22)
         Me.Label9.TabIndex = 7
@@ -183,7 +214,7 @@ Partial Class Form3
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(376, 89)
+        Me.Label10.Location = New System.Drawing.Point(374, 89)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(39, 22)
         Me.Label10.TabIndex = 8
@@ -203,7 +234,7 @@ Partial Class Form3
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(190, 133)
+        Me.Label12.Location = New System.Drawing.Point(189, 133)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(62, 22)
         Me.Label12.TabIndex = 10
@@ -213,7 +244,7 @@ Partial Class Form3
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(376, 133)
+        Me.Label13.Location = New System.Drawing.Point(374, 133)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(28, 22)
         Me.Label13.TabIndex = 11
@@ -233,7 +264,7 @@ Partial Class Form3
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(190, 177)
+        Me.Label15.Location = New System.Drawing.Point(189, 177)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(62, 22)
         Me.Label15.TabIndex = 13
@@ -243,7 +274,7 @@ Partial Class Form3
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(376, 177)
+        Me.Label16.Location = New System.Drawing.Point(374, 177)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(28, 22)
         Me.Label16.TabIndex = 14
@@ -263,7 +294,7 @@ Partial Class Form3
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(190, 221)
+        Me.Label18.Location = New System.Drawing.Point(189, 221)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(54, 22)
         Me.Label18.TabIndex = 16
@@ -273,41 +304,11 @@ Partial Class Form3
         '
         Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.Location = New System.Drawing.Point(376, 221)
+        Me.Label19.Location = New System.Drawing.Point(374, 221)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(74, 22)
         Me.Label19.TabIndex = 17
         Me.Label19.Text = "sedutan"
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(376, 265)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(54, 22)
-        Me.Label20.TabIndex = 18
-        Me.Label20.Text = "paket"
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label21.Location = New System.Drawing.Point(190, 265)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(62, 22)
-        Me.Label21.TabIndex = 19
-        Me.Label21.Text = "Minum"
-        '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.Location = New System.Drawing.Point(4, 265)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(69, 22)
-        Me.Label22.TabIndex = 20
-        Me.Label22.Text = "Internal"
         '
         'Form3
         '
@@ -316,6 +317,7 @@ Partial Class Form3
         Me.ClientSize = New System.Drawing.Size(534, 381)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.Label1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Form3"
         Me.Text = "Dosage Form Guide"

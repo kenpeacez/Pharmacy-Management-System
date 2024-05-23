@@ -22,6 +22,7 @@ Partial Class Form2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.DrugNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DrugName = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -60,13 +61,13 @@ Partial Class Form2
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DrugNo, Me.DrugName, Me.Strength, Me.Unit, Me.Dose, Me.Frequency, Me.Duration, Me.TotalQTY})
-        Me.DataGridView1.Location = New System.Drawing.Point(4, 17)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.DataGridView1.Location = New System.Drawing.Point(5, 21)
+        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersWidth = 51
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(951, 293)
+        Me.DataGridView1.Size = New System.Drawing.Size(1268, 361)
         Me.DataGridView1.TabIndex = 0
         '
         'DrugNo
@@ -136,19 +137,19 @@ Partial Class Form2
         '
         'txtSearchPatientIC
         '
-        Me.txtSearchPatientIC.Location = New System.Drawing.Point(144, 2)
-        Me.txtSearchPatientIC.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txtSearchPatientIC.Location = New System.Drawing.Point(192, 2)
+        Me.txtSearchPatientIC.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtSearchPatientIC.MaxLength = 14
         Me.txtSearchPatientIC.Name = "txtSearchPatientIC"
-        Me.txtSearchPatientIC.Size = New System.Drawing.Size(137, 20)
+        Me.txtSearchPatientIC.Size = New System.Drawing.Size(181, 22)
         Me.txtSearchPatientIC.TabIndex = 1
         '
         'btnSearch
         '
-        Me.btnSearch.Location = New System.Drawing.Point(306, 2)
-        Me.btnSearch.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnSearch.Location = New System.Drawing.Point(408, 2)
+        Me.btnSearch.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(56, 19)
+        Me.btnSearch.Size = New System.Drawing.Size(75, 23)
         Me.btnSearch.TabIndex = 2
         Me.btnSearch.Text = "Search"
         Me.btnSearch.UseVisualStyleBackColor = True
@@ -156,10 +157,9 @@ Partial Class Form2
         'lblSearch
         '
         Me.lblSearch.AutoSize = True
-        Me.lblSearch.Location = New System.Drawing.Point(10, 7)
-        Me.lblSearch.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblSearch.Location = New System.Drawing.Point(13, 9)
         Me.lblSearch.Name = "lblSearch"
-        Me.lblSearch.Size = New System.Drawing.Size(125, 13)
+        Me.lblSearch.Size = New System.Drawing.Size(151, 16)
         Me.lblSearch.TabIndex = 3
         Me.lblSearch.Text = "Search for Patient IC No."
         '
@@ -167,11 +167,11 @@ Partial Class Form2
         '
         Me.GroupBox1.Controls.Add(Me.DataGridView2)
         Me.GroupBox1.Controls.Add(Me.DataGridView1)
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 34)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Location = New System.Drawing.Point(11, 42)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
-        Me.GroupBox1.Size = New System.Drawing.Size(964, 505)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GroupBox1.Size = New System.Drawing.Size(1285, 622)
         Me.GroupBox1.TabIndex = 4
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Past Medication"
@@ -180,13 +180,13 @@ Partial Class Form2
         '
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
-        Me.DataGridView2.Location = New System.Drawing.Point(4, 330)
-        Me.DataGridView2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.DataGridView2.Location = New System.Drawing.Point(5, 406)
+        Me.DataGridView2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.ReadOnly = True
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(951, 119)
+        Me.DataGridView2.Size = New System.Drawing.Size(1268, 146)
         Me.DataGridView2.TabIndex = 7
         '
         'DataGridViewTextBoxColumn1
@@ -297,35 +297,34 @@ Partial Class Form2
         'lblDatePastMed
         '
         Me.lblDatePastMed.AutoSize = True
-        Me.lblDatePastMed.Location = New System.Drawing.Point(498, 4)
-        Me.lblDatePastMed.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblDatePastMed.Location = New System.Drawing.Point(664, 5)
         Me.lblDatePastMed.Name = "lblDatePastMed"
-        Me.lblDatePastMed.Size = New System.Drawing.Size(25, 13)
+        Me.lblDatePastMed.Size = New System.Drawing.Size(25, 16)
         Me.lblDatePastMed.TabIndex = 5
         Me.lblDatePastMed.Text = "      "
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(367, 4)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(489, 5)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(127, 13)
+        Me.Label1.Size = New System.Drawing.Size(155, 16)
         Me.Label1.TabIndex = 6
         Me.Label1.Text = "Date of Past Medication :"
         '
         'Form2
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(979, 549)
+        Me.ClientSize = New System.Drawing.Size(1305, 676)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.lblDatePastMed)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.lblSearch)
         Me.Controls.Add(Me.btnSearch)
         Me.Controls.Add(Me.txtSearchPatientIC)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "Form2"
         Me.Text = "Search for Past Medications"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()

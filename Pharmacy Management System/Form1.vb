@@ -1509,7 +1509,7 @@ Redo:
 
             While dr.Read
                 count += 1
-                dgvRecords.Rows.Add(count, dr.Item("Name"), dr.Item("ICNo"), dr.Item("NewPatient"), dr.Item("IOU"), dr.Item("NoOfItems"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
+                dgvRecords.Rows.Add(count, dr.Item("ID"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("NewPatient"), dr.Item("IOU"), dr.Item("NoOfItems"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
                 newpatientcount = newpatientcount + CInt(dr.Item("NewPatient"))
                 ioucount = ioucount + CInt(dr.Item("IOU"))
                 noofitems = noofitems + CInt(dr.Item("NoOfItems"))
@@ -4297,7 +4297,6 @@ Redo:
             Return
         End If
 
-        Dim timestamp As String
 
         Dim dt As New DataTable
         'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
@@ -4466,5 +4465,147 @@ Redo:
         Form3.Show()
     End Sub
 
+    Private Sub btnDeleteRecord_Click(sender As Object, e As EventArgs) Handles btnDeleteRecord.Click
+        deleteRecordRow()
+    End Sub
 
+    Public Sub deleteRecordRow()
+        Select Case MsgBox("Do you want to Delete the Selected Row?", MsgBoxStyle.YesNoCancel, "Confirmation")
+            Case MsgBoxResult.Yes
+                'Delete button at Database Tab to Delete Database Row Selected at DataGridView Table
+                Try
+
+
+                    conn.Open()
+
+                    Dim cmd As New MySqlCommand("DELETE FROM `records` WHERE `ID`=@ID", conn)
+                    cmd.Parameters.Clear()
+                    cmd.Parameters.AddWithValue("@ID", dgvRecords.CurrentRow.Cells(1).Value)
+
+
+                    Dim i = cmd.ExecuteNonQuery
+                    If i > 0 Then
+                        MsgBox("Successfully Deleted.")
+                        conn.Close()
+
+                        loadDGVRecords()
+
+                    Else
+                        MsgBox("Delete Failed.")
+                    End If
+                Catch ex As Exception
+                    conn.Close()
+                    MsgBox("Please select the row first.")
+                End Try
+            Case MsgBoxResult.Cancel
+                Return
+            Case MsgBoxResult.No
+                Return
+        End Select
+    End Sub
+
+    Private Sub btnChangeRecord_Click(sender As Object, e As EventArgs) Handles btnChangeRecord.Click
+        If dgvRecords.ReadOnly Then
+            lblEditModeRecords.Text = "EDIT MODE, You may edit any cells and press Save"
+            dgvRecords.ReadOnly = False
+            btnChangeRecord.Text = "Save"
+            btnChangeRecord.BackColor = Color.LightGreen
+        ElseIf btnChangeRecord.Text = "Save" Then
+            changeRecords()
+            lblEditModeRecords.Text = ""
+            dgvRecords.ReadOnly = True
+            btnChangeRecord.Text = "Edit"
+            btnChangeRecord.BackColor = Color.Transparent
+        End If
+
+
+    End Sub
+
+    Public Sub changeRecords()
+
+        Try
+            conn.Open()
+            Dim ID As String
+            '"UPDATE `drugtable` SET `Strength`=@Strength,`Unit`=@Unit,`DosageForm`=@DosageForm,`PrescriberCategory`=@PrescriberCategory,`Remark`=@Remark WHERE `DrugName`=@DrugName", conn
+
+
+
+
+            For Each row As DataGridViewRow In dgvRecords.Rows
+                ID = row.Cells("IDRecords").Value
+                Dim cmd As New MySqlCommand("UPDATE `records` SET `Name`=@Name,`ICNo`=@ICNo,`NewPatient`=@NewPatient,`IOU`=@IOU,`NoOfItems`=@NoOfItems,`DateCollection`=@DateCollection,`DateSeeDoctor`=@DateSeeDoctor WHERE ID='" & ID & "'", conn)
+                cmd.Parameters.Clear()
+                cmd.Parameters.AddWithValue("@Name", row.Cells("NameOfPatient").Value)
+                cmd.Parameters.AddWithValue("@ICNo", row.Cells("ICNoOfPatient").Value)
+                cmd.Parameters.AddWithValue("@NewPatient", row.Cells("NewPatient").Value)
+                cmd.Parameters.AddWithValue("@IOU", row.Cells("IOU").Value)
+                cmd.Parameters.AddWithValue("@NoOfItems", row.Cells("NoOfItems").Value)
+                cmd.Parameters.AddWithValue("@DateCollection", row.Cells("DateCollectionRecord").Value)
+                cmd.Parameters.AddWithValue("@DateSeeDoctor", row.Cells("DateSeeDoctorRecord").Value)
+                cmd.ExecuteNonQuery()
+            Next
+
+            MsgBox("Successfully Updated.")
+            conn.Close()
+
+            loadDGVRecords()
+
+
+
+
+        Catch ex As Exception
+            conn.Close()
+            MsgBox("Delete Failed.")
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub btnDeleteAllprescribeddrugs_Click(sender As Object, e As EventArgs) Handles btnDeleteAllPatientRecords.Click
+        deleteAllPatientRecords()
+
+    End Sub
+
+    Public Sub deleteAllPatientRecords()
+        Select Case MsgBox("Do you want to Delete All the Patient Records? This operation cannot be undone. This will restart the application after completed.", MsgBoxStyle.YesNoCancel, "Confirmation")
+            Case MsgBoxResult.Yes
+                'Delete button at Database Tab to Delete Database Row Selected at DataGridView Table
+                Try
+
+
+
+                    'Dim cmd As New MySqlCommand("TRUNCATE TABLE prescribeddrugs;TRUNCATE TABLE prescribeddrugshistory;TRUNCATE TABLE records", conn)
+                    Dim cmd As New MySqlCommand("TRUNCATE TABLE prescribeddrugs", conn)
+                    cmd.Parameters.Clear()
+
+                    conn.Open()
+                    cmd.ExecuteNonQuery()
+                    conn.Close()
+
+                    Dim cmd2 As New MySqlCommand("TRUNCATE TABLE prescribeddrugshistory", conn)
+                    cmd2.Parameters.Clear()
+
+                    conn.Open()
+                    cmd2.ExecuteNonQuery()
+                    conn.Close()
+
+                    Dim cmd3 As New MySqlCommand("TRUNCATE TABLE records", conn)
+                    cmd3.Parameters.Clear()
+
+                    conn.Open()
+                    cmd3.ExecuteNonQuery()
+                    conn.Close()
+
+                    Application.Restart()
+
+
+                Catch ex As Exception
+                    conn.Close()
+                    MsgBox(ex.Message)
+                End Try
+            Case MsgBoxResult.Cancel
+                Return
+            Case MsgBoxResult.No
+                Return
+        End Select
+    End Sub
 End Class
