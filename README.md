@@ -11,7 +11,7 @@ Main Features
 - Patient medications entry and store
 - Patient history medications view wtih overwrite function
 - Add, view, seach, update and store medications infomation in database from application
-- Ability to print medications labels based on selected medications
+- Ability to print medications labels based on selected medications, optimized for Label Size 80mm x 50mm (height x width)
 
 Pictures of Application
 ![image](https://github.com/kenpeacez/Pharmacy-Management-System/assets/28534332/0bdbd3b0-8f62-4e03-8dc9-a51d5f4e54dd)
