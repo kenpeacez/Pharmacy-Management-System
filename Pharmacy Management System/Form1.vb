@@ -24,9 +24,9 @@ Public Class Form1
 
     Private currentPage As Integer = 1
     Private currentPageInsulin As Integer = 1
+
     Dim NoOfItemsRecord As Integer = 0
     Dim NoOfItemsRecordInsulin As Integer = 0
-
 
     Dim RemarkD1 As String
     Dim RemarkD2 As String
@@ -127,19 +127,17 @@ Public Class Form1
 
     Public Sub InitializeAll()
 
-
-
         dtpRecordsDateSelector.Value = Today
         dtpRecordsDateSelector.MaxDate = Today
         dtpRecordsDateSelectorEnd.MaxDate = Today
         dtpRecordsDateSelectorEnd.Value = Today
 
-
-
-
-
         cboxEnablePrintPDF.Checked = My.Settings.EnablePrintAfterSave
         cboxAutoClear.Checked = My.Settings.AutoClear
+
+        txtLabelHeight.Text = My.Settings.LabelHeight
+        txtLabelWidth.Text = My.Settings.LabelWidth
+
         btnIOU.Enabled = False
         cbAddDays.SelectedIndex = 3
         GetDefaultPrinterName()
@@ -188,10 +186,38 @@ Public Class Form1
         Form1_Load(sender, e)
     End Sub
     Private Sub SetandSavePrinterSettings()
+        If txtLabelHeight.Text < 30 Then
+            MsgBox("Minimum Height is 30. Please try again.")
+            Return
+        End If
+        If txtLabelHeight.Text > 100 Then
+            MsgBox("Maximum Height is 100. Please try again.")
+            Return
+        End If
+        If txtLabelWidth.Text < 40 Then
+            MsgBox("Minimum Width is 40. Please try again.")
+            Return
+        End If
+        If txtLabelWidth.Text > 100 Then
+            MsgBox("Maximum Width is 100. Please try again.")
+            Return
+        End If
+
         Dim ClinicName As String = My.Settings.ClinicName
         Dim ClinicNameNew As String
         ClinicNameNew = txtClinicName.Text
         My.Settings.ClinicName = ClinicNameNew
+
+        Dim LabelHeight As Integer = My.Settings.LabelHeight
+        Dim LabelHeightNew As Integer
+        LabelHeightNew = txtLabelHeight.Text
+        My.Settings.LabelHeight = LabelHeightNew
+
+        Dim LabelWidth As Integer = My.Settings.LabelWidth
+        Dim LabelWidthNew As Integer
+        LabelWidthNew = txtLabelWidth.Text
+        My.Settings.LabelWidth = LabelWidthNew
+
         My.Settings.Save()
         'Set Default Printer
         Dim selectedPrinter As String = cboxDefaultPrinters.SelectedItem
@@ -260,6 +286,16 @@ Public Class Form1
         lblDefaultPrinterAtSetting.Text = defaultPrinterName
     End Sub
     Public Sub printPreview()
+        Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
+        Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
+
+        Dim ScaleHeight As Double = ((txtLabelHeight.Text - 2) / 25.4 * 100) / LabelHeight
+        Dim ScaleWidth As Double = ((txtLabelWidth.Text - 2) / 25.4 * 100) / LabelWidth
+
+        Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
+        Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
+
+        
 
         If cbDrug1.Text = "" AndAlso cbInsulin1.Text = "" Then
             MsgBox("Nothing to print")
@@ -267,8 +303,8 @@ Public Class Form1
         End If
 
         If Drug1Selected Then
-            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
-            PrintDoc.DefaultPageSettings.Landscape = False
+            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height in inch, 1 inch = 1000, 78mm = 3.07 inch, 48mm = 1.89 inch
+            PrintDoc.DefaultPageSettings.Landscape = True
 
 
             CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
@@ -289,17 +325,26 @@ Public Class Form1
     End Sub
 
     Public Sub print()
+        Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
+        Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
+
+        Dim ScaleHeight As Double = ((txtLabelHeight.Text - 2) / 25.4 * 100) / LabelHeight
+        Dim ScaleWidth As Double = ((txtLabelWidth.Text - 2) / 25.4 * 100) / LabelWidth
+
+        Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
+        Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
+
         If cbDrug1.Text = "" AndAlso cbInsulin1.Text = "" Then
             MsgBox("Nothing to print")
             Return
         End If
 
         If Drug1Selected Then
-            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
-            PrintDoc.DefaultPageSettings.Landscape = False
+            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
+            PrintDoc.DefaultPageSettings.Landscape = True
 
 
-            PPD.Document = PrintDoc
+            'PPD.Document = PrintDoc
             'PPD.ShowDialog()
             currentPage = 1
 
@@ -315,14 +360,27 @@ Public Class Form1
     End Sub
 
     Private Sub PrintDoc_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDoc.PrintPage
+        Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
+        Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
+
+        Dim ScaleHeight As Double = ((txtLabelHeight.Text - 2) / 25.4 * 100) / LabelHeight
+        Dim ScaleWidth As Double = ((txtLabelWidth.Text - 2) / 25.4 * 100) / LabelWidth
+        Dim RationalizedScale As Double = (ScaleHeight + ScaleWidth) / 2
+
+        Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
+        Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
+
         'Set Custom Names
         Dim ClinicName As String = txtClinicName.Text
         'Set Control Print Variable
         Dim stopprintflag As Boolean = False
         'Set Fonts
-        Dim f8 As New Font("Arial", 8, FontStyle.Italic)
-        Dim f8a As New Font("Arial", 8, FontStyle.Bold)
-        Dim f8b As New Font("Arial", 13, FontStyle.Bold)
+        Dim fontsize1 As Single = Math.Round(8 * RationalizedScale)
+        Dim fontsize2 As Single = Math.Round(13 * RationalizedScale)
+        'Dim fontsize3 As Single = Math.Round(8 * RationalizedScale)
+        Dim f8 As New Font("Arial", fontsize1, FontStyle.Italic)
+        Dim f8a As New Font("Arial", fontsize1, FontStyle.Bold)
+        Dim f8b As New Font("Arial", fontsize2, FontStyle.Bold)
         'Set Alignments
         Dim left As New StringFormat
         Dim centre As New StringFormat
@@ -332,20 +390,33 @@ Public Class Form1
         centre.Alignment = StringAlignment.Center
         right.Alignment = StringAlignment.Far
 
+        ''Draw Rectangles FOR Drug Prescriptions
+        'Dim Rect1 As New Rectangle(Math.Round(6 * ScaleWidth), Math.Round(5 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(178 * ScaleHeight)) '( x margin, y margin, width, height) 'Border
+        'Dim Rect2 As New Rectangle(Math.Round(6 * ScaleWidth), 20, 295, 45)
+        'Dim Rect3 As New Rectangle(Math.Round(6 * ScaleWidth), 45, 295, 20)
+
+        'Dim Rect4 As New Rectangle(Math.Round(7 * ScaleWidth), 70, 293, 25) 'medicine name 
+        'Dim Rect5 As New Rectangle(Math.Round(6 * ScaleWidth), 96, 295, 25)
+        'Dim Rect6 As New Rectangle(Math.Round(7 * ScaleWidth), 100, 290, 20)
+
+        'Dim Rect7 As New Rectangle(Math.Round(6 * ScaleWidth), 121, 295, 40)
+        'Dim Rect8 As New Rectangle(Math.Round(7 * ScaleWidth), 128, 290, 30) 'Remark margin
+
+        'Dim Rect9 As New Rectangle(Math.Round(201 * ScaleWidth), 170, 70, 12) 'Jumlah
+
         'Draw Rectangles FOR Drug Prescriptions
-        Dim Rect1 As New Rectangle(5, 5, 305, 185) '(margin, margin, width, height) 'Border
-        Dim Rect2 As New Rectangle(5, 20, 305, 45)
-        Dim Rect3 As New Rectangle(5, 45, 305, 20)
+        Dim Rect1 As New Rectangle(Math.Round(6 * ScaleWidth), Math.Round(5 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(178 * ScaleHeight)) '( x margin, y margin, width, height) 'Border
+        Dim Rect2 As New Rectangle(Math.Round(6 * ScaleWidth), Math.Round(20 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(45 * ScaleHeight))
+        Dim Rect3 As New Rectangle(Math.Round(6 * ScaleWidth), Math.Round(45 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(20 * ScaleHeight))
 
-        Dim Rect4 As New Rectangle(6, 70, 300, 25)
-        Dim Rect5 As New Rectangle(5, 96, 305, 25)
-        Dim Rect6 As New Rectangle(6, 100, 300, 20)
+        Dim Rect4 As New Rectangle(Math.Round(8 * ScaleWidth), Math.Round(68 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(25 * ScaleHeight)) 'medicine name 
+        Dim Rect5 As New Rectangle(Math.Round(6 * ScaleWidth), Math.Round(96 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(27 * ScaleHeight))
+        Dim Rect6 As New Rectangle(Math.Round(8 * ScaleWidth), Math.Round(100 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(20 * ScaleHeight))
 
-        Dim Rect7 As New Rectangle(5, 121, 305, 40)
-        Dim Rect8 As New Rectangle(6, 128, 300, 30) 'Remark margin
+        Dim Rect7 As New Rectangle(Math.Round(6 * ScaleWidth), Math.Round(123 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(40 * ScaleHeight))
+        Dim Rect8 As New Rectangle(Math.Round(8 * ScaleWidth), Math.Round(130 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(30 * ScaleHeight)) 'Remark margin
 
-
-        Dim Rect9 As New Rectangle(200, 175, 80, 12) 'Jumlah
+        Dim Rect9 As New Rectangle(Math.Round(201 * ScaleWidth), Math.Round(167 * ScaleHeight), Math.Round(70 * ScaleWidth), Math.Round(12 * ScaleHeight)) 'Jumlah
 
 
 
@@ -358,7 +429,7 @@ Public Class Form1
             e.Graphics.DrawRectangle(Pens.Black, Rect1)
             e.Graphics.DrawRectangle(Pens.Black, Rect2)
             e.Graphics.DrawRectangle(Pens.Black, Rect3)
-            e.Graphics.DrawRectangle(Pens.White, Rect4)
+            e.Graphics.DrawRectangle(Pens.White, Rect4) 'medicine name
             e.Graphics.DrawRectangle(Pens.Black, Rect5)
             e.Graphics.DrawRectangle(Pens.White, Rect6)
             e.Graphics.DrawRectangle(Pens.Black, Rect7)
@@ -634,6 +705,18 @@ Public Class Form1
     End Function
     Private Sub PrintDocInsulin_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDocInsulin.PrintPage
         Try
+            Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
+            Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
+
+            Dim ScaleHeight As Double = ((txtLabelHeight.Text - 2) / 25.4 * 100) / LabelHeight
+            Dim ScaleWidth As Double = ((txtLabelWidth.Text - 2) / 25.4 * 100) / LabelWidth
+            Dim RationalizedScale As Double = (ScaleHeight + ScaleWidth) / 2
+
+            Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
+            Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
+
+            Dim fontscale1 As Single = Math.Round(RationalizedScale * 8)
+            Dim fontscale2 As Single = Math.Round(RationalizedScale * 10)
 
             'Perform checking on insulin selections
             If Insulin1Selected = False Then
@@ -650,9 +733,9 @@ Public Class Form1
             'Set Control Print Variable
 
             'Set Fonts
-            Dim f8 As New Font("Arial", 8, FontStyle.Italic)
-            Dim f8a As New Font("Arial", 8, FontStyle.Bold)
-            Dim f8b As New Font("Arial", 10, FontStyle.Bold)
+            Dim f8 As New Font("Arial", fontscale1, FontStyle.Italic)
+            Dim f8a As New Font("Arial", fontscale1, FontStyle.Bold)
+            Dim f8b As New Font("Arial", fontscale2, FontStyle.Bold)
             'Set Alignments
             Dim left As New StringFormat
             Dim centre As New StringFormat
@@ -661,20 +744,20 @@ Public Class Form1
             left.Alignment = StringAlignment.Near
             centre.Alignment = StringAlignment.Center
             right.Alignment = StringAlignment.Far
-            Dim Rect1a As New Rectangle(5, 5, 305, 185) '(x location, y location, width, height) 'Border
-            Dim Rect2a As New Rectangle(5, 20, 305, 45)
+            Dim Rect1a As New Rectangle(Math.Round(5 * ScaleWidth), Math.Round(4 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(181 * ScaleHeight)) '(x location, y location, width, height) 'Border
+            Dim Rect2a As New Rectangle(Math.Round(5 * ScaleWidth), Math.Round(20 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(45 * ScaleHeight))
 
-            Dim Rect3a As New Rectangle(5, 45, 305, 20)
-            Dim Rect4a As New Rectangle(6, 70, 300, 25)
+            Dim Rect3a As New Rectangle(Math.Round(5 * ScaleWidth), Math.Round(45 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(20 * ScaleHeight)) 'insulin rectangle
+            Dim Rect4a As New Rectangle(Math.Round(7 * ScaleWidth), Math.Round(70 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(25 * ScaleHeight)) 'insulin name margin
 
-            Dim Rect5a As New Rectangle(5, 100, 305, 46) 'Cara 
-            Dim Rect6a As New Rectangle(6, 104, 300, 40) 'Cara margin
+            Dim Rect5a As New Rectangle(Math.Round(5 * ScaleWidth), Math.Round(99 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(42 * ScaleHeight)) 'Cara 
+            Dim Rect6a As New Rectangle(Math.Round(7 * ScaleWidth), Math.Round(101 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(40 * ScaleHeight)) 'Cara margin
 
-            Dim Rect7a As New Rectangle(5, 146, 305, 25)
-            Dim Rect8a As New Rectangle(6, 151, 300, 18) 'Remark margin
+            Dim Rect7a As New Rectangle(Math.Round(5 * ScaleWidth), Math.Round(141 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(25 * ScaleHeight))
+            Dim Rect8a As New Rectangle(Math.Round(7 * ScaleWidth), Math.Round(145 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(18 * ScaleHeight)) 'Remark margin
 
 
-            Dim Rect9a As New Rectangle(180, 175, 100, 13) 'Jumlah
+            Dim Rect9a As New Rectangle(Math.Round(170 * ScaleWidth), Math.Round(168 * ScaleHeight), Math.Round(110 * ScaleWidth), Math.Round(15 * ScaleHeight)) 'Jumlah
             'Insulin 1
             Dim combinedwords As String
             Dim comamorning As String = " "
@@ -814,7 +897,7 @@ Public Class Form1
 
             e.Graphics.DrawRectangle(Pens.Black, Rect1a)
             e.Graphics.DrawRectangle(Pens.Black, Rect2a)
-            e.Graphics.DrawRectangle(Pens.Black, Rect3a) 'Date
+            e.Graphics.DrawRectangle(Pens.Black, Rect3a) 'insulin rectangle
             e.Graphics.DrawRectangle(Pens.White, Rect4a) 'insulin name margin
             e.Graphics.DrawRectangle(Pens.Black, Rect5a) 'Cara 
             e.Graphics.DrawRectangle(Pens.White, Rect6a) 'Cara margin
@@ -867,6 +950,8 @@ Public Class Form1
         End Try
     End Sub
     Public Sub checkforItemsToCount()
+        NoOfItemsRecord = 0
+        NoOfItemsRecordInsulin = 0
         If cbDrug1.SelectedIndex > 0 Then
             NoOfItemsRecord += 1
         End If
@@ -905,12 +990,20 @@ Public Class Form1
         End If
     End Sub
     Public Sub printInsulin()
+        Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
+        Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
 
-        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
-        PrintDocInsulin.DefaultPageSettings.Landscape = False
+        Dim ScaleHeight As Double = ((txtLabelHeight.Text - 2) / 25.4 * 100) / LabelHeight
+        Dim ScaleWidth As Double = ((txtLabelWidth.Text - 2) / 25.4 * 100) / LabelWidth
+
+        Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
+        Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
+
+        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
+        PrintDocInsulin.DefaultPageSettings.Landscape = True
 
 
-        PPD.Document = PrintDocInsulin
+        'PPD.Document = PrintDocInsulin
         'PPD.ShowDialog()
         currentPageInsulin = 1
         PrintDocInsulin.Print()
@@ -918,9 +1011,17 @@ Public Class Form1
 
     End Sub
     Public Sub printPreviewInsulin()
+        Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
+        Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
 
-        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", 314.97, 196.85) 'width, height
-        PrintDocInsulin.DefaultPageSettings.Landscape = False
+        Dim ScaleHeight As Double = ((txtLabelHeight.Text - 2) / 25.4 * 100) / LabelHeight
+        Dim ScaleWidth As Double = ((txtLabelWidth.Text - 2) / 25.4 * 100) / LabelWidth
+
+        Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
+        Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
+
+        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
+        PrintDocInsulin.DefaultPageSettings.Landscape = True
 
         CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
         PPD.Document = PrintDocInsulin
@@ -2091,6 +2192,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD1 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD1 = 0
                 End If
 
             End While
@@ -2150,6 +2252,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD2 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD2 = 0
                 End If
             End While
             dr.Close()
@@ -2209,6 +2312,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD3 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD3 = 0
                 End If
             End While
             dr.Close()
@@ -2267,6 +2371,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD4 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD4 = 0
                 End If
             End While
             dr.Close()
@@ -2324,6 +2429,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD5 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD5 = 0
                 End If
             End While
             dr.Close()
@@ -2381,6 +2487,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD6 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD6 = 0
                 End If
             End While
             dr.Close()
@@ -2438,6 +2545,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD7 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD7 = 0
                 End If
             End While
             dr.Close()
@@ -2495,6 +2603,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD8 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD8 = 0
                 End If
             End While
             dr.Close()
@@ -2552,6 +2661,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD9 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD9 = 0
                 End If
             End While
             dr.Close()
@@ -2609,6 +2719,7 @@ Redo:
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
                     DefaultMaxQTYD10 = CInt(dr.Item("DefaultMaxQTY"))
+                Else DefaultMaxQTYD10 = 0
                 End If
 
             End While
@@ -3769,6 +3880,17 @@ Redo:
     End Sub
     Private Sub txtDefaultMaxQTY_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtDefaultMaxQTY.KeyPress
         If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    'Print Label Textbox
+    Private Sub txtLabelHeight_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtLabelHeight.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Asc(e.KeyChar) <> 46 AndAlso Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+    Private Sub txtLabelWidth_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtLabelWidth.KeyPress
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Not IsNumeric(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub

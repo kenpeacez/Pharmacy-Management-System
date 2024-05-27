@@ -137,6 +137,30 @@ Namespace My
                 Me("AutoClear") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property LabelHeight() As Integer
+            Get
+                Return CType(Me("LabelHeight"),Integer)
+            End Get
+            Set
+                Me("LabelHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("80")>  _
+        Public Property LabelWidth() As Integer
+            Get
+                Return CType(Me("LabelWidth"),Integer)
+            End Get
+            Set
+                Me("LabelWidth") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
