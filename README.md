@@ -2,16 +2,16 @@ Pharmacy Management System
 
 Developed using VB.NET in Visual Studio 2022.
 Optimized for use in Malaysia Country.
-This project is still under active development as of May 2024.
+This project is under active development as of May 2024, and will receive updates and bug fixes until September 2024.
 
 Main Features
 - Ability to save patients basic information such as Name, Identification (IC No)
 - Ability to store data in MYSQL database (MYSQL from XAMPP)
 - Validations check for IC formatting No to prevent errors
 - Patient medications entry and store
-- Patient history medications view wtih overwrite function
+- Patient history medications view with overwrite function
 - Add, view, seach, update and store medications infomation in database from application
-- Ability to print medications labels based on selected medications, optimized for Label Size 80mm x 50mm (height x width)
+- Ability to print medications labels based on selected medications, optimized for Label Size 80mm x 50mm (height x width) and customizable
 
 Pictures of Application
 ![image](https://github.com/kenpeacez/Pharmacy-Management-System/assets/28534332/0bdbd3b0-8f62-4e03-8dc9-a51d5f4e54dd)
