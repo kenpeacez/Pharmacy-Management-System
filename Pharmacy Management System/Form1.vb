@@ -150,6 +150,9 @@ Public Class Form1
         DataGridViewInsulin.AllowUserToAddRows = False
         dgvPatientDrugHistory.AllowUserToAddRows = False
         dgvPatientInsulinHistory.AllowUserToAddRows = False
+
+        DevMode()
+
     End Sub
 
     Private Sub SetandSaveDBSettings()
@@ -458,6 +461,8 @@ Public Class Form1
                     If ConsumeMethodD1.Contains("Minum ") And ConsumeUnitD1.Contains("ml") Then
                         Dim consumedose = txtDoseD1.Text / lblStrD1.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD1.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD1.Text / lblStrD1.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -484,6 +489,8 @@ Public Class Form1
                     If ConsumeMethodD2.Contains("Minum ") And ConsumeUnitD2.Contains("ml") Then
                         Dim consumedose = txtDoseD2.Text / lblStrD2.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD2.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD2.Text / lblStrD2.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -505,6 +512,8 @@ Public Class Form1
                     If ConsumeMethodD3.Contains("Minum ") And ConsumeUnitD3.Contains("ml") Then
                         Dim consumedose = txtDoseD3.Text / lblStrD3.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD3.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD3.Text / lblStrD3.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -526,6 +535,8 @@ Public Class Form1
                     If ConsumeMethodD4.Contains("Minum ") And ConsumeUnitD4.Contains("ml") Then
                         Dim consumedose = txtDoseD4.Text / lblStrD4.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD4.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD4.Text / lblStrD4.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -547,6 +558,8 @@ Public Class Form1
                     If ConsumeMethodD5.Contains("Minum ") And ConsumeUnitD5.Contains("ml") Then
                         Dim consumedose = txtDoseD5.Text / lblStrD5.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD5.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD5.Text / lblStrD5.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -568,6 +581,8 @@ Public Class Form1
                     If ConsumeMethodD6.Contains("Minum ") And ConsumeUnitD6.Contains("ml") Then
                         Dim consumedose = txtDoseD6.Text / lblStrD6.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD6.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD6.Text / lblStrD6.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -589,6 +604,8 @@ Public Class Form1
                     If ConsumeMethodD7.Contains("Minum ") And ConsumeUnitD7.Contains("ml") Then
                         Dim consumedose = txtDoseD7.Text / lblStrD7.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD7.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD7.Text / lblStrD7.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -610,6 +627,8 @@ Public Class Form1
                     If ConsumeMethodD8.Contains("Minum ") And ConsumeUnitD8.Contains("ml") Then
                         Dim consumedose = txtDoseD8.Text / lblStrD8.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD8.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD8.Text / lblStrD8.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -631,6 +650,8 @@ Public Class Form1
                     If ConsumeMethodD9.Contains("Minum ") And ConsumeUnitD9.Contains("ml") Then
                         Dim consumedose = txtDoseD9.Text / lblStrD9.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD9.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD9.Text / lblStrD9.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -645,6 +666,8 @@ Public Class Form1
                     If ConsumeMethodD10.Contains("Minum ") And ConsumeUnitD10.Contains("ml") Then
                         Dim consumedose = txtDoseD10.Text / lblStrD10.Text
                         consumedosefinal = Math.Round(consumedose, 1)
+                    ElseIf ConsumeMethodD10.Contains("Sapu ") Then
+                        consumedosefinal = ""
                     Else
                         Dim consumedose = txtDoseD10.Text / lblStrD10.Text
                         consumedosefinal = ConvertToFraction(consumedose)
@@ -1682,7 +1705,7 @@ Redo:
         Return output.ToString()
     End Function
 
-    Public Sub Add()
+    Public Sub AddDrug() 'Add Drug
         'Add button at Drugs Tab to Save Data entered in the Text Boxes
         Try
             If txtDrugName.Text = "" Then
@@ -1711,6 +1734,8 @@ Redo:
                 DGV_Load()
                 loaddatafromdb()
                 loadInsulindatafromdb()
+                'checkforselecteddrugs()
+                'clearall()
             Else
                 conn.Close()
                 MsgBox("Save Failed.")
@@ -1805,7 +1830,7 @@ Redo:
 
 
     Private Sub btnAddDrug_Click(sender As Object, e As EventArgs) Handles btnAddDrug.Click
-        Add()
+        AddDrug()
     End Sub
 
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
@@ -1958,6 +1983,8 @@ Redo:
 
     End Sub
     Public Sub loadInsulindatafromdb()
+        Dim tempcbInsulin1 = cbInsulin1.SelectedIndex
+        Dim tempcbInsulin2 = cbInsulin2.SelectedIndex
         Try
             cbInsulin1.Items.Clear()
             cbInsulin2.Items.Clear()
@@ -1988,6 +2015,11 @@ Redo:
             cbInsulin2.AutoCompleteSource = AutoCompleteSource.CustomSource
             cbInsulin2.AutoCompleteCustomSource = col
             cbInsulin2.AutoCompleteMode = AutoCompleteMode.Suggest
+
+            'sets the previous selected insulin
+            cbInsulin1.SelectedIndex = tempcbInsulin1
+            cbInsulin2.SelectedIndex = tempcbInsulin2
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -1995,6 +2027,16 @@ Redo:
     End Sub
 
     Public Sub loaddatafromdb()
+        Dim tempcbDrug1 = cbDrug1.SelectedIndex
+        Dim tempcbDrug2 = cbDrug2.SelectedIndex
+        Dim tempcbDrug3 = cbDrug3.SelectedIndex
+        Dim tempcbDrug4 = cbDrug4.SelectedIndex
+        Dim tempcbDrug5 = cbDrug5.SelectedIndex
+        Dim tempcbDrug6 = cbDrug6.SelectedIndex
+        Dim tempcbDrug7 = cbDrug7.SelectedIndex
+        Dim tempcbDrug8 = cbDrug8.SelectedIndex
+        Dim tempcbDrug9 = cbDrug9.SelectedIndex
+        Dim tempcbDrug10 = cbDrug10.SelectedIndex
         Try
             cbDrug1.Items.Clear()
             cbDrug2.Items.Clear()
@@ -2071,6 +2113,19 @@ Redo:
             cbDrug10.AutoCompleteSource = AutoCompleteSource.CustomSource
             cbDrug10.AutoCompleteCustomSource = col
             cbDrug10.AutoCompleteMode = AutoCompleteMode.Suggest
+
+            'sets the drug from previously selected
+            cbDrug1.SelectedIndex = tempcbDrug1
+            cbDrug2.SelectedIndex = tempcbDrug2
+            cbDrug3.SelectedIndex = tempcbDrug3
+            cbDrug4.SelectedIndex = tempcbDrug4
+            cbDrug5.SelectedIndex = tempcbDrug5
+            cbDrug6.SelectedIndex = tempcbDrug6
+            cbDrug7.SelectedIndex = tempcbDrug7
+            cbDrug8.SelectedIndex = tempcbDrug8
+            cbDrug9.SelectedIndex = tempcbDrug9
+            cbDrug10.SelectedIndex = tempcbDrug10
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -2187,6 +2242,13 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Packet" Then
                     ConsumeMethodD1 = "Minum "
                     ConsumeUnitD1 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD1 = "Sapu "
+                    ConsumeUnitD1 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD1 = ""
+                    ConsumeUnitD1 = " titis "
+
                 End If
 
                 'check for max default QTY if present
@@ -2247,6 +2309,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD2 = "Minum "
                     ConsumeUnitD2 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD2 = "Sapu "
+                    ConsumeUnitD2 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD2 = ""
+                    ConsumeUnitD2 = " titis "
                 End If
 
                 'check for max default QTY if present
@@ -2308,6 +2376,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD3 = "Minum "
                     ConsumeUnitD3 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD3 = "Sapu "
+                    ConsumeUnitD3 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD3 = ""
+                    ConsumeUnitD3 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -2367,6 +2441,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD4 = "Minum "
                     ConsumeUnitD4 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD4 = "Sapu "
+                    ConsumeUnitD4 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD4 = ""
+                    ConsumeUnitD4 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -2425,6 +2505,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD5 = "Minum "
                     ConsumeUnitD5 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD5 = "Sapu "
+                    ConsumeUnitD5 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD5 = ""
+                    ConsumeUnitD5 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -2483,6 +2569,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD6 = "Minum "
                     ConsumeUnitD6 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD6 = "Sapu "
+                    ConsumeUnitD6 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD6 = ""
+                    ConsumeUnitD6 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -2541,6 +2633,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD7 = "Minum "
                     ConsumeUnitD7 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD7 = "Sapu "
+                    ConsumeUnitD7 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD7 = ""
+                    ConsumeUnitD7 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -2599,6 +2697,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD8 = "Minum "
                     ConsumeUnitD8 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD8 = "Sapu "
+                    ConsumeUnitD8 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD8 = ""
+                    ConsumeUnitD8 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -2657,6 +2761,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD9 = "Minum "
                     ConsumeUnitD9 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD9 = "Sapu "
+                    ConsumeUnitD9 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD9 = ""
+                    ConsumeUnitD9 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -2715,6 +2825,12 @@ Redo:
                 ElseIf dr.Item("DosageForm") = "Internal" Then
                     ConsumeMethodD10 = "Minum "
                     ConsumeUnitD10 = " paket "
+                ElseIf dr.Item("DosageForm") = "Cream" Then
+                    ConsumeMethodD10 = "Sapu "
+                    ConsumeUnitD10 = ""
+                ElseIf dr.Item("DosageForm") = "Dropper" Then
+                    ConsumeMethodD10 = ""
+                    ConsumeUnitD10 = " titis "
                 End If
                 'check for max default QTY if present
                 If dr.Item("DefaultMaxQTY") <> "" Then
@@ -3494,12 +3610,14 @@ Redo:
     Public Sub checkforselecteddrugs()
         If cbDrug1.SelectedIndex >= 0 Then
             Drug1Selected = True
+            cbDrug2.Enabled = True
         Else Drug1Selected = False
 
         End If
         If cbDrug2.SelectedIndex >= 0 Then
             Drug2Selected = True
             cbDrug2.Enabled = True
+            cbDrug3.Enabled = True
         Else Drug2Selected = False
             cbDrug2.Enabled = False
 
@@ -3507,6 +3625,7 @@ Redo:
         If cbDrug3.SelectedIndex >= 0 Then
             Drug3Selected = True
             cbDrug3.Enabled = True
+            cbDrug4.Enabled = True
         Else Drug3Selected = False
             cbDrug3.Enabled = False
 
@@ -3514,6 +3633,7 @@ Redo:
         If cbDrug4.SelectedIndex >= 0 Then
             Drug4Selected = True
             cbDrug4.Enabled = True
+            cbDrug5.Enabled = True
         Else Drug4Selected = False
             cbDrug4.Enabled = False
 
@@ -3521,6 +3641,7 @@ Redo:
         If cbDrug5.SelectedIndex >= 0 Then
             Drug5Selected = True
             cbDrug5.Enabled = True
+            cbDrug6.Enabled = True
         Else Drug5Selected = False
             cbDrug5.Enabled = False
 
@@ -3528,6 +3649,7 @@ Redo:
         If cbDrug6.SelectedIndex >= 0 Then
             Drug6Selected = True
             cbDrug6.Enabled = True
+            cbDrug7.Enabled = True
         Else Drug6Selected = False
             cbDrug6.Enabled = False
 
@@ -3535,11 +3657,12 @@ Redo:
         If cbDrug7.SelectedIndex >= 0 Then
             Drug7Selected = True
             cbDrug7.Enabled = True
-
+            cbDrug8.Enabled = True
         End If
         If cbDrug8.SelectedIndex >= 0 Then
             Drug8Selected = True
             cbDrug8.Enabled = True
+            cbDrug9.Enabled = True
         Else Drug8Selected = False
             cbDrug8.Enabled = False
 
@@ -3547,6 +3670,7 @@ Redo:
         If cbDrug9.SelectedIndex >= 0 Then
             Drug9Selected = True
             cbDrug9.Enabled = True
+            cbDrug10.Enabled = True
         Else Drug9Selected = False
             cbDrug9.Enabled = False
 
@@ -3561,6 +3685,7 @@ Redo:
         If cbInsulin1.SelectedIndex >= 0 Then
             Insulin1Selected = True
             cbInsulin1.Enabled = True
+            cbInsulin2.Enabled = True
         Else Insulin1Selected = False
             'cbInsulin1.Enabled = False
 
@@ -4781,5 +4906,26 @@ Redo:
             Case MsgBoxResult.No
                 Return
         End Select
+    End Sub
+
+    Public Sub DevMode()
+        If My.Settings.DevMode = True Then
+            PictureBox1.Visible = True
+        Else
+            PictureBox1.Visible = False
+        End If
+    End Sub
+
+    Private Sub Label35_Click(sender As Object, e As EventArgs) Handles Label35.Click
+        If My.Settings.DevMode = False Then
+            My.Settings.DevMode = True
+            PictureBox1.Visible = True
+            My.Settings.Save()
+
+        Else
+            My.Settings.DevMode = False
+            PictureBox1.Visible = False
+            My.Settings.Save()
+        End If
     End Sub
 End Class

@@ -330,6 +330,7 @@ Partial Class Form1
         Me.DateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timestamp = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.Label44 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label43 = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
@@ -1278,7 +1279,7 @@ Partial Class Form1
         Me.TableLayoutPanel15.Controls.Add(Me.txtFreqD10, 5, 0)
         Me.TableLayoutPanel15.Controls.Add(Me.txtDurationD10, 6, 0)
         Me.TableLayoutPanel15.Controls.Add(Me.txtQTYD10, 7, 0)
-        Me.TableLayoutPanel15.Location = New System.Drawing.Point(4, 442)
+        Me.TableLayoutPanel15.Location = New System.Drawing.Point(2, 442)
         Me.TableLayoutPanel15.Margin = New System.Windows.Forms.Padding(2)
         Me.TableLayoutPanel15.Name = "TableLayoutPanel15"
         Me.TableLayoutPanel15.RowCount = 1
@@ -1351,7 +1352,7 @@ Partial Class Form1
         Me.txtDoseD10.BackColor = System.Drawing.SystemColors.Info
         Me.txtDoseD10.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD10.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD10.MaxLength = 4
+        Me.txtDoseD10.MaxLength = 5
         Me.txtDoseD10.Name = "txtDoseD10"
         Me.txtDoseD10.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD10.TabIndex = 52
@@ -1394,7 +1395,7 @@ Partial Class Form1
         'TableLayoutPanel13
         '
         Me.TableLayoutPanel13.ColumnCount = 9
-        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39.0!))
         Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.2937!))
         Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.503497!))
         Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.174825!))
@@ -1412,7 +1413,7 @@ Partial Class Form1
         Me.TableLayoutPanel13.Controls.Add(Me.txtFreqD8, 5, 0)
         Me.TableLayoutPanel13.Controls.Add(Me.txtDurationD8, 6, 0)
         Me.TableLayoutPanel13.Controls.Add(Me.txtQTYD8, 7, 0)
-        Me.TableLayoutPanel13.Location = New System.Drawing.Point(4, 356)
+        Me.TableLayoutPanel13.Location = New System.Drawing.Point(2, 356)
         Me.TableLayoutPanel13.Margin = New System.Windows.Forms.Padding(2)
         Me.TableLayoutPanel13.Name = "TableLayoutPanel13"
         Me.TableLayoutPanel13.RowCount = 1
@@ -1436,7 +1437,7 @@ Partial Class Form1
         '
         Me.cbDrug8.BackColor = System.Drawing.SystemColors.Info
         Me.cbDrug8.FormattingEnabled = True
-        Me.cbDrug8.Location = New System.Drawing.Point(42, 2)
+        Me.cbDrug8.Location = New System.Drawing.Point(41, 2)
         Me.cbDrug8.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug8.Name = "cbDrug8"
         Me.cbDrug8.Size = New System.Drawing.Size(652, 30)
@@ -1448,10 +1449,10 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD8.AutoSize = True
-        Me.lblPreCatagoryD8.Location = New System.Drawing.Point(1350, 6)
+        Me.lblPreCatagoryD8.Location = New System.Drawing.Point(1349, 6)
         Me.lblPreCatagoryD8.Margin = New System.Windows.Forms.Padding(6)
         Me.lblPreCatagoryD8.Name = "lblPreCatagoryD8"
-        Me.lblPreCatagoryD8.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD8.Size = New System.Drawing.Size(115, 26)
         Me.lblPreCatagoryD8.TabIndex = 31
         Me.lblPreCatagoryD8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -1461,7 +1462,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD8.AutoSize = True
-        Me.lblStrD8.Location = New System.Drawing.Point(708, 6)
+        Me.lblStrD8.Location = New System.Drawing.Point(707, 6)
         Me.lblStrD8.Margin = New System.Windows.Forms.Padding(6)
         Me.lblStrD8.Name = "lblStrD8"
         Me.lblStrD8.Size = New System.Drawing.Size(81, 26)
@@ -1474,7 +1475,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD8.AutoSize = True
-        Me.lblUnitD8.Location = New System.Drawing.Point(801, 6)
+        Me.lblUnitD8.Location = New System.Drawing.Point(800, 6)
         Me.lblUnitD8.Margin = New System.Windows.Forms.Padding(6)
         Me.lblUnitD8.Name = "lblUnitD8"
         Me.lblUnitD8.Size = New System.Drawing.Size(62, 26)
@@ -1483,9 +1484,9 @@ Partial Class Form1
         'txtDoseD8
         '
         Me.txtDoseD8.BackColor = System.Drawing.SystemColors.Info
-        Me.txtDoseD8.Location = New System.Drawing.Point(871, 2)
+        Me.txtDoseD8.Location = New System.Drawing.Point(870, 2)
         Me.txtDoseD8.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD8.MaxLength = 4
+        Me.txtDoseD8.MaxLength = 5
         Me.txtDoseD8.Name = "txtDoseD8"
         Me.txtDoseD8.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD8.TabIndex = 42
@@ -1494,7 +1495,7 @@ Partial Class Form1
         'txtFreqD8
         '
         Me.txtFreqD8.BackColor = System.Drawing.SystemColors.Info
-        Me.txtFreqD8.Location = New System.Drawing.Point(982, 2)
+        Me.txtFreqD8.Location = New System.Drawing.Point(981, 2)
         Me.txtFreqD8.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD8.MaxLength = 1
         Me.txtFreqD8.Name = "txtFreqD8"
@@ -1505,7 +1506,7 @@ Partial Class Form1
         'txtDurationD8
         '
         Me.txtDurationD8.BackColor = System.Drawing.SystemColors.Info
-        Me.txtDurationD8.Location = New System.Drawing.Point(1093, 2)
+        Me.txtDurationD8.Location = New System.Drawing.Point(1092, 2)
         Me.txtDurationD8.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD8.MaxLength = 3
         Me.txtDurationD8.Name = "txtDurationD8"
@@ -1517,7 +1518,7 @@ Partial Class Form1
         '
         Me.txtQTYD8.BackColor = System.Drawing.SystemColors.Info
         Me.txtQTYD8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtQTYD8.Location = New System.Drawing.Point(1183, 2)
+        Me.txtQTYD8.Location = New System.Drawing.Point(1182, 2)
         Me.txtQTYD8.Margin = New System.Windows.Forms.Padding(2)
         Me.txtQTYD8.MaxLength = 3
         Me.txtQTYD8.Name = "txtQTYD8"
@@ -1619,7 +1620,7 @@ Partial Class Form1
         Me.txtDoseD9.BackColor = System.Drawing.SystemColors.Info
         Me.txtDoseD9.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD9.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD9.MaxLength = 4
+        Me.txtDoseD9.MaxLength = 5
         Me.txtDoseD9.Name = "txtDoseD9"
         Me.txtDoseD9.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD9.TabIndex = 47
@@ -1680,7 +1681,7 @@ Partial Class Form1
         Me.TableLayoutPanel11.Controls.Add(Me.txtFreqD6, 5, 0)
         Me.TableLayoutPanel11.Controls.Add(Me.txtDurationD6, 6, 0)
         Me.TableLayoutPanel11.Controls.Add(Me.txtQTYD6, 7, 0)
-        Me.TableLayoutPanel11.Location = New System.Drawing.Point(4, 270)
+        Me.TableLayoutPanel11.Location = New System.Drawing.Point(2, 270)
         Me.TableLayoutPanel11.Margin = New System.Windows.Forms.Padding(2)
         Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
         Me.TableLayoutPanel11.RowCount = 1
@@ -1753,7 +1754,7 @@ Partial Class Form1
         Me.txtDoseD6.BackColor = System.Drawing.SystemColors.Info
         Me.txtDoseD6.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD6.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD6.MaxLength = 4
+        Me.txtDoseD6.MaxLength = 5
         Me.txtDoseD6.Name = "txtDoseD6"
         Me.txtDoseD6.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD6.TabIndex = 32
@@ -1814,7 +1815,7 @@ Partial Class Form1
         Me.TableLayoutPanel12.Controls.Add(Me.txtFreqD7, 5, 0)
         Me.TableLayoutPanel12.Controls.Add(Me.txtDurationD7, 6, 0)
         Me.TableLayoutPanel12.Controls.Add(Me.txtQTYD7, 7, 0)
-        Me.TableLayoutPanel12.Location = New System.Drawing.Point(4, 312)
+        Me.TableLayoutPanel12.Location = New System.Drawing.Point(2, 312)
         Me.TableLayoutPanel12.Margin = New System.Windows.Forms.Padding(2)
         Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
         Me.TableLayoutPanel12.RowCount = 1
@@ -1887,7 +1888,7 @@ Partial Class Form1
         Me.txtDoseD7.BackColor = System.Drawing.SystemColors.Info
         Me.txtDoseD7.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD7.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD7.MaxLength = 4
+        Me.txtDoseD7.MaxLength = 5
         Me.txtDoseD7.Name = "txtDoseD7"
         Me.txtDoseD7.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD7.TabIndex = 37
@@ -2006,7 +2007,7 @@ Partial Class Form1
         '
         Me.txtDoseD4.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD4.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD4.MaxLength = 4
+        Me.txtDoseD4.MaxLength = 5
         Me.txtDoseD4.Name = "txtDoseD4"
         Me.txtDoseD4.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD4.TabIndex = 22
@@ -2077,7 +2078,7 @@ Partial Class Form1
         Me.TableLayoutPanel10.Controls.Add(Me.txtFreqD5, 5, 0)
         Me.TableLayoutPanel10.Controls.Add(Me.txtDurationD5, 6, 0)
         Me.TableLayoutPanel10.Controls.Add(Me.txtQTYD5, 7, 0)
-        Me.TableLayoutPanel10.Location = New System.Drawing.Point(4, 231)
+        Me.TableLayoutPanel10.Location = New System.Drawing.Point(2, 231)
         Me.TableLayoutPanel10.Margin = New System.Windows.Forms.Padding(2)
         Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
         Me.TableLayoutPanel10.RowCount = 1
@@ -2135,7 +2136,7 @@ Partial Class Form1
         '
         Me.txtDoseD5.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD5.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD5.MaxLength = 4
+        Me.txtDoseD5.MaxLength = 5
         Me.txtDoseD5.Name = "txtDoseD5"
         Me.txtDoseD5.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD5.TabIndex = 27
@@ -2253,7 +2254,7 @@ Partial Class Form1
         '
         Me.txtDoseD3.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD3.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD3.MaxLength = 4
+        Me.txtDoseD3.MaxLength = 5
         Me.txtDoseD3.Name = "txtDoseD3"
         Me.txtDoseD3.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD3.TabIndex = 17
@@ -2426,7 +2427,7 @@ Partial Class Form1
         '
         Me.txtDoseD2.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD2.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD2.MaxLength = 4
+        Me.txtDoseD2.MaxLength = 5
         Me.txtDoseD2.Name = "txtDoseD2"
         Me.txtDoseD2.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD2.TabIndex = 12
@@ -2511,7 +2512,7 @@ Partial Class Form1
         '
         Me.txtDoseD1.Location = New System.Drawing.Point(871, 2)
         Me.txtDoseD1.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtDoseD1.MaxLength = 4
+        Me.txtDoseD1.MaxLength = 5
         Me.txtDoseD1.Name = "txtDoseD1"
         Me.txtDoseD1.Size = New System.Drawing.Size(104, 28)
         Me.txtDoseD1.TabIndex = 7
@@ -2628,7 +2629,7 @@ Partial Class Form1
         Me.Label7.Location = New System.Drawing.Point(1139, 0)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Padding = New System.Windows.Forms.Padding(18, 20, 0, 10)
+        Me.Label7.Padding = New System.Windows.Forms.Padding(10, 20, 0, 10)
         Me.Label7.Size = New System.Drawing.Size(159, 78)
         Me.Label7.TabIndex = 14
         Me.Label7.Text = "Total Quantity"
@@ -2808,7 +2809,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 166.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2826,10 +2827,10 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(402, 2)
+        Me.btnDelete.Location = New System.Drawing.Point(400, 2)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(163, 32)
+        Me.btnDelete.Size = New System.Drawing.Size(165, 32)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2843,7 +2844,7 @@ Partial Class Form1
         Me.btnAddDrug.Location = New System.Drawing.Point(2, 2)
         Me.btnAddDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(179, 32)
+        Me.btnAddDrug.Size = New System.Drawing.Size(177, 32)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2853,7 +2854,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(280, 2)
+        Me.btnClear.Location = New System.Drawing.Point(278, 2)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(118, 32)
@@ -2866,7 +2867,7 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(185, 2)
+        Me.btnUpdate.Location = New System.Drawing.Point(183, 2)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
         Me.btnUpdate.Size = New System.Drawing.Size(91, 32)
@@ -2919,20 +2920,22 @@ Partial Class Form1
         'lblPrescriberCategory
         '
         Me.lblPrescriberCategory.AutoSize = True
+        Me.lblPrescriberCategory.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPrescriberCategory.Location = New System.Drawing.Point(751, 0)
         Me.lblPrescriberCategory.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPrescriberCategory.Name = "lblPrescriberCategory"
-        Me.lblPrescriberCategory.Size = New System.Drawing.Size(170, 22)
+        Me.lblPrescriberCategory.Size = New System.Drawing.Size(159, 20)
         Me.lblPrescriberCategory.TabIndex = 11
         Me.lblPrescriberCategory.Text = "Prescriber Category"
         '
         'lblDosageForm
         '
         Me.lblDosageForm.AutoSize = True
+        Me.lblDosageForm.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDosageForm.Location = New System.Drawing.Point(624, 0)
         Me.lblDosageForm.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblDosageForm.Name = "lblDosageForm"
-        Me.lblDosageForm.Size = New System.Drawing.Size(118, 22)
+        Me.lblDosageForm.Size = New System.Drawing.Size(111, 20)
         Me.lblDosageForm.TabIndex = 10
         Me.lblDosageForm.Text = "Dosage Form"
         '
@@ -4011,6 +4014,7 @@ Partial Class Form1
         '
         'TabPage4
         '
+        Me.TabPage4.Controls.Add(Me.Label44)
         Me.TabPage4.Controls.Add(Me.Label35)
         Me.TabPage4.Controls.Add(Me.Label43)
         Me.TabPage4.Controls.Add(Me.GroupBox5)
@@ -4029,6 +4033,16 @@ Partial Class Form1
         Me.TabPage4.Text = "Settings"
         Me.TabPage4.UseVisualStyleBackColor = True
         '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.Location = New System.Drawing.Point(1250, 661)
+        Me.Label44.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(236, 22)
+        Me.Label44.TabIndex = 11
+        Me.Label44.Text = "VB.NET, Visual Studio 2022"
+        '
         'Label35
         '
         Me.Label35.AutoSize = True
@@ -4044,17 +4058,17 @@ Partial Class Form1
         Me.Label43.Location = New System.Drawing.Point(1250, 804)
         Me.Label43.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label43.Name = "Label43"
-        Me.Label43.Size = New System.Drawing.Size(91, 22)
+        Me.Label43.Size = New System.Drawing.Size(185, 22)
         Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 4"
+        Me.Label43.Text = "Release 4, Revision 2"
         '
         'GroupBox5
         '
         Me.GroupBox5.Controls.Add(Me.Label42)
         Me.GroupBox5.Controls.Add(Me.btnDeleteAllPatientRecords)
-        Me.GroupBox5.Location = New System.Drawing.Point(677, 44)
+        Me.GroupBox5.Location = New System.Drawing.Point(677, 35)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(587, 231)
+        Me.GroupBox5.Size = New System.Drawing.Size(587, 240)
         Me.GroupBox5.TabIndex = 8
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Database Management"
@@ -4102,7 +4116,7 @@ Partial Class Form1
         '
         Me.GroupBox4.Controls.Add(Me.Label32)
         Me.GroupBox4.Controls.Add(Me.cboxAutoClear)
-        Me.GroupBox4.Location = New System.Drawing.Point(677, 302)
+        Me.GroupBox4.Location = New System.Drawing.Point(678, 289)
         Me.GroupBox4.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Padding = New System.Windows.Forms.Padding(2)
@@ -4134,7 +4148,7 @@ Partial Class Form1
         '
         'btnRestart
         '
-        Me.btnRestart.Location = New System.Drawing.Point(1029, 735)
+        Me.btnRestart.Location = New System.Drawing.Point(1060, 709)
         Me.btnRestart.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRestart.Name = "btnRestart"
         Me.btnRestart.Size = New System.Drawing.Size(168, 58)
@@ -4510,6 +4524,7 @@ Partial Class Form1
         Me.Controls.Add(Me.lblDeveloper)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.TabControl1)
+        Me.DoubleBuffered = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.MaximizeBox = False
@@ -4941,4 +4956,5 @@ Partial Class Form1
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents DefaultMaxQty As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents Label44 As Label
 End Class

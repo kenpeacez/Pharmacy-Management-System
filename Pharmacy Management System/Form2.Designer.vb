@@ -137,7 +137,7 @@ Partial Class Form2
         '
         'txtSearchPatientIC
         '
-        Me.txtSearchPatientIC.Location = New System.Drawing.Point(192, 2)
+        Me.txtSearchPatientIC.Location = New System.Drawing.Point(192, 6)
         Me.txtSearchPatientIC.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtSearchPatientIC.MaxLength = 14
         Me.txtSearchPatientIC.Name = "txtSearchPatientIC"
@@ -146,7 +146,7 @@ Partial Class Form2
         '
         'btnSearch
         '
-        Me.btnSearch.Location = New System.Drawing.Point(408, 2)
+        Me.btnSearch.Location = New System.Drawing.Point(408, 6)
         Me.btnSearch.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(75, 23)
@@ -297,7 +297,7 @@ Partial Class Form2
         'lblDatePastMed
         '
         Me.lblDatePastMed.AutoSize = True
-        Me.lblDatePastMed.Location = New System.Drawing.Point(664, 5)
+        Me.lblDatePastMed.Location = New System.Drawing.Point(652, 11)
         Me.lblDatePastMed.Name = "lblDatePastMed"
         Me.lblDatePastMed.Size = New System.Drawing.Size(25, 16)
         Me.lblDatePastMed.TabIndex = 5
@@ -306,7 +306,7 @@ Partial Class Form2
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(489, 5)
+        Me.Label1.Location = New System.Drawing.Point(489, 10)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(155, 16)
         Me.Label1.TabIndex = 6
