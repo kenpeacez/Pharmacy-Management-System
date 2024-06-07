@@ -97,6 +97,14 @@ Public Class Form1
     Private disableTextChangedDB As Boolean = False
 
     Dim notyetinitialize As Boolean = True
+    Public Sub New()
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Enable double buffering
+        Me.SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint, True)
+        Me.UpdateStyles()
+    End Sub
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -156,8 +164,8 @@ Public Class Form1
     End Sub
 
     Private Sub SetandSaveDBSettings()
-        Dim sender As Object
-        Dim e As EventArgs
+        Dim sender As Object = Nothing
+        Dim e As EventArgs = Nothing
         'Server settings
         Dim DBServerAddress As String = My.Settings.dbServerAddress
         Dim DBServerAddressNew As String
@@ -343,8 +351,13 @@ Public Class Form1
         End If
 
         If Drug1Selected Then
+
             PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
             PrintDoc.DefaultPageSettings.Landscape = True
+
+            PrintDoc.DefaultPageSettings.Margins = New Margins(1, 1, 1, 1)
+            PrintDoc.OriginAtMargins = True
+            PrintDoc.PrintController = New StandardPrintController()
 
 
             'PPD.Document = PrintDoc
@@ -359,13 +372,17 @@ Public Class Form1
         End If
     End Sub
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+
         print()
     End Sub
 
     Private Sub PrintDoc_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDoc.PrintPage
+        'Dim margins As Rectangle = e.MarginBounds
+
         Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
         Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
-
+        'MessageBox.Show(margins.ToString() + "//Height: " + LabelHeight.ToString + "//Width: " + LabelWidth.ToString)
+        'Return
         Dim ScaleHeight As Double = ((txtLabelHeight.Text - 2) / 25.4 * 100) / LabelHeight
         Dim ScaleWidth As Double = ((txtLabelWidth.Text - 2) / 25.4 * 100) / LabelWidth
         Dim RationalizedScale As Double = (ScaleHeight + ScaleWidth) / 2
@@ -1022,8 +1039,13 @@ Public Class Form1
         Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
         Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
 
-        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
+        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Insulin Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
         PrintDocInsulin.DefaultPageSettings.Landscape = True
+
+        PrintDocInsulin.DefaultPageSettings.Margins = New Margins(1, 1, 1, 1)
+        PrintDocInsulin.OriginAtMargins = True
+        PrintDocInsulin.PrintController = New StandardPrintController()
+
 
 
         'PPD.Document = PrintDocInsulin
@@ -1343,8 +1365,8 @@ Public Class Form1
                     print()
                 End If
                 addRecordTab()
-                MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
-                stlbMainStatus.Text = "Saved Successfully for " & stPatientName & ", IC No: " & stIC
+                'MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
+                lblMainStatus.Text = "Saved Successfully for " & stPatientName & ", IC No: " & stIC & " at " & Now()
                 loadLogDGV()
                 loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
                 chboxNoICNumber.Checked = False
@@ -1426,7 +1448,7 @@ Redo:
                                         conn.Close()
 
                                         MsgBox("Old Data saved to History for " & stPatientName & ", IC No.: " & stIC)
-                                        stlbMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
+                                        lblMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
 
                                     Else
                                         MsgBox("Save Failed.")
@@ -1461,7 +1483,7 @@ Redo:
                             `Drug9Name`=@Drug9Name,`Drug9Strength`=@Drug9Strength,`Drug9Unit`=@Drug9Unit,`Drug9Dose`=@Drug9Dose,`Drug9Freq`=@Drug9Freq,`Drug9Duration`=@Drug9Duration,`Drug9TotalQTY`=@Drug9TotalQTY,
                             `Drug10Name`=@Drug10Name,`Drug10Strength`=@Drug10Strength,`Drug10Unit`=@Drug10Unit,`Drug10Dose`=@Drug10Dose,`Drug10Freq`=@Drug10Freq,`Drug10Duration`=@Drug10Duration,`Drug10TotalQTY`=@Drug10TotalQTY,
                             `Insulin1Name`=@Insulin1Name,`Insulin1Strength`=@Insulin1Strength,`Insulin1Unit`=@Insulin1Unit,`Insulin1MorDose`=@Insulin1MorDose,`Insulin1NoonDose`=@Insulin1NoonDose,`Insulin1AfternoonDose`=@Insulin1AfternoonDose,`Insulin1NightDose`=@Insulin1NightDose,`Insulin1Freq`=@Insulin1Freq,`Insulin1Duration`=@Insulin1Duration,`Insulin1TotalDose`=@Insulin1TotalDose,`Insulin1POM`=@Insulin1POM,`Insulin1CartQTY`=@Insulin1CartQTY,
-                            `Insulin2Name`=@Insulin2Name,`Insulin2Strength`=@Insulin2Strength,`Insulin2Unit`=@Insulin2Unit,`Insulin2MorDose`=@Insulin2MorDose,`Insulin2NoonDose`=@Insulin2NoonDose,`Insulin2AfternoonDose`=@Insulin2AfternoonDose,`Insulin2NightDose`=@Insulin2NightDose,`Insulin2Freq`=@Insulin2Freq,`Insulin2Duration`=@Insulin2Duration,`Insulin2TotalDose`=@Insulin2TotalDose,`Insulin2POM`=@Insulin2POM,`Insulin2CartQTY`=@Insulin2CartQTY WHERE `ICNo`=@ICNo", conn)
+                            `Insulin2Name`=@Insulin2Name,`Insulin2Strength`=@Insulin2Strength,`Insulin2Unit`=@Insulin2Unit,`Insulin2MorDose`=@Insulin2MorDose,`Insulin2NoonDose`=@Insulin2NoonDose,`Insulin2AfternoonDose`=@Insulin2AfternoonDose,`Insulin2NightDose`=@Insulin2NightDose,`Insulin2Freq`=@Insulin2Freq,`Insulin2Duration`=@Insulin2Duration,`Insulin2TotalDose`=@Insulin2TotalDose,`Insulin2POM`=@Insulin2POM,`Insulin2CartQTY`=@Insulin2CartQTY,`Timestamp`=CURRENT_TIMESTAMP WHERE `ICNo`=@ICNo", conn)
                             cmd2.Parameters.Clear()
                             cmd2.Parameters.AddWithValue("@Name", txtPatientName.Text)
                             cmd2.Parameters.AddWithValue("@ICNo", txtICNo.Text)
@@ -1585,8 +1607,8 @@ Redo:
                                 End If
                                 addRecordTab()
                                 'MsgBox("Successfully Updated Data.")
-                                MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
-                                stlbMainStatus.Text = "Overwrite Successfully for " & stPatientName & ", IC No: " & stIC
+                                'MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
+                                lblMainStatus.Text = "Overwrite Successfully for " & stPatientName & ", IC No: " & stIC
                                 loadLogDGV()
                                 'loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
                                 chboxNoICNumber.Checked = False
@@ -1784,8 +1806,8 @@ Redo:
 
 
     Public Sub Edit()
-        Dim sender As Object
-        Dim e As EventArgs
+        Dim sender As Object = Nothing
+        Dim e As EventArgs = Nothing
         'Add button at Database Tab to Save Data entered into Text Boxes
         Try
             If txtDrugName.Text = "" Then
@@ -4572,6 +4594,7 @@ Redo:
 
                 lblPrevSavedName.Text = dr.Item("Name")
                 lblPrevSavedICNo.Text = dr.Item("ICNo")
+                lblLogPrevPatientTimestamp.Text = dr.Item("Timestamp")
 
             End While
             dr.Close()
@@ -4618,7 +4641,8 @@ Redo:
             lblPatientNameDB.Text = dr.Item("Name")
             dr.Close()
         Catch ex As Exception
-            MsgBox(ex.Message)
+            'MsgBox(ex.Message)
+            'MessageBox.Show("IC No. not found.")
         Finally
             dr.Dispose()
             conn.Close()
@@ -4670,9 +4694,319 @@ Redo:
             dr.Dispose()
             conn.Close()
         End Try
+    End Sub
+
+    Public Sub UpdateDataInDatabase()
+        'Dim currentcelladd = dgvDateSelector.CurrentCellAddress
+
+        Dim currentcell = dgvDateSelector.CurrentCell
+        Dim timestamp As String = dgvDateSelector.CurrentRow.Cells(5).Value
+        Dim inputTime As String = timestamp
+        Dim format As String = "d/M/yyyy h:mm:ss tt"
+        Dim provider As CultureInfo = CultureInfo.InvariantCulture
+        Dim parsedTime As DateTime = DateTime.ParseExact(inputTime, format, provider)
+        Dim outputTime As String = parsedTime.ToString("yyyy-M-dd HH:mm:ss")
+
+        Dim ColumnIndex = dgvDateSelector.CurrentCell.ColumnIndex
+        Dim RowIndex = dgvDateSelector.CurrentCell.RowIndex
+
+        Try
+            conn.Open()
+            Dim cmd2 As New MySqlCommand("UPDATE `prescribeddrugs` SET 
+                            `Drug1Name`=@Drug1Name,`Drug1Strength`=@Drug1Strength,`Drug1Unit`=@Drug1Unit,`Drug1Dose`=@Drug1Dose,`Drug1Freq`=@Drug1Freq,`Drug1Duration`=@Drug1Duration,`Drug1TotalQTY`=@Drug1TotalQTY,
+                            `Drug2Name`=@Drug2Name,`Drug2Strength`=@Drug2Strength,`Drug2Unit`=@Drug2Unit,`Drug2Dose`=@Drug2Dose,`Drug2Freq`=@Drug2Freq,`Drug2Duration`=@Drug2Duration,`Drug2TotalQTY`=@Drug2TotalQTY,
+                            `Drug3Name`=@Drug3Name,`Drug3Strength`=@Drug3Strength,`Drug3Unit`=@Drug3Unit,`Drug3Dose`=@Drug3Dose,`Drug3Freq`=@Drug3Freq,`Drug3Duration`=@Drug3Duration,`Drug3TotalQTY`=@Drug3TotalQTY,
+                            `Drug4Name`=@Drug4Name,`Drug4Strength`=@Drug4Strength,`Drug4Unit`=@Drug4Unit,`Drug4Dose`=@Drug4Dose,`Drug4Freq`=@Drug4Freq,`Drug4Duration`=@Drug4Duration,`Drug4TotalQTY`=@Drug4TotalQTY,
+                            `Drug5Name`=@Drug5Name,`Drug5Strength`=@Drug5Strength,`Drug5Unit`=@Drug5Unit,`Drug5Dose`=@Drug5Dose,`Drug5Freq`=@Drug5Freq,`Drug5Duration`=@Drug5Duration,`Drug5TotalQTY`=@Drug5TotalQTY,
+                            `Drug6Name`=@Drug6Name,`Drug6Strength`=@Drug6Strength,`Drug6Unit`=@Drug6Unit,`Drug6Dose`=@Drug6Dose,`Drug6Freq`=@Drug6Freq,`Drug6Duration`=@Drug6Duration,`Drug6TotalQTY`=@Drug6TotalQTY,
+                            `Drug7Name`=@Drug7Name,`Drug7Strength`=@Drug7Strength,`Drug7Unit`=@Drug7Unit,`Drug7Dose`=@Drug7Dose,`Drug7Freq`=@Drug7Freq,`Drug7Duration`=@Drug7Duration,`Drug7TotalQTY`=@Drug7TotalQTY,
+                            `Drug8Name`=@Drug8Name,`Drug8Strength`=@Drug8Strength,`Drug8Unit`=@Drug8Unit,`Drug8Dose`=@Drug8Dose,`Drug8Freq`=@Drug8Freq,`Drug8Duration`=@Drug8Duration,`Drug8TotalQTY`=@Drug8TotalQTY,
+                            `Drug9Name`=@Drug9Name,`Drug9Strength`=@Drug9Strength,`Drug9Unit`=@Drug9Unit,`Drug9Dose`=@Drug9Dose,`Drug9Freq`=@Drug9Freq,`Drug9Duration`=@Drug9Duration,`Drug9TotalQTY`=@Drug9TotalQTY,
+                            `Drug10Name`=@Drug10Name,`Drug10Strength`=@Drug10Strength,`Drug10Unit`=@Drug10Unit,`Drug10Dose`=@Drug10Dose,`Drug10Freq`=@Drug10Freq,`Drug10Duration`=@Drug10Duration,`Drug10TotalQTY`=@Drug10TotalQTY,
+                            `Insulin1Name`=@Insulin1Name,`Insulin1Strength`=@Insulin1Strength,`Insulin1Unit`=@Insulin1Unit,`Insulin1MorDose`=@Insulin1MorDose,`Insulin1NoonDose`=@Insulin1NoonDose,`Insulin1AfternoonDose`=@Insulin1AfternoonDose,`Insulin1NightDose`=@Insulin1NightDose,`Insulin1Freq`=@Insulin1Freq,`Insulin1Duration`=@Insulin1Duration,`Insulin1TotalDose`=@Insulin1TotalDose,`Insulin1POM`=@Insulin1POM,`Insulin1CartQTY`=@Insulin1CartQTY,
+                            `Insulin2Name`=@Insulin2Name,`Insulin2Strength`=@Insulin2Strength,`Insulin2Unit`=@Insulin2Unit,`Insulin2MorDose`=@Insulin2MorDose,`Insulin2NoonDose`=@Insulin2NoonDose,`Insulin2AfternoonDose`=@Insulin2AfternoonDose,`Insulin2NightDose`=@Insulin2NightDose,`Insulin2Freq`=@Insulin2Freq,`Insulin2Duration`=@Insulin2Duration,`Insulin2TotalDose`=@Insulin2TotalDose,`Insulin2POM`=@Insulin2POM,`Insulin2CartQTY`=@Insulin2CartQTY,
+                            Timestamp=Timestamp WHERE `ICNo`=@ICNo AND `Timestamp`=@Timestamp", conn)
+            cmd2.Parameters.Clear()
+            'cmd2.Parameters.AddWithValue("@Name", txtPatientName.Text)
+            cmd2.Parameters.AddWithValue("@ICNo", txtICNoDB.Text)
+            'cmd2.Parameters.AddWithValue("@Date", dtpDateSaved.Text)
+            'cmd2.Parameters.AddWithValue("@DateCollection", dtpDateCollection.Text)
+            'cmd2.Parameters.AddWithValue("@DateSeeDoctor", dtpDateSeeDoctor.Text)
+            cmd2.Parameters.AddWithValue("@Timestamp", outputTime)
+            'Drug 1
+
+            cmd2.Parameters.AddWithValue("@Drug1Name", dgvPatientDrugHistory.Rows(0).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Strength", dgvPatientDrugHistory.Rows(0).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Unit", dgvPatientDrugHistory.Rows(0).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Dose", dgvPatientDrugHistory.Rows(0).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Freq", dgvPatientDrugHistory.Rows(0).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Duration", dgvPatientDrugHistory.Rows(0).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug1TotalQTY", dgvPatientDrugHistory.Rows(0).Cells(7).Value)
+            'Drug 2
+            cmd2.Parameters.AddWithValue("@Drug2Name", dgvPatientDrugHistory.Rows(1).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Strength", dgvPatientDrugHistory.Rows(1).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Unit", dgvPatientDrugHistory.Rows(1).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Dose", dgvPatientDrugHistory.Rows(1).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Freq", dgvPatientDrugHistory.Rows(1).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Duration", dgvPatientDrugHistory.Rows(1).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug2TotalQTY", dgvPatientDrugHistory.Rows(1).Cells(7).Value)
+            'Drug 3
+            cmd2.Parameters.AddWithValue("@Drug3Name", dgvPatientDrugHistory.Rows(2).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Strength", dgvPatientDrugHistory.Rows(2).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Unit", dgvPatientDrugHistory.Rows(2).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Dose", dgvPatientDrugHistory.Rows(2).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Freq", dgvPatientDrugHistory.Rows(2).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Duration", dgvPatientDrugHistory.Rows(2).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug3TotalQTY", dgvPatientDrugHistory.Rows(2).Cells(7).Value)
+            'Drug 4
+            cmd2.Parameters.AddWithValue("@Drug4Name", dgvPatientDrugHistory.Rows(3).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Strength", dgvPatientDrugHistory.Rows(3).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Unit", dgvPatientDrugHistory.Rows(3).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Dose", dgvPatientDrugHistory.Rows(3).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Freq", dgvPatientDrugHistory.Rows(3).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Duration", dgvPatientDrugHistory.Rows(3).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug4TotalQTY", dgvPatientDrugHistory.Rows(3).Cells(7).Value)
+            'Drug 5
+            cmd2.Parameters.AddWithValue("@Drug5Name", dgvPatientDrugHistory.Rows(4).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Strength", dgvPatientDrugHistory.Rows(4).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Unit", dgvPatientDrugHistory.Rows(4).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Dose", dgvPatientDrugHistory.Rows(4).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Freq", dgvPatientDrugHistory.Rows(4).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Duration", dgvPatientDrugHistory.Rows(4).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug5TotalQTY", dgvPatientDrugHistory.Rows(4).Cells(7).Value)
+            'Drug 6
+            cmd2.Parameters.AddWithValue("@Drug6Name", dgvPatientDrugHistory.Rows(5).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Strength", dgvPatientDrugHistory.Rows(5).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Unit", dgvPatientDrugHistory.Rows(5).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Dose", dgvPatientDrugHistory.Rows(5).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Freq", dgvPatientDrugHistory.Rows(5).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Duration", dgvPatientDrugHistory.Rows(5).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug6TotalQTY", dgvPatientDrugHistory.Rows(5).Cells(7).Value)
+            'Drug 7
+            cmd2.Parameters.AddWithValue("@Drug7Name", dgvPatientDrugHistory.Rows(6).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Strength", dgvPatientDrugHistory.Rows(6).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Unit", dgvPatientDrugHistory.Rows(6).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Dose", dgvPatientDrugHistory.Rows(6).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Freq", dgvPatientDrugHistory.Rows(6).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Duration", dgvPatientDrugHistory.Rows(6).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug7TotalQTY", dgvPatientDrugHistory.Rows(6).Cells(7).Value)
+            'Drug 8
+            cmd2.Parameters.AddWithValue("@Drug8Name", dgvPatientDrugHistory.Rows(7).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Strength", dgvPatientDrugHistory.Rows(7).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Unit", dgvPatientDrugHistory.Rows(7).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Dose", dgvPatientDrugHistory.Rows(7).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Freq", dgvPatientDrugHistory.Rows(7).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Duration", dgvPatientDrugHistory.Rows(7).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug8TotalQTY", dgvPatientDrugHistory.Rows(7).Cells(7).Value)
+            'Drug 9
+            cmd2.Parameters.AddWithValue("@Drug9Name", dgvPatientDrugHistory.Rows(8).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Strength", dgvPatientDrugHistory.Rows(8).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Unit", dgvPatientDrugHistory.Rows(8).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Dose", dgvPatientDrugHistory.Rows(8).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Freq", dgvPatientDrugHistory.Rows(8).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Duration", dgvPatientDrugHistory.Rows(8).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug9TotalQTY", dgvPatientDrugHistory.Rows(8).Cells(7).Value)
+            'Drug 10
+            cmd2.Parameters.AddWithValue("@Drug10Name", dgvPatientDrugHistory.Rows(9).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Strength", dgvPatientDrugHistory.Rows(9).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Unit", dgvPatientDrugHistory.Rows(9).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Dose", dgvPatientDrugHistory.Rows(9).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Freq", dgvPatientDrugHistory.Rows(9).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Duration", dgvPatientDrugHistory.Rows(9).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug10TotalQTY", dgvPatientDrugHistory.Rows(9).Cells(7).Value)
+            'Insulin 1
+            cmd2.Parameters.AddWithValue("@Insulin1Name", dgvPatientInsulinHistory.Rows(0).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Strength", dgvPatientInsulinHistory.Rows(0).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Unit", dgvPatientInsulinHistory.Rows(0).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1MorDose", dgvPatientInsulinHistory.Rows(0).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1NoonDose", dgvPatientInsulinHistory.Rows(0).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1AfternoonDose", dgvPatientInsulinHistory.Rows(0).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1NightDose", dgvPatientInsulinHistory.Rows(0).Cells(7).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Freq", dgvPatientInsulinHistory.Rows(0).Cells(8).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Duration", dgvPatientInsulinHistory.Rows(0).Cells(9).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1TotalDose", dgvPatientInsulinHistory.Rows(0).Cells(10).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1POM", dgvPatientInsulinHistory.Rows(0).Cells(11).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1CartQTY", dgvPatientInsulinHistory.Rows(0).Cells(12).Value)
+            'Insulin 2
+            cmd2.Parameters.AddWithValue("@Insulin2Name", dgvPatientInsulinHistory.Rows(1).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Strength", dgvPatientInsulinHistory.Rows(1).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Unit", dgvPatientInsulinHistory.Rows(1).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2MorDose", dgvPatientInsulinHistory.Rows(1).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2NoonDose", dgvPatientInsulinHistory.Rows(1).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2AfternoonDose", dgvPatientInsulinHistory.Rows(1).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2NightDose", dgvPatientInsulinHistory.Rows(1).Cells(7).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Freq", dgvPatientInsulinHistory.Rows(1).Cells(8).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Duration", dgvPatientInsulinHistory.Rows(1).Cells(9).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2TotalDose", dgvPatientInsulinHistory.Rows(1).Cells(10).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2POM", dgvPatientInsulinHistory.Rows(1).Cells(11).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2CartQTY", dgvPatientInsulinHistory.Rows(1).Cells(12).Value)
+
+            'cmd2.ExecuteNonQuery()
+            Dim i As Integer = cmd2.ExecuteNonQuery()
+            If i > 0 Then
+                MessageBox.Show("Updated Successfully.")
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+
+        Try
+            conn.Open()
+            Dim cmd2 As New MySqlCommand("UPDATE `prescribeddrugshistory` SET 
+                            `Drug1Name`=@Drug1Name,`Drug1Strength`=@Drug1Strength,`Drug1Unit`=@Drug1Unit,`Drug1Dose`=@Drug1Dose,`Drug1Freq`=@Drug1Freq,`Drug1Duration`=@Drug1Duration,`Drug1TotalQTY`=@Drug1TotalQTY,
+                            `Drug2Name`=@Drug2Name,`Drug2Strength`=@Drug2Strength,`Drug2Unit`=@Drug2Unit,`Drug2Dose`=@Drug2Dose,`Drug2Freq`=@Drug2Freq,`Drug2Duration`=@Drug2Duration,`Drug2TotalQTY`=@Drug2TotalQTY,
+                            `Drug3Name`=@Drug3Name,`Drug3Strength`=@Drug3Strength,`Drug3Unit`=@Drug3Unit,`Drug3Dose`=@Drug3Dose,`Drug3Freq`=@Drug3Freq,`Drug3Duration`=@Drug3Duration,`Drug3TotalQTY`=@Drug3TotalQTY,
+                            `Drug4Name`=@Drug4Name,`Drug4Strength`=@Drug4Strength,`Drug4Unit`=@Drug4Unit,`Drug4Dose`=@Drug4Dose,`Drug4Freq`=@Drug4Freq,`Drug4Duration`=@Drug4Duration,`Drug4TotalQTY`=@Drug4TotalQTY,
+                            `Drug5Name`=@Drug5Name,`Drug5Strength`=@Drug5Strength,`Drug5Unit`=@Drug5Unit,`Drug5Dose`=@Drug5Dose,`Drug5Freq`=@Drug5Freq,`Drug5Duration`=@Drug5Duration,`Drug5TotalQTY`=@Drug5TotalQTY,
+                            `Drug6Name`=@Drug6Name,`Drug6Strength`=@Drug6Strength,`Drug6Unit`=@Drug6Unit,`Drug6Dose`=@Drug6Dose,`Drug6Freq`=@Drug6Freq,`Drug6Duration`=@Drug6Duration,`Drug6TotalQTY`=@Drug6TotalQTY,
+                            `Drug7Name`=@Drug7Name,`Drug7Strength`=@Drug7Strength,`Drug7Unit`=@Drug7Unit,`Drug7Dose`=@Drug7Dose,`Drug7Freq`=@Drug7Freq,`Drug7Duration`=@Drug7Duration,`Drug7TotalQTY`=@Drug7TotalQTY,
+                            `Drug8Name`=@Drug8Name,`Drug8Strength`=@Drug8Strength,`Drug8Unit`=@Drug8Unit,`Drug8Dose`=@Drug8Dose,`Drug8Freq`=@Drug8Freq,`Drug8Duration`=@Drug8Duration,`Drug8TotalQTY`=@Drug8TotalQTY,
+                            `Drug9Name`=@Drug9Name,`Drug9Strength`=@Drug9Strength,`Drug9Unit`=@Drug9Unit,`Drug9Dose`=@Drug9Dose,`Drug9Freq`=@Drug9Freq,`Drug9Duration`=@Drug9Duration,`Drug9TotalQTY`=@Drug9TotalQTY,
+                            `Drug10Name`=@Drug10Name,`Drug10Strength`=@Drug10Strength,`Drug10Unit`=@Drug10Unit,`Drug10Dose`=@Drug10Dose,`Drug10Freq`=@Drug10Freq,`Drug10Duration`=@Drug10Duration,`Drug10TotalQTY`=@Drug10TotalQTY,
+                            `Insulin1Name`=@Insulin1Name,`Insulin1Strength`=@Insulin1Strength,`Insulin1Unit`=@Insulin1Unit,`Insulin1MorDose`=@Insulin1MorDose,`Insulin1NoonDose`=@Insulin1NoonDose,`Insulin1AfternoonDose`=@Insulin1AfternoonDose,`Insulin1NightDose`=@Insulin1NightDose,`Insulin1Freq`=@Insulin1Freq,`Insulin1Duration`=@Insulin1Duration,`Insulin1TotalDose`=@Insulin1TotalDose,`Insulin1POM`=@Insulin1POM,`Insulin1CartQTY`=@Insulin1CartQTY,
+                            `Insulin2Name`=@Insulin2Name,`Insulin2Strength`=@Insulin2Strength,`Insulin2Unit`=@Insulin2Unit,`Insulin2MorDose`=@Insulin2MorDose,`Insulin2NoonDose`=@Insulin2NoonDose,`Insulin2AfternoonDose`=@Insulin2AfternoonDose,`Insulin2NightDose`=@Insulin2NightDose,`Insulin2Freq`=@Insulin2Freq,`Insulin2Duration`=@Insulin2Duration,`Insulin2TotalDose`=@Insulin2TotalDose,`Insulin2POM`=@Insulin2POM,`Insulin2CartQTY`=@Insulin2CartQTY,
+                            Timestamp=Timestamp WHERE `ICNo`=@ICNo AND `Timestamp`=@Timestamp", conn)
+            cmd2.Parameters.Clear()
+            'cmd2.Parameters.AddWithValue("@Name", txtPatientName.Text)
+            cmd2.Parameters.AddWithValue("@ICNo", txtICNoDB.Text)
+            'cmd2.Parameters.AddWithValue("@Date", dtpDateSaved.Text)
+            'cmd2.Parameters.AddWithValue("@DateCollection", dtpDateCollection.Text)
+            'cmd2.Parameters.AddWithValue("@DateSeeDoctor", dtpDateSeeDoctor.Text)
+            cmd2.Parameters.AddWithValue("@Timestamp", outputTime)
+            'Drug 1
+
+            cmd2.Parameters.AddWithValue("@Drug1Name", dgvPatientDrugHistory.Rows(0).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Strength", dgvPatientDrugHistory.Rows(0).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Unit", dgvPatientDrugHistory.Rows(0).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Dose", dgvPatientDrugHistory.Rows(0).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Freq", dgvPatientDrugHistory.Rows(0).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug1Duration", dgvPatientDrugHistory.Rows(0).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug1TotalQTY", dgvPatientDrugHistory.Rows(0).Cells(7).Value)
+            'Drug 2
+            cmd2.Parameters.AddWithValue("@Drug2Name", dgvPatientDrugHistory.Rows(1).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Strength", dgvPatientDrugHistory.Rows(1).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Unit", dgvPatientDrugHistory.Rows(1).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Dose", dgvPatientDrugHistory.Rows(1).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Freq", dgvPatientDrugHistory.Rows(1).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug2Duration", dgvPatientDrugHistory.Rows(1).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug2TotalQTY", dgvPatientDrugHistory.Rows(1).Cells(7).Value)
+            'Drug 3
+            cmd2.Parameters.AddWithValue("@Drug3Name", dgvPatientDrugHistory.Rows(2).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Strength", dgvPatientDrugHistory.Rows(2).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Unit", dgvPatientDrugHistory.Rows(2).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Dose", dgvPatientDrugHistory.Rows(2).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Freq", dgvPatientDrugHistory.Rows(2).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug3Duration", dgvPatientDrugHistory.Rows(2).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug3TotalQTY", dgvPatientDrugHistory.Rows(2).Cells(7).Value)
+            'Drug 4
+            cmd2.Parameters.AddWithValue("@Drug4Name", dgvPatientDrugHistory.Rows(3).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Strength", dgvPatientDrugHistory.Rows(3).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Unit", dgvPatientDrugHistory.Rows(3).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Dose", dgvPatientDrugHistory.Rows(3).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Freq", dgvPatientDrugHistory.Rows(3).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug4Duration", dgvPatientDrugHistory.Rows(3).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug4TotalQTY", dgvPatientDrugHistory.Rows(3).Cells(7).Value)
+            'Drug 5
+            cmd2.Parameters.AddWithValue("@Drug5Name", dgvPatientDrugHistory.Rows(4).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Strength", dgvPatientDrugHistory.Rows(4).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Unit", dgvPatientDrugHistory.Rows(4).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Dose", dgvPatientDrugHistory.Rows(4).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Freq", dgvPatientDrugHistory.Rows(4).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug5Duration", dgvPatientDrugHistory.Rows(4).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug5TotalQTY", dgvPatientDrugHistory.Rows(4).Cells(7).Value)
+            'Drug 6
+            cmd2.Parameters.AddWithValue("@Drug6Name", dgvPatientDrugHistory.Rows(5).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Strength", dgvPatientDrugHistory.Rows(5).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Unit", dgvPatientDrugHistory.Rows(5).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Dose", dgvPatientDrugHistory.Rows(5).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Freq", dgvPatientDrugHistory.Rows(5).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug6Duration", dgvPatientDrugHistory.Rows(5).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug6TotalQTY", dgvPatientDrugHistory.Rows(5).Cells(7).Value)
+            'Drug 7
+            cmd2.Parameters.AddWithValue("@Drug7Name", dgvPatientDrugHistory.Rows(6).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Strength", dgvPatientDrugHistory.Rows(6).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Unit", dgvPatientDrugHistory.Rows(6).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Dose", dgvPatientDrugHistory.Rows(6).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Freq", dgvPatientDrugHistory.Rows(6).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug7Duration", dgvPatientDrugHistory.Rows(6).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug7TotalQTY", dgvPatientDrugHistory.Rows(6).Cells(7).Value)
+            'Drug 8
+            cmd2.Parameters.AddWithValue("@Drug8Name", dgvPatientDrugHistory.Rows(7).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Strength", dgvPatientDrugHistory.Rows(7).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Unit", dgvPatientDrugHistory.Rows(7).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Dose", dgvPatientDrugHistory.Rows(7).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Freq", dgvPatientDrugHistory.Rows(7).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug8Duration", dgvPatientDrugHistory.Rows(7).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug8TotalQTY", dgvPatientDrugHistory.Rows(7).Cells(7).Value)
+            'Drug 9
+            cmd2.Parameters.AddWithValue("@Drug9Name", dgvPatientDrugHistory.Rows(8).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Strength", dgvPatientDrugHistory.Rows(8).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Unit", dgvPatientDrugHistory.Rows(8).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Dose", dgvPatientDrugHistory.Rows(8).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Freq", dgvPatientDrugHistory.Rows(8).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug9Duration", dgvPatientDrugHistory.Rows(8).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug9TotalQTY", dgvPatientDrugHistory.Rows(8).Cells(7).Value)
+            'Drug 10
+            cmd2.Parameters.AddWithValue("@Drug10Name", dgvPatientDrugHistory.Rows(9).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Strength", dgvPatientDrugHistory.Rows(9).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Unit", dgvPatientDrugHistory.Rows(9).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Dose", dgvPatientDrugHistory.Rows(9).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Freq", dgvPatientDrugHistory.Rows(9).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Drug10Duration", dgvPatientDrugHistory.Rows(9).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Drug10TotalQTY", dgvPatientDrugHistory.Rows(9).Cells(7).Value)
+            'Insulin 1
+            cmd2.Parameters.AddWithValue("@Insulin1Name", dgvPatientInsulinHistory.Rows(0).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Strength", dgvPatientInsulinHistory.Rows(0).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Unit", dgvPatientInsulinHistory.Rows(0).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1MorDose", dgvPatientInsulinHistory.Rows(0).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1NoonDose", dgvPatientInsulinHistory.Rows(0).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1AfternoonDose", dgvPatientInsulinHistory.Rows(0).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1NightDose", dgvPatientInsulinHistory.Rows(0).Cells(7).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Freq", dgvPatientInsulinHistory.Rows(0).Cells(8).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1Duration", dgvPatientInsulinHistory.Rows(0).Cells(9).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1TotalDose", dgvPatientInsulinHistory.Rows(0).Cells(10).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1POM", dgvPatientInsulinHistory.Rows(0).Cells(11).Value)
+            cmd2.Parameters.AddWithValue("@Insulin1CartQTY", dgvPatientInsulinHistory.Rows(0).Cells(12).Value)
+            'Insulin 2
+            cmd2.Parameters.AddWithValue("@Insulin2Name", dgvPatientInsulinHistory.Rows(1).Cells(1).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Strength", dgvPatientInsulinHistory.Rows(1).Cells(2).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Unit", dgvPatientInsulinHistory.Rows(1).Cells(3).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2MorDose", dgvPatientInsulinHistory.Rows(1).Cells(4).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2NoonDose", dgvPatientInsulinHistory.Rows(1).Cells(5).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2AfternoonDose", dgvPatientInsulinHistory.Rows(1).Cells(6).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2NightDose", dgvPatientInsulinHistory.Rows(1).Cells(7).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Freq", dgvPatientInsulinHistory.Rows(1).Cells(8).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2Duration", dgvPatientInsulinHistory.Rows(1).Cells(9).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2TotalDose", dgvPatientInsulinHistory.Rows(1).Cells(10).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2POM", dgvPatientInsulinHistory.Rows(1).Cells(11).Value)
+            cmd2.Parameters.AddWithValue("@Insulin2CartQTY", dgvPatientInsulinHistory.Rows(1).Cells(12).Value)
+
+            'cmd2.ExecuteNonQuery()
+            Dim i As Integer = cmd2.ExecuteNonQuery()
+            If i > 0 Then
+                MessageBox.Show("Updated Successfully.")
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+
+        loadDatabaseDGV()
+        'dgvDateSelector.CurrentCell = currentcell
+        dgvDateSelector.CurrentCell = dgvDateSelector(ColumnIndex, RowIndex)
+        loadDatabaseDGV2()
 
 
     End Sub
+
+
+
+
 
     Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvDateSelector.CellClick
         'txtDrugName.Text = dgvDateSelector.CurrentRow.Cells(0).Value
@@ -4854,7 +5188,7 @@ Redo:
 
         Catch ex As Exception
             conn.Close()
-            MsgBox("Delete Failed.")
+            MsgBox("Update Failed.")
             MsgBox(ex.Message)
         End Try
     End Sub
@@ -4928,4 +5262,173 @@ Redo:
             My.Settings.Save()
         End If
     End Sub
+
+    Private Sub btnEditPatientDB_Click(sender As Object, e As EventArgs) Handles btnEditPatientDB.Click
+        If dgvPatientDrugHistory.ReadOnly And dgvPatientInsulinHistory.ReadOnly Then
+            lblEditModeDB.Text = "EDIT MODE"
+            lblEditModeDB.BackColor = Color.LightGreen
+            dgvDateSelector.Enabled = False
+            dgvPatientDrugHistory.ReadOnly = False
+            dgvPatientInsulinHistory.ReadOnly = False
+            txtICNoDB.ReadOnly = True
+            btnSearchDB.Enabled = False
+            btnEditPatientDB.Text = "Save"
+            btnEditPatientDB.BackColor = Color.LightGreen
+        ElseIf btnEditPatientDB.Text = "Save" Then
+            UpdateDataInDatabase()
+            dgvDateSelector.Enabled = True
+            lblEditModeDB.Text = ""
+            lblEditModeDB.BackColor = Color.Transparent
+            dgvPatientDrugHistory.ReadOnly = True
+            dgvPatientInsulinHistory.ReadOnly = True
+            txtICNoDB.ReadOnly = False
+            btnSearchDB.Enabled = True
+            btnEditPatientDB.Text = "Edit"
+            btnEditPatientDB.BackColor = Color.Transparent
+        End If
+    End Sub
+
+    Public autotext As DataGridViewTextBoxEditingControl
+    Public coltitle As String
+
+    Private Sub dgvPatientDrugHistory_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles dgvPatientDrugHistory.EditingControlShowing
+        autotext = TryCast(e.Control, DataGridViewTextBoxEditingControl)
+        If coltitle.Equals("Drug Name") Then
+            autocomplete("drugname")
+        End If
+    End Sub
+
+    Private Sub dgvPatientInsulinHistory_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles dgvPatientInsulinHistory.EditingControlShowing
+        autotext = TryCast(e.Control, DataGridViewTextBoxEditingControl)
+        If coltitle.Equals("Insulin Name") Then
+            autocomplete("insulinname")
+        End If
+    End Sub
+
+    Public Sub autocomplete(ByVal type As String)
+        'If autotext IsNot Nothing Then
+
+
+        If type = "drugname" Then
+            conn.Open()
+            Dim cmd As New MySqlCommand("SELECT DrugName FROM drugtable WHERE DrugName not like '%Insulin%'", conn)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            Dim col As New AutoCompleteStringCollection
+
+            da.Fill(dt)
+            For i = 0 To dt.Rows.Count - 1
+                col.Add(dt.Rows(i)("DrugName").ToString())
+                'drugnamedb = dt.Rows(i)("DrugName").ToString()
+                'cbDrug1.Items.Add(drugnamedb)
+            Next
+            conn.Close()
+            da.Dispose()
+
+            autotext.AutoCompleteSource = AutoCompleteSource.CustomSource
+            autotext.AutoCompleteCustomSource = col
+            autotext.AutoCompleteMode = AutoCompleteMode.Suggest
+        End If
+
+        If type = "insulinname" Then
+            conn.Open()
+            Dim cmd As New MySqlCommand("SELECT DrugName FROM drugtable WHERE DrugName like '%Insulin%'", conn)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            Dim col As New AutoCompleteStringCollection
+
+            da.Fill(dt)
+            For i = 0 To dt.Rows.Count - 1
+                col.Add(dt.Rows(i)("DrugName").ToString())
+                'drugnamedb = dt.Rows(i)("DrugName").ToString()
+                'cbDrug1.Items.Add(drugnamedb)
+            Next
+            conn.Close()
+            da.Dispose()
+
+            autotext.AutoCompleteSource = AutoCompleteSource.CustomSource
+            autotext.AutoCompleteCustomSource = col
+            autotext.AutoCompleteMode = AutoCompleteMode.Suggest
+        End If
+        'End If
+    End Sub
+
+    Private Sub dgvPatientDrugHistory_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvPatientDrugHistory.CellBeginEdit
+        coltitle = dgvPatientDrugHistory.Columns(dgvPatientDrugHistory.SelectedCells(0).ColumnIndex).HeaderText
+    End Sub
+
+    Private Sub dgvPatientInsulinHistory_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dgvPatientInsulinHistory.CellBeginEdit
+        coltitle = dgvPatientInsulinHistory.Columns(dgvPatientInsulinHistory.SelectedCells(0).ColumnIndex).HeaderText
+    End Sub
+
+    Private Sub btnDeletePatientDB_Click(sender As Object, e As EventArgs) Handles btnDeletePatientDB.Click
+        deletePatientDB()
+    End Sub
+
+    Public Sub deletePatientDB()
+        Select Case MsgBox("Do you want to Delete the Selected Row? This operation cannot be undone.", MsgBoxStyle.YesNoCancel, "Confirmation")
+            Case MsgBoxResult.Yes
+                Dim timestamp As String = dgvDateSelector.CurrentRow.Cells(5).Value
+                Dim inputTime As String = timestamp
+                Dim format As String = "d/M/yyyy h:mm:ss tt"
+                Dim provider As CultureInfo = CultureInfo.InvariantCulture
+                Dim parsedTime As DateTime = DateTime.ParseExact(inputTime, format, provider)
+                Dim outputTime As String = parsedTime.ToString("yyyy-M-dd HH:mm:ss")
+                'Delete button at Database Tab to Delete Database Row Selected at DataGridView Table
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand("DELETE FROM `prescribeddrugs` WHERE `ICNo`=@ICNo AND `Timestamp`=@Timestamp", conn)
+                    cmd.Parameters.Clear()
+                    cmd.Parameters.AddWithValue("@ICNo", txtICNoDB.Text)
+                    cmd.Parameters.AddWithValue("@Timestamp", outputTime)
+
+                    Dim i = cmd.ExecuteNonQuery
+                    If i > 0 Then
+                        MsgBox("Lastest Patient Data Successfully Deleted.")
+
+                    Else
+                        'MsgBox("Delete Failed.")
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.Message)
+                    'MsgBox("Please select the row first.")
+                Finally
+                    conn.Close()
+                End Try
+
+                Try
+                    conn.Open()
+                    Dim cmd As New MySqlCommand("DELETE FROM `prescribeddrugshistory` WHERE `ICNo`=@ICNo AND `Timestamp`=@Timestamp", conn)
+                    cmd.Parameters.Clear()
+                    cmd.Parameters.AddWithValue("@ICNo", txtICNoDB.Text)
+                    cmd.Parameters.AddWithValue("@Timestamp", outputTime)
+
+                    Dim i = cmd.ExecuteNonQuery
+                    If i > 0 Then
+                        MsgBox("History Patient Data Successfully Deleted.")
+
+
+                    Else
+                        'MsgBox("Delete Failed.")
+                    End If
+
+                Catch ex As Exception
+                    'MsgBox("Please select the row first.")
+                Finally
+                    conn.Close()
+                    dgvDateSelector.Refresh()
+                    dgvPatientDrugHistory.Refresh()
+                    dgvPatientInsulinHistory.Refresh()
+                    loadDatabaseDGV()
+                    loaddatafromdb()
+                    loadDBDataforPatientInfo()
+
+                End Try
+            Case MsgBoxResult.Cancel
+                Return
+            Case MsgBoxResult.No
+                Return
+        End Select
+    End Sub
+
 End Class

@@ -239,6 +239,8 @@ Partial Class Form1
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.lblLogPrevPatientTimestamp = New System.Windows.Forms.Label()
+        Me.lblLogPrevPatientTime = New System.Windows.Forms.Label()
         Me.DataGridViewInsulin = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -293,6 +295,9 @@ Partial Class Form1
         Me.DateSeeDoctorRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TimestampRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnSavePrinterSettings = New System.Windows.Forms.TabPage()
+        Me.btnDeletePatientDB = New System.Windows.Forms.Button()
+        Me.lblEditModeDB = New System.Windows.Forms.Label()
+        Me.btnEditPatientDB = New System.Windows.Forms.Button()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.lblPatientNameDB = New System.Windows.Forms.Label()
@@ -373,12 +378,12 @@ Partial Class Form1
         Me.pbrDatabaseConnection = New System.Windows.Forms.ToolStripProgressBar()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.stlbPrinterName = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.stlbMainStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.PrintDoc = New System.Drawing.Printing.PrintDocument()
         Me.PPD = New System.Windows.Forms.PrintPreviewDialog()
         Me.PrintDocInsulin = New System.Drawing.Printing.PrintDocument()
         Me.lblDeveloper = New System.Windows.Forms.Label()
+        Me.Label50 = New System.Windows.Forms.Label()
+        Me.lblMainStatus = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
@@ -453,6 +458,8 @@ Partial Class Form1
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.lblMainStatus)
+        Me.TabPage1.Controls.Add(Me.Label50)
         Me.TabPage1.Controls.Add(Me.btnPrintPreview)
         Me.TabPage1.Controls.Add(Me.cboxIOU)
         Me.TabPage1.Controls.Add(Me.lblExistingPatient)
@@ -2809,7 +2816,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2827,10 +2834,10 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(400, 2)
+        Me.btnDelete.Location = New System.Drawing.Point(391, 2)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(165, 32)
+        Me.btnDelete.Size = New System.Drawing.Size(174, 32)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2844,7 +2851,7 @@ Partial Class Form1
         Me.btnAddDrug.Location = New System.Drawing.Point(2, 2)
         Me.btnAddDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(177, 32)
+        Me.btnAddDrug.Size = New System.Drawing.Size(171, 32)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2854,7 +2861,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(278, 2)
+        Me.btnClear.Location = New System.Drawing.Point(269, 2)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(118, 32)
@@ -2867,10 +2874,10 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(183, 2)
+        Me.btnUpdate.Location = New System.Drawing.Point(177, 2)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(91, 32)
+        Me.btnUpdate.Size = New System.Drawing.Size(88, 32)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -3157,6 +3164,8 @@ Partial Class Form1
         '
         'TabPage5
         '
+        Me.TabPage5.Controls.Add(Me.lblLogPrevPatientTimestamp)
+        Me.TabPage5.Controls.Add(Me.lblLogPrevPatientTime)
         Me.TabPage5.Controls.Add(Me.DataGridViewInsulin)
         Me.TabPage5.Controls.Add(Me.lblPrevSavedName)
         Me.TabPage5.Controls.Add(Me.DataGridViewDrug)
@@ -3171,6 +3180,26 @@ Partial Class Form1
         Me.TabPage5.TabIndex = 0
         Me.TabPage5.Text = "Previous Patient"
         Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'lblLogPrevPatientTimestamp
+        '
+        Me.lblLogPrevPatientTimestamp.AutoSize = True
+        Me.lblLogPrevPatientTimestamp.Location = New System.Drawing.Point(600, 48)
+        Me.lblLogPrevPatientTimestamp.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblLogPrevPatientTimestamp.Name = "lblLogPrevPatientTimestamp"
+        Me.lblLogPrevPatientTimestamp.Size = New System.Drawing.Size(40, 22)
+        Me.lblLogPrevPatientTimestamp.TabIndex = 15
+        Me.lblLogPrevPatientTimestamp.Text = "      "
+        '
+        'lblLogPrevPatientTime
+        '
+        Me.lblLogPrevPatientTime.AutoSize = True
+        Me.lblLogPrevPatientTime.Location = New System.Drawing.Point(488, 48)
+        Me.lblLogPrevPatientTime.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblLogPrevPatientTime.Name = "lblLogPrevPatientTime"
+        Me.lblLogPrevPatientTime.Size = New System.Drawing.Size(108, 22)
+        Me.lblLogPrevPatientTime.TabIndex = 14
+        Me.lblLogPrevPatientTime.Text = "Timestamp :"
         '
         'DataGridViewInsulin
         '
@@ -3405,7 +3434,7 @@ Partial Class Form1
         'Label26
         '
         Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(6, 48)
+        Me.Label26.Location = New System.Drawing.Point(9, 48)
         Me.Label26.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(201, 22)
@@ -3670,6 +3699,9 @@ Partial Class Form1
         '
         'btnSavePrinterSettings
         '
+        Me.btnSavePrinterSettings.Controls.Add(Me.btnDeletePatientDB)
+        Me.btnSavePrinterSettings.Controls.Add(Me.lblEditModeDB)
+        Me.btnSavePrinterSettings.Controls.Add(Me.btnEditPatientDB)
         Me.btnSavePrinterSettings.Controls.Add(Me.Label41)
         Me.btnSavePrinterSettings.Controls.Add(Me.Label28)
         Me.btnSavePrinterSettings.Controls.Add(Me.lblPatientNameDB)
@@ -3687,6 +3719,33 @@ Partial Class Form1
         Me.btnSavePrinterSettings.TabIndex = 3
         Me.btnSavePrinterSettings.Text = "Database"
         Me.btnSavePrinterSettings.UseVisualStyleBackColor = True
+        '
+        'btnDeletePatientDB
+        '
+        Me.btnDeletePatientDB.Location = New System.Drawing.Point(1083, 171)
+        Me.btnDeletePatientDB.Name = "btnDeletePatientDB"
+        Me.btnDeletePatientDB.Size = New System.Drawing.Size(99, 41)
+        Me.btnDeletePatientDB.TabIndex = 20
+        Me.btnDeletePatientDB.Text = "Delete"
+        Me.btnDeletePatientDB.UseVisualStyleBackColor = True
+        '
+        'lblEditModeDB
+        '
+        Me.lblEditModeDB.AutoSize = True
+        Me.lblEditModeDB.Location = New System.Drawing.Point(1083, 146)
+        Me.lblEditModeDB.Name = "lblEditModeDB"
+        Me.lblEditModeDB.Size = New System.Drawing.Size(25, 22)
+        Me.lblEditModeDB.TabIndex = 19
+        Me.lblEditModeDB.Text = "   "
+        '
+        'btnEditPatientDB
+        '
+        Me.btnEditPatientDB.Location = New System.Drawing.Point(1083, 88)
+        Me.btnEditPatientDB.Name = "btnEditPatientDB"
+        Me.btnEditPatientDB.Size = New System.Drawing.Size(99, 42)
+        Me.btnEditPatientDB.TabIndex = 18
+        Me.btnEditPatientDB.Text = "Edit"
+        Me.btnEditPatientDB.UseVisualStyleBackColor = True
         '
         'Label41
         '
@@ -4060,7 +4119,7 @@ Partial Class Form1
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(185, 22)
         Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 4, Revision 2"
+        Me.Label43.Text = "Release 4, Revision 3"
         '
         'GroupBox5
         '
@@ -4437,7 +4496,7 @@ Partial Class Form1
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.stlbDatabaseConnection, Me.pbrDatabaseConnection, Me.ToolStripStatusLabel2, Me.stlbPrinterName, Me.ToolStripStatusLabel1, Me.stlbMainStatus})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.stlbDatabaseConnection, Me.pbrDatabaseConnection, Me.ToolStripStatusLabel2, Me.stlbPrinterName})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 913)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1540, 26)
@@ -4467,22 +4526,9 @@ Partial Class Form1
         '
         Me.stlbPrinterName.BackColor = System.Drawing.Color.Transparent
         Me.stlbPrinterName.Name = "stlbPrinterName"
-        Me.stlbPrinterName.Size = New System.Drawing.Size(0, 20)
+        Me.stlbPrinterName.Size = New System.Drawing.Size(25, 20)
+        Me.stlbPrinterName.Text = "    "
         Me.stlbPrinterName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'ToolStripStatusLabel1
-        '
-        Me.ToolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(64, 20)
-        Me.ToolStripStatusLabel1.Text = "| Status: "
-        '
-        'stlbMainStatus
-        '
-        Me.stlbMainStatus.BackColor = System.Drawing.Color.Transparent
-        Me.stlbMainStatus.Name = "stlbMainStatus"
-        Me.stlbMainStatus.Size = New System.Drawing.Size(53, 20)
-        Me.stlbMainStatus.Text = "Ready."
         '
         'PrintDoc
         '
@@ -4512,6 +4558,24 @@ Partial Class Form1
         Me.lblDeveloper.Size = New System.Drawing.Size(297, 20)
         Me.lblDeveloper.TabIndex = 4
         Me.lblDeveloper.Text = "                                                "
+        '
+        'Label50
+        '
+        Me.Label50.AutoSize = True
+        Me.Label50.Location = New System.Drawing.Point(9, 813)
+        Me.Label50.Name = "Label50"
+        Me.Label50.Size = New System.Drawing.Size(71, 22)
+        Me.Label50.TabIndex = 43
+        Me.Label50.Text = "Status: "
+        '
+        'lblMainStatus
+        '
+        Me.lblMainStatus.AutoSize = True
+        Me.lblMainStatus.Location = New System.Drawing.Point(86, 813)
+        Me.lblMainStatus.Name = "lblMainStatus"
+        Me.lblMainStatus.Size = New System.Drawing.Size(67, 22)
+        Me.lblMainStatus.TabIndex = 44
+        Me.lblMainStatus.Text = "Ready."
         '
         'Form1
         '
@@ -4698,7 +4762,6 @@ Partial Class Form1
     Friend WithEvents PrintDoc As Printing.PrintDocument
     Friend WithEvents PPD As PrintPreviewDialog
     Friend WithEvents btnPrint As Button
-    Friend WithEvents stlbMainStatus As ToolStripStatusLabel
     Friend WithEvents lblStrD2 As Label
     Friend WithEvents lblStrD4 As Label
     Friend WithEvents lblStrD5 As Label
@@ -4798,7 +4861,6 @@ Partial Class Form1
     Friend WithEvents lblUnitD3 As Label
     Friend WithEvents cbDrug8 As ComboBox
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents stlbPrinterName As ToolStripStatusLabel
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents txtICNo As TextBox
@@ -4957,4 +5019,11 @@ Partial Class Form1
     Friend WithEvents DefaultMaxQty As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Label44 As Label
+    Friend WithEvents btnEditPatientDB As Button
+    Friend WithEvents lblEditModeDB As Label
+    Friend WithEvents lblLogPrevPatientTimestamp As Label
+    Friend WithEvents lblLogPrevPatientTime As Label
+    Friend WithEvents btnDeletePatientDB As Button
+    Friend WithEvents lblMainStatus As Label
+    Friend WithEvents Label50 As Label
 End Class
