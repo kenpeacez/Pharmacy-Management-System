@@ -1,8 +1,10 @@
 Pharmacy Management System
 
-Developed using VB.NET in Visual Studio 2022.
+Developed using WinForms as the frontend and VB.NET as the backend in Visual Studio 2022.
 Optimized for use in Malaysia Country.
 This project is under active development as of May 2024, and will receive updates and bug fixes until September 2024.
+
+This project is developed to showcase my skills in software development. It is now being used live in clinic to manage patient data, print labels without requiring internet connection to function. Only available in Windows PC.
 
 Main Features
 - Ability to save patients basic information such as Name, Identification (IC No)
