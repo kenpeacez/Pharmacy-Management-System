@@ -7,6 +7,8 @@ Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System.Globalization
 Imports System.Runtime.InteropServices
+Imports System.Threading.Tasks
+Imports System.Threading
 
 
 Public Class Form1
@@ -97,6 +99,9 @@ Public Class Form1
     Private disableTextChangedDB As Boolean = False
 
     Dim notyetinitialize As Boolean = True
+
+    Dim overwriten As Boolean = False
+
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
@@ -113,21 +118,21 @@ Public Class Form1
 
         'First Function, Check for DB Connection Status
         checkDB()
-        If DBStatus = False Then
+        If checkDB() = False Then
             Return 'Exit from Function due to Database Initialization error
         End If
-
-        'Second Funtion, Tabulate Data from Database to Drug Tab Table 
+        'Load windows forms data
+        'Method to Tabulate Data from Database to Drug Tab Table 
         DGV_Load()
-
-        'Third Function
+        'Method to load autocomplete for Patient Name and IC No
         loadDBDataforPatientInfo()
-
-        'Fourth Function
+        'Method to load autocomplete and drug names into Drug Combo Boxes
         loaddatafromdb()
+        'Method to load autocomplete and insulin names into Insulin Combo Boxes
         loadInsulindatafromdb()
-        'Fiveth Function
+        'Method to load Log Datagridview for previous patient
         loadLogDGV()
+        'Method to load Log > Records tab for Daily Records Data
         loadDGVRecords()
 
         notyetinitialize = False
@@ -142,6 +147,7 @@ Public Class Form1
 
         cboxEnablePrintPDF.Checked = My.Settings.EnablePrintAfterSave
         cboxAutoClear.Checked = My.Settings.AutoClear
+        cboxDisplayDateTime.Checked = My.Settings.EnableTime
 
         txtLabelHeight.Text = My.Settings.LabelHeight
         txtLabelWidth.Text = My.Settings.LabelWidth
@@ -159,13 +165,26 @@ Public Class Form1
         dgvPatientDrugHistory.AllowUserToAddRows = False
         dgvPatientInsulinHistory.AllowUserToAddRows = False
 
+        If cboxEnablePrintPDF.Checked Then
+            btnSave.Text = "Save and Print"
+            btnSave.BackColor = Color.GreenYellow
+        End If
+        If cboxEnablePrintPDF.Checked = False Then
+            btnSave.Text = "Save only"
+            btnSave.BackColor = Color.Azure
+        End If
+
+        DisplayDateTime()
+
+
         DevMode()
 
     End Sub
 
     Private Sub SetandSaveDBSettings()
-        Dim sender As Object = Nothing
-        Dim e As EventArgs = Nothing
+
+        Dim e As New EventArgs
+
         'Server settings
         Dim DBServerAddress As String = My.Settings.dbServerAddress
         Dim DBServerAddressNew As String
@@ -194,7 +213,7 @@ Public Class Form1
 
         MsgBox("Saved Database Settings")
         MsgBox("Attempting to Reload Application..")
-        Form1_Load(sender, e)
+        Form1_Load(Me, e)
     End Sub
     Private Sub SetandSavePrinterSettings()
         If txtLabelHeight.Text < 30 Then
@@ -272,22 +291,21 @@ Public Class Form1
                 & "database=" & DBName
         conn.ConnectionString = myConnectionString
     End Sub
-    Private Sub checkDB()
+    Private Function checkDB() As Boolean
         Try
             conn.Open()
             pbrDatabaseConnection.Value = 100
-            DBStatus = True
+            Return True
 
         Catch ex As MySql.Data.MySqlClient.MySqlException
             MessageBox.Show(ex.Message)
             pbrDatabaseConnection.Value = 0
-            DBStatus = False
-            Return
+            Return False
 
         Finally
             conn.Close()
         End Try
-    End Sub
+    End Function
 
     Private Sub GetDefaultPrinterName()
         Dim printerSettings As New PrinterSettings()
@@ -297,6 +315,14 @@ Public Class Form1
         lblDefaultPrinterAtSetting.Text = defaultPrinterName
     End Sub
     Public Sub printPreview()
+        'check for validations
+        If checkICNewPatient() = False Then
+            Return
+        End If
+
+        If checkDrugsInput() = False Then
+            Return
+        End If
         Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
         Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
 
@@ -306,7 +332,7 @@ Public Class Form1
         Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
         Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
 
-        
+
 
         If cbDrug1.Text = "" AndAlso cbInsulin1.Text = "" Then
             MsgBox("Nothing to print")
@@ -320,8 +346,9 @@ Public Class Form1
 
             CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
             PPD.Document = PrintDoc
-            PPD.ShowDialog()
             currentPage = 1
+            PPD.ShowDialog()
+
 
             'PrintDoc.Print()
         End If
@@ -332,10 +359,19 @@ Public Class Form1
     End Sub
 
     Private Sub btnPrintPreview_Click(sender As Object, e As EventArgs) Handles btnPrintPreview.Click
+
         printPreview()
     End Sub
 
     Public Sub print()
+        'check for validations
+        If checkICNewPatient() = False Then
+            Return
+        End If
+
+        If checkDrugsInput() = False Then
+            Return
+        End If
         Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
         Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
 
@@ -1070,8 +1106,9 @@ Public Class Form1
 
         CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
         PPD.Document = PrintDocInsulin
-        PPD.ShowDialog()
         currentPageInsulin = 1
+        PPD.ShowDialog()
+
         'PrintDocInsulin.Print()
 
 
@@ -1092,11 +1129,7 @@ Public Class Form1
         cboxDefaultPrinters.SelectedItem = New PrinterSettings().PrinterName
     End Sub
 
-
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        'NEW PATIENT TAB
-        'SAVE BUTTON
+    Public Function checkICNewPatient() As Boolean
         Dim stPatientName As String
 
         Dim stIC As String
@@ -1115,91 +1148,159 @@ Public Class Form1
             If chboxNoICNumber.Checked = False Then
                 If stPatientName = "" Then
                     MsgBox("Error. Name cannot be empty")
-                    Return
+                    Return False
                 End If
                 'Patient IC Validation
                 If stIC.Length < 14 Then
                     MsgBox("Error. IC No. must be 12 digits")
-                    Return
+                    Return False
                 ElseIf Regex.IsMatch(stIC, ICRegexPattern) = False Then
                     MsgBox("Error. IC No. Regex Formatting is Invalid. Please check and try again")
-                    Return
+                    Return False
                 End If
-            End If
 
+
+            End If
+        Catch
+            Return False
+        End Try
+        Return True
+    End Function
+
+    Public Function checkDrugsInput() As Boolean
+        Try
             'Patient Drug Prescription Validation
             If cbDrug1.SelectedIndex >= 0 Then
                 If txtDoseD1.Text = "" Or txtFreqD1.Text = "" Or txtDurationD1.Text = "" Or txtQTYD1.Text = "" Or CDbl(txtQTYD1.Text) = 0 Then
                     MsgBox("Drug 1 Error input")
-                    Return
+                    Return False
                 End If
             End If
             If cbDrug2.SelectedIndex >= 0 Then
                 If txtDoseD2.Text = "" Or txtFreqD2.Text = "" Or txtDurationD2.Text = "" Or txtQTYD2.Text = "" Or CDbl(txtQTYD2.Text) = 0 Then
                     MsgBox("Drug 2 Error input")
-                    Return
+                    Return False
                 End If
             End If
             If cbDrug3.SelectedIndex >= 0 Then
                 If txtDoseD3.Text = "" Or txtFreqD3.Text = "" Or txtDurationD3.Text = "" Or txtQTYD3.Text = "" Or CDbl(txtQTYD3.Text) = 0 Then
                     MsgBox("Drug 3 Error input")
-                    Return
+                    Return False
                 End If
             End If
 
             If cbDrug4.SelectedIndex >= 0 Then
                 If txtDoseD4.Text = "" Or txtFreqD4.Text = "" Or txtDurationD4.Text = "" Or txtQTYD4.Text = "" Or CDbl(txtQTYD4.Text) = 0 Then
                     MsgBox("Drug 4 Error input")
-                    Return
+                    Return False
                 End If
             End If
             If cbDrug5.SelectedIndex >= 0 Then
                 If txtDoseD5.Text = "" Or txtFreqD5.Text = "" Or txtDurationD5.Text = "" Or txtQTYD5.Text = "" Or CDbl(txtQTYD5.Text) = 0 Then
                     MsgBox("Drug 5 Error input")
-                    Return
+                    Return False
                 End If
 
             End If
             If cbDrug6.SelectedIndex >= 0 Then
                 If txtDoseD6.Text = "" Or txtFreqD6.Text = "" Or txtDurationD6.Text = "" Or txtQTYD6.Text = "" Or CDbl(txtQTYD6.Text) = 0 Then
                     MsgBox("Drug 6 Error input")
-                    Return
+                    Return False
                 End If
 
             End If
             If cbDrug7.SelectedIndex >= 0 Then
                 If txtDoseD7.Text = "" Or txtFreqD7.Text = "" Or txtDurationD7.Text = "" Or txtQTYD7.Text = "" Or CDbl(txtQTYD7.Text) = 0 Then
                     MsgBox("Drug 7 Error input")
-                    Return
+                    Return False
                 End If
 
             End If
             If cbDrug8.SelectedIndex >= 0 Then
                 If txtDoseD8.Text = "" Or txtFreqD8.Text = "" Or txtDurationD8.Text = "" Or txtQTYD8.Text = "" Or CDbl(txtQTYD8.Text) = 0 Then
                     MsgBox("Drug 8 Error input")
-                    Return
+                    Return False
                 End If
 
             End If
             If cbDrug9.SelectedIndex >= 0 Then
                 If txtDoseD9.Text = "" Or txtFreqD9.Text = "" Or txtDurationD9.Text = "" Or txtQTYD9.Text = "" Or CDbl(txtQTYD9.Text) = 0 Then
                     MsgBox("Drug 9 Error input")
-                    Return
+                    Return False
                 End If
 
             End If
             If cbDrug10.SelectedIndex >= 0 Then
                 If txtDoseD10.Text = "" Or txtFreqD10.Text = "" Or txtDurationD10.Text = "" Or txtQTYD10.Text = "" Or CDbl(txtQTYD10.Text) = 0 Then
                     MsgBox("Drug 10 Error input")
-                    Return
+                    Return False
                 End If
             End If
 
-            'MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
+        Catch ex As Exception
+            MsgBox("Drug input error")
+            Return False
+        End Try
 
-            'For Testing validations, enable return
-            'Return
+        Try
+            If cbInsulin1.SelectedIndex >= 0 Then
+                If txtIn1TotalDose.Text = "" Or txtIn1TotalDose.Text = 0 Or txtIn1CartQTY.Text = "" Then
+                    MsgBox("Insulin 1 input error")
+                    Return False
+                End If
+            End If
+            If cbInsulin2.SelectedIndex >= 0 Then
+                If txtIn2TotalDose.Text = "" Or txtIn2TotalDose.Text = 0 Or txtIn2CartQTY.Text = "" Then
+                    MsgBox("Insulin 2 input error")
+                    Return False
+                End If
+            End If
+            If cbInsulin1.SelectedIndex < 0 Then
+                If cbDrug1.SelectedIndex < 0 Then
+                    MessageBox.Show("No Drug or Insulin selected", "Error")
+                    Return False
+                End If
+            End If
 
+            Return True
+        Catch ex As Exception
+            MsgBox("Insulin input error")
+            Return False
+        End Try
+    End Function
+
+
+    Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        'NEW PATIENT TAB
+        'SAVE BUTTON
+        Dim stPatientName As String
+
+        Dim stIC As String
+        Dim dtDateRegister As Date
+        Dim dtDateSeeDoctor As Date
+
+        stPatientName = txtPatientName.Text
+        stIC = txtICNo.Text
+        dtDateRegister = dtpDateSaved.Text
+        dtDateSeeDoctor = dtpDateCollection.Text
+
+        Dim ICRegexPattern As String = "^((\d{2}(?!0229))|([02468][048]|[13579][26])(?=0229))(0[1-9]|1[0-2])(0[1-9]|[12]\d|(?<!02)30|(?<!02|4|6|9|11)31)-(\d{2})-(\d{4})$"
+
+        If checkICNewPatient() = False Then
+            Return
+        End If
+
+        If checkDrugsInput() = False Then
+            Return
+        End If
+
+
+
+        'MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
+
+        'For Testing validations, enable return
+        'Return
+        Try
 
             conn.Open()
 
@@ -1363,16 +1464,28 @@ Public Class Form1
                 conn.Close()
                 If cboxEnablePrintPDF.Checked Then
                     print()
+                    Thread.Sleep(250) 'Give time for printer to process into printer pool
                 End If
                 addRecordTab()
                 'MsgBox("Saved data for " & stPatientName & ", IC No.: " & stIC)
-                lblMainStatus.Text = "Saved Successfully for " & stPatientName & ", IC No: " & stIC & " at " & Now()
+                stlbMainStatus.Text = "Saved Successfully for " & stPatientName & ", IC No: " & stIC & " at " & Now()
+                If stlbMainStatus.Text.Length > 50 Then
+                    stlbMainStatus.Font = New Font(stlbMainStatus.Font.FontFamily, 9)
+                ElseIf stlbMainStatus.Text.Length < 50 Then
+                    stlbMainStatus.Font = New Font(stlbMainStatus.Font.FontFamily, 10)
+                End If
                 loadLogDGV()
                 loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
                 chboxNoICNumber.Checked = False
                 If cboxAutoClear.Checked Then
                     clearall()
                 End If
+                Dim btnsavetemp As String
+                btnsavetemp = btnSave.Text
+                btnSave.Text = "Saved!"
+
+                Await Task.Delay(3000)
+                btnSave.Text = btnsavetemp
             Else
                 MsgBox("Save Failed.")
             End If
@@ -1447,9 +1560,13 @@ Redo:
                                     If i2 > 0 Then
                                         conn.Close()
 
-                                        MsgBox("Old Data saved to History for " & stPatientName & ", IC No.: " & stIC)
-                                        lblMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
-
+                                        'MsgBox("Old Data saved to History for " & stPatientName & ", IC No.: " & stIC)
+                                        'stlbMainStatus.Text = "Old Data Saved for " & stPatientName & ", IC No: " & stIC
+                                        'If stlbMainStatus.Text.Length > 50 Then
+                                        'stlbMainStatus.Font = New Font(stlbMainStatus.Font.FontFamily, 9)
+                                        'ElseIf stlbMainStatus.Text.Length < 50 Then
+                                        'stlbMainStatus.Font = New Font(stlbMainStatus.Font.FontFamily, 10)
+                                        'End If
                                     Else
                                         MsgBox("Save Failed.")
                                         conn.Close()
@@ -1604,17 +1721,25 @@ Redo:
                                 conn.Close()
                                 If cboxEnablePrintPDF.Checked Then
                                     print()
+                                    Thread.Sleep(250)
                                 End If
+
                                 addRecordTab()
                                 'MsgBox("Successfully Updated Data.")
                                 'MsgBox("Overwritten data for " & stPatientName & ", IC No.: " & stIC)
-                                lblMainStatus.Text = "Overwrite Successfully for " & stPatientName & ", IC No: " & stIC
+                                stlbMainStatus.Text = "Overwrite Successfully for " & stPatientName & ", IC No: " & stIC & " at " & Now()
+                                If stlbMainStatus.Text.Length > 50 Then
+                                    stlbMainStatus.Font = New Font(stlbMainStatus.Font.FontFamily, 9)
+                                ElseIf stlbMainStatus.Text.Length < 50 Then
+                                    stlbMainStatus.Font = New Font(stlbMainStatus.Font.FontFamily, 10)
+                                End If
                                 loadLogDGV()
                                 'loadDBDataforPatientInfo() 'Refresh IC Textbox Autocomplete
                                 chboxNoICNumber.Checked = False
                                 If cboxAutoClear.Checked Then
                                     clearall()
                                 End If
+                                overwriten = True
 
                             End If
                         Catch exxx As Exception
@@ -1633,6 +1758,16 @@ Redo:
         Finally
 
         End Try
+        If overwriten Then
+            Dim btnsavetemp As String
+            btnsavetemp = btnSave.Text
+            btnSave.Text = "Overwritten!"
+            Await Task.Delay(3000)
+            btnSave.Text = btnsavetemp
+            overwriten = False
+        End If
+
+
     End Sub
     Public Sub addRecordTab()
         Dim newpatientBool As Integer = 0
@@ -1950,6 +2085,7 @@ Redo:
             conn.Close()
         End Try
     End Sub
+
     Public Sub loadDBDataforPatientInfo()
         Dim cmd As New MySqlCommand("SELECT ICNo , Name FROM prescribeddrugs", conn)
         Dim dt As New DataTable
@@ -1994,6 +2130,7 @@ Redo:
                 If dr.Item("ICNo") = txtICNo.Text Then
                     btnIOU.Enabled = True
                     lblExistingPatient.Text = "Existing Patient Found!"
+                    txtPatientName.Text = dr.Item("Name")
                 End If
             End While
             conn.Close()
@@ -4241,26 +4378,32 @@ Redo:
         lblAge.Text = "Age"
         lblGender.Text = "Gender"
         If chboxNoICNumber.Checked = False Then
-            If Not disableTextChanged Then
-                If txtICNo.TextLength = 6 Then
-                    ' Insert "-" at the position after the sixth and ninth character
-                    txtICNo.Text = txtICNo.Text.Insert(6, "-")
+            ' Get the current position of the cursor
+            Dim currentPosition As Integer = txtICNo.SelectionStart
 
-                    ' Set the cursor position to after the "-" character
-                    txtICNo.SelectionStart = txtICNo.TextLength
-                End If
-                If txtICNo.TextLength = 9 Then
-                    ' Insert "-" at the position after the sixth and ninth character
-                    txtICNo.Text = txtICNo.Text.Insert(9, "-")
+            ' Remove the existing hyphens to simplify processing
+            Dim text As String = txtICNo.Text.Replace("-", String.Empty)
 
-                    ' Set the cursor position to after the "-" character
-                    txtICNo.SelectionStart = txtICNo.TextLength
-
-                End If
-
+            ' Reinsert the hyphens at the 7th and 9th positions if the text is long enough
+            If text.Length > 6 Then
+                text = text.Insert(6, "-")
             End If
-            If txtICNo.TextLength < 5 Then
-                disableTextChanged = False
+            If text.Length > 9 Then
+                text = text.Insert(9, "-")
+            End If
+
+            ' Update the TextBox text without triggering another TextChanged event
+            RemoveHandler txtICNo.TextChanged, AddressOf txtICNo_TextChanged
+            txtICNo.Text = text
+            AddHandler txtICNo.TextChanged, AddressOf txtICNo_TextChanged
+
+            ' Adjust the cursor position
+            If currentPosition <= 6 Then
+                txtICNo.SelectionStart = currentPosition
+            ElseIf currentPosition > 6 AndAlso currentPosition <= 8 Then
+                txtICNo.SelectionStart = currentPosition + 1
+            ElseIf currentPosition > 8 Then
+                txtICNo.SelectionStart = currentPosition + 2
             End If
             If txtICNo.TextLength < 14 Then
                 btnCheckICMySPR.Enabled = False
@@ -4316,7 +4459,9 @@ Redo:
 
 
     Private Sub btnIOU_Click(sender As Object, e As EventArgs) Handles btnIOU.Click
-        Form2.Show()
+        Dim newForm As New Form2()
+        newForm.Show()
+        'Form2.Show()
     End Sub
 
     Private Sub btnCheckICMySPR_Click(sender As Object, e As EventArgs) Handles btnCheckICMySPR.Click
@@ -4395,9 +4540,11 @@ Redo:
     Private Sub cboxEnablePrintPDF_CheckedChanged(sender As Object, e As EventArgs) Handles cboxEnablePrintPDF.CheckedChanged
         If cboxEnablePrintPDF.Checked Then
             btnSave.Text = "Save and Print"
+            btnSave.BackColor = Color.GreenYellow
         End If
         If cboxEnablePrintPDF.Checked = False Then
             btnSave.Text = "Save only"
+            btnSave.BackColor = Color.Azure
         End If
         Dim EnablePrintAfterSave As Boolean = My.Settings.EnablePrintAfterSave
         Dim EnablePrintAfterSaveNew As Boolean
@@ -4595,6 +4742,9 @@ Redo:
                 lblPrevSavedName.Text = dr.Item("Name")
                 lblPrevSavedICNo.Text = dr.Item("ICNo")
                 lblLogPrevPatientTimestamp.Text = dr.Item("Timestamp")
+                lblLogPrevPatientDateCollection.Text = dr.Item("DateCollection")
+                lblLogPrevPatientDateSeeDoctor.Text = dr.Item("DateSeeDoctor")
+
 
             End While
             dr.Close()
@@ -5026,29 +5176,35 @@ Redo:
 
     Private Sub txtICNoDB_TextChanged(sender As Object, e As EventArgs) Handles txtICNoDB.TextChanged
         lblPatientNameDB.Text = ""
-        If Not disableTextChangedDB Then
-            If txtICNoDB.TextLength = 6 Then
-                ' Insert "-" at the position after the sixth and ninth character
-                txtICNoDB.Text = txtICNoDB.Text.Insert(6, "-")
+        ' Get the current position of the cursor
+        Dim currentPosition As Integer = txtICNoDB.SelectionStart
 
-                ' Set the cursor position to after the "-" character
-                txtICNoDB.SelectionStart = txtICNoDB.TextLength
-            End If
-            If txtICNoDB.TextLength = 9 Then
-                ' Insert "-" at the position after the sixth and ninth character
-                txtICNoDB.Text = txtICNoDB.Text.Insert(9, "-")
+        ' Remove the existing hyphens to simplify processing
+        Dim text As String = txtICNoDB.Text.Replace("-", String.Empty)
 
-                ' Set the cursor position to after the "-" character
-                txtICNoDB.SelectionStart = txtICNoDB.TextLength
-
-            End If
-
+        ' Reinsert the hyphens at the 7th and 9th positions if the text is long enough
+        If text.Length > 6 Then
+            text = text.Insert(6, "-")
         End If
-        If txtICNoDB.TextLength < 5 Then
-            disableTextChangedDB = False
+        If text.Length > 9 Then
+            text = text.Insert(9, "-")
+        End If
+
+        ' Update the TextBox text without triggering another TextChanged event
+        RemoveHandler txtICNoDB.TextChanged, AddressOf txtICNoDB_TextChanged
+        txtICNoDB.Text = text
+        AddHandler txtICNoDB.TextChanged, AddressOf txtICNoDB_TextChanged
+
+        ' Adjust the cursor position
+        If currentPosition <= 6 Then
+            txtICNoDB.SelectionStart = currentPosition
+        ElseIf currentPosition > 6 AndAlso currentPosition <= 8 Then
+            txtICNoDB.SelectionStart = currentPosition + 1
+        ElseIf currentPosition > 8 Then
+            txtICNoDB.SelectionStart = currentPosition + 2
         End If
     End Sub
-    Private Sub txtICNoDB_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtICNoDB.KeyPress
+    Private Sub txtICNoDB_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) Handles txtICNoDB.KeyPress
         If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Not IsNumeric(e.KeyChar) Then
             e.Handled = True
         End If
@@ -5431,4 +5587,45 @@ Redo:
         End Select
     End Sub
 
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        ' Update the label with the current time every tick (every second)
+        lblTime.Text = DateTime.Now.ToString("h:mm:ss tt")
+        lblDate.Text = DateTime.Now.ToString("dddd, dd MMMM yyyy")
+    End Sub
+
+    Private Sub cboxDisplayDateTime_CheckedChanged(sender As Object, e As EventArgs) Handles cboxDisplayDateTime.CheckedChanged
+        Dim DisplayTime As Boolean = My.Settings.EnableTime
+        Dim DisplayTimeNew As Boolean
+        DisplayTimeNew = cboxDisplayDateTime.Checked
+        My.Settings.EnableTime = DisplayTimeNew
+        My.Settings.Save()
+        DisplayDateTime()
+    End Sub
+
+    Public Sub DisplayDateTime()
+        lblTime.Text = DateTime.Now.ToString("h:mm:ss tt")
+        lblDate.Text = DateTime.Now.ToString("dddd, dd MMMM yyyy")
+        If cboxDisplayDateTime.Checked Then
+            lblTime.Visible = True
+            lblDate.Visible = True
+            Timer1.Enabled = True
+        End If
+        If cboxDisplayDateTime.Checked = False Then
+            lblTime.Visible = False
+            lblDate.Visible = False
+            Timer1.Enabled = False
+        End If
+
+    End Sub
+
+    Private Sub lblDate_Click(sender As Object, e As EventArgs) Handles lblDate.Click
+        Form4.Show()
+
+    End Sub
+
+    Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+        Dim url As String = "https://paypal.me/kenpeacez?country.x=MY&locale.x=en_US"
+
+        Process.Start(New ProcessStartInfo(url) With {.UseShellExecute = True})
+    End Sub
 End Class

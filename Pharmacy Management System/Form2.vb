@@ -20,8 +20,13 @@ Public Class Form2
         InitializeDB()
         txtSearchPatientIC.Text = Form1.txtICNo.Text
         DataGridView1.AllowUserToAddRows = False
+        DataGridView1.AllowUserToResizeColumns = False
+        DataGridView1.AllowUserToResizeRows = False
         DataGridView2.AllowUserToAddRows = False
+        DataGridView2.AllowUserToResizeColumns = False
+        DataGridView2.AllowUserToResizeRows = False
         loadpastmedintoDGV()
+
     End Sub
     Private Sub InitializeDB()
 
@@ -38,6 +43,8 @@ Public Class Form2
     End Sub
     Public Sub loadpastmedintoDGV()
         DataGridView1.Rows.Clear()
+        DataGridView2.Rows.Clear()
+
         Dim dt As New DataTable
 
         Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & txtSearchPatientIC.Text & "'", conn)

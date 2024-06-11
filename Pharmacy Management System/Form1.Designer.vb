@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.btnSave = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
@@ -83,7 +84,6 @@ Partial Class Form1
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.dtpDateSeeDoctor = New System.Windows.Forms.DateTimePicker()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.cboxEnablePrintPDF = New System.Windows.Forms.CheckBox()
         Me.txtDurationMaster = New System.Windows.Forms.TextBox()
         Me.lblDurationMaster = New System.Windows.Forms.Label()
@@ -205,6 +205,7 @@ Partial Class Form1
         Me.txtPatientName = New System.Windows.Forms.TextBox()
         Me.lbName = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label50 = New System.Windows.Forms.Label()
         Me.btnDoseGuide = New System.Windows.Forms.Button()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.txtDefaultMaxQTY = New System.Windows.Forms.TextBox()
@@ -294,7 +295,7 @@ Partial Class Form1
         Me.DateCollectionRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DateSeeDoctorRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TimestampRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.btnSavePrinterSettings = New System.Windows.Forms.TabPage()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.btnDeletePatientDB = New System.Windows.Forms.Button()
         Me.lblEditModeDB = New System.Windows.Forms.Label()
         Me.btnEditPatientDB = New System.Windows.Forms.Button()
@@ -334,7 +335,7 @@ Partial Class Form1
         Me.DateCollection = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timestamp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TabPage4a = New System.Windows.Forms.TabPage()
         Me.Label44 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label43 = New System.Windows.Forms.Label()
@@ -378,18 +379,26 @@ Partial Class Form1
         Me.pbrDatabaseConnection = New System.Windows.Forms.ToolStripProgressBar()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.stlbPrinterName = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.stlbMainStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.PrintDoc = New System.Drawing.Printing.PrintDocument()
         Me.PPD = New System.Windows.Forms.PrintPreviewDialog()
         Me.PrintDocInsulin = New System.Drawing.Printing.PrintDocument()
-        Me.lblDeveloper = New System.Windows.Forms.Label()
-        Me.Label50 = New System.Windows.Forms.Label()
-        Me.lblMainStatus = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.lblTime = New System.Windows.Forms.Label()
+        Me.lblDate = New System.Windows.Forms.Label()
+        Me.cboxDisplayDateTime = New System.Windows.Forms.CheckBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Label51 = New System.Windows.Forms.Label()
+        Me.Label52 = New System.Windows.Forms.Label()
+        Me.lblLogPrevPatientDateCollection = New System.Windows.Forms.Label()
+        Me.lblLogPrevPatientDateSeeDoctor = New System.Windows.Forms.Label()
+        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
         Me.TableLayoutPanel16.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel15.SuspendLayout()
         Me.TableLayoutPanel13.SuspendLayout()
@@ -413,17 +422,18 @@ Partial Class Form1
         CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.btnSavePrinterSettings.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
         CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvPatientDrugHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDateSelector, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage4.SuspendLayout()
+        Me.TabPage4a.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnSave
@@ -446,8 +456,8 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Controls.Add(Me.btnSavePrinterSettings)
         Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Controls.Add(Me.TabPage4a)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabControl1.Location = New System.Drawing.Point(0, 32)
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(2)
@@ -458,8 +468,6 @@ Partial Class Form1
         '
         'TabPage1
         '
-        Me.TabPage1.Controls.Add(Me.lblMainStatus)
-        Me.TabPage1.Controls.Add(Me.Label50)
         Me.TabPage1.Controls.Add(Me.btnPrintPreview)
         Me.TabPage1.Controls.Add(Me.cboxIOU)
         Me.TabPage1.Controls.Add(Me.lblExistingPatient)
@@ -502,10 +510,10 @@ Partial Class Form1
         'btnPrintPreview
         '
         Me.btnPrintPreview.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnPrintPreview.Location = New System.Drawing.Point(860, 60)
+        Me.btnPrintPreview.Location = New System.Drawing.Point(857, 55)
         Me.btnPrintPreview.Margin = New System.Windows.Forms.Padding(2)
         Me.btnPrintPreview.Name = "btnPrintPreview"
-        Me.btnPrintPreview.Size = New System.Drawing.Size(101, 32)
+        Me.btnPrintPreview.Size = New System.Drawing.Size(102, 32)
         Me.btnPrintPreview.TabIndex = 42
         Me.btnPrintPreview.Text = "Print Preview"
         Me.btnPrintPreview.UseVisualStyleBackColor = True
@@ -536,7 +544,7 @@ Partial Class Form1
         'Label24
         '
         Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(658, 68)
+        Me.Label24.Location = New System.Drawing.Point(671, 68)
         Me.Label24.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(48, 22)
@@ -545,13 +553,14 @@ Partial Class Form1
         '
         'cbAddDays
         '
+        Me.cbAddDays.BackColor = System.Drawing.SystemColors.Info
         Me.cbAddDays.FormattingEnabled = True
         Me.cbAddDays.Items.AddRange(New Object() {"7", "14", "21", "30", "40", "50", "60", "90"})
         Me.cbAddDays.Location = New System.Drawing.Point(598, 62)
         Me.cbAddDays.Margin = New System.Windows.Forms.Padding(2)
         Me.cbAddDays.MaxLength = 3
         Me.cbAddDays.Name = "cbAddDays"
-        Me.cbAddDays.Size = New System.Drawing.Size(56, 30)
+        Me.cbAddDays.Size = New System.Drawing.Size(72, 30)
         Me.cbAddDays.TabIndex = 38
         '
         'lblGender
@@ -578,10 +587,11 @@ Partial Class Form1
         '
         'btnCheckICMySPR
         '
-        Me.btnCheckICMySPR.Location = New System.Drawing.Point(725, 60)
+        Me.btnCheckICMySPR.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCheckICMySPR.Location = New System.Drawing.Point(733, 55)
         Me.btnCheckICMySPR.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCheckICMySPR.Name = "btnCheckICMySPR"
-        Me.btnCheckICMySPR.Size = New System.Drawing.Size(118, 31)
+        Me.btnCheckICMySPR.Size = New System.Drawing.Size(99, 31)
         Me.btnCheckICMySPR.TabIndex = 35
         Me.btnCheckICMySPR.Text = "Check IC"
         Me.btnCheckICMySPR.UseVisualStyleBackColor = True
@@ -589,10 +599,10 @@ Partial Class Form1
         'btnIOU
         '
         Me.btnIOU.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnIOU.Location = New System.Drawing.Point(724, 18)
+        Me.btnIOU.Location = New System.Drawing.Point(732, 11)
         Me.btnIOU.Margin = New System.Windows.Forms.Padding(2)
         Me.btnIOU.Name = "btnIOU"
-        Me.btnIOU.Size = New System.Drawing.Size(75, 32)
+        Me.btnIOU.Size = New System.Drawing.Size(100, 30)
         Me.btnIOU.TabIndex = 34
         Me.btnIOU.Text = "Past Med"
         Me.btnIOU.UseVisualStyleBackColor = True
@@ -601,7 +611,7 @@ Partial Class Form1
         '
         Me.chboxNoICNumber.AutoSize = True
         Me.chboxNoICNumber.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chboxNoICNumber.Location = New System.Drawing.Point(394, 46)
+        Me.chboxNoICNumber.Location = New System.Drawing.Point(992, 48)
         Me.chboxNoICNumber.Margin = New System.Windows.Forms.Padding(2)
         Me.chboxNoICNumber.Name = "chboxNoICNumber"
         Me.chboxNoICNumber.Size = New System.Drawing.Size(186, 24)
@@ -647,13 +657,15 @@ Partial Class Form1
         '
         'btnPrint
         '
-        Me.btnPrint.Location = New System.Drawing.Point(815, 18)
+        Me.btnPrint.BackColor = System.Drawing.Color.LightGray
+        Me.btnPrint.ForeColor = System.Drawing.Color.Black
+        Me.btnPrint.Location = New System.Drawing.Point(859, 11)
         Me.btnPrint.Margin = New System.Windows.Forms.Padding(2)
         Me.btnPrint.Name = "btnPrint"
-        Me.btnPrint.Size = New System.Drawing.Size(90, 32)
+        Me.btnPrint.Size = New System.Drawing.Size(100, 30)
         Me.btnPrint.TabIndex = 20
         Me.btnPrint.Text = "Print"
-        Me.btnPrint.UseVisualStyleBackColor = True
+        Me.btnPrint.UseVisualStyleBackColor = False
         '
         'groupInsulin
         '
@@ -1149,7 +1161,6 @@ Partial Class Form1
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Enabled = False
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.Location = New System.Drawing.Point(2, 52)
         Me.Label18.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -1161,16 +1172,17 @@ Partial Class Form1
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(712, 98)
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(725, 98)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(163, 22)
+        Me.Label9.Size = New System.Drawing.Size(154, 20)
         Me.Label9.TabIndex = 17
         Me.Label9.Text = "Date to See Doctor"
         '
         'dtpDateSeeDoctor
         '
-        Me.dtpDateSeeDoctor.Location = New System.Drawing.Point(715, 122)
+        Me.dtpDateSeeDoctor.Location = New System.Drawing.Point(729, 122)
         Me.dtpDateSeeDoctor.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpDateSeeDoctor.MinDate = New Date(2023, 1, 1, 0, 0, 0, 0)
         Me.dtpDateSeeDoctor.Name = "dtpDateSeeDoctor"
@@ -1178,22 +1190,10 @@ Partial Class Form1
         Me.dtpDateSeeDoctor.TabIndex = 5
         Me.dtpDateSeeDoctor.Value = New Date(2024, 6, 19, 0, 0, 0, 0)
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.Pharmacy_Management_System.My.Resources.Resources.kitty_pharmacy
-        Me.PictureBox1.Location = New System.Drawing.Point(1348, 2)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(146, 155)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox1.TabIndex = 15
-        Me.PictureBox1.TabStop = False
-        Me.PictureBox1.Visible = False
-        '
         'cboxEnablePrintPDF
         '
         Me.cboxEnablePrintPDF.AutoSize = True
-        Me.cboxEnablePrintPDF.Location = New System.Drawing.Point(923, 22)
+        Me.cboxEnablePrintPDF.Location = New System.Drawing.Point(992, 15)
         Me.cboxEnablePrintPDF.Margin = New System.Windows.Forms.Padding(2)
         Me.cboxEnablePrintPDF.Name = "cboxEnablePrintPDF"
         Me.cboxEnablePrintPDF.Size = New System.Drawing.Size(217, 26)
@@ -1236,10 +1236,11 @@ Partial Class Form1
         'lblDatetoSeeDoctor
         '
         Me.lblDatetoSeeDoctor.AutoSize = True
-        Me.lblDatetoSeeDoctor.Location = New System.Drawing.Point(264, 98)
+        Me.lblDatetoSeeDoctor.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDatetoSeeDoctor.Location = New System.Drawing.Point(264, 97)
         Me.lblDatetoSeeDoctor.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblDatetoSeeDoctor.Name = "lblDatetoSeeDoctor"
-        Me.lblDatetoSeeDoctor.Size = New System.Drawing.Size(178, 22)
+        Me.lblDatetoSeeDoctor.Size = New System.Drawing.Size(168, 20)
         Me.lblDatetoSeeDoctor.TabIndex = 9
         Me.lblDatetoSeeDoctor.Text = "Collection Date / IOU"
         '
@@ -1301,11 +1302,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD10.AutoSize = True
         Me.lblPreCatagoryD10.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD10.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD10.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD10.Name = "lblPreCatagoryD10"
-        Me.lblPreCatagoryD10.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD10.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD10.TabIndex = 31
-        Me.lblPreCatagoryD10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD10.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lbDrugNumber10
         '
@@ -1340,7 +1341,7 @@ Partial Class Form1
         Me.lblStrD10.Name = "lblStrD10"
         Me.lblStrD10.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD10.TabIndex = 40
-        Me.lblStrD10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD10.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD10
         '
@@ -1457,11 +1458,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD8.AutoSize = True
         Me.lblPreCatagoryD8.Location = New System.Drawing.Point(1349, 6)
-        Me.lblPreCatagoryD8.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD8.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD8.Name = "lblPreCatagoryD8"
-        Me.lblPreCatagoryD8.Size = New System.Drawing.Size(115, 26)
+        Me.lblPreCatagoryD8.Size = New System.Drawing.Size(115, 20)
         Me.lblPreCatagoryD8.TabIndex = 31
-        Me.lblPreCatagoryD8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD8.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblStrD8
         '
@@ -1474,7 +1475,7 @@ Partial Class Form1
         Me.lblStrD8.Name = "lblStrD8"
         Me.lblStrD8.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD8.TabIndex = 38
-        Me.lblStrD8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD8.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD8
         '
@@ -1581,11 +1582,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD9.AutoSize = True
         Me.lblPreCatagoryD9.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD9.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD9.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD9.Name = "lblPreCatagoryD9"
-        Me.lblPreCatagoryD9.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD9.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD9.TabIndex = 31
-        Me.lblPreCatagoryD9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD9.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'cbDrug9
         '
@@ -1608,7 +1609,7 @@ Partial Class Form1
         Me.lblStrD9.Name = "lblStrD9"
         Me.lblStrD9.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD9.TabIndex = 39
-        Me.lblStrD9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD9.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD9
         '
@@ -1729,7 +1730,7 @@ Partial Class Form1
         Me.lblStrD6.Name = "lblStrD6"
         Me.lblStrD6.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD6.TabIndex = 36
-        Me.lblStrD6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD6.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD6
         '
@@ -1750,11 +1751,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD6.AutoSize = True
         Me.lblPreCatagoryD6.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD6.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD6.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD6.Name = "lblPreCatagoryD6"
-        Me.lblPreCatagoryD6.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD6.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD6.TabIndex = 31
-        Me.lblPreCatagoryD6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD6.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'txtDoseD6
         '
@@ -1863,7 +1864,7 @@ Partial Class Form1
         Me.lblStrD7.Name = "lblStrD7"
         Me.lblStrD7.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD7.TabIndex = 37
-        Me.lblStrD7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD7.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblPreCatagoryD7
         '
@@ -1872,11 +1873,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD7.AutoSize = True
         Me.lblPreCatagoryD7.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD7.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD7.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD7.Name = "lblPreCatagoryD7"
-        Me.lblPreCatagoryD7.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD7.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD7.TabIndex = 31
-        Me.lblPreCatagoryD7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD7.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD7
         '
@@ -1996,7 +1997,7 @@ Partial Class Form1
         Me.lblStrD4.Name = "lblStrD4"
         Me.lblStrD4.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD4.TabIndex = 34
-        Me.lblStrD4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD4.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD4
         '
@@ -2037,11 +2038,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD4.AutoSize = True
         Me.lblPreCatagoryD4.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD4.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD4.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD4.Name = "lblPreCatagoryD4"
-        Me.lblPreCatagoryD4.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD4.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD4.TabIndex = 31
-        Me.lblPreCatagoryD4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD4.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'txtDurationD4
         '
@@ -2125,7 +2126,7 @@ Partial Class Form1
         Me.lblStrD5.Name = "lblStrD5"
         Me.lblStrD5.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD5.TabIndex = 35
-        Me.lblStrD5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD5.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD5
         '
@@ -2156,11 +2157,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD5.AutoSize = True
         Me.lblPreCatagoryD5.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD5.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD5.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD5.Name = "lblPreCatagoryD5"
-        Me.lblPreCatagoryD5.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD5.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD5.TabIndex = 31
-        Me.lblPreCatagoryD5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD5.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'txtFreqD5
         '
@@ -2243,7 +2244,7 @@ Partial Class Form1
         Me.lblStrD3.Name = "lblStrD3"
         Me.lblStrD3.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD3.TabIndex = 30
-        Me.lblStrD3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD3.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD3
         '
@@ -2305,11 +2306,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD3.AutoSize = True
         Me.lblPreCatagoryD3.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD3.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD3.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD3.Name = "lblPreCatagoryD3"
-        Me.lblPreCatagoryD3.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD3.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD3.TabIndex = 31
-        Me.lblPreCatagoryD3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD3.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lbDrugNumber3
         '
@@ -2359,11 +2360,11 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD2.AutoSize = True
         Me.lblPreCatagoryD2.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD2.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD2.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD2.Name = "lblPreCatagoryD2"
-        Me.lblPreCatagoryD2.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD2.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD2.TabIndex = 30
-        Me.lblPreCatagoryD2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD2.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'txtQTYD2
         '
@@ -2406,7 +2407,7 @@ Partial Class Form1
         Me.lblStrD2.Name = "lblStrD2"
         Me.lblStrD2.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD2.TabIndex = 32
-        Me.lblStrD2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD2.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'txtFreqD2
         '
@@ -2501,7 +2502,7 @@ Partial Class Form1
         Me.lblStrD1.Name = "lblStrD1"
         Me.lblStrD1.Size = New System.Drawing.Size(81, 26)
         Me.lblStrD1.TabIndex = 27
-        Me.lblStrD1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrD1.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitD1
         '
@@ -2563,16 +2564,15 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPreCatagoryD1.AutoSize = True
         Me.lblPreCatagoryD1.Location = New System.Drawing.Point(1350, 6)
-        Me.lblPreCatagoryD1.Margin = New System.Windows.Forms.Padding(6)
+        Me.lblPreCatagoryD1.Margin = New System.Windows.Forms.Padding(6, 6, 6, 12)
         Me.lblPreCatagoryD1.Name = "lblPreCatagoryD1"
-        Me.lblPreCatagoryD1.Size = New System.Drawing.Size(114, 26)
+        Me.lblPreCatagoryD1.Size = New System.Drawing.Size(114, 20)
         Me.lblPreCatagoryD1.TabIndex = 29
-        Me.lblPreCatagoryD1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPreCatagoryD1.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lbDrugNumber1
         '
         Me.lbDrugNumber1.AutoSize = True
-        Me.lbDrugNumber1.Enabled = False
         Me.lbDrugNumber1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbDrugNumber1.Location = New System.Drawing.Point(2, 0)
         Me.lbDrugNumber1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
@@ -2608,7 +2608,7 @@ Partial Class Form1
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 78.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1430, 78)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1430, 51)
         Me.TableLayoutPanel2.TabIndex = 8
         '
         'Label8
@@ -2761,6 +2761,7 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.Label50)
         Me.TabPage2.Controls.Add(Me.btnDoseGuide)
         Me.TabPage2.Controls.Add(Me.Label34)
         Me.TabPage2.Controls.Add(Me.txtDefaultMaxQTY)
@@ -2778,12 +2779,21 @@ Partial Class Form1
         Me.TabPage2.Text = "DRUGS"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
+        'Label50
+        '
+        Me.Label50.AutoSize = True
+        Me.Label50.Location = New System.Drawing.Point(5, 731)
+        Me.Label50.Name = "Label50"
+        Me.Label50.Size = New System.Drawing.Size(439, 22)
+        Me.Label50.TabIndex = 17
+        Me.Label50.Text = "Note : Double click the drug name you want to modify."
+        '
         'btnDoseGuide
         '
         Me.btnDoseGuide.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDoseGuide.Location = New System.Drawing.Point(637, 70)
+        Me.btnDoseGuide.Location = New System.Drawing.Point(626, 70)
         Me.btnDoseGuide.Name = "btnDoseGuide"
-        Me.btnDoseGuide.Size = New System.Drawing.Size(115, 35)
+        Me.btnDoseGuide.Size = New System.Drawing.Size(120, 35)
         Me.btnDoseGuide.TabIndex = 16
         Me.btnDoseGuide.Text = "Dose Guide"
         Me.btnDoseGuide.UseVisualStyleBackColor = True
@@ -2816,7 +2826,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 182.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2834,10 +2844,10 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(391, 2)
+        Me.btnDelete.Location = New System.Drawing.Point(386, 2)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(174, 32)
+        Me.btnDelete.Size = New System.Drawing.Size(179, 32)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2851,7 +2861,7 @@ Partial Class Form1
         Me.btnAddDrug.Location = New System.Drawing.Point(2, 2)
         Me.btnAddDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(171, 32)
+        Me.btnAddDrug.Size = New System.Drawing.Size(168, 32)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2861,7 +2871,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(269, 2)
+        Me.btnClear.Location = New System.Drawing.Point(264, 2)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(118, 32)
@@ -2874,10 +2884,10 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(177, 2)
+        Me.btnUpdate.Location = New System.Drawing.Point(174, 2)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(88, 32)
+        Me.btnUpdate.Size = New System.Drawing.Size(86, 32)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -3164,6 +3174,10 @@ Partial Class Form1
         '
         'TabPage5
         '
+        Me.TabPage5.Controls.Add(Me.lblLogPrevPatientDateSeeDoctor)
+        Me.TabPage5.Controls.Add(Me.lblLogPrevPatientDateCollection)
+        Me.TabPage5.Controls.Add(Me.Label52)
+        Me.TabPage5.Controls.Add(Me.Label51)
         Me.TabPage5.Controls.Add(Me.lblLogPrevPatientTimestamp)
         Me.TabPage5.Controls.Add(Me.lblLogPrevPatientTime)
         Me.TabPage5.Controls.Add(Me.DataGridViewInsulin)
@@ -3184,7 +3198,7 @@ Partial Class Form1
         'lblLogPrevPatientTimestamp
         '
         Me.lblLogPrevPatientTimestamp.AutoSize = True
-        Me.lblLogPrevPatientTimestamp.Location = New System.Drawing.Point(600, 48)
+        Me.lblLogPrevPatientTimestamp.Location = New System.Drawing.Point(214, 82)
         Me.lblLogPrevPatientTimestamp.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblLogPrevPatientTimestamp.Name = "lblLogPrevPatientTimestamp"
         Me.lblLogPrevPatientTimestamp.Size = New System.Drawing.Size(40, 22)
@@ -3194,7 +3208,7 @@ Partial Class Form1
         'lblLogPrevPatientTime
         '
         Me.lblLogPrevPatientTime.AutoSize = True
-        Me.lblLogPrevPatientTime.Location = New System.Drawing.Point(488, 48)
+        Me.lblLogPrevPatientTime.Location = New System.Drawing.Point(102, 82)
         Me.lblLogPrevPatientTime.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblLogPrevPatientTime.Name = "lblLogPrevPatientTime"
         Me.lblLogPrevPatientTime.Size = New System.Drawing.Size(108, 22)
@@ -3206,14 +3220,14 @@ Partial Class Form1
         Me.DataGridViewInsulin.AllowUserToResizeRows = False
         Me.DataGridViewInsulin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridViewInsulin.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
-        Me.DataGridViewInsulin.Location = New System.Drawing.Point(9, 445)
+        Me.DataGridViewInsulin.Location = New System.Drawing.Point(13, 557)
         Me.DataGridViewInsulin.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridViewInsulin.Name = "DataGridViewInsulin"
         Me.DataGridViewInsulin.ReadOnly = True
         Me.DataGridViewInsulin.RowHeadersVisible = False
         Me.DataGridViewInsulin.RowHeadersWidth = 51
         Me.DataGridViewInsulin.RowTemplate.Height = 24
-        Me.DataGridViewInsulin.Size = New System.Drawing.Size(1439, 128)
+        Me.DataGridViewInsulin.Size = New System.Drawing.Size(1439, 112)
         Me.DataGridViewInsulin.TabIndex = 9
         '
         'DataGridViewTextBoxColumn1
@@ -3336,7 +3350,7 @@ Partial Class Form1
         Me.DataGridViewDrug.AllowUserToResizeRows = False
         Me.DataGridViewDrug.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridViewDrug.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DrugNo, Me.DrugName, Me.Strength, Me.Unit, Me.Dose, Me.Frequency, Me.Duration, Me.TotalQTY})
-        Me.DataGridViewDrug.Location = New System.Drawing.Point(9, 85)
+        Me.DataGridViewDrug.Location = New System.Drawing.Point(13, 197)
         Me.DataGridViewDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridViewDrug.Name = "DataGridViewDrug"
         Me.DataGridViewDrug.ReadOnly = True
@@ -3697,42 +3711,43 @@ Partial Class Form1
         Me.TimestampRecord.ReadOnly = True
         Me.TimestampRecord.Width = 215
         '
-        'btnSavePrinterSettings
+        'TabPage4
         '
-        Me.btnSavePrinterSettings.Controls.Add(Me.btnDeletePatientDB)
-        Me.btnSavePrinterSettings.Controls.Add(Me.lblEditModeDB)
-        Me.btnSavePrinterSettings.Controls.Add(Me.btnEditPatientDB)
-        Me.btnSavePrinterSettings.Controls.Add(Me.Label41)
-        Me.btnSavePrinterSettings.Controls.Add(Me.Label28)
-        Me.btnSavePrinterSettings.Controls.Add(Me.lblPatientNameDB)
-        Me.btnSavePrinterSettings.Controls.Add(Me.Label27)
-        Me.btnSavePrinterSettings.Controls.Add(Me.btnSearchDB)
-        Me.btnSavePrinterSettings.Controls.Add(Me.txtICNoDB)
-        Me.btnSavePrinterSettings.Controls.Add(Me.dgvPatientInsulinHistory)
-        Me.btnSavePrinterSettings.Controls.Add(Me.dgvPatientDrugHistory)
-        Me.btnSavePrinterSettings.Controls.Add(Me.dgvDateSelector)
-        Me.btnSavePrinterSettings.Location = New System.Drawing.Point(4, 31)
-        Me.btnSavePrinterSettings.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnSavePrinterSettings.Name = "btnSavePrinterSettings"
-        Me.btnSavePrinterSettings.Padding = New System.Windows.Forms.Padding(2)
-        Me.btnSavePrinterSettings.Size = New System.Drawing.Size(1521, 844)
-        Me.btnSavePrinterSettings.TabIndex = 3
-        Me.btnSavePrinterSettings.Text = "Database"
-        Me.btnSavePrinterSettings.UseVisualStyleBackColor = True
+        Me.TabPage4.Controls.Add(Me.btnDeletePatientDB)
+        Me.TabPage4.Controls.Add(Me.lblEditModeDB)
+        Me.TabPage4.Controls.Add(Me.btnEditPatientDB)
+        Me.TabPage4.Controls.Add(Me.Label41)
+        Me.TabPage4.Controls.Add(Me.Label28)
+        Me.TabPage4.Controls.Add(Me.lblPatientNameDB)
+        Me.TabPage4.Controls.Add(Me.Label27)
+        Me.TabPage4.Controls.Add(Me.btnSearchDB)
+        Me.TabPage4.Controls.Add(Me.txtICNoDB)
+        Me.TabPage4.Controls.Add(Me.dgvPatientInsulinHistory)
+        Me.TabPage4.Controls.Add(Me.dgvPatientDrugHistory)
+        Me.TabPage4.Controls.Add(Me.dgvDateSelector)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage4.Margin = New System.Windows.Forms.Padding(2)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(2)
+        Me.TabPage4.Size = New System.Drawing.Size(1521, 844)
+        Me.TabPage4.TabIndex = 3
+        Me.TabPage4.Text = "Database"
+        Me.TabPage4.UseVisualStyleBackColor = True
         '
         'btnDeletePatientDB
         '
-        Me.btnDeletePatientDB.Location = New System.Drawing.Point(1083, 171)
+        Me.btnDeletePatientDB.BackColor = System.Drawing.Color.IndianRed
+        Me.btnDeletePatientDB.Location = New System.Drawing.Point(1083, 162)
         Me.btnDeletePatientDB.Name = "btnDeletePatientDB"
         Me.btnDeletePatientDB.Size = New System.Drawing.Size(99, 41)
         Me.btnDeletePatientDB.TabIndex = 20
         Me.btnDeletePatientDB.Text = "Delete"
-        Me.btnDeletePatientDB.UseVisualStyleBackColor = True
+        Me.btnDeletePatientDB.UseVisualStyleBackColor = False
         '
         'lblEditModeDB
         '
         Me.lblEditModeDB.AutoSize = True
-        Me.lblEditModeDB.Location = New System.Drawing.Point(1083, 146)
+        Me.lblEditModeDB.Location = New System.Drawing.Point(1087, 162)
         Me.lblEditModeDB.Name = "lblEditModeDB"
         Me.lblEditModeDB.Size = New System.Drawing.Size(25, 22)
         Me.lblEditModeDB.TabIndex = 19
@@ -3740,7 +3755,7 @@ Partial Class Form1
         '
         'btnEditPatientDB
         '
-        Me.btnEditPatientDB.Location = New System.Drawing.Point(1083, 88)
+        Me.btnEditPatientDB.Location = New System.Drawing.Point(1083, 103)
         Me.btnEditPatientDB.Name = "btnEditPatientDB"
         Me.btnEditPatientDB.Size = New System.Drawing.Size(99, 42)
         Me.btnEditPatientDB.TabIndex = 18
@@ -3750,16 +3765,16 @@ Partial Class Form1
         'Label41
         '
         Me.Label41.AutoSize = True
-        Me.Label41.Location = New System.Drawing.Point(429, 15)
+        Me.Label41.Location = New System.Drawing.Point(429, 19)
         Me.Label41.Name = "Label41"
-        Me.Label41.Size = New System.Drawing.Size(245, 22)
+        Me.Label41.Size = New System.Drawing.Size(298, 22)
         Me.Label41.TabIndex = 17
-        Me.Label41.Text = "Select the row to display data"
+        Me.Label41.Text = "Note : Select the row to display data"
         '
         'Label28
         '
         Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(8, 11)
+        Me.Label28.Location = New System.Drawing.Point(8, 18)
         Me.Label28.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(70, 22)
@@ -3769,7 +3784,7 @@ Partial Class Form1
         'lblPatientNameDB
         '
         Me.lblPatientNameDB.AutoSize = True
-        Me.lblPatientNameDB.Location = New System.Drawing.Point(84, 51)
+        Me.lblPatientNameDB.Location = New System.Drawing.Point(84, 62)
         Me.lblPatientNameDB.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblPatientNameDB.Name = "lblPatientNameDB"
         Me.lblPatientNameDB.Size = New System.Drawing.Size(30, 22)
@@ -3779,7 +3794,7 @@ Partial Class Form1
         'Label27
         '
         Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(10, 51)
+        Me.Label27.Location = New System.Drawing.Point(10, 60)
         Me.Label27.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(72, 22)
@@ -3788,7 +3803,7 @@ Partial Class Form1
         '
         'btnSearchDB
         '
-        Me.btnSearchDB.Location = New System.Drawing.Point(292, 9)
+        Me.btnSearchDB.Location = New System.Drawing.Point(292, 13)
         Me.btnSearchDB.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSearchDB.Name = "btnSearchDB"
         Me.btnSearchDB.Size = New System.Drawing.Size(95, 34)
@@ -3799,7 +3814,7 @@ Partial Class Form1
         'txtICNoDB
         '
         Me.txtICNoDB.BackColor = System.Drawing.SystemColors.Info
-        Me.txtICNoDB.Location = New System.Drawing.Point(84, 10)
+        Me.txtICNoDB.Location = New System.Drawing.Point(84, 15)
         Me.txtICNoDB.Margin = New System.Windows.Forms.Padding(2)
         Me.txtICNoDB.MaxLength = 14
         Me.txtICNoDB.Name = "txtICNoDB"
@@ -3811,7 +3826,7 @@ Partial Class Form1
         Me.dgvPatientInsulinHistory.AllowUserToResizeRows = False
         Me.dgvPatientInsulinHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvPatientInsulinHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10, Me.DataGridViewTextBoxColumn11, Me.DataGridViewTextBoxColumn12, Me.DataGridViewTextBoxColumn13, Me.DataGridViewTextBoxColumn14, Me.DataGridViewTextBoxColumn15, Me.DataGridViewTextBoxColumn16, Me.DataGridViewTextBoxColumn17, Me.DataGridViewTextBoxColumn18, Me.DataGridViewTextBoxColumn19, Me.DataGridViewTextBoxColumn20, Me.DataGridViewTextBoxColumn21})
-        Me.dgvPatientInsulinHistory.Location = New System.Drawing.Point(8, 680)
+        Me.dgvPatientInsulinHistory.Location = New System.Drawing.Point(8, 697)
         Me.dgvPatientInsulinHistory.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPatientInsulinHistory.Name = "dgvPatientInsulinHistory"
         Me.dgvPatientInsulinHistory.ReadOnly = True
@@ -3931,7 +3946,7 @@ Partial Class Form1
         Me.dgvPatientDrugHistory.AllowUserToResizeRows = False
         Me.dgvPatientDrugHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvPatientDrugHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn22, Me.DataGridViewTextBoxColumn23, Me.DataGridViewTextBoxColumn24, Me.DataGridViewTextBoxColumn25, Me.DataGridViewTextBoxColumn26, Me.DataGridViewTextBoxColumn27, Me.DataGridViewTextBoxColumn28, Me.DataGridViewTextBoxColumn29})
-        Me.dgvPatientDrugHistory.Location = New System.Drawing.Point(9, 324)
+        Me.dgvPatientDrugHistory.Location = New System.Drawing.Point(9, 341)
         Me.dgvPatientDrugHistory.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPatientDrugHistory.Name = "dgvPatientDrugHistory"
         Me.dgvPatientDrugHistory.ReadOnly = True
@@ -4013,7 +4028,7 @@ Partial Class Form1
         Me.dgvDateSelector.AllowUserToResizeRows = False
         Me.dgvDateSelector.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvDateSelector.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.ID, Me.DateAdded, Me.DateCollection, Me.DateSeeDoctor, Me.Timestamp})
-        Me.dgvDateSelector.Location = New System.Drawing.Point(9, 88)
+        Me.dgvDateSelector.Location = New System.Drawing.Point(9, 103)
         Me.dgvDateSelector.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvDateSelector.Name = "dgvDateSelector"
         Me.dgvDateSelector.ReadOnly = True
@@ -4053,7 +4068,7 @@ Partial Class Form1
         Me.DateCollection.MinimumWidth = 6
         Me.DateCollection.Name = "DateCollection"
         Me.DateCollection.ReadOnly = True
-        Me.DateCollection.Width = 200
+        Me.DateCollection.Width = 250
         '
         'DateSeeDoctor
         '
@@ -4061,7 +4076,7 @@ Partial Class Form1
         Me.DateSeeDoctor.MinimumWidth = 6
         Me.DateSeeDoctor.Name = "DateSeeDoctor"
         Me.DateSeeDoctor.ReadOnly = True
-        Me.DateSeeDoctor.Width = 200
+        Me.DateSeeDoctor.Width = 250
         '
         'Timestamp
         '
@@ -4069,33 +4084,34 @@ Partial Class Form1
         Me.Timestamp.MinimumWidth = 6
         Me.Timestamp.Name = "Timestamp"
         Me.Timestamp.ReadOnly = True
-        Me.Timestamp.Width = 200
+        Me.Timestamp.Width = 250
         '
-        'TabPage4
+        'TabPage4a
         '
-        Me.TabPage4.Controls.Add(Me.Label44)
-        Me.TabPage4.Controls.Add(Me.Label35)
-        Me.TabPage4.Controls.Add(Me.Label43)
-        Me.TabPage4.Controls.Add(Me.GroupBox5)
-        Me.TabPage4.Controls.Add(Me.LinkLabel1)
-        Me.TabPage4.Controls.Add(Me.Label33)
-        Me.TabPage4.Controls.Add(Me.GroupBox4)
-        Me.TabPage4.Controls.Add(Me.btnRestart)
-        Me.TabPage4.Controls.Add(Me.GroupBox2)
-        Me.TabPage4.Controls.Add(Me.GroupBox3)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 31)
-        Me.TabPage4.Margin = New System.Windows.Forms.Padding(2)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage4.Size = New System.Drawing.Size(1521, 844)
-        Me.TabPage4.TabIndex = 4
-        Me.TabPage4.Text = "Settings"
-        Me.TabPage4.UseVisualStyleBackColor = True
+        Me.TabPage4a.Controls.Add(Me.LinkLabel2)
+        Me.TabPage4a.Controls.Add(Me.Label44)
+        Me.TabPage4a.Controls.Add(Me.Label35)
+        Me.TabPage4a.Controls.Add(Me.Label43)
+        Me.TabPage4a.Controls.Add(Me.GroupBox5)
+        Me.TabPage4a.Controls.Add(Me.LinkLabel1)
+        Me.TabPage4a.Controls.Add(Me.Label33)
+        Me.TabPage4a.Controls.Add(Me.GroupBox4)
+        Me.TabPage4a.Controls.Add(Me.btnRestart)
+        Me.TabPage4a.Controls.Add(Me.GroupBox2)
+        Me.TabPage4a.Controls.Add(Me.GroupBox3)
+        Me.TabPage4a.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage4a.Margin = New System.Windows.Forms.Padding(2)
+        Me.TabPage4a.Name = "TabPage4a"
+        Me.TabPage4a.Padding = New System.Windows.Forms.Padding(2)
+        Me.TabPage4a.Size = New System.Drawing.Size(1521, 844)
+        Me.TabPage4a.TabIndex = 4
+        Me.TabPage4a.Text = "Settings"
+        Me.TabPage4a.UseVisualStyleBackColor = True
         '
         'Label44
         '
         Me.Label44.AutoSize = True
-        Me.Label44.Location = New System.Drawing.Point(1250, 661)
+        Me.Label44.Location = New System.Drawing.Point(1250, 632)
         Me.Label44.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label44.Name = "Label44"
         Me.Label44.Size = New System.Drawing.Size(236, 22)
@@ -4105,7 +4121,7 @@ Partial Class Form1
         'Label35
         '
         Me.Label35.AutoSize = True
-        Me.Label35.Location = New System.Drawing.Point(1249, 709)
+        Me.Label35.Location = New System.Drawing.Point(1249, 660)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(227, 22)
         Me.Label35.TabIndex = 10
@@ -4119,7 +4135,7 @@ Partial Class Form1
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(185, 22)
         Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 4, Revision 3"
+        Me.Label43.Text = "Release 5, Revision 2"
         '
         'GroupBox5
         '
@@ -4173,6 +4189,7 @@ Partial Class Form1
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.cboxDisplayDateTime)
         Me.GroupBox4.Controls.Add(Me.Label32)
         Me.GroupBox4.Controls.Add(Me.cboxAutoClear)
         Me.GroupBox4.Location = New System.Drawing.Point(678, 289)
@@ -4496,39 +4513,58 @@ Partial Class Form1
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.stlbDatabaseConnection, Me.pbrDatabaseConnection, Me.ToolStripStatusLabel2, Me.stlbPrinterName})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 913)
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.stlbDatabaseConnection, Me.pbrDatabaseConnection, Me.ToolStripStatusLabel2, Me.stlbPrinterName, Me.ToolStripStatusLabel1, Me.stlbMainStatus})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 910)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1540, 26)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1540, 29)
         Me.StatusStrip1.TabIndex = 2
         Me.StatusStrip1.Text = "StatusStrip1"
         '
         'stlbDatabaseConnection
         '
         Me.stlbDatabaseConnection.BackColor = System.Drawing.Color.Transparent
+        Me.stlbDatabaseConnection.Font = New System.Drawing.Font("Segoe UI", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.stlbDatabaseConnection.Name = "stlbDatabaseConnection"
-        Me.stlbDatabaseConnection.Size = New System.Drawing.Size(151, 20)
+        Me.stlbDatabaseConnection.Size = New System.Drawing.Size(132, 23)
         Me.stlbDatabaseConnection.Text = "Database Connection"
         '
         'pbrDatabaseConnection
         '
         Me.pbrDatabaseConnection.Name = "pbrDatabaseConnection"
-        Me.pbrDatabaseConnection.Size = New System.Drawing.Size(100, 18)
+        Me.pbrDatabaseConnection.Size = New System.Drawing.Size(50, 21)
         '
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent
+        Me.ToolStripStatusLabel2.Font = New System.Drawing.Font("Segoe UI", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(160, 20)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(141, 23)
         Me.ToolStripStatusLabel2.Text = "Default Printer Name : "
         '
         'stlbPrinterName
         '
         Me.stlbPrinterName.BackColor = System.Drawing.Color.Transparent
+        Me.stlbPrinterName.Font = New System.Drawing.Font("Segoe UI", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.stlbPrinterName.Name = "stlbPrinterName"
-        Me.stlbPrinterName.Size = New System.Drawing.Size(25, 20)
-        Me.stlbPrinterName.Text = "    "
+        Me.stlbPrinterName.Size = New System.Drawing.Size(20, 23)
+        Me.stlbPrinterName.Text = "   "
         Me.stlbPrinterName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent
+        Me.ToolStripStatusLabel1.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(74, 23)
+        Me.ToolStripStatusLabel1.Text = "| Status: "
+        '
+        'stlbMainStatus
+        '
+        Me.stlbMainStatus.BackColor = System.Drawing.Color.Transparent
+        Me.stlbMainStatus.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.stlbMainStatus.Name = "stlbMainStatus"
+        Me.stlbMainStatus.Size = New System.Drawing.Size(60, 23)
+        Me.stlbMainStatus.Text = "Ready."
         '
         'PrintDoc
         '
@@ -4546,36 +4582,105 @@ Partial Class Form1
         'PrintDocInsulin
         '
         '
-        'lblDeveloper
+        'Timer1
         '
-        Me.lblDeveloper.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblDeveloper.AutoSize = True
-        Me.lblDeveloper.BackColor = System.Drawing.SystemColors.Control
-        Me.lblDeveloper.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDeveloper.Location = New System.Drawing.Point(1232, 913)
-        Me.lblDeveloper.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblDeveloper.Name = "lblDeveloper"
-        Me.lblDeveloper.Size = New System.Drawing.Size(297, 20)
-        Me.lblDeveloper.TabIndex = 4
-        Me.lblDeveloper.Text = "                                                "
+        Me.Timer1.Enabled = True
+        Me.Timer1.Interval = 1000
         '
-        'Label50
+        'lblTime
         '
-        Me.Label50.AutoSize = True
-        Me.Label50.Location = New System.Drawing.Point(9, 813)
-        Me.Label50.Name = "Label50"
-        Me.Label50.Size = New System.Drawing.Size(71, 22)
-        Me.Label50.TabIndex = 43
-        Me.Label50.Text = "Status: "
+        Me.lblTime.AutoSize = True
+        Me.lblTime.BackColor = System.Drawing.Color.LightPink
+        Me.lblTime.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTime.Location = New System.Drawing.Point(1415, 32)
+        Me.lblTime.Name = "lblTime"
+        Me.lblTime.Size = New System.Drawing.Size(37, 25)
+        Me.lblTime.TabIndex = 3
+        Me.lblTime.Text = "     "
         '
-        'lblMainStatus
+        'lblDate
         '
-        Me.lblMainStatus.AutoSize = True
-        Me.lblMainStatus.Location = New System.Drawing.Point(86, 813)
-        Me.lblMainStatus.Name = "lblMainStatus"
-        Me.lblMainStatus.Size = New System.Drawing.Size(67, 22)
-        Me.lblMainStatus.TabIndex = 44
-        Me.lblMainStatus.Text = "Ready."
+        Me.lblDate.AutoSize = True
+        Me.lblDate.BackColor = System.Drawing.Color.LightPink
+        Me.lblDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDate.Location = New System.Drawing.Point(1107, 31)
+        Me.lblDate.Name = "lblDate"
+        Me.lblDate.Size = New System.Drawing.Size(37, 25)
+        Me.lblDate.TabIndex = 4
+        Me.lblDate.Text = "     "
+        '
+        'cboxDisplayDateTime
+        '
+        Me.cboxDisplayDateTime.AutoSize = True
+        Me.cboxDisplayDateTime.Location = New System.Drawing.Point(10, 99)
+        Me.cboxDisplayDateTime.Name = "cboxDisplayDateTime"
+        Me.cboxDisplayDateTime.Size = New System.Drawing.Size(322, 26)
+        Me.cboxDisplayDateTime.TabIndex = 2
+        Me.cboxDisplayDateTime.Text = "Enable Display Date and Time on UI"
+        Me.cboxDisplayDateTime.UseVisualStyleBackColor = True
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.Pharmacy_Management_System.My.Resources.Resources.kitty_pharmacy
+        Me.PictureBox1.Location = New System.Drawing.Point(1348, 2)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(146, 155)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 15
+        Me.PictureBox1.TabStop = False
+        Me.PictureBox1.Visible = False
+        '
+        'Label51
+        '
+        Me.Label51.AutoSize = True
+        Me.Label51.Location = New System.Drawing.Point(68, 114)
+        Me.Label51.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label51.Name = "Label51"
+        Me.Label51.Size = New System.Drawing.Size(142, 22)
+        Me.Label51.TabIndex = 16
+        Me.Label51.Text = "Date Collection :"
+        '
+        'Label52
+        '
+        Me.Label52.AutoSize = True
+        Me.Label52.Location = New System.Drawing.Point(57, 146)
+        Me.Label52.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label52.Name = "Label52"
+        Me.Label52.Size = New System.Drawing.Size(153, 22)
+        Me.Label52.TabIndex = 17
+        Me.Label52.Text = "Date See Doctor :"
+        '
+        'lblLogPrevPatientDateCollection
+        '
+        Me.lblLogPrevPatientDateCollection.AutoSize = True
+        Me.lblLogPrevPatientDateCollection.Location = New System.Drawing.Point(214, 114)
+        Me.lblLogPrevPatientDateCollection.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblLogPrevPatientDateCollection.Name = "lblLogPrevPatientDateCollection"
+        Me.lblLogPrevPatientDateCollection.Size = New System.Drawing.Size(40, 22)
+        Me.lblLogPrevPatientDateCollection.TabIndex = 18
+        Me.lblLogPrevPatientDateCollection.Text = "      "
+        '
+        'lblLogPrevPatientDateSeeDoctor
+        '
+        Me.lblLogPrevPatientDateSeeDoctor.AutoSize = True
+        Me.lblLogPrevPatientDateSeeDoctor.Location = New System.Drawing.Point(214, 146)
+        Me.lblLogPrevPatientDateSeeDoctor.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblLogPrevPatientDateSeeDoctor.Name = "lblLogPrevPatientDateSeeDoctor"
+        Me.lblLogPrevPatientDateSeeDoctor.Size = New System.Drawing.Size(40, 22)
+        Me.lblLogPrevPatientDateSeeDoctor.TabIndex = 19
+        Me.lblLogPrevPatientDateSeeDoctor.Text = "      "
+        '
+        'LinkLabel2
+        '
+        Me.LinkLabel2.AutoSize = True
+        Me.LinkLabel2.Location = New System.Drawing.Point(1250, 709)
+        Me.LinkLabel2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.LinkLabel2.Name = "LinkLabel2"
+        Me.LinkLabel2.Size = New System.Drawing.Size(249, 22)
+        Me.LinkLabel2.TabIndex = 12
+        Me.LinkLabel2.TabStop = True
+        Me.LinkLabel2.Text = "Donate to Developer (PayPal)"
         '
         'Form1
         '
@@ -4585,7 +4690,8 @@ Partial Class Form1
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.LightPink
         Me.ClientSize = New System.Drawing.Size(1540, 939)
-        Me.Controls.Add(Me.lblDeveloper)
+        Me.Controls.Add(Me.lblDate)
+        Me.Controls.Add(Me.lblTime)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.TabControl1)
         Me.DoubleBuffered = True
@@ -4603,7 +4709,6 @@ Partial Class Form1
         Me.TableLayoutPanel16.PerformLayout()
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel15.ResumeLayout(False)
         Me.TableLayoutPanel15.PerformLayout()
@@ -4642,13 +4747,13 @@ Partial Class Form1
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.btnSavePrinterSettings.ResumeLayout(False)
-        Me.btnSavePrinterSettings.PerformLayout()
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage4.PerformLayout()
         CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvPatientDrugHistory, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvDateSelector, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage4.ResumeLayout(False)
-        Me.TabPage4.PerformLayout()
+        Me.TabPage4a.ResumeLayout(False)
+        Me.TabPage4a.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -4660,6 +4765,7 @@ Partial Class Form1
         Me.GroupBox3.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -4688,7 +4794,7 @@ Partial Class Form1
     Friend WithEvents btnAddDrug As Button
     Friend WithEvents lblSearch As Label
     Friend WithEvents txtSearchDrug As TextBox
-    Friend WithEvents btnSavePrinterSettings As TabPage
+    Friend WithEvents TabPage4 As TabPage
     Friend WithEvents dtpDateCollection As DateTimePicker
     Friend WithEvents lblDatetoSeeDoctor As Label
     Friend WithEvents GroupBox1 As GroupBox
@@ -4762,6 +4868,7 @@ Partial Class Form1
     Friend WithEvents PrintDoc As Printing.PrintDocument
     Friend WithEvents PPD As PrintPreviewDialog
     Friend WithEvents btnPrint As Button
+    Friend WithEvents stlbMainStatus As ToolStripStatusLabel
     Friend WithEvents lblStrD2 As Label
     Friend WithEvents lblStrD4 As Label
     Friend WithEvents lblStrD5 As Label
@@ -4861,6 +4968,7 @@ Partial Class Form1
     Friend WithEvents lblUnitD3 As Label
     Friend WithEvents cbDrug8 As ComboBox
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents stlbPrinterName As ToolStripStatusLabel
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents txtICNo As TextBox
@@ -4898,7 +5006,7 @@ Partial Class Form1
     Friend WithEvents lblPrevSavedName As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents Label25 As Label
-    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents TabPage4a As TabPage
     Friend WithEvents dgvDateSelector As DataGridView
     Friend WithEvents dgvPatientInsulinHistory As DataGridView
     Friend WithEvents dgvPatientDrugHistory As DataGridView
@@ -4906,12 +5014,6 @@ Partial Class Form1
     Friend WithEvents txtICNoDB As TextBox
     Friend WithEvents lblPatientNameDB As Label
     Friend WithEvents Label27 As Label
-    Friend WithEvents No As DataGridViewTextBoxColumn
-    Friend WithEvents ID As DataGridViewTextBoxColumn
-    Friend WithEvents DateAdded As DataGridViewTextBoxColumn
-    Friend WithEvents DateCollection As DataGridViewTextBoxColumn
-    Friend WithEvents DateSeeDoctor As DataGridViewTextBoxColumn
-    Friend WithEvents Timestamp As DataGridViewTextBoxColumn
     Friend WithEvents Label28 As Label
     Friend WithEvents TabControl2 As TabControl
     Friend WithEvents TabPage5 As TabPage
@@ -4931,7 +5033,6 @@ Partial Class Form1
     Friend WithEvents Label33 As Label
     Friend WithEvents Label34 As Label
     Friend WithEvents txtDefaultMaxQTY As TextBox
-    Friend WithEvents lblDeveloper As Label
     Friend WithEvents Label38 As Label
     Friend WithEvents Label37 As Label
     Friend WithEvents Label36 As Label
@@ -5024,6 +5125,20 @@ Partial Class Form1
     Friend WithEvents lblLogPrevPatientTimestamp As Label
     Friend WithEvents lblLogPrevPatientTime As Label
     Friend WithEvents btnDeletePatientDB As Button
-    Friend WithEvents lblMainStatus As Label
+    Friend WithEvents No As DataGridViewTextBoxColumn
+    Friend WithEvents ID As DataGridViewTextBoxColumn
+    Friend WithEvents DateAdded As DataGridViewTextBoxColumn
+    Friend WithEvents DateCollection As DataGridViewTextBoxColumn
+    Friend WithEvents DateSeeDoctor As DataGridViewTextBoxColumn
+    Friend WithEvents Timestamp As DataGridViewTextBoxColumn
     Friend WithEvents Label50 As Label
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents lblTime As Label
+    Friend WithEvents lblDate As Label
+    Friend WithEvents cboxDisplayDateTime As CheckBox
+    Friend WithEvents Label52 As Label
+    Friend WithEvents Label51 As Label
+    Friend WithEvents lblLogPrevPatientDateSeeDoctor As Label
+    Friend WithEvents lblLogPrevPatientDateCollection As Label
+    Friend WithEvents LinkLabel2 As LinkLabel
 End Class
