@@ -84,6 +84,7 @@ Partial Class Form1
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.dtpDateSeeDoctor = New System.Windows.Forms.DateTimePicker()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.cboxEnablePrintPDF = New System.Windows.Forms.CheckBox()
         Me.txtDurationMaster = New System.Windows.Forms.TextBox()
         Me.lblDurationMaster = New System.Windows.Forms.Label()
@@ -240,6 +241,10 @@ Partial Class Form1
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.lblLogPrevPatientDateSeeDoctor = New System.Windows.Forms.Label()
+        Me.lblLogPrevPatientDateCollection = New System.Windows.Forms.Label()
+        Me.Label52 = New System.Windows.Forms.Label()
+        Me.Label51 = New System.Windows.Forms.Label()
         Me.lblLogPrevPatientTimestamp = New System.Windows.Forms.Label()
         Me.lblLogPrevPatientTime = New System.Windows.Forms.Label()
         Me.DataGridViewInsulin = New System.Windows.Forms.DataGridView()
@@ -336,6 +341,7 @@ Partial Class Form1
         Me.DateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timestamp = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage4a = New System.Windows.Forms.TabPage()
+        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label44 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label43 = New System.Windows.Forms.Label()
@@ -345,6 +351,7 @@ Partial Class Form1
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.cboxDisplayDateTime = New System.Windows.Forms.CheckBox()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.cboxAutoClear = New System.Windows.Forms.CheckBox()
         Me.btnRestart = New System.Windows.Forms.Button()
@@ -387,18 +394,12 @@ Partial Class Form1
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.lblTime = New System.Windows.Forms.Label()
         Me.lblDate = New System.Windows.Forms.Label()
-        Me.cboxDisplayDateTime = New System.Windows.Forms.CheckBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label51 = New System.Windows.Forms.Label()
-        Me.Label52 = New System.Windows.Forms.Label()
-        Me.lblLogPrevPatientDateCollection = New System.Windows.Forms.Label()
-        Me.lblLogPrevPatientDateSeeDoctor = New System.Windows.Forms.Label()
-        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
         Me.TableLayoutPanel16.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel15.SuspendLayout()
         Me.TableLayoutPanel13.SuspendLayout()
@@ -433,7 +434,6 @@ Partial Class Form1
         Me.TableLayoutPanel3.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnSave
@@ -1189,6 +1189,18 @@ Partial Class Form1
         Me.dtpDateSeeDoctor.Size = New System.Drawing.Size(313, 28)
         Me.dtpDateSeeDoctor.TabIndex = 5
         Me.dtpDateSeeDoctor.Value = New Date(2024, 6, 19, 0, 0, 0, 0)
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.Pharmacy_Management_System.My.Resources.Resources.kitty_pharmacy
+        Me.PictureBox1.Location = New System.Drawing.Point(1348, 2)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(146, 155)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 15
+        Me.PictureBox1.TabStop = False
+        Me.PictureBox1.Visible = False
         '
         'cboxEnablePrintPDF
         '
@@ -2826,7 +2838,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 182.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 183.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2844,10 +2856,10 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(386, 2)
+        Me.btnDelete.Location = New System.Drawing.Point(385, 2)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(179, 32)
+        Me.btnDelete.Size = New System.Drawing.Size(180, 32)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2861,7 +2873,7 @@ Partial Class Form1
         Me.btnAddDrug.Location = New System.Drawing.Point(2, 2)
         Me.btnAddDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(168, 32)
+        Me.btnAddDrug.Size = New System.Drawing.Size(167, 32)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2871,7 +2883,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(264, 2)
+        Me.btnClear.Location = New System.Drawing.Point(263, 2)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(118, 32)
@@ -2884,7 +2896,7 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(174, 2)
+        Me.btnUpdate.Location = New System.Drawing.Point(173, 2)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
         Me.btnUpdate.Size = New System.Drawing.Size(86, 32)
@@ -3194,6 +3206,46 @@ Partial Class Form1
         Me.TabPage5.TabIndex = 0
         Me.TabPage5.Text = "Previous Patient"
         Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'lblLogPrevPatientDateSeeDoctor
+        '
+        Me.lblLogPrevPatientDateSeeDoctor.AutoSize = True
+        Me.lblLogPrevPatientDateSeeDoctor.Location = New System.Drawing.Point(214, 146)
+        Me.lblLogPrevPatientDateSeeDoctor.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblLogPrevPatientDateSeeDoctor.Name = "lblLogPrevPatientDateSeeDoctor"
+        Me.lblLogPrevPatientDateSeeDoctor.Size = New System.Drawing.Size(40, 22)
+        Me.lblLogPrevPatientDateSeeDoctor.TabIndex = 19
+        Me.lblLogPrevPatientDateSeeDoctor.Text = "      "
+        '
+        'lblLogPrevPatientDateCollection
+        '
+        Me.lblLogPrevPatientDateCollection.AutoSize = True
+        Me.lblLogPrevPatientDateCollection.Location = New System.Drawing.Point(214, 114)
+        Me.lblLogPrevPatientDateCollection.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblLogPrevPatientDateCollection.Name = "lblLogPrevPatientDateCollection"
+        Me.lblLogPrevPatientDateCollection.Size = New System.Drawing.Size(40, 22)
+        Me.lblLogPrevPatientDateCollection.TabIndex = 18
+        Me.lblLogPrevPatientDateCollection.Text = "      "
+        '
+        'Label52
+        '
+        Me.Label52.AutoSize = True
+        Me.Label52.Location = New System.Drawing.Point(57, 146)
+        Me.Label52.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label52.Name = "Label52"
+        Me.Label52.Size = New System.Drawing.Size(153, 22)
+        Me.Label52.TabIndex = 17
+        Me.Label52.Text = "Date See Doctor :"
+        '
+        'Label51
+        '
+        Me.Label51.AutoSize = True
+        Me.Label51.Location = New System.Drawing.Point(68, 114)
+        Me.Label51.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label51.Name = "Label51"
+        Me.Label51.Size = New System.Drawing.Size(142, 22)
+        Me.Label51.TabIndex = 16
+        Me.Label51.Text = "Date Collection :"
         '
         'lblLogPrevPatientTimestamp
         '
@@ -4108,6 +4160,17 @@ Partial Class Form1
         Me.TabPage4a.Text = "Settings"
         Me.TabPage4a.UseVisualStyleBackColor = True
         '
+        'LinkLabel2
+        '
+        Me.LinkLabel2.AutoSize = True
+        Me.LinkLabel2.Location = New System.Drawing.Point(1250, 709)
+        Me.LinkLabel2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.LinkLabel2.Name = "LinkLabel2"
+        Me.LinkLabel2.Size = New System.Drawing.Size(249, 22)
+        Me.LinkLabel2.TabIndex = 12
+        Me.LinkLabel2.TabStop = True
+        Me.LinkLabel2.Text = "Donate to Developer (PayPal)"
+        '
         'Label44
         '
         Me.Label44.AutoSize = True
@@ -4135,7 +4198,7 @@ Partial Class Form1
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(185, 22)
         Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 5, Revision 2"
+        Me.Label43.Text = "Release 5, Revision 3"
         '
         'GroupBox5
         '
@@ -4200,6 +4263,16 @@ Partial Class Form1
         Me.GroupBox4.TabIndex = 3
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Application"
+        '
+        'cboxDisplayDateTime
+        '
+        Me.cboxDisplayDateTime.AutoSize = True
+        Me.cboxDisplayDateTime.Location = New System.Drawing.Point(10, 99)
+        Me.cboxDisplayDateTime.Name = "cboxDisplayDateTime"
+        Me.cboxDisplayDateTime.Size = New System.Drawing.Size(322, 26)
+        Me.cboxDisplayDateTime.TabIndex = 2
+        Me.cboxDisplayDateTime.Text = "Enable Display Date and Time on UI"
+        Me.cboxDisplayDateTime.UseVisualStyleBackColor = True
         '
         'Label32
         '
@@ -4609,79 +4682,6 @@ Partial Class Form1
         Me.lblDate.TabIndex = 4
         Me.lblDate.Text = "     "
         '
-        'cboxDisplayDateTime
-        '
-        Me.cboxDisplayDateTime.AutoSize = True
-        Me.cboxDisplayDateTime.Location = New System.Drawing.Point(10, 99)
-        Me.cboxDisplayDateTime.Name = "cboxDisplayDateTime"
-        Me.cboxDisplayDateTime.Size = New System.Drawing.Size(322, 26)
-        Me.cboxDisplayDateTime.TabIndex = 2
-        Me.cboxDisplayDateTime.Text = "Enable Display Date and Time on UI"
-        Me.cboxDisplayDateTime.UseVisualStyleBackColor = True
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.Pharmacy_Management_System.My.Resources.Resources.kitty_pharmacy
-        Me.PictureBox1.Location = New System.Drawing.Point(1348, 2)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(146, 155)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox1.TabIndex = 15
-        Me.PictureBox1.TabStop = False
-        Me.PictureBox1.Visible = False
-        '
-        'Label51
-        '
-        Me.Label51.AutoSize = True
-        Me.Label51.Location = New System.Drawing.Point(68, 114)
-        Me.Label51.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label51.Name = "Label51"
-        Me.Label51.Size = New System.Drawing.Size(142, 22)
-        Me.Label51.TabIndex = 16
-        Me.Label51.Text = "Date Collection :"
-        '
-        'Label52
-        '
-        Me.Label52.AutoSize = True
-        Me.Label52.Location = New System.Drawing.Point(57, 146)
-        Me.Label52.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label52.Name = "Label52"
-        Me.Label52.Size = New System.Drawing.Size(153, 22)
-        Me.Label52.TabIndex = 17
-        Me.Label52.Text = "Date See Doctor :"
-        '
-        'lblLogPrevPatientDateCollection
-        '
-        Me.lblLogPrevPatientDateCollection.AutoSize = True
-        Me.lblLogPrevPatientDateCollection.Location = New System.Drawing.Point(214, 114)
-        Me.lblLogPrevPatientDateCollection.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblLogPrevPatientDateCollection.Name = "lblLogPrevPatientDateCollection"
-        Me.lblLogPrevPatientDateCollection.Size = New System.Drawing.Size(40, 22)
-        Me.lblLogPrevPatientDateCollection.TabIndex = 18
-        Me.lblLogPrevPatientDateCollection.Text = "      "
-        '
-        'lblLogPrevPatientDateSeeDoctor
-        '
-        Me.lblLogPrevPatientDateSeeDoctor.AutoSize = True
-        Me.lblLogPrevPatientDateSeeDoctor.Location = New System.Drawing.Point(214, 146)
-        Me.lblLogPrevPatientDateSeeDoctor.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblLogPrevPatientDateSeeDoctor.Name = "lblLogPrevPatientDateSeeDoctor"
-        Me.lblLogPrevPatientDateSeeDoctor.Size = New System.Drawing.Size(40, 22)
-        Me.lblLogPrevPatientDateSeeDoctor.TabIndex = 19
-        Me.lblLogPrevPatientDateSeeDoctor.Text = "      "
-        '
-        'LinkLabel2
-        '
-        Me.LinkLabel2.AutoSize = True
-        Me.LinkLabel2.Location = New System.Drawing.Point(1250, 709)
-        Me.LinkLabel2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.LinkLabel2.Name = "LinkLabel2"
-        Me.LinkLabel2.Size = New System.Drawing.Size(249, 22)
-        Me.LinkLabel2.TabIndex = 12
-        Me.LinkLabel2.TabStop = True
-        Me.LinkLabel2.Text = "Donate to Developer (PayPal)"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
@@ -4709,6 +4709,7 @@ Partial Class Form1
         Me.TableLayoutPanel16.PerformLayout()
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.TableLayoutPanel15.ResumeLayout(False)
         Me.TableLayoutPanel15.PerformLayout()
@@ -4765,7 +4766,6 @@ Partial Class Form1
         Me.GroupBox3.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

@@ -472,7 +472,7 @@ Public Class Form1
         Dim Rect7 As New Rectangle(Math.Round(6 * ScaleWidth), Math.Round(123 * ScaleHeight), Math.Round(295 * ScaleWidth), Math.Round(40 * ScaleHeight))
         Dim Rect8 As New Rectangle(Math.Round(8 * ScaleWidth), Math.Round(130 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(30 * ScaleHeight)) 'Remark margin
 
-        Dim Rect9 As New Rectangle(Math.Round(201 * ScaleWidth), Math.Round(167 * ScaleHeight), Math.Round(70 * ScaleWidth), Math.Round(12 * ScaleHeight)) 'Jumlah
+        Dim Rect9 As New Rectangle(Math.Round(201 * ScaleWidth), Math.Round(167 * ScaleHeight), Math.Round(75 * ScaleWidth), Math.Round(12 * ScaleHeight)) 'Jumlah
 
 
 
