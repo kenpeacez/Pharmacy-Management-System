@@ -134,6 +134,8 @@ Public Class Form1
         loadLogDGV()
         'Method to load Log > Records tab for Daily Records Data
         loadDGVRecords()
+        '
+        loadDrugNamestoCboxSearch()
 
         notyetinitialize = False
     End Sub
@@ -164,6 +166,8 @@ Public Class Form1
         DataGridViewInsulin.AllowUserToAddRows = False
         dgvPatientDrugHistory.AllowUserToAddRows = False
         dgvPatientInsulinHistory.AllowUserToAddRows = False
+
+        cboxSearchbyDrugPatientName.Enabled = False
 
         If cboxEnablePrintPDF.Checked Then
             btnSave.Text = "Save and Print"
@@ -1493,7 +1497,7 @@ Public Class Form1
             conn.Close()
             'MsgBox(ex.Message)
             If ex.Message.Contains("Duplicate") Then
-                Select Case MsgBox("Existing Patient. Do you want to overwrite with current data?", MsgBoxStyle.YesNo, "Confirmation")
+                Select Case MsgBox("Existing Patient. Do you want to overwrite with current data? Choosing No or Cancel will not print label.", MsgBoxStyle.YesNoCancel, "Confirmation")
                     Case MsgBoxResult.Yes
                         Try
 
@@ -1750,6 +1754,9 @@ Redo:
                     Case MsgBoxResult.No
                         conn.Close()
                         Return
+                    Case MsgBoxResult.Cancel
+                        conn.Close()
+                        Return
                 End Select
 
 
@@ -1891,6 +1898,7 @@ Redo:
                 DGV_Load()
                 loaddatafromdb()
                 loadInsulindatafromdb()
+                loadDrugNamestoCboxSearch()
                 'checkforselecteddrugs()
                 'clearall()
             Else
@@ -2185,7 +2193,36 @@ Redo:
 
     End Sub
 
+    Public Sub loadDrugNamestoCboxSearch()
+        Dim tempcbSearchDrug = cboxSearchbyDrug.SelectedIndex
+        Try
+            cboxSearchbyDrug.Items.Clear()
+            conn.Open()
+            Dim cmd As New MySqlCommand("SELECT DrugName FROM drugtable", conn)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            Dim col As New AutoCompleteStringCollection
+            Dim drugnamedb As String
+            da.Fill(dt)
+            For i = 0 To dt.Rows.Count - 1
+                col.Add(dt.Rows(i)("DrugName").ToString())
+                drugnamedb = dt.Rows(i)("DrugName").ToString()
+                cboxSearchbyDrug.Items.Add(drugnamedb)
+            Next
+            conn.Close()
+            da.Dispose()
+            cboxSearchbyDrug.AutoCompleteSource = AutoCompleteSource.CustomSource
+            cboxSearchbyDrug.AutoCompleteCustomSource = col
+            cboxSearchbyDrug.AutoCompleteMode = AutoCompleteMode.Suggest
+            cboxSearchbyDrug.SelectedIndex = tempcbSearchDrug
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
     Public Sub loaddatafromdb()
+        'run the search drug name combo box also
+
         Dim tempcbDrug1 = cbDrug1.SelectedIndex
         Dim tempcbDrug2 = cbDrug2.SelectedIndex
         Dim tempcbDrug3 = cbDrug3.SelectedIndex
@@ -2196,6 +2233,7 @@ Redo:
         Dim tempcbDrug8 = cbDrug8.SelectedIndex
         Dim tempcbDrug9 = cbDrug9.SelectedIndex
         Dim tempcbDrug10 = cbDrug10.SelectedIndex
+
         Try
             cbDrug1.Items.Clear()
             cbDrug2.Items.Clear()
@@ -2207,6 +2245,7 @@ Redo:
             cbDrug8.Items.Clear()
             cbDrug9.Items.Clear()
             cbDrug10.Items.Clear()
+            cboxSearchbyDrug.Items.Clear()
             conn.Open()
             Dim cmd As New MySqlCommand("SELECT DrugName FROM drugtable WHERE DrugName not like '%Insulin%'", conn)
             Dim dt As New DataTable
@@ -4758,6 +4797,134 @@ Redo:
 
     End Sub
 
+    Public Sub loadSearchDrugDGV()
+        dgvLatestRecord.Rows.Clear()
+
+        Dim dt As New DataTable
+        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
+        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
+        Dim count As Integer = 0
+        Dim cmd As New MySqlCommand(" SELECT 
+    ID,
+    Date,
+    Name,
+    ICNo,
+    DateCollection,
+    DateSeeDoctor,
+    Timestamp
+FROM 
+    `prescribeddrugs`
+WHERE 
+    Drug1Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
+    OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
+    OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
+        Try
+
+            conn.Open()
+            dr = cmd.ExecuteReader
+
+            While dr.Read()
+                count += 1
+                dgvLatestRecord.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
+
+            End While
+            'timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
+
+
+            'lblPatientNameDB.Text = dr.Item("Name")
+            dr.Close()
+        Catch ex As Exception
+            'MsgBox(ex.Message)
+            'MessageBox.Show("IC No. not found.")
+        Finally
+            dr.Dispose()
+            conn.Close()
+        End Try
+    End Sub
+
+    Public Sub loadSearchPreviousDrugDGV()
+        dgvPreviousRecords.Rows.Clear()
+        'conn.Open()
+        Dim dt As New DataTable
+        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
+        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
+        Dim count As Integer = 0
+        Dim cmd As New MySqlCommand(" SELECT 
+    ID,
+    Date,
+    Name,
+    ICNo,
+    DateCollection,
+    DateSeeDoctor,
+    Timestamp
+FROM 
+    `prescribeddrugshistory`
+WHERE 
+    Drug1Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
+    OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
+    OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
+        Dim da As New MySqlDataAdapter(cmd)
+        Dim col As New AutoCompleteStringCollection
+        Dim PatientName As String
+        Try
+
+
+
+            conn.Open()
+            dr = cmd.ExecuteReader
+
+            While dr.Read()
+                count += 1
+                dgvPreviousRecords.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
+
+
+            End While
+            'timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
+
+
+            'lblPatientNameDB.Text = dr.Item("Name")
+            dr.Close()
+
+
+        Catch ex As Exception
+            'MsgBox(ex.Message)
+            'MessageBox.Show("IC No. not found.")
+        Finally
+            dr.Dispose()
+            cboxSearchbyDrugPatientName.Items.Clear()
+            da.Fill(dt)
+            For i = 0 To dt.Rows.Count - 1
+                col.Add(dt.Rows(i)("Name").ToString())
+                PatientName = dt.Rows(i)("Name").ToString()
+                cboxSearchbyDrugPatientName.Items.Add(PatientName)
+            Next
+            conn.Close()
+            da.Dispose()
+            cboxSearchbyDrugPatientName.AutoCompleteSource = AutoCompleteSource.CustomSource
+            cboxSearchbyDrugPatientName.AutoCompleteCustomSource = col
+            cboxSearchbyDrugPatientName.AutoCompleteMode = AutoCompleteMode.Suggest
+            conn.Close()
+        End Try
+    End Sub
+
     Public Sub loadDatabaseDGV()
         dgvDateSelector.Rows.Clear()
         dgvPatientDrugHistory.Rows.Clear()
@@ -4800,6 +4967,7 @@ Redo:
 
 
     End Sub
+
     Public Sub loadDatabaseDGV2()
         dgvPatientDrugHistory.Rows.Clear()
         dgvPatientInsulinHistory.Rows.Clear()
@@ -5579,6 +5747,7 @@ Redo:
                     loaddatafromdb()
                     loadDBDataforPatientInfo()
 
+
                 End Try
             Case MsgBoxResult.Cancel
                 Return
@@ -5627,5 +5796,92 @@ Redo:
         Dim url As String = "https://paypal.me/kenpeacez?country.x=MY&locale.x=en_US"
 
         Process.Start(New ProcessStartInfo(url) With {.UseShellExecute = True})
+    End Sub
+
+    Private Sub cboxSearchbyDrug_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxSearchbyDrug.SelectedIndexChanged
+        loadSearchDrugDGV()
+        loadSearchPreviousDrugDGV()
+        cboxSearchbyDrugPatientName.Text = ""
+    End Sub
+
+    Private Sub cboxSearchbyDrug_TextChanged(sender As Object, e As EventArgs) Handles cboxSearchbyDrug.TextChanged
+        If cboxSearchbyDrug.Text = "" Then
+            dgvLatestRecord.Rows.Clear()
+            dgvPreviousRecords.Rows.Clear()
+            cboxSearchbyDrugPatientName.Text = ""
+        End If
+    End Sub
+
+    Private Sub TabControl3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl3.SelectedIndexChanged
+        If TabControl3.SelectedIndex = 1 Then
+            cboxSearchbyDrugPatientName.Enabled = True
+            loadSearchPreviousDrugDGV()
+        End If
+        If TabControl3.SelectedIndex = 0 Then
+            cboxSearchbyDrugPatientName.Text = ""
+            cboxSearchbyDrugPatientName.Enabled = False
+        End If
+    End Sub
+
+    Private Sub cboxSearchbyDrugPatientName_TextChanged(sender As Object, e As EventArgs) Handles cboxSearchbyDrugPatientName.SelectedIndexChanged
+        dgvPreviousRecords.Rows.Clear()
+        'conn.Open()
+        Dim dt As New DataTable
+        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
+        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
+        Dim count As Integer = 0
+        Dim cmd As New MySqlCommand(" SELECT 
+    ID,
+    Date,
+    Name,
+    ICNo,
+    DateCollection,
+    DateSeeDoctor,
+    Timestamp
+FROM 
+    `prescribeddrugshistory`
+WHERE 
+    (Drug1Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
+    OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
+    OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
+    OR Insulin2Name = '" & cboxSearchbyDrug.Text & "') AND Name = '" & cboxSearchbyDrugPatientName.Text & "'", conn)
+        Dim da As New MySqlDataAdapter(cmd)
+        Dim col As New AutoCompleteStringCollection
+
+        Try
+
+
+
+            conn.Open()
+            dr = cmd.ExecuteReader
+
+            While dr.Read()
+                count += 1
+                dgvPreviousRecords.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
+
+
+            End While
+            'timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
+
+
+            'lblPatientNameDB.Text = dr.Item("Name")
+            dr.Close()
+
+
+        Catch ex As Exception
+            'MsgBox(ex.Message)
+            'MessageBox.Show("IC No. not found.")
+        Finally
+            dr.Dispose()
+            conn.Close()
+        End Try
     End Sub
 End Class

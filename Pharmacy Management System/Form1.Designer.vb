@@ -300,6 +300,32 @@ Partial Class Form1
         Me.DateCollectionRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DateSeeDoctorRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TimestampRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.Label54 = New System.Windows.Forms.Label()
+        Me.cboxSearchbyDrugPatientName = New System.Windows.Forms.ComboBox()
+        Me.TabControl3 = New System.Windows.Forms.TabControl()
+        Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.dgvLatestRecord = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn30 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn31 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvColLatestDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn32 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn33 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvColLatestDateCollect = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvColLatestDateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn39 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.dgvPreviousRecords = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn34 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn35 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn36 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn37 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn38 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn40 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn41 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn42 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label53 = New System.Windows.Forms.Label()
+        Me.cboxSearchbyDrug = New System.Windows.Forms.ComboBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.btnDeletePatientDB = New System.Windows.Forms.Button()
         Me.lblEditModeDB = New System.Windows.Forms.Label()
@@ -423,6 +449,12 @@ Partial Class Form1
         CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage7.SuspendLayout()
+        Me.TabControl3.SuspendLayout()
+        Me.TabPage8.SuspendLayout()
+        CType(Me.dgvLatestRecord, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage9.SuspendLayout()
+        CType(Me.dgvPreviousRecords, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvPatientDrugHistory, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2838,7 +2870,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 183.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 186.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2856,10 +2888,10 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(385, 2)
+        Me.btnDelete.Location = New System.Drawing.Point(382, 2)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(180, 32)
+        Me.btnDelete.Size = New System.Drawing.Size(183, 32)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2873,7 +2905,7 @@ Partial Class Form1
         Me.btnAddDrug.Location = New System.Drawing.Point(2, 2)
         Me.btnAddDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(167, 32)
+        Me.btnAddDrug.Size = New System.Drawing.Size(166, 32)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2883,7 +2915,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(263, 2)
+        Me.btnClear.Location = New System.Drawing.Point(260, 2)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(118, 32)
@@ -2896,10 +2928,10 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(173, 2)
+        Me.btnUpdate.Location = New System.Drawing.Point(172, 2)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(86, 32)
+        Me.btnUpdate.Size = New System.Drawing.Size(84, 32)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -3177,6 +3209,7 @@ Partial Class Form1
         '
         Me.TabControl2.Controls.Add(Me.TabPage5)
         Me.TabControl2.Controls.Add(Me.TabPage6)
+        Me.TabControl2.Controls.Add(Me.TabPage7)
         Me.TabControl2.Location = New System.Drawing.Point(9, 2)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(2)
         Me.TabControl2.Name = "TabControl2"
@@ -3763,6 +3796,253 @@ Partial Class Form1
         Me.TimestampRecord.ReadOnly = True
         Me.TimestampRecord.Width = 215
         '
+        'TabPage7
+        '
+        Me.TabPage7.AccessibleDescription = "k"
+        Me.TabPage7.Controls.Add(Me.Label54)
+        Me.TabPage7.Controls.Add(Me.cboxSearchbyDrugPatientName)
+        Me.TabPage7.Controls.Add(Me.TabControl3)
+        Me.TabPage7.Controls.Add(Me.Label53)
+        Me.TabPage7.Controls.Add(Me.cboxSearchbyDrug)
+        Me.TabPage7.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage7.Name = "TabPage7"
+        Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage7.Size = New System.Drawing.Size(1531, 810)
+        Me.TabPage7.TabIndex = 2
+        Me.TabPage7.Text = "Search by Drug"
+        Me.TabPage7.UseVisualStyleBackColor = True
+        '
+        'Label54
+        '
+        Me.Label54.AutoSize = True
+        Me.Label54.Location = New System.Drawing.Point(790, 18)
+        Me.Label54.Name = "Label54"
+        Me.Label54.Size = New System.Drawing.Size(118, 22)
+        Me.Label54.TabIndex = 5
+        Me.Label54.Text = "Patient Name"
+        '
+        'cboxSearchbyDrugPatientName
+        '
+        Me.cboxSearchbyDrugPatientName.FormattingEnabled = True
+        Me.cboxSearchbyDrugPatientName.Location = New System.Drawing.Point(914, 15)
+        Me.cboxSearchbyDrugPatientName.Name = "cboxSearchbyDrugPatientName"
+        Me.cboxSearchbyDrugPatientName.Size = New System.Drawing.Size(351, 30)
+        Me.cboxSearchbyDrugPatientName.TabIndex = 4
+        '
+        'TabControl3
+        '
+        Me.TabControl3.Controls.Add(Me.TabPage8)
+        Me.TabControl3.Controls.Add(Me.TabPage9)
+        Me.TabControl3.Location = New System.Drawing.Point(10, 60)
+        Me.TabControl3.Name = "TabControl3"
+        Me.TabControl3.SelectedIndex = 0
+        Me.TabControl3.Size = New System.Drawing.Size(1493, 744)
+        Me.TabControl3.TabIndex = 3
+        '
+        'TabPage8
+        '
+        Me.TabPage8.Controls.Add(Me.dgvLatestRecord)
+        Me.TabPage8.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage8.Name = "TabPage8"
+        Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage8.Size = New System.Drawing.Size(1485, 709)
+        Me.TabPage8.TabIndex = 0
+        Me.TabPage8.Text = "Latest Record"
+        Me.TabPage8.UseVisualStyleBackColor = True
+        '
+        'dgvLatestRecord
+        '
+        Me.dgvLatestRecord.AllowUserToAddRows = False
+        Me.dgvLatestRecord.AllowUserToDeleteRows = False
+        Me.dgvLatestRecord.AllowUserToResizeRows = False
+        Me.dgvLatestRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvLatestRecord.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn30, Me.DataGridViewTextBoxColumn31, Me.dgvColLatestDate, Me.DataGridViewTextBoxColumn32, Me.DataGridViewTextBoxColumn33, Me.dgvColLatestDateCollect, Me.dgvColLatestDateSeeDoctor, Me.DataGridViewTextBoxColumn39})
+        Me.dgvLatestRecord.Location = New System.Drawing.Point(0, 0)
+        Me.dgvLatestRecord.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvLatestRecord.Name = "dgvLatestRecord"
+        Me.dgvLatestRecord.ReadOnly = True
+        Me.dgvLatestRecord.RowHeadersVisible = False
+        Me.dgvLatestRecord.RowHeadersWidth = 51
+        Me.dgvLatestRecord.RowTemplate.Height = 24
+        Me.dgvLatestRecord.Size = New System.Drawing.Size(1478, 698)
+        Me.dgvLatestRecord.TabIndex = 2
+        '
+        'DataGridViewTextBoxColumn30
+        '
+        Me.DataGridViewTextBoxColumn30.HeaderText = "No"
+        Me.DataGridViewTextBoxColumn30.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn30.Name = "DataGridViewTextBoxColumn30"
+        Me.DataGridViewTextBoxColumn30.ReadOnly = True
+        Me.DataGridViewTextBoxColumn30.Width = 45
+        '
+        'DataGridViewTextBoxColumn31
+        '
+        Me.DataGridViewTextBoxColumn31.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn31.HeaderText = "ID"
+        Me.DataGridViewTextBoxColumn31.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn31.Name = "DataGridViewTextBoxColumn31"
+        Me.DataGridViewTextBoxColumn31.ReadOnly = True
+        Me.DataGridViewTextBoxColumn31.Width = 56
+        '
+        'dgvColLatestDate
+        '
+        Me.dgvColLatestDate.HeaderText = "Date"
+        Me.dgvColLatestDate.MinimumWidth = 6
+        Me.dgvColLatestDate.Name = "dgvColLatestDate"
+        Me.dgvColLatestDate.ReadOnly = True
+        Me.dgvColLatestDate.Width = 125
+        '
+        'DataGridViewTextBoxColumn32
+        '
+        Me.DataGridViewTextBoxColumn32.HeaderText = "Name"
+        Me.DataGridViewTextBoxColumn32.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn32.Name = "DataGridViewTextBoxColumn32"
+        Me.DataGridViewTextBoxColumn32.ReadOnly = True
+        Me.DataGridViewTextBoxColumn32.Width = 350
+        '
+        'DataGridViewTextBoxColumn33
+        '
+        Me.DataGridViewTextBoxColumn33.HeaderText = "IC No."
+        Me.DataGridViewTextBoxColumn33.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn33.Name = "DataGridViewTextBoxColumn33"
+        Me.DataGridViewTextBoxColumn33.ReadOnly = True
+        Me.DataGridViewTextBoxColumn33.Width = 170
+        '
+        'dgvColLatestDateCollect
+        '
+        Me.dgvColLatestDateCollect.HeaderText = "Date Collection"
+        Me.dgvColLatestDateCollect.MinimumWidth = 6
+        Me.dgvColLatestDateCollect.Name = "dgvColLatestDateCollect"
+        Me.dgvColLatestDateCollect.ReadOnly = True
+        Me.dgvColLatestDateCollect.Width = 260
+        '
+        'dgvColLatestDateSeeDoctor
+        '
+        Me.dgvColLatestDateSeeDoctor.HeaderText = "Date See Doctor"
+        Me.dgvColLatestDateSeeDoctor.MinimumWidth = 6
+        Me.dgvColLatestDateSeeDoctor.Name = "dgvColLatestDateSeeDoctor"
+        Me.dgvColLatestDateSeeDoctor.ReadOnly = True
+        Me.dgvColLatestDateSeeDoctor.Width = 260
+        '
+        'DataGridViewTextBoxColumn39
+        '
+        Me.DataGridViewTextBoxColumn39.HeaderText = "Timestamp"
+        Me.DataGridViewTextBoxColumn39.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn39.Name = "DataGridViewTextBoxColumn39"
+        Me.DataGridViewTextBoxColumn39.ReadOnly = True
+        Me.DataGridViewTextBoxColumn39.Width = 215
+        '
+        'TabPage9
+        '
+        Me.TabPage9.Controls.Add(Me.dgvPreviousRecords)
+        Me.TabPage9.Location = New System.Drawing.Point(4, 31)
+        Me.TabPage9.Name = "TabPage9"
+        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage9.Size = New System.Drawing.Size(1485, 709)
+        Me.TabPage9.TabIndex = 1
+        Me.TabPage9.Text = "Previous Records"
+        Me.TabPage9.UseVisualStyleBackColor = True
+        '
+        'dgvPreviousRecords
+        '
+        Me.dgvPreviousRecords.AllowUserToAddRows = False
+        Me.dgvPreviousRecords.AllowUserToDeleteRows = False
+        Me.dgvPreviousRecords.AllowUserToResizeRows = False
+        Me.dgvPreviousRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvPreviousRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn34, Me.DataGridViewTextBoxColumn35, Me.DataGridViewTextBoxColumn36, Me.DataGridViewTextBoxColumn37, Me.DataGridViewTextBoxColumn38, Me.DataGridViewTextBoxColumn40, Me.DataGridViewTextBoxColumn41, Me.DataGridViewTextBoxColumn42})
+        Me.dgvPreviousRecords.Location = New System.Drawing.Point(0, 0)
+        Me.dgvPreviousRecords.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvPreviousRecords.Name = "dgvPreviousRecords"
+        Me.dgvPreviousRecords.ReadOnly = True
+        Me.dgvPreviousRecords.RowHeadersVisible = False
+        Me.dgvPreviousRecords.RowHeadersWidth = 51
+        Me.dgvPreviousRecords.RowTemplate.Height = 24
+        Me.dgvPreviousRecords.Size = New System.Drawing.Size(1478, 698)
+        Me.dgvPreviousRecords.TabIndex = 3
+        '
+        'DataGridViewTextBoxColumn34
+        '
+        Me.DataGridViewTextBoxColumn34.HeaderText = "No"
+        Me.DataGridViewTextBoxColumn34.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn34.Name = "DataGridViewTextBoxColumn34"
+        Me.DataGridViewTextBoxColumn34.ReadOnly = True
+        Me.DataGridViewTextBoxColumn34.Width = 45
+        '
+        'DataGridViewTextBoxColumn35
+        '
+        Me.DataGridViewTextBoxColumn35.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn35.HeaderText = "ID"
+        Me.DataGridViewTextBoxColumn35.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn35.Name = "DataGridViewTextBoxColumn35"
+        Me.DataGridViewTextBoxColumn35.ReadOnly = True
+        Me.DataGridViewTextBoxColumn35.Width = 56
+        '
+        'DataGridViewTextBoxColumn36
+        '
+        Me.DataGridViewTextBoxColumn36.HeaderText = "Date"
+        Me.DataGridViewTextBoxColumn36.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn36.Name = "DataGridViewTextBoxColumn36"
+        Me.DataGridViewTextBoxColumn36.ReadOnly = True
+        Me.DataGridViewTextBoxColumn36.Width = 125
+        '
+        'DataGridViewTextBoxColumn37
+        '
+        Me.DataGridViewTextBoxColumn37.HeaderText = "Name"
+        Me.DataGridViewTextBoxColumn37.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn37.Name = "DataGridViewTextBoxColumn37"
+        Me.DataGridViewTextBoxColumn37.ReadOnly = True
+        Me.DataGridViewTextBoxColumn37.Width = 350
+        '
+        'DataGridViewTextBoxColumn38
+        '
+        Me.DataGridViewTextBoxColumn38.HeaderText = "IC No."
+        Me.DataGridViewTextBoxColumn38.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn38.Name = "DataGridViewTextBoxColumn38"
+        Me.DataGridViewTextBoxColumn38.ReadOnly = True
+        Me.DataGridViewTextBoxColumn38.Width = 170
+        '
+        'DataGridViewTextBoxColumn40
+        '
+        Me.DataGridViewTextBoxColumn40.HeaderText = "Date Collection"
+        Me.DataGridViewTextBoxColumn40.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn40.Name = "DataGridViewTextBoxColumn40"
+        Me.DataGridViewTextBoxColumn40.ReadOnly = True
+        Me.DataGridViewTextBoxColumn40.Width = 260
+        '
+        'DataGridViewTextBoxColumn41
+        '
+        Me.DataGridViewTextBoxColumn41.HeaderText = "Date See Doctor"
+        Me.DataGridViewTextBoxColumn41.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn41.Name = "DataGridViewTextBoxColumn41"
+        Me.DataGridViewTextBoxColumn41.ReadOnly = True
+        Me.DataGridViewTextBoxColumn41.Width = 260
+        '
+        'DataGridViewTextBoxColumn42
+        '
+        Me.DataGridViewTextBoxColumn42.HeaderText = "Timestamp"
+        Me.DataGridViewTextBoxColumn42.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn42.Name = "DataGridViewTextBoxColumn42"
+        Me.DataGridViewTextBoxColumn42.ReadOnly = True
+        Me.DataGridViewTextBoxColumn42.Width = 215
+        '
+        'Label53
+        '
+        Me.Label53.AutoSize = True
+        Me.Label53.Location = New System.Drawing.Point(6, 18)
+        Me.Label53.Name = "Label53"
+        Me.Label53.Size = New System.Drawing.Size(101, 22)
+        Me.Label53.TabIndex = 1
+        Me.Label53.Text = "Drug Name"
+        '
+        'cboxSearchbyDrug
+        '
+        Me.cboxSearchbyDrug.BackColor = System.Drawing.SystemColors.Info
+        Me.cboxSearchbyDrug.FormattingEnabled = True
+        Me.cboxSearchbyDrug.Location = New System.Drawing.Point(123, 15)
+        Me.cboxSearchbyDrug.Name = "cboxSearchbyDrug"
+        Me.cboxSearchbyDrug.Size = New System.Drawing.Size(651, 30)
+        Me.cboxSearchbyDrug.TabIndex = 0
+        '
         'TabPage4
         '
         Me.TabPage4.Controls.Add(Me.btnDeletePatientDB)
@@ -4198,7 +4478,7 @@ Partial Class Form1
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(185, 22)
         Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 5, Revision 3"
+        Me.Label43.Text = "Release 5, Revision 4"
         '
         'GroupBox5
         '
@@ -4748,6 +5028,13 @@ Partial Class Form1
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage7.ResumeLayout(False)
+        Me.TabPage7.PerformLayout()
+        Me.TabControl3.ResumeLayout(False)
+        Me.TabPage8.ResumeLayout(False)
+        CType(Me.dgvLatestRecord, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage9.ResumeLayout(False)
+        CType(Me.dgvPreviousRecords, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
         CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).EndInit()
@@ -5141,4 +5428,30 @@ Partial Class Form1
     Friend WithEvents lblLogPrevPatientDateSeeDoctor As Label
     Friend WithEvents lblLogPrevPatientDateCollection As Label
     Friend WithEvents LinkLabel2 As LinkLabel
+    Friend WithEvents TabPage7 As TabPage
+    Friend WithEvents Label53 As Label
+    Friend WithEvents cboxSearchbyDrug As ComboBox
+    Friend WithEvents dgvLatestRecord As DataGridView
+    Friend WithEvents TabControl3 As TabControl
+    Friend WithEvents TabPage8 As TabPage
+    Friend WithEvents TabPage9 As TabPage
+    Friend WithEvents dgvPreviousRecords As DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn30 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn31 As DataGridViewTextBoxColumn
+    Friend WithEvents dgvColLatestDate As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn32 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn33 As DataGridViewTextBoxColumn
+    Friend WithEvents dgvColLatestDateCollect As DataGridViewTextBoxColumn
+    Friend WithEvents dgvColLatestDateSeeDoctor As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn39 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn34 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn35 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn36 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn37 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn38 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn40 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn41 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn42 As DataGridViewTextBoxColumn
+    Friend WithEvents Label54 As Label
+    Friend WithEvents cboxSearchbyDrugPatientName As ComboBox
 End Class
