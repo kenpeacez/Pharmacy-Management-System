@@ -11,6 +11,7 @@ Imports System.Threading.Tasks
 Imports System.Threading
 Imports System.Net.Http
 Imports Newtonsoft.Json.Linq
+Imports System.Reflection
 
 
 Public Class Form1
@@ -115,6 +116,14 @@ Public Class Form1
     End Sub
 
 
+
+    Public Sub SetDoubleBuffered(dgv As DataGridView)
+        Dim dgvType As Type = dgv.GetType()
+        Dim pi As PropertyInfo = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
+        pi.SetValue(dgv, True, Nothing)
+    End Sub
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Form Initialization / First Load
         'Utility.FitFormToScreen(Me, 1200, 1920)
@@ -142,12 +151,14 @@ Public Class Form1
         'Method to load Log > Records tab for Daily Records Data
         loadDGVRecords()
         '
-        loadDrugNamestoCboxSearch()
+
 
         notyetinitialize = False
     End Sub
 
     Public Sub InitializeAll()
+
+        SetDoubleBuffered(dgvRecords)
 
         dtpDateSeeDoctor.Value = Today
 
@@ -155,6 +166,12 @@ Public Class Form1
         dtpRecordsDateSelector.MaxDate = Today
         dtpRecordsDateSelectorEnd.MaxDate = Today
         dtpRecordsDateSelectorEnd.Value = Today
+
+        dtpDrugQty1.Value = Today
+        dtpDrugQty2.Value = Today
+
+        dtpAllDrugsQty1.Value = Today
+        dtpAllDrugsQty2.Value = Today
 
         cboxEnablePrintPDF.Checked = My.Settings.EnablePrintAfterSave
         cboxAutoClear.Checked = My.Settings.AutoClear
@@ -175,8 +192,6 @@ Public Class Form1
         DataGridViewInsulin.AllowUserToAddRows = False
         dgvPatientDrugHistory.AllowUserToAddRows = False
         dgvPatientInsulinHistory.AllowUserToAddRows = False
-
-        cboxSearchbyDrugPatientName.Enabled = False
 
         If cboxEnablePrintPDF.Checked Then
             btnSave.Text = "Save and Print"
@@ -1943,7 +1958,7 @@ Redo:
                 DGV_Load()
                 loaddatafromdb()
                 loadInsulindatafromdb()
-                loadDrugNamestoCboxSearch()
+
                 'checkforselecteddrugs()
                 'clearall()
             Else
@@ -2294,40 +2309,6 @@ Redo:
 
     End Sub
 
-    Public Sub loadDrugNamestoCboxSearch()
-        Dim tempcbSearchDrug = cboxSearchbyDrug.SelectedIndex
-        Dim tempcbDrugQty = cbDrugQty.SelectedIndex ' Store the current index of cbDrugQty
-        Try
-            cboxSearchbyDrug.Items.Clear()
-            cbDrugQty.Items.Clear() ' Clear the cbDrugQty ComboBox
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT DrugName FROM drugtable", conn)
-            Dim dt As New DataTable
-            Dim da As New MySqlDataAdapter(cmd)
-            Dim col As New AutoCompleteStringCollection
-            Dim drugnamedb As String
-            da.Fill(dt)
-            For i = 0 To dt.Rows.Count - 1
-                col.Add(dt.Rows(i)("DrugName").ToString())
-                drugnamedb = dt.Rows(i)("DrugName").ToString()
-                cboxSearchbyDrug.Items.Add(drugnamedb)
-                cbDrugQty.Items.Add(drugnamedb) ' Add drug names to cbDrugQty
-            Next
-            conn.Close()
-            da.Dispose()
-            cboxSearchbyDrug.AutoCompleteSource = AutoCompleteSource.CustomSource
-            cboxSearchbyDrug.AutoCompleteCustomSource = col
-            cboxSearchbyDrug.AutoCompleteMode = AutoCompleteMode.Suggest
-            cboxSearchbyDrug.SelectedIndex = tempcbSearchDrug
-
-            cbDrugQty.AutoCompleteSource = AutoCompleteSource.CustomSource
-            cbDrugQty.AutoCompleteCustomSource = col
-            cbDrugQty.AutoCompleteMode = AutoCompleteMode.Suggest
-            cbDrugQty.SelectedIndex = tempcbDrugQty ' Restore the previous index of cbDrugQty
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
 
     Public Sub loaddatafromdb()
         'run the search drug name combo box also
@@ -2343,6 +2324,8 @@ Redo:
         Dim tempcbDrug9 = cbDrug9.SelectedIndex
         Dim tempcbDrug10 = cbDrug10.SelectedIndex
 
+        Dim tempcbDrugQty = cbDrugQty.SelectedIndex
+
         Try
             cbDrug1.Items.Clear()
             cbDrug2.Items.Clear()
@@ -2354,7 +2337,8 @@ Redo:
             cbDrug8.Items.Clear()
             cbDrug9.Items.Clear()
             cbDrug10.Items.Clear()
-            cboxSearchbyDrug.Items.Clear()
+            cbDrugQty.Items.Clear()
+
             conn.Open()
             Dim cmd As New MySqlCommand("SELECT DrugName FROM drugtable WHERE DrugName not like '%Insulin%'", conn)
             Dim dt As New DataTable
@@ -2375,6 +2359,7 @@ Redo:
                 cbDrug8.Items.Add(drugnamedb)
                 cbDrug9.Items.Add(drugnamedb)
                 cbDrug10.Items.Add(drugnamedb)
+                cbDrugQty.Items.Add(drugnamedb)
             Next
             conn.Close()
             da.Dispose()
@@ -2421,6 +2406,10 @@ Redo:
             cbDrug10.AutoCompleteCustomSource = col
             cbDrug10.AutoCompleteMode = AutoCompleteMode.Suggest
 
+            cbDrugQty.AutoCompleteSource = AutoCompleteSource.CustomSource
+            cbDrugQty.AutoCompleteCustomSource = col
+            cbDrugQty.AutoCompleteMode = AutoCompleteMode.Suggest
+
             'sets the drug from previously selected
             cbDrug1.SelectedIndex = tempcbDrug1
             cbDrug2.SelectedIndex = tempcbDrug2
@@ -2432,6 +2421,7 @@ Redo:
             cbDrug8.SelectedIndex = tempcbDrug8
             cbDrug9.SelectedIndex = tempcbDrug9
             cbDrug10.SelectedIndex = tempcbDrug10
+            cbDrugQty.SelectedIndex = tempcbDrugQty
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -4042,6 +4032,7 @@ Redo:
     Private Sub btnIOU_Click(sender As Object, e As EventArgs) Handles btnIOU.Click
         Dim newForm As New Form2()
         newForm.Show()
+        txtICNoDB.Text = txtICNo.Text
         'Form2.Show()
     End Sub
 
@@ -4339,60 +4330,6 @@ Redo:
 
     End Sub
 
-    Public Sub loadSearchDrugDGV()
-        dgvLatestRecord.Rows.Clear()
-
-        Dim dt As New DataTable
-        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
-        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
-        Dim count As Integer = 0
-        Dim cmd As New MySqlCommand(" SELECT 
-        ID,
-        Date,
-        Name,
-      ICNo,
-       DateCollection,
-       DateSeeDoctor,
-      Timestamp
-        FROM 
-       `prescribeddrugs`
-        WHERE 
-      Drug1Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
-      OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
-      OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
-        Try
-
-            conn.Open()
-            dr = cmd.ExecuteReader
-
-            While dr.Read()
-                count += 1
-                dgvLatestRecord.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
-
-            End While
-            'timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
-
-
-            'lblPatientNameDB.Text = dr.Item("Name")
-            dr.Close()
-        Catch ex As Exception
-            'MsgBox(ex.Message)
-            'MessageBox.Show("IC No. not found.")
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-    End Sub
-
     Public Sub loadDrugQtyDGV()
         dgvDrugQty.Rows.Clear() ' Clear the dgvDrugQty DataGridView
 
@@ -4401,54 +4338,109 @@ Redo:
         Dim totalQty As Integer = 0 ' Initialize total quantity
         Dim startDate As String = dtpDrugQty1.Value.ToString("yyyy-MM-dd HH:mm:ss")
         Dim endDate As String = dtpDrugQty2.Value.ToString("yyyy-MM-dd HH:mm:ss")
-        Dim cmd As New MySqlCommand("SELECT 
-        ID,
-        Date,
-        Name,
-        ICNo,
-        DateCollection,
-        DateSeeDoctor,
-        Timestamp,
-        Drug1Name,
-        Drug1TotalQTY,
-        Drug2Name,
-        Drug2TotalQTY,
-        Drug3Name,
-        Drug3TotalQTY,
-        Drug4Name,
-        Drug4TotalQTY,
-        Drug5Name,
-        Drug5TotalQTY,
-        Drug6Name,
-        Drug6TotalQTY,
-        Drug7Name,
-        Drug7TotalQTY,
-        Drug8Name,
-        Drug8TotalQTY,
-        Drug9Name,
-        Drug9TotalQTY,
-        Drug10Name,
-        Drug10TotalQTY,
-        Insulin1Name,
-        Insulin1CartQTY,
-        Insulin2Name,
-        Insulin2CartQTY
+        Dim cmd As New MySqlCommand("
+        SELECT 
+            ID,
+            Date,
+            Name,
+            ICNo,
+            DateCollection,
+            DateSeeDoctor,
+            Timestamp,
+            Drug1Name,
+            Drug1TotalQTY,
+            Drug2Name,
+            Drug2TotalQTY,
+            Drug3Name,
+            Drug3TotalQTY,
+            Drug4Name,
+            Drug4TotalQTY,
+            Drug5Name,
+            Drug5TotalQTY,
+            Drug6Name,
+            Drug6TotalQTY,
+            Drug7Name,
+            Drug7TotalQTY,
+            Drug8Name,
+            Drug8TotalQTY,
+            Drug9Name,
+            Drug9TotalQTY,
+            Drug10Name,
+            Drug10TotalQTY,
+            Insulin1Name,
+            Insulin1CartQTY,
+            Insulin2Name,
+            Insulin2CartQTY
         FROM 
-        `prescribeddrugs`
+            `prescribeddrugs`
         WHERE 
-        (Drug1Name = '" & cbDrugQty.Text & "' 
-        OR Drug2Name = '" & cbDrugQty.Text & "' 
-        OR Drug3Name = '" & cbDrugQty.Text & "' 
-        OR Drug4Name = '" & cbDrugQty.Text & "' 
-        OR Drug5Name = '" & cbDrugQty.Text & "' 
-        OR Drug6Name = '" & cbDrugQty.Text & "' 
-        OR Drug7Name = '" & cbDrugQty.Text & "' 
-        OR Drug8Name = '" & cbDrugQty.Text & "' 
-        OR Drug9Name = '" & cbDrugQty.Text & "' 
-        OR Drug10Name = '" & cbDrugQty.Text & "' 
-        OR Insulin1Name = '" & cbDrugQty.Text & "' 
-        OR Insulin2Name = '" & cbDrugQty.Text & "') 
-        AND Timestamp BETWEEN '" & startDate & "' AND '" & endDate & "'", conn)
+            (Drug1Name = @drugName 
+            OR Drug2Name = @drugName 
+            OR Drug3Name = @drugName 
+            OR Drug4Name = @drugName 
+            OR Drug5Name = @drugName 
+            OR Drug6Name = @drugName 
+            OR Drug7Name = @drugName 
+            OR Drug8Name = @drugName 
+            OR Drug9Name = @drugName 
+            OR Drug10Name = @drugName 
+            OR Insulin1Name = @drugName 
+            OR Insulin2Name = @drugName) 
+            AND Timestamp BETWEEN @startDate AND @endDate
+        UNION
+        SELECT 
+            ID,
+            Date,
+            Name,
+            ICNo,
+            DateCollection,
+            DateSeeDoctor,
+            Timestamp,
+            Drug1Name,
+            Drug1TotalQTY,
+            Drug2Name,
+            Drug2TotalQTY,
+            Drug3Name,
+            Drug3TotalQTY,
+            Drug4Name,
+            Drug4TotalQTY,
+            Drug5Name,
+            Drug5TotalQTY,
+            Drug6Name,
+            Drug6TotalQTY,
+            Drug7Name,
+            Drug7TotalQTY,
+            Drug8Name,
+            Drug8TotalQTY,
+            Drug9Name,
+            Drug9TotalQTY,
+            Drug10Name,
+            Drug10TotalQTY,
+            Insulin1Name,
+            Insulin1CartQTY,
+            Insulin2Name,
+            Insulin2CartQTY
+        FROM 
+            `prescribeddrugshistory`
+        WHERE 
+            (Drug1Name = @drugName 
+            OR Drug2Name = @drugName 
+            OR Drug3Name = @drugName 
+            OR Drug4Name = @drugName 
+            OR Drug5Name = @drugName 
+            OR Drug6Name = @drugName 
+            OR Drug7Name = @drugName 
+            OR Drug8Name = @drugName 
+            OR Drug9Name = @drugName 
+            OR Drug10Name = @drugName 
+            OR Insulin1Name = @drugName 
+            OR Insulin2Name = @drugName) 
+            AND Timestamp BETWEEN @startDate AND @endDate", conn)
+
+        cmd.Parameters.AddWithValue("@drugName", cbDrugQty.Text)
+        cmd.Parameters.AddWithValue("@startDate", startDate)
+        cmd.Parameters.AddWithValue("@endDate", endDate)
+
         Try
             conn.Open()
             dr = cmd.ExecuteReader
@@ -4488,7 +4480,7 @@ Redo:
                 totalQty += currentQty
 
                 ' Add the main data and the matching drug's total quantity to the dgvDrugQty DataGridView
-                dgvDrugQty.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"), currentQty)
+                dgvDrugQty.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), currentQty, dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
             End While
 
             ' Update the label with the total quantity
@@ -4496,88 +4488,90 @@ Redo:
 
             dr.Close()
         Catch ex As Exception
-            MsgBox(ex.Message) ' Handle exceptions if necessary
+            ' MsgBox(ex.Message) ' Handle exceptions if necessary
         Finally
             dr.Dispose()
             conn.Close()
         End Try
     End Sub
 
-    Public Sub loadSearchPreviousDrugDGV()
-        dgvPreviousRecords.Rows.Clear()
-        If cboxSearchbyDrug.Text Is "" Then
-            Return
-            'MessageBox.Show("error")
-        End If
+    Public Sub loadAllDrugsQtyDGV()
+        dgvAllDrugsQty.Rows.Clear() ' Clear the dgvAllDrugsQty DataGridView
 
-        'conn.Open()
         Dim dt As New DataTable
-        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
-        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
-        Dim count As Integer = 0
-        Dim cmd As New MySqlCommand(" SELECT 
-        ID,
-      Date,
-      Name,
-      ICNo,
-       DateCollection,
-       DateSeeDoctor,
-       Timestamp
-       FROM 
-       `prescribeddrugshistory`
-      WHERE 
-      Drug1Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
-      OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
-       OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
-      OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
-        Dim da As New MySqlDataAdapter(cmd)
-        Dim col As New AutoCompleteStringCollection
-        Dim PatientName As String
+        Dim startDate As String = dtpAllDrugsQty1.Value.ToString("yyyy-MM-dd HH:mm:ss")
+        Dim endDate As String = dtpAllDrugsQty2.Value.ToString("yyyy-MM-dd HH:mm:ss")
+
+        Dim cmd As New MySqlCommand("SELECT 
+    DrugName, 
+    SUM(TotalQTY) AS TotalQuantity 
+    FROM (
+        SELECT Drug1Name AS DrugName, Drug1TotalQTY AS TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug2Name, Drug2TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug3Name, Drug3TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug4Name, Drug4TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug5Name, Drug5TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug6Name, Drug6TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug7Name, Drug7TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug8Name, Drug8TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug9Name, Drug9TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug10Name, Drug10TotalQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Insulin1Name, Insulin1CartQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Insulin2Name, Insulin2CartQTY FROM prescribeddrugs WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug1Name, Drug1TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug2Name, Drug2TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug3Name, Drug3TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug4Name, Drug4TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug5Name, Drug5TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug6Name, Drug6TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug7Name, Drug7TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug8Name, Drug8TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug9Name, Drug9TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Drug10Name, Drug10TotalQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Insulin1Name, Insulin1CartQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+        UNION ALL
+        SELECT Insulin2Name, Insulin2CartQTY FROM prescribeddrugshistory WHERE Timestamp BETWEEN @startDate AND @endDate
+    ) AS AllDrugs
+    GROUP BY DrugName", conn)
+
+        cmd.Parameters.AddWithValue("@startDate", startDate)
+        cmd.Parameters.AddWithValue("@endDate", endDate)
+
         Try
-
-
-
             conn.Open()
             dr = cmd.ExecuteReader
 
             While dr.Read()
-                count += 1
-                dgvPreviousRecords.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
-
-
+                dgvAllDrugsQty.Rows.Add(dr.Item("DrugName"), dr.Item("TotalQuantity"))
             End While
-            'timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
 
-
-            'lblPatientNameDB.Text = dr.Item("Name")
             dr.Close()
-
-
         Catch ex As Exception
-            'MsgBox(ex.Message)
-            'MessageBox.Show("IC No. not found.")
+            ' MsgBox(ex.Message)
         Finally
             dr.Dispose()
-            cboxSearchbyDrugPatientName.Items.Clear()
-            da.Fill(dt)
-            For i = 0 To dt.Rows.Count - 1
-                col.Add(dt.Rows(i)("Name").ToString())
-                PatientName = dt.Rows(i)("Name").ToString()
-                cboxSearchbyDrugPatientName.Items.Add(PatientName)
-            Next
-            conn.Close()
-            da.Dispose()
-            cboxSearchbyDrugPatientName.AutoCompleteSource = AutoCompleteSource.CustomSource
-            cboxSearchbyDrugPatientName.AutoCompleteCustomSource = col
-            cboxSearchbyDrugPatientName.AutoCompleteMode = AutoCompleteMode.Suggest
             conn.Close()
         End Try
     End Sub
@@ -5445,103 +5439,13 @@ Redo:
 
     End Sub
 
-    Private Sub lblDate_Click(sender As Object, e As EventArgs) Handles lblDate.Click
-        Form4.Show()
-
-    End Sub
-
     Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
         Dim url As String = "https://paypal.me/kenpeacez?country.x=MY&locale.x=en_US"
 
         Process.Start(New ProcessStartInfo(url) With {.UseShellExecute = True})
     End Sub
 
-    Private Sub cboxSearchbyDrug_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxSearchbyDrug.SelectedIndexChanged
-        loadSearchDrugDGV()
-        loadSearchPreviousDrugDGV()
-        cboxSearchbyDrugPatientName.Text = ""
-    End Sub
 
-    Private Sub cboxSearchbyDrug_TextChanged(sender As Object, e As EventArgs) Handles cboxSearchbyDrug.TextChanged
-        If cboxSearchbyDrug.Text = "" Then
-            dgvLatestRecord.Rows.Clear()
-            dgvPreviousRecords.Rows.Clear()
-            cboxSearchbyDrugPatientName.Text = ""
-        End If
-    End Sub
-
-    Private Sub TabControl3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl3.SelectedIndexChanged
-        If TabControl3.SelectedIndex = 1 Then
-            cboxSearchbyDrugPatientName.Enabled = True
-            loadSearchPreviousDrugDGV()
-        End If
-        If TabControl3.SelectedIndex = 0 Then
-            cboxSearchbyDrugPatientName.Text = ""
-            cboxSearchbyDrugPatientName.Enabled = False
-        End If
-    End Sub
-
-    Private Sub cboxSearchbyDrugPatientName_TextChanged(sender As Object, e As EventArgs) Handles cboxSearchbyDrugPatientName.SelectedIndexChanged
-        dgvPreviousRecords.Rows.Clear()
-        'conn.Open()
-        Dim dt As New DataTable
-        'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
-        'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
-        Dim count As Integer = 0
-        Dim cmd As New MySqlCommand(" SELECT 
-    ID,
-    Date,
-    Name,
-    ICNo,
-    DateCollection,
-    DateSeeDoctor,
-    Timestamp
-FROM 
-    `prescribeddrugshistory`
-WHERE 
-    (Drug1Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
-    OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
-    OR Insulin2Name = '" & cboxSearchbyDrug.Text & "') AND Name = '" & cboxSearchbyDrugPatientName.Text & "'", conn)
-        Dim da As New MySqlDataAdapter(cmd)
-        Dim col As New AutoCompleteStringCollection
-
-        Try
-
-
-
-            conn.Open()
-            dr = cmd.ExecuteReader
-
-            While dr.Read()
-                count += 1
-                dgvPreviousRecords.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"))
-
-
-            End While
-            'timestamp = dgvDateSelector.CurrentRow.Cells(5).Value
-
-
-            'lblPatientNameDB.Text = dr.Item("Name")
-            dr.Close()
-
-
-        Catch ex As Exception
-            'MsgBox(ex.Message)
-            'MessageBox.Show("IC No. not found.")
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-    End Sub
 
     Private Sub dtpDateSeeDoctor_ValueChanged(sender As Object, e As EventArgs) Handles dtpDateSeeDoctor.ValueChanged
         ' Calculate the difference in days between the two dates
@@ -5635,4 +5539,26 @@ WHERE
         End If
 
     End Sub
+
+    Private Sub dtpAllDrugsQty1_ValueChanged(sender As Object, e As EventArgs) Handles dtpAllDrugsQty1.ValueChanged
+        If notyetinitialize Then
+            Return
+        Else
+            dtpAllDrugsQty2.MinDate = dtpAllDrugsQty1.Value
+            loadAllDrugsQtyDGV()
+        End If
+    End Sub
+
+    Private Sub dtpAllDrugsQty2_ValueChanged(sender As Object, e As EventArgs) Handles dtpAllDrugsQty2.ValueChanged
+        If notyetinitialize Then
+            Return
+        Else
+            loadAllDrugsQtyDGV()
+        End If
+    End Sub
+
+    Private Sub btnOpenStatistics_Click(sender As Object, e As EventArgs) Handles btnOpenStatistics.Click
+        Form4.Show()
+    End Sub
+
 End Class

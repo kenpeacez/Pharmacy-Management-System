@@ -280,6 +280,7 @@ Partial Class Form1
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.btnOpenStatistics = New System.Windows.Forms.Button()
         Me.lblEditModeRecords = New System.Windows.Forms.Label()
         Me.btnChangeRecord = New System.Windows.Forms.Button()
         Me.btnDeleteRecord = New System.Windows.Forms.Button()
@@ -305,40 +306,33 @@ Partial Class Form1
         Me.DateCollectionRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DateSeeDoctorRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TimestampRecord = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TabPage7 = New System.Windows.Forms.TabPage()
-        Me.Label54 = New System.Windows.Forms.Label()
-        Me.cboxSearchbyDrugPatientName = New System.Windows.Forms.ComboBox()
-        Me.TabControl3 = New System.Windows.Forms.TabControl()
-        Me.TabPage8 = New System.Windows.Forms.TabPage()
-        Me.dgvLatestRecord = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn30 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn31 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgvColLatestDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn32 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn33 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgvColLatestDateCollect = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgvColLatestDateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn39 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TabPage9 = New System.Windows.Forms.TabPage()
-        Me.dgvPreviousRecords = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn34 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn35 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn36 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn37 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn38 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn40 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn41 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn42 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Label53 = New System.Windows.Forms.Label()
-        Me.cboxSearchbyDrug = New System.Windows.Forms.ComboBox()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.lblDrugTotalQty = New System.Windows.Forms.Label()
+        Me.Label59 = New System.Windows.Forms.Label()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.dtpDrugQty2 = New System.Windows.Forms.DateTimePicker()
         Me.Label58 = New System.Windows.Forms.Label()
         Me.dtpDrugQty1 = New System.Windows.Forms.DateTimePicker()
         Me.dgvDrugQty = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn43 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn44 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn45 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn46 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn47 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DrugQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn48 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn49 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn50 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label56 = New System.Windows.Forms.Label()
         Me.cbDrugQty = New System.Windows.Forms.ComboBox()
+        Me.TabPage11 = New System.Windows.Forms.TabPage()
+        Me.Label60 = New System.Windows.Forms.Label()
+        Me.dtpAllDrugsQty2 = New System.Windows.Forms.DateTimePicker()
+        Me.Label61 = New System.Windows.Forms.Label()
+        Me.dtpAllDrugsQty1 = New System.Windows.Forms.DateTimePicker()
+        Me.dgvAllDrugsQty = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn54 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn59 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.btnDeletePatientDB = New System.Windows.Forms.Button()
         Me.lblEditModeDB = New System.Windows.Forms.Label()
@@ -435,17 +429,6 @@ Partial Class Form1
         Me.lblDate = New System.Windows.Forms.Label()
         Me.lblQuote = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Label59 = New System.Windows.Forms.Label()
-        Me.lblDrugTotalQty = New System.Windows.Forms.Label()
-        Me.DataGridViewTextBoxColumn43 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn44 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn45 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn46 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn47 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn48 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn49 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn50 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DrugQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
@@ -475,14 +458,10 @@ Partial Class Form1
         CType(Me.DataGridViewDrug, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage7.SuspendLayout()
-        Me.TabControl3.SuspendLayout()
-        Me.TabPage8.SuspendLayout()
-        CType(Me.dgvLatestRecord, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage9.SuspendLayout()
-        CType(Me.dgvPreviousRecords, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage10.SuspendLayout()
         CType(Me.dgvDrugQty, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage11.SuspendLayout()
+        CType(Me.dgvAllDrugsQty, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvPatientDrugHistory, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -766,6 +745,7 @@ Partial Class Form1
         '
         Me.groupInsulin.Controls.Add(Me.TableLayoutPanel16)
         Me.groupInsulin.Controls.Add(Me.TableLayoutPanel4)
+        Me.groupInsulin.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.groupInsulin.Location = New System.Drawing.Point(6, 521)
         Me.groupInsulin.Margin = New System.Windows.Forms.Padding(2)
         Me.groupInsulin.Name = "groupInsulin"
@@ -830,7 +810,7 @@ Partial Class Form1
         Me.cbInsulin2.Location = New System.Drawing.Point(36, 2)
         Me.cbInsulin2.Margin = New System.Windows.Forms.Padding(2)
         Me.cbInsulin2.Name = "cbInsulin2"
-        Me.cbInsulin2.Size = New System.Drawing.Size(414, 25)
+        Me.cbInsulin2.Size = New System.Drawing.Size(414, 23)
         Me.cbInsulin2.TabIndex = 13
         '
         'lblStrInsulin2
@@ -864,7 +844,7 @@ Partial Class Form1
         Me.txtIn2MorDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn2MorDose.MaxLength = 2
         Me.txtIn2MorDose.Name = "txtIn2MorDose"
-        Me.txtIn2MorDose.Size = New System.Drawing.Size(68, 24)
+        Me.txtIn2MorDose.Size = New System.Drawing.Size(68, 21)
         Me.txtIn2MorDose.TabIndex = 14
         Me.txtIn2MorDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -874,7 +854,7 @@ Partial Class Form1
         Me.txtIn2NoonDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn2NoonDose.MaxLength = 2
         Me.txtIn2NoonDose.Name = "txtIn2NoonDose"
-        Me.txtIn2NoonDose.Size = New System.Drawing.Size(56, 24)
+        Me.txtIn2NoonDose.Size = New System.Drawing.Size(56, 21)
         Me.txtIn2NoonDose.TabIndex = 15
         Me.txtIn2NoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -884,7 +864,7 @@ Partial Class Form1
         Me.txtIn2AfterNoonDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn2AfterNoonDose.MaxLength = 2
         Me.txtIn2AfterNoonDose.Name = "txtIn2AfterNoonDose"
-        Me.txtIn2AfterNoonDose.Size = New System.Drawing.Size(66, 24)
+        Me.txtIn2AfterNoonDose.Size = New System.Drawing.Size(66, 21)
         Me.txtIn2AfterNoonDose.TabIndex = 16
         Me.txtIn2AfterNoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -894,7 +874,7 @@ Partial Class Form1
         Me.txtIn2NightDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn2NightDose.MaxLength = 2
         Me.txtIn2NightDose.Name = "txtIn2NightDose"
-        Me.txtIn2NightDose.Size = New System.Drawing.Size(49, 24)
+        Me.txtIn2NightDose.Size = New System.Drawing.Size(49, 21)
         Me.txtIn2NightDose.TabIndex = 17
         Me.txtIn2NightDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -905,7 +885,7 @@ Partial Class Form1
         Me.txtIn2Freq.MaxLength = 4
         Me.txtIn2Freq.Name = "txtIn2Freq"
         Me.txtIn2Freq.ReadOnly = True
-        Me.txtIn2Freq.Size = New System.Drawing.Size(39, 24)
+        Me.txtIn2Freq.Size = New System.Drawing.Size(39, 21)
         Me.txtIn2Freq.TabIndex = 18
         Me.txtIn2Freq.Text = "1"
         Me.txtIn2Freq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -916,7 +896,7 @@ Partial Class Form1
         Me.txtIn2Duration.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn2Duration.MaxLength = 4
         Me.txtIn2Duration.Name = "txtIn2Duration"
-        Me.txtIn2Duration.Size = New System.Drawing.Size(63, 24)
+        Me.txtIn2Duration.Size = New System.Drawing.Size(63, 21)
         Me.txtIn2Duration.TabIndex = 19
         Me.txtIn2Duration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -926,7 +906,7 @@ Partial Class Form1
         Me.txtIn2TotalDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn2TotalDose.MaxLength = 4
         Me.txtIn2TotalDose.Name = "txtIn2TotalDose"
-        Me.txtIn2TotalDose.Size = New System.Drawing.Size(58, 24)
+        Me.txtIn2TotalDose.Size = New System.Drawing.Size(58, 21)
         Me.txtIn2TotalDose.TabIndex = 20
         Me.txtIn2TotalDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -936,7 +916,7 @@ Partial Class Form1
         Me.txtIn2POM.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn2POM.MaxLength = 2
         Me.txtIn2POM.Name = "txtIn2POM"
-        Me.txtIn2POM.Size = New System.Drawing.Size(50, 24)
+        Me.txtIn2POM.Size = New System.Drawing.Size(50, 21)
         Me.txtIn2POM.TabIndex = 21
         Me.txtIn2POM.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1033,7 +1013,7 @@ Partial Class Form1
         Me.cbInsulin1.Location = New System.Drawing.Point(36, 30)
         Me.cbInsulin1.Margin = New System.Windows.Forms.Padding(2)
         Me.cbInsulin1.Name = "cbInsulin1"
-        Me.cbInsulin1.Size = New System.Drawing.Size(414, 25)
+        Me.cbInsulin1.Size = New System.Drawing.Size(414, 23)
         Me.cbInsulin1.TabIndex = 0
         '
         'lblInsulin
@@ -1164,7 +1144,7 @@ Partial Class Form1
         Me.txtIn1MorDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn1MorDose.MaxLength = 2
         Me.txtIn1MorDose.Name = "txtIn1MorDose"
-        Me.txtIn1MorDose.Size = New System.Drawing.Size(68, 24)
+        Me.txtIn1MorDose.Size = New System.Drawing.Size(68, 21)
         Me.txtIn1MorDose.TabIndex = 2
         Me.txtIn1MorDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1174,7 +1154,7 @@ Partial Class Form1
         Me.txtIn1NoonDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn1NoonDose.MaxLength = 2
         Me.txtIn1NoonDose.Name = "txtIn1NoonDose"
-        Me.txtIn1NoonDose.Size = New System.Drawing.Size(56, 24)
+        Me.txtIn1NoonDose.Size = New System.Drawing.Size(56, 21)
         Me.txtIn1NoonDose.TabIndex = 3
         Me.txtIn1NoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1184,7 +1164,7 @@ Partial Class Form1
         Me.txtIn1AfterNoonDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn1AfterNoonDose.MaxLength = 2
         Me.txtIn1AfterNoonDose.Name = "txtIn1AfterNoonDose"
-        Me.txtIn1AfterNoonDose.Size = New System.Drawing.Size(66, 24)
+        Me.txtIn1AfterNoonDose.Size = New System.Drawing.Size(66, 21)
         Me.txtIn1AfterNoonDose.TabIndex = 4
         Me.txtIn1AfterNoonDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1194,7 +1174,7 @@ Partial Class Form1
         Me.txtIn1NightDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn1NightDose.MaxLength = 2
         Me.txtIn1NightDose.Name = "txtIn1NightDose"
-        Me.txtIn1NightDose.Size = New System.Drawing.Size(49, 24)
+        Me.txtIn1NightDose.Size = New System.Drawing.Size(49, 21)
         Me.txtIn1NightDose.TabIndex = 5
         Me.txtIn1NightDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1205,7 +1185,7 @@ Partial Class Form1
         Me.txtIn1Freq.MaxLength = 4
         Me.txtIn1Freq.Name = "txtIn1Freq"
         Me.txtIn1Freq.ReadOnly = True
-        Me.txtIn1Freq.Size = New System.Drawing.Size(39, 24)
+        Me.txtIn1Freq.Size = New System.Drawing.Size(39, 21)
         Me.txtIn1Freq.TabIndex = 6
         Me.txtIn1Freq.Text = "1"
         Me.txtIn1Freq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -1216,7 +1196,7 @@ Partial Class Form1
         Me.txtIn1Duration.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn1Duration.MaxLength = 4
         Me.txtIn1Duration.Name = "txtIn1Duration"
-        Me.txtIn1Duration.Size = New System.Drawing.Size(63, 24)
+        Me.txtIn1Duration.Size = New System.Drawing.Size(63, 21)
         Me.txtIn1Duration.TabIndex = 7
         Me.txtIn1Duration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1226,7 +1206,7 @@ Partial Class Form1
         Me.txtIn1TotalDose.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn1TotalDose.MaxLength = 4
         Me.txtIn1TotalDose.Name = "txtIn1TotalDose"
-        Me.txtIn1TotalDose.Size = New System.Drawing.Size(58, 24)
+        Me.txtIn1TotalDose.Size = New System.Drawing.Size(58, 21)
         Me.txtIn1TotalDose.TabIndex = 8
         Me.txtIn1TotalDose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1236,7 +1216,7 @@ Partial Class Form1
         Me.txtIn1POM.Margin = New System.Windows.Forms.Padding(2)
         Me.txtIn1POM.MaxLength = 2
         Me.txtIn1POM.Name = "txtIn1POM"
-        Me.txtIn1POM.Size = New System.Drawing.Size(50, 24)
+        Me.txtIn1POM.Size = New System.Drawing.Size(50, 21)
         Me.txtIn1POM.TabIndex = 9
         Me.txtIn1POM.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1278,6 +1258,7 @@ Partial Class Form1
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.Label9.Location = New System.Drawing.Point(581, 82)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
@@ -1358,6 +1339,7 @@ Partial Class Form1
         '
         Me.lblDatetoSeeDoctor.AutoSize = True
         Me.lblDatetoSeeDoctor.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDatetoSeeDoctor.ForeColor = System.Drawing.SystemColors.ControlDarkDark
         Me.lblDatetoSeeDoctor.Location = New System.Drawing.Point(213, 82)
         Me.lblDatetoSeeDoctor.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblDatetoSeeDoctor.Name = "lblDatetoSeeDoctor"
@@ -1378,11 +1360,12 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel7)
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel6)
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel2)
-        Me.GroupBox1.Location = New System.Drawing.Point(7, 132)
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.Location = New System.Drawing.Point(7, 126)
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox1.Size = New System.Drawing.Size(1187, 387)
+        Me.GroupBox1.Size = New System.Drawing.Size(1187, 393)
         Me.GroupBox1.TabIndex = 8
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Drug Prescription"
@@ -1448,7 +1431,7 @@ Partial Class Form1
         Me.cbDrug10.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug10.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug10.Name = "cbDrug10"
-        Me.cbDrug10.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug10.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug10.TabIndex = 51
         '
         'lblStrD10
@@ -1483,7 +1466,7 @@ Partial Class Form1
         Me.txtDoseD10.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD10.MaxLength = 6
         Me.txtDoseD10.Name = "txtDoseD10"
-        Me.txtDoseD10.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD10.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD10.TabIndex = 52
         Me.txtDoseD10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1494,7 +1477,7 @@ Partial Class Form1
         Me.txtFreqD10.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD10.MaxLength = 1
         Me.txtFreqD10.Name = "txtFreqD10"
-        Me.txtFreqD10.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD10.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD10.TabIndex = 53
         Me.txtFreqD10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1505,7 +1488,7 @@ Partial Class Form1
         Me.txtDurationD10.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD10.MaxLength = 3
         Me.txtDurationD10.Name = "txtDurationD10"
-        Me.txtDurationD10.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD10.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD10.TabIndex = 54
         Me.txtDurationD10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1569,7 +1552,7 @@ Partial Class Form1
         Me.cbDrug8.Location = New System.Drawing.Point(33, 2)
         Me.cbDrug8.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug8.Name = "cbDrug8"
-        Me.cbDrug8.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug8.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug8.TabIndex = 41
         '
         'lblPreCatagoryD8
@@ -1617,7 +1600,7 @@ Partial Class Form1
         Me.txtDoseD8.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD8.MaxLength = 6
         Me.txtDoseD8.Name = "txtDoseD8"
-        Me.txtDoseD8.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD8.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD8.TabIndex = 42
         Me.txtDoseD8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1628,7 +1611,7 @@ Partial Class Form1
         Me.txtFreqD8.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD8.MaxLength = 1
         Me.txtFreqD8.Name = "txtFreqD8"
-        Me.txtFreqD8.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD8.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD8.TabIndex = 43
         Me.txtFreqD8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1639,7 +1622,7 @@ Partial Class Form1
         Me.txtDurationD8.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD8.MaxLength = 3
         Me.txtDurationD8.Name = "txtDurationD8"
-        Me.txtDurationD8.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD8.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD8.TabIndex = 44
         Me.txtDurationD8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1716,7 +1699,7 @@ Partial Class Form1
         Me.cbDrug9.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug9.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug9.Name = "cbDrug9"
-        Me.cbDrug9.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug9.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug9.TabIndex = 46
         '
         'lblStrD9
@@ -1751,7 +1734,7 @@ Partial Class Form1
         Me.txtDoseD9.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD9.MaxLength = 6
         Me.txtDoseD9.Name = "txtDoseD9"
-        Me.txtDoseD9.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD9.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD9.TabIndex = 47
         Me.txtDoseD9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1762,7 +1745,7 @@ Partial Class Form1
         Me.txtFreqD9.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD9.MaxLength = 1
         Me.txtFreqD9.Name = "txtFreqD9"
-        Me.txtFreqD9.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD9.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD9.TabIndex = 48
         Me.txtFreqD9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1773,7 +1756,7 @@ Partial Class Form1
         Me.txtDurationD9.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD9.MaxLength = 3
         Me.txtDurationD9.Name = "txtDurationD9"
-        Me.txtDurationD9.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD9.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD9.TabIndex = 49
         Me.txtDurationD9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1837,7 +1820,7 @@ Partial Class Form1
         Me.cbDrug6.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug6.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug6.Name = "cbDrug6"
-        Me.cbDrug6.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug6.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug6.TabIndex = 31
         '
         'lblStrD6
@@ -1885,7 +1868,7 @@ Partial Class Form1
         Me.txtDoseD6.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD6.MaxLength = 6
         Me.txtDoseD6.Name = "txtDoseD6"
-        Me.txtDoseD6.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD6.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD6.TabIndex = 32
         Me.txtDoseD6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1896,7 +1879,7 @@ Partial Class Form1
         Me.txtFreqD6.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD6.MaxLength = 1
         Me.txtFreqD6.Name = "txtFreqD6"
-        Me.txtFreqD6.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD6.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD6.TabIndex = 33
         Me.txtFreqD6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1907,7 +1890,7 @@ Partial Class Form1
         Me.txtDurationD6.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD6.MaxLength = 3
         Me.txtDurationD6.Name = "txtDurationD6"
-        Me.txtDurationD6.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD6.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD6.TabIndex = 34
         Me.txtDurationD6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1971,7 +1954,7 @@ Partial Class Form1
         Me.cbDrug7.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug7.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug7.Name = "cbDrug7"
-        Me.cbDrug7.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug7.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug7.TabIndex = 36
         '
         'lblStrD7
@@ -2019,7 +2002,7 @@ Partial Class Form1
         Me.txtDoseD7.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD7.MaxLength = 6
         Me.txtDoseD7.Name = "txtDoseD7"
-        Me.txtDoseD7.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD7.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD7.TabIndex = 37
         Me.txtDoseD7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2030,7 +2013,7 @@ Partial Class Form1
         Me.txtFreqD7.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD7.MaxLength = 1
         Me.txtFreqD7.Name = "txtFreqD7"
-        Me.txtFreqD7.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD7.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD7.TabIndex = 38
         Me.txtFreqD7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2041,7 +2024,7 @@ Partial Class Form1
         Me.txtDurationD7.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD7.MaxLength = 3
         Me.txtDurationD7.Name = "txtDurationD7"
-        Me.txtDurationD7.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD7.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD7.TabIndex = 39
         Me.txtDurationD7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2104,7 +2087,7 @@ Partial Class Form1
         Me.cbDrug4.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug4.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug4.Name = "cbDrug4"
-        Me.cbDrug4.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug4.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug4.TabIndex = 21
         '
         'lblStrD4
@@ -2138,7 +2121,7 @@ Partial Class Form1
         Me.txtDoseD4.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD4.MaxLength = 6
         Me.txtDoseD4.Name = "txtDoseD4"
-        Me.txtDoseD4.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD4.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD4.TabIndex = 22
         Me.txtDoseD4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2148,7 +2131,7 @@ Partial Class Form1
         Me.txtFreqD4.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD4.MaxLength = 1
         Me.txtFreqD4.Name = "txtFreqD4"
-        Me.txtFreqD4.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD4.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD4.TabIndex = 23
         Me.txtFreqD4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2171,7 +2154,7 @@ Partial Class Form1
         Me.txtDurationD4.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD4.MaxLength = 3
         Me.txtDurationD4.Name = "txtDurationD4"
-        Me.txtDurationD4.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD4.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD4.TabIndex = 24
         Me.txtDurationD4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2234,7 +2217,7 @@ Partial Class Form1
         Me.cbDrug5.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug5.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug5.Name = "cbDrug5"
-        Me.cbDrug5.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug5.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug5.TabIndex = 26
         '
         'lblStrD5
@@ -2268,7 +2251,7 @@ Partial Class Form1
         Me.txtDoseD5.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD5.MaxLength = 6
         Me.txtDoseD5.Name = "txtDoseD5"
-        Me.txtDoseD5.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD5.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD5.TabIndex = 27
         Me.txtDoseD5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2291,7 +2274,7 @@ Partial Class Form1
         Me.txtFreqD5.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD5.MaxLength = 1
         Me.txtFreqD5.Name = "txtFreqD5"
-        Me.txtFreqD5.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD5.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD5.TabIndex = 28
         Me.txtFreqD5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2301,7 +2284,7 @@ Partial Class Form1
         Me.txtDurationD5.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD5.MaxLength = 3
         Me.txtDurationD5.Name = "txtDurationD5"
-        Me.txtDurationD5.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD5.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD5.TabIndex = 29
         Me.txtDurationD5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2353,7 +2336,7 @@ Partial Class Form1
         Me.cbDrug3.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug3.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug3.Name = "cbDrug3"
-        Me.cbDrug3.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug3.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug3.TabIndex = 16
         '
         'lblStrD3
@@ -2387,7 +2370,7 @@ Partial Class Form1
         Me.txtDoseD3.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD3.MaxLength = 6
         Me.txtDoseD3.Name = "txtDoseD3"
-        Me.txtDoseD3.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD3.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD3.TabIndex = 17
         Me.txtDoseD3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2397,7 +2380,7 @@ Partial Class Form1
         Me.txtFreqD3.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD3.MaxLength = 1
         Me.txtFreqD3.Name = "txtFreqD3"
-        Me.txtFreqD3.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD3.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD3.TabIndex = 18
         Me.txtFreqD3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2407,7 +2390,7 @@ Partial Class Form1
         Me.txtDurationD3.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD3.MaxLength = 3
         Me.txtDurationD3.Name = "txtDurationD3"
-        Me.txtDurationD3.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD3.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD3.TabIndex = 19
         Me.txtDurationD3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2508,7 +2491,7 @@ Partial Class Form1
         Me.cbDrug2.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug2.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug2.Name = "cbDrug2"
-        Me.cbDrug2.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug2.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug2.TabIndex = 11
         '
         'txtDurationD2
@@ -2517,7 +2500,7 @@ Partial Class Form1
         Me.txtDurationD2.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD2.MaxLength = 3
         Me.txtDurationD2.Name = "txtDurationD2"
-        Me.txtDurationD2.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD2.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD2.TabIndex = 14
         Me.txtDurationD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2540,7 +2523,7 @@ Partial Class Form1
         Me.txtFreqD2.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD2.MaxLength = 1
         Me.txtFreqD2.Name = "txtFreqD2"
-        Me.txtFreqD2.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD2.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD2.TabIndex = 13
         Me.txtFreqD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2562,7 +2545,7 @@ Partial Class Form1
         Me.txtDoseD2.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD2.MaxLength = 6
         Me.txtDoseD2.Name = "txtDoseD2"
-        Me.txtDoseD2.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD2.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD2.TabIndex = 12
         Me.txtDoseD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2613,7 +2596,7 @@ Partial Class Form1
         Me.cbDrug1.Location = New System.Drawing.Point(34, 2)
         Me.cbDrug1.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrug1.Name = "cbDrug1"
-        Me.cbDrug1.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrug1.Size = New System.Drawing.Size(522, 23)
         Me.cbDrug1.TabIndex = 6
         '
         'lblStrD1
@@ -2647,7 +2630,7 @@ Partial Class Form1
         Me.txtDoseD1.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDoseD1.MaxLength = 6
         Me.txtDoseD1.Name = "txtDoseD1"
-        Me.txtDoseD1.Size = New System.Drawing.Size(84, 24)
+        Me.txtDoseD1.Size = New System.Drawing.Size(84, 21)
         Me.txtDoseD1.TabIndex = 7
         Me.txtDoseD1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2657,7 +2640,7 @@ Partial Class Form1
         Me.txtFreqD1.Margin = New System.Windows.Forms.Padding(2)
         Me.txtFreqD1.MaxLength = 1
         Me.txtFreqD1.Name = "txtFreqD1"
-        Me.txtFreqD1.Size = New System.Drawing.Size(84, 24)
+        Me.txtFreqD1.Size = New System.Drawing.Size(84, 21)
         Me.txtFreqD1.TabIndex = 8
         Me.txtFreqD1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2667,7 +2650,7 @@ Partial Class Form1
         Me.txtDurationD1.Margin = New System.Windows.Forms.Padding(2)
         Me.txtDurationD1.MaxLength = 3
         Me.txtDurationD1.Name = "txtDurationD1"
-        Me.txtDurationD1.Size = New System.Drawing.Size(68, 24)
+        Me.txtDurationD1.Size = New System.Drawing.Size(68, 21)
         Me.txtDurationD1.TabIndex = 9
         Me.txtDurationD1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -2734,7 +2717,7 @@ Partial Class Form1
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1144, 34)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1144, 40)
         Me.TableLayoutPanel2.TabIndex = 8
         '
         'Label8
@@ -2971,7 +2954,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 165.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2989,10 +2972,10 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(332, 2)
+        Me.btnDelete.Location = New System.Drawing.Point(327, 2)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(157, 26)
+        Me.btnDelete.Size = New System.Drawing.Size(162, 26)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -3006,7 +2989,7 @@ Partial Class Form1
         Me.btnAddDrug.Location = New System.Drawing.Point(2, 2)
         Me.btnAddDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(148, 26)
+        Me.btnAddDrug.Size = New System.Drawing.Size(145, 26)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -3016,7 +2999,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(234, 2)
+        Me.btnClear.Location = New System.Drawing.Point(229, 2)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(94, 26)
@@ -3029,10 +3012,10 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(154, 2)
+        Me.btnUpdate.Location = New System.Drawing.Point(151, 2)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(76, 26)
+        Me.btnUpdate.Size = New System.Drawing.Size(74, 26)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -3308,8 +3291,8 @@ Partial Class Form1
         '
         Me.TabControl2.Controls.Add(Me.TabPage5)
         Me.TabControl2.Controls.Add(Me.TabPage6)
-        Me.TabControl2.Controls.Add(Me.TabPage7)
         Me.TabControl2.Controls.Add(Me.TabPage10)
+        Me.TabControl2.Controls.Add(Me.TabPage11)
         Me.TabControl2.Location = New System.Drawing.Point(7, 2)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(2)
         Me.TabControl2.Name = "TabControl2"
@@ -3319,6 +3302,7 @@ Partial Class Form1
         '
         'TabPage5
         '
+        Me.TabPage5.BackColor = System.Drawing.Color.MistyRose
         Me.TabPage5.Controls.Add(Me.lblLogPrevPatientDateSeeDoctor)
         Me.TabPage5.Controls.Add(Me.lblLogPrevPatientDateCollection)
         Me.TabPage5.Controls.Add(Me.Label52)
@@ -3338,7 +3322,6 @@ Partial Class Form1
         Me.TabPage5.Size = New System.Drawing.Size(1190, 646)
         Me.TabPage5.TabIndex = 0
         Me.TabPage5.Text = "Previous Patient"
-        Me.TabPage5.UseVisualStyleBackColor = True
         '
         'lblLogPrevPatientDateSeeDoctor
         '
@@ -3650,6 +3633,7 @@ Partial Class Form1
         '
         'TabPage6
         '
+        Me.TabPage6.Controls.Add(Me.btnOpenStatistics)
         Me.TabPage6.Controls.Add(Me.lblEditModeRecords)
         Me.TabPage6.Controls.Add(Me.btnChangeRecord)
         Me.TabPage6.Controls.Add(Me.btnDeleteRecord)
@@ -3674,6 +3658,15 @@ Partial Class Form1
         Me.TabPage6.Text = "Records"
         Me.TabPage6.UseVisualStyleBackColor = True
         '
+        'btnOpenStatistics
+        '
+        Me.btnOpenStatistics.Location = New System.Drawing.Point(5, 5)
+        Me.btnOpenStatistics.Name = "btnOpenStatistics"
+        Me.btnOpenStatistics.Size = New System.Drawing.Size(88, 27)
+        Me.btnOpenStatistics.TabIndex = 15
+        Me.btnOpenStatistics.Text = "Statistics"
+        Me.btnOpenStatistics.UseVisualStyleBackColor = True
+        '
         'lblEditModeRecords
         '
         Me.lblEditModeRecords.AutoSize = True
@@ -3689,7 +3682,7 @@ Partial Class Form1
         '
         'btnChangeRecord
         '
-        Me.btnChangeRecord.Location = New System.Drawing.Point(882, 15)
+        Me.btnChangeRecord.Location = New System.Drawing.Point(1064, 16)
         Me.btnChangeRecord.Margin = New System.Windows.Forms.Padding(2)
         Me.btnChangeRecord.Name = "btnChangeRecord"
         Me.btnChangeRecord.Size = New System.Drawing.Size(94, 32)
@@ -3700,7 +3693,7 @@ Partial Class Form1
         'btnDeleteRecord
         '
         Me.btnDeleteRecord.BackColor = System.Drawing.Color.LightSalmon
-        Me.btnDeleteRecord.Location = New System.Drawing.Point(882, 62)
+        Me.btnDeleteRecord.Location = New System.Drawing.Point(1064, 63)
         Me.btnDeleteRecord.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDeleteRecord.Name = "btnDeleteRecord"
         Me.btnDeleteRecord.Size = New System.Drawing.Size(94, 28)
@@ -3781,7 +3774,7 @@ Partial Class Form1
         'Label36
         '
         Me.Label36.AutoSize = True
-        Me.Label36.Location = New System.Drawing.Point(364, 30)
+        Me.Label36.Location = New System.Drawing.Point(364, 43)
         Me.Label36.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(26, 18)
@@ -3790,7 +3783,7 @@ Partial Class Form1
         '
         'dtpRecordsDateSelectorEnd
         '
-        Me.dtpRecordsDateSelectorEnd.Location = New System.Drawing.Point(399, 27)
+        Me.dtpRecordsDateSelectorEnd.Location = New System.Drawing.Point(399, 40)
         Me.dtpRecordsDateSelectorEnd.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpRecordsDateSelectorEnd.MaxDate = New Date(2024, 5, 20, 0, 0, 0, 0)
         Me.dtpRecordsDateSelectorEnd.Name = "dtpRecordsDateSelectorEnd"
@@ -3801,7 +3794,7 @@ Partial Class Form1
         'Label31
         '
         Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(5, 30)
+        Me.Label31.Location = New System.Drawing.Point(5, 43)
         Me.Label31.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(96, 18)
@@ -3810,7 +3803,7 @@ Partial Class Form1
         '
         'dtpRecordsDateSelector
         '
-        Me.dtpRecordsDateSelector.Location = New System.Drawing.Point(102, 27)
+        Me.dtpRecordsDateSelector.Location = New System.Drawing.Point(102, 40)
         Me.dtpRecordsDateSelector.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpRecordsDateSelector.Name = "dtpRecordsDateSelector"
         Me.dtpRecordsDateSelector.Size = New System.Drawing.Size(253, 24)
@@ -3915,261 +3908,6 @@ Partial Class Form1
         Me.TimestampRecord.ReadOnly = True
         Me.TimestampRecord.Width = 215
         '
-        'TabPage7
-        '
-        Me.TabPage7.AccessibleDescription = "k"
-        Me.TabPage7.Controls.Add(Me.Label54)
-        Me.TabPage7.Controls.Add(Me.cboxSearchbyDrugPatientName)
-        Me.TabPage7.Controls.Add(Me.TabControl3)
-        Me.TabPage7.Controls.Add(Me.Label53)
-        Me.TabPage7.Controls.Add(Me.cboxSearchbyDrug)
-        Me.TabPage7.Location = New System.Drawing.Point(4, 26)
-        Me.TabPage7.Margin = New System.Windows.Forms.Padding(2)
-        Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage7.Size = New System.Drawing.Size(1190, 646)
-        Me.TabPage7.TabIndex = 2
-        Me.TabPage7.Text = "Search by Drug"
-        Me.TabPage7.UseVisualStyleBackColor = True
-        '
-        'Label54
-        '
-        Me.Label54.AutoSize = True
-        Me.Label54.Location = New System.Drawing.Point(632, 14)
-        Me.Label54.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label54.Name = "Label54"
-        Me.Label54.Size = New System.Drawing.Size(97, 18)
-        Me.Label54.TabIndex = 5
-        Me.Label54.Text = "Patient Name"
-        '
-        'cboxSearchbyDrugPatientName
-        '
-        Me.cboxSearchbyDrugPatientName.FormattingEnabled = True
-        Me.cboxSearchbyDrugPatientName.Location = New System.Drawing.Point(731, 12)
-        Me.cboxSearchbyDrugPatientName.Margin = New System.Windows.Forms.Padding(2)
-        Me.cboxSearchbyDrugPatientName.Name = "cboxSearchbyDrugPatientName"
-        Me.cboxSearchbyDrugPatientName.Size = New System.Drawing.Size(282, 25)
-        Me.cboxSearchbyDrugPatientName.TabIndex = 4
-        '
-        'TabControl3
-        '
-        Me.TabControl3.Controls.Add(Me.TabPage8)
-        Me.TabControl3.Controls.Add(Me.TabPage9)
-        Me.TabControl3.Location = New System.Drawing.Point(8, 48)
-        Me.TabControl3.Margin = New System.Windows.Forms.Padding(2)
-        Me.TabControl3.Name = "TabControl3"
-        Me.TabControl3.SelectedIndex = 0
-        Me.TabControl3.Size = New System.Drawing.Size(1178, 595)
-        Me.TabControl3.TabIndex = 3
-        '
-        'TabPage8
-        '
-        Me.TabPage8.Controls.Add(Me.dgvLatestRecord)
-        Me.TabPage8.Location = New System.Drawing.Point(4, 26)
-        Me.TabPage8.Margin = New System.Windows.Forms.Padding(2)
-        Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage8.Size = New System.Drawing.Size(1170, 565)
-        Me.TabPage8.TabIndex = 0
-        Me.TabPage8.Text = "Latest Record"
-        Me.TabPage8.UseVisualStyleBackColor = True
-        '
-        'dgvLatestRecord
-        '
-        Me.dgvLatestRecord.AllowUserToAddRows = False
-        Me.dgvLatestRecord.AllowUserToDeleteRows = False
-        Me.dgvLatestRecord.AllowUserToResizeRows = False
-        Me.dgvLatestRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvLatestRecord.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn30, Me.DataGridViewTextBoxColumn31, Me.dgvColLatestDate, Me.DataGridViewTextBoxColumn32, Me.DataGridViewTextBoxColumn33, Me.dgvColLatestDateCollect, Me.dgvColLatestDateSeeDoctor, Me.DataGridViewTextBoxColumn39})
-        Me.dgvLatestRecord.Location = New System.Drawing.Point(0, 0)
-        Me.dgvLatestRecord.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgvLatestRecord.Name = "dgvLatestRecord"
-        Me.dgvLatestRecord.ReadOnly = True
-        Me.dgvLatestRecord.RowHeadersVisible = False
-        Me.dgvLatestRecord.RowHeadersWidth = 51
-        Me.dgvLatestRecord.RowTemplate.Height = 24
-        Me.dgvLatestRecord.Size = New System.Drawing.Size(1170, 558)
-        Me.dgvLatestRecord.TabIndex = 2
-        '
-        'DataGridViewTextBoxColumn30
-        '
-        Me.DataGridViewTextBoxColumn30.HeaderText = "No"
-        Me.DataGridViewTextBoxColumn30.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn30.Name = "DataGridViewTextBoxColumn30"
-        Me.DataGridViewTextBoxColumn30.ReadOnly = True
-        Me.DataGridViewTextBoxColumn30.Width = 45
-        '
-        'DataGridViewTextBoxColumn31
-        '
-        Me.DataGridViewTextBoxColumn31.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.DataGridViewTextBoxColumn31.HeaderText = "ID"
-        Me.DataGridViewTextBoxColumn31.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn31.Name = "DataGridViewTextBoxColumn31"
-        Me.DataGridViewTextBoxColumn31.ReadOnly = True
-        Me.DataGridViewTextBoxColumn31.Width = 47
-        '
-        'dgvColLatestDate
-        '
-        Me.dgvColLatestDate.HeaderText = "Date"
-        Me.dgvColLatestDate.MinimumWidth = 6
-        Me.dgvColLatestDate.Name = "dgvColLatestDate"
-        Me.dgvColLatestDate.ReadOnly = True
-        Me.dgvColLatestDate.Width = 125
-        '
-        'DataGridViewTextBoxColumn32
-        '
-        Me.DataGridViewTextBoxColumn32.HeaderText = "Name"
-        Me.DataGridViewTextBoxColumn32.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn32.Name = "DataGridViewTextBoxColumn32"
-        Me.DataGridViewTextBoxColumn32.ReadOnly = True
-        Me.DataGridViewTextBoxColumn32.Width = 350
-        '
-        'DataGridViewTextBoxColumn33
-        '
-        Me.DataGridViewTextBoxColumn33.HeaderText = "IC No."
-        Me.DataGridViewTextBoxColumn33.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn33.Name = "DataGridViewTextBoxColumn33"
-        Me.DataGridViewTextBoxColumn33.ReadOnly = True
-        Me.DataGridViewTextBoxColumn33.Width = 170
-        '
-        'dgvColLatestDateCollect
-        '
-        Me.dgvColLatestDateCollect.HeaderText = "Date Collection"
-        Me.dgvColLatestDateCollect.MinimumWidth = 6
-        Me.dgvColLatestDateCollect.Name = "dgvColLatestDateCollect"
-        Me.dgvColLatestDateCollect.ReadOnly = True
-        Me.dgvColLatestDateCollect.Width = 260
-        '
-        'dgvColLatestDateSeeDoctor
-        '
-        Me.dgvColLatestDateSeeDoctor.HeaderText = "Date See Doctor"
-        Me.dgvColLatestDateSeeDoctor.MinimumWidth = 6
-        Me.dgvColLatestDateSeeDoctor.Name = "dgvColLatestDateSeeDoctor"
-        Me.dgvColLatestDateSeeDoctor.ReadOnly = True
-        Me.dgvColLatestDateSeeDoctor.Width = 260
-        '
-        'DataGridViewTextBoxColumn39
-        '
-        Me.DataGridViewTextBoxColumn39.HeaderText = "Timestamp"
-        Me.DataGridViewTextBoxColumn39.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn39.Name = "DataGridViewTextBoxColumn39"
-        Me.DataGridViewTextBoxColumn39.ReadOnly = True
-        Me.DataGridViewTextBoxColumn39.Width = 215
-        '
-        'TabPage9
-        '
-        Me.TabPage9.Controls.Add(Me.dgvPreviousRecords)
-        Me.TabPage9.Location = New System.Drawing.Point(4, 26)
-        Me.TabPage9.Margin = New System.Windows.Forms.Padding(2)
-        Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage9.Size = New System.Drawing.Size(1170, 565)
-        Me.TabPage9.TabIndex = 1
-        Me.TabPage9.Text = "Previous Records"
-        Me.TabPage9.UseVisualStyleBackColor = True
-        '
-        'dgvPreviousRecords
-        '
-        Me.dgvPreviousRecords.AllowUserToAddRows = False
-        Me.dgvPreviousRecords.AllowUserToDeleteRows = False
-        Me.dgvPreviousRecords.AllowUserToResizeRows = False
-        Me.dgvPreviousRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvPreviousRecords.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn34, Me.DataGridViewTextBoxColumn35, Me.DataGridViewTextBoxColumn36, Me.DataGridViewTextBoxColumn37, Me.DataGridViewTextBoxColumn38, Me.DataGridViewTextBoxColumn40, Me.DataGridViewTextBoxColumn41, Me.DataGridViewTextBoxColumn42})
-        Me.dgvPreviousRecords.Location = New System.Drawing.Point(0, 0)
-        Me.dgvPreviousRecords.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgvPreviousRecords.Name = "dgvPreviousRecords"
-        Me.dgvPreviousRecords.ReadOnly = True
-        Me.dgvPreviousRecords.RowHeadersVisible = False
-        Me.dgvPreviousRecords.RowHeadersWidth = 51
-        Me.dgvPreviousRecords.RowTemplate.Height = 24
-        Me.dgvPreviousRecords.Size = New System.Drawing.Size(1182, 558)
-        Me.dgvPreviousRecords.TabIndex = 3
-        '
-        'DataGridViewTextBoxColumn34
-        '
-        Me.DataGridViewTextBoxColumn34.HeaderText = "No"
-        Me.DataGridViewTextBoxColumn34.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn34.Name = "DataGridViewTextBoxColumn34"
-        Me.DataGridViewTextBoxColumn34.ReadOnly = True
-        Me.DataGridViewTextBoxColumn34.Width = 45
-        '
-        'DataGridViewTextBoxColumn35
-        '
-        Me.DataGridViewTextBoxColumn35.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.DataGridViewTextBoxColumn35.HeaderText = "ID"
-        Me.DataGridViewTextBoxColumn35.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn35.Name = "DataGridViewTextBoxColumn35"
-        Me.DataGridViewTextBoxColumn35.ReadOnly = True
-        Me.DataGridViewTextBoxColumn35.Width = 47
-        '
-        'DataGridViewTextBoxColumn36
-        '
-        Me.DataGridViewTextBoxColumn36.HeaderText = "Date"
-        Me.DataGridViewTextBoxColumn36.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn36.Name = "DataGridViewTextBoxColumn36"
-        Me.DataGridViewTextBoxColumn36.ReadOnly = True
-        Me.DataGridViewTextBoxColumn36.Width = 125
-        '
-        'DataGridViewTextBoxColumn37
-        '
-        Me.DataGridViewTextBoxColumn37.HeaderText = "Name"
-        Me.DataGridViewTextBoxColumn37.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn37.Name = "DataGridViewTextBoxColumn37"
-        Me.DataGridViewTextBoxColumn37.ReadOnly = True
-        Me.DataGridViewTextBoxColumn37.Width = 350
-        '
-        'DataGridViewTextBoxColumn38
-        '
-        Me.DataGridViewTextBoxColumn38.HeaderText = "IC No."
-        Me.DataGridViewTextBoxColumn38.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn38.Name = "DataGridViewTextBoxColumn38"
-        Me.DataGridViewTextBoxColumn38.ReadOnly = True
-        Me.DataGridViewTextBoxColumn38.Width = 170
-        '
-        'DataGridViewTextBoxColumn40
-        '
-        Me.DataGridViewTextBoxColumn40.HeaderText = "Date Collection"
-        Me.DataGridViewTextBoxColumn40.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn40.Name = "DataGridViewTextBoxColumn40"
-        Me.DataGridViewTextBoxColumn40.ReadOnly = True
-        Me.DataGridViewTextBoxColumn40.Width = 260
-        '
-        'DataGridViewTextBoxColumn41
-        '
-        Me.DataGridViewTextBoxColumn41.HeaderText = "Date See Doctor"
-        Me.DataGridViewTextBoxColumn41.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn41.Name = "DataGridViewTextBoxColumn41"
-        Me.DataGridViewTextBoxColumn41.ReadOnly = True
-        Me.DataGridViewTextBoxColumn41.Width = 260
-        '
-        'DataGridViewTextBoxColumn42
-        '
-        Me.DataGridViewTextBoxColumn42.HeaderText = "Timestamp"
-        Me.DataGridViewTextBoxColumn42.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn42.Name = "DataGridViewTextBoxColumn42"
-        Me.DataGridViewTextBoxColumn42.ReadOnly = True
-        Me.DataGridViewTextBoxColumn42.Width = 215
-        '
-        'Label53
-        '
-        Me.Label53.AutoSize = True
-        Me.Label53.Location = New System.Drawing.Point(5, 14)
-        Me.Label53.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label53.Name = "Label53"
-        Me.Label53.Size = New System.Drawing.Size(84, 18)
-        Me.Label53.TabIndex = 1
-        Me.Label53.Text = "Drug Name"
-        '
-        'cboxSearchbyDrug
-        '
-        Me.cboxSearchbyDrug.BackColor = System.Drawing.SystemColors.Info
-        Me.cboxSearchbyDrug.FormattingEnabled = True
-        Me.cboxSearchbyDrug.Location = New System.Drawing.Point(98, 12)
-        Me.cboxSearchbyDrug.Margin = New System.Windows.Forms.Padding(2)
-        Me.cboxSearchbyDrug.Name = "cboxSearchbyDrug"
-        Me.cboxSearchbyDrug.Size = New System.Drawing.Size(522, 25)
-        Me.cboxSearchbyDrug.TabIndex = 0
-        '
         'TabPage10
         '
         Me.TabPage10.Controls.Add(Me.lblDrugTotalQty)
@@ -4188,10 +3926,31 @@ Partial Class Form1
         Me.TabPage10.Text = "Drug Quantity"
         Me.TabPage10.UseVisualStyleBackColor = True
         '
+        'lblDrugTotalQty
+        '
+        Me.lblDrugTotalQty.AutoSize = True
+        Me.lblDrugTotalQty.Location = New System.Drawing.Point(828, 58)
+        Me.lblDrugTotalQty.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblDrugTotalQty.Name = "lblDrugTotalQty"
+        Me.lblDrugTotalQty.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.lblDrugTotalQty.Size = New System.Drawing.Size(28, 18)
+        Me.lblDrugTotalQty.TabIndex = 10
+        Me.lblDrugTotalQty.Text = "     "
+        '
+        'Label59
+        '
+        Me.Label59.AutoSize = True
+        Me.Label59.Location = New System.Drawing.Point(713, 58)
+        Me.Label59.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label59.Name = "Label59"
+        Me.Label59.Size = New System.Drawing.Size(111, 18)
+        Me.Label59.TabIndex = 9
+        Me.Label59.Text = "Total Quantity : "
+        '
         'Label57
         '
         Me.Label57.AutoSize = True
-        Me.Label57.Location = New System.Drawing.Point(365, 74)
+        Me.Label57.Location = New System.Drawing.Point(364, 108)
         Me.Label57.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label57.Name = "Label57"
         Me.Label57.Size = New System.Drawing.Size(26, 18)
@@ -4200,7 +3959,7 @@ Partial Class Form1
         '
         'dtpDrugQty2
         '
-        Me.dtpDrugQty2.Location = New System.Drawing.Point(400, 71)
+        Me.dtpDrugQty2.Location = New System.Drawing.Point(399, 105)
         Me.dtpDrugQty2.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpDrugQty2.MaxDate = New Date(2199, 5, 20, 0, 0, 0, 0)
         Me.dtpDrugQty2.Name = "dtpDrugQty2"
@@ -4211,7 +3970,7 @@ Partial Class Form1
         'Label58
         '
         Me.Label58.AutoSize = True
-        Me.Label58.Location = New System.Drawing.Point(6, 74)
+        Me.Label58.Location = New System.Drawing.Point(5, 108)
         Me.Label58.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label58.Name = "Label58"
         Me.Label58.Size = New System.Drawing.Size(96, 18)
@@ -4220,7 +3979,7 @@ Partial Class Form1
         '
         'dtpDrugQty1
         '
-        Me.dtpDrugQty1.Location = New System.Drawing.Point(103, 71)
+        Me.dtpDrugQty1.Location = New System.Drawing.Point(102, 105)
         Me.dtpDrugQty1.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpDrugQty1.Name = "dtpDrugQty1"
         Me.dtpDrugQty1.Size = New System.Drawing.Size(253, 24)
@@ -4233,7 +3992,7 @@ Partial Class Form1
         Me.dgvDrugQty.AllowUserToDeleteRows = False
         Me.dgvDrugQty.AllowUserToResizeRows = False
         Me.dgvDrugQty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvDrugQty.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn43, Me.DataGridViewTextBoxColumn44, Me.DataGridViewTextBoxColumn45, Me.DataGridViewTextBoxColumn46, Me.DataGridViewTextBoxColumn47, Me.DataGridViewTextBoxColumn48, Me.DataGridViewTextBoxColumn49, Me.DataGridViewTextBoxColumn50, Me.DrugQTY})
+        Me.dgvDrugQty.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn43, Me.DataGridViewTextBoxColumn44, Me.DataGridViewTextBoxColumn45, Me.DataGridViewTextBoxColumn46, Me.DataGridViewTextBoxColumn47, Me.DrugQTY, Me.DataGridViewTextBoxColumn48, Me.DataGridViewTextBoxColumn49, Me.DataGridViewTextBoxColumn50})
         Me.dgvDrugQty.Location = New System.Drawing.Point(2, 174)
         Me.dgvDrugQty.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvDrugQty.Name = "dgvDrugQty"
@@ -4244,10 +4003,81 @@ Partial Class Form1
         Me.dgvDrugQty.Size = New System.Drawing.Size(1186, 470)
         Me.dgvDrugQty.TabIndex = 4
         '
+        'DataGridViewTextBoxColumn43
+        '
+        Me.DataGridViewTextBoxColumn43.HeaderText = "No"
+        Me.DataGridViewTextBoxColumn43.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn43.Name = "DataGridViewTextBoxColumn43"
+        Me.DataGridViewTextBoxColumn43.ReadOnly = True
+        Me.DataGridViewTextBoxColumn43.Width = 45
+        '
+        'DataGridViewTextBoxColumn44
+        '
+        Me.DataGridViewTextBoxColumn44.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.DataGridViewTextBoxColumn44.HeaderText = "ID"
+        Me.DataGridViewTextBoxColumn44.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn44.Name = "DataGridViewTextBoxColumn44"
+        Me.DataGridViewTextBoxColumn44.ReadOnly = True
+        Me.DataGridViewTextBoxColumn44.Width = 47
+        '
+        'DataGridViewTextBoxColumn45
+        '
+        Me.DataGridViewTextBoxColumn45.HeaderText = "Date"
+        Me.DataGridViewTextBoxColumn45.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn45.Name = "DataGridViewTextBoxColumn45"
+        Me.DataGridViewTextBoxColumn45.ReadOnly = True
+        Me.DataGridViewTextBoxColumn45.Width = 125
+        '
+        'DataGridViewTextBoxColumn46
+        '
+        Me.DataGridViewTextBoxColumn46.HeaderText = "Name"
+        Me.DataGridViewTextBoxColumn46.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn46.Name = "DataGridViewTextBoxColumn46"
+        Me.DataGridViewTextBoxColumn46.ReadOnly = True
+        Me.DataGridViewTextBoxColumn46.Width = 350
+        '
+        'DataGridViewTextBoxColumn47
+        '
+        Me.DataGridViewTextBoxColumn47.HeaderText = "IC No."
+        Me.DataGridViewTextBoxColumn47.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn47.Name = "DataGridViewTextBoxColumn47"
+        Me.DataGridViewTextBoxColumn47.ReadOnly = True
+        Me.DataGridViewTextBoxColumn47.Width = 120
+        '
+        'DrugQTY
+        '
+        Me.DrugQTY.HeaderText = "Drug QTY"
+        Me.DrugQTY.Name = "DrugQTY"
+        Me.DrugQTY.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn48
+        '
+        Me.DataGridViewTextBoxColumn48.HeaderText = "Date Collection"
+        Me.DataGridViewTextBoxColumn48.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn48.Name = "DataGridViewTextBoxColumn48"
+        Me.DataGridViewTextBoxColumn48.ReadOnly = True
+        Me.DataGridViewTextBoxColumn48.Width = 260
+        '
+        'DataGridViewTextBoxColumn49
+        '
+        Me.DataGridViewTextBoxColumn49.HeaderText = "Date See Doctor"
+        Me.DataGridViewTextBoxColumn49.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn49.Name = "DataGridViewTextBoxColumn49"
+        Me.DataGridViewTextBoxColumn49.ReadOnly = True
+        Me.DataGridViewTextBoxColumn49.Width = 260
+        '
+        'DataGridViewTextBoxColumn50
+        '
+        Me.DataGridViewTextBoxColumn50.HeaderText = "Timestamp"
+        Me.DataGridViewTextBoxColumn50.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn50.Name = "DataGridViewTextBoxColumn50"
+        Me.DataGridViewTextBoxColumn50.ReadOnly = True
+        Me.DataGridViewTextBoxColumn50.Width = 215
+        '
         'Label56
         '
         Me.Label56.AutoSize = True
-        Me.Label56.Location = New System.Drawing.Point(9, 23)
+        Me.Label56.Location = New System.Drawing.Point(8, 57)
         Me.Label56.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label56.Name = "Label56"
         Me.Label56.Size = New System.Drawing.Size(84, 18)
@@ -4258,11 +4088,96 @@ Partial Class Form1
         '
         Me.cbDrugQty.BackColor = System.Drawing.SystemColors.Info
         Me.cbDrugQty.FormattingEnabled = True
-        Me.cbDrugQty.Location = New System.Drawing.Point(102, 21)
+        Me.cbDrugQty.Location = New System.Drawing.Point(101, 55)
         Me.cbDrugQty.Margin = New System.Windows.Forms.Padding(2)
         Me.cbDrugQty.Name = "cbDrugQty"
-        Me.cbDrugQty.Size = New System.Drawing.Size(522, 25)
+        Me.cbDrugQty.Size = New System.Drawing.Size(551, 25)
         Me.cbDrugQty.TabIndex = 2
+        '
+        'TabPage11
+        '
+        Me.TabPage11.Controls.Add(Me.Label60)
+        Me.TabPage11.Controls.Add(Me.dtpAllDrugsQty2)
+        Me.TabPage11.Controls.Add(Me.Label61)
+        Me.TabPage11.Controls.Add(Me.dtpAllDrugsQty1)
+        Me.TabPage11.Controls.Add(Me.dgvAllDrugsQty)
+        Me.TabPage11.Location = New System.Drawing.Point(4, 26)
+        Me.TabPage11.Name = "TabPage11"
+        Me.TabPage11.Size = New System.Drawing.Size(1190, 646)
+        Me.TabPage11.TabIndex = 4
+        Me.TabPage11.Text = "All Drugs Qty"
+        Me.TabPage11.UseVisualStyleBackColor = True
+        '
+        'Label60
+        '
+        Me.Label60.AutoSize = True
+        Me.Label60.Location = New System.Drawing.Point(364, 57)
+        Me.Label60.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label60.Name = "Label60"
+        Me.Label60.Size = New System.Drawing.Size(26, 18)
+        Me.Label60.TabIndex = 13
+        Me.Label60.Text = "To"
+        '
+        'dtpAllDrugsQty2
+        '
+        Me.dtpAllDrugsQty2.Location = New System.Drawing.Point(399, 54)
+        Me.dtpAllDrugsQty2.Margin = New System.Windows.Forms.Padding(2)
+        Me.dtpAllDrugsQty2.MaxDate = New Date(2199, 5, 20, 0, 0, 0, 0)
+        Me.dtpAllDrugsQty2.Name = "dtpAllDrugsQty2"
+        Me.dtpAllDrugsQty2.Size = New System.Drawing.Size(253, 24)
+        Me.dtpAllDrugsQty2.TabIndex = 12
+        Me.dtpAllDrugsQty2.Value = New Date(2024, 5, 20, 0, 0, 0, 0)
+        '
+        'Label61
+        '
+        Me.Label61.AutoSize = True
+        Me.Label61.Location = New System.Drawing.Point(5, 57)
+        Me.Label61.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(96, 18)
+        Me.Label61.TabIndex = 11
+        Me.Label61.Text = "Select Date : "
+        '
+        'dtpAllDrugsQty1
+        '
+        Me.dtpAllDrugsQty1.Location = New System.Drawing.Point(102, 54)
+        Me.dtpAllDrugsQty1.Margin = New System.Windows.Forms.Padding(2)
+        Me.dtpAllDrugsQty1.Name = "dtpAllDrugsQty1"
+        Me.dtpAllDrugsQty1.Size = New System.Drawing.Size(253, 24)
+        Me.dtpAllDrugsQty1.TabIndex = 10
+        Me.dtpAllDrugsQty1.Value = New Date(2024, 5, 20, 0, 0, 0, 0)
+        '
+        'dgvAllDrugsQty
+        '
+        Me.dgvAllDrugsQty.AllowUserToAddRows = False
+        Me.dgvAllDrugsQty.AllowUserToDeleteRows = False
+        Me.dgvAllDrugsQty.AllowUserToResizeRows = False
+        Me.dgvAllDrugsQty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvAllDrugsQty.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn54, Me.DataGridViewTextBoxColumn59})
+        Me.dgvAllDrugsQty.Location = New System.Drawing.Point(72, 121)
+        Me.dgvAllDrugsQty.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvAllDrugsQty.Name = "dgvAllDrugsQty"
+        Me.dgvAllDrugsQty.ReadOnly = True
+        Me.dgvAllDrugsQty.RowHeadersVisible = False
+        Me.dgvAllDrugsQty.RowHeadersWidth = 51
+        Me.dgvAllDrugsQty.RowTemplate.Height = 24
+        Me.dgvAllDrugsQty.Size = New System.Drawing.Size(1042, 492)
+        Me.dgvAllDrugsQty.TabIndex = 9
+        '
+        'DataGridViewTextBoxColumn54
+        '
+        Me.DataGridViewTextBoxColumn54.HeaderText = "Drug Name"
+        Me.DataGridViewTextBoxColumn54.MinimumWidth = 6
+        Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
+        Me.DataGridViewTextBoxColumn54.ReadOnly = True
+        Me.DataGridViewTextBoxColumn54.Width = 800
+        '
+        'DataGridViewTextBoxColumn59
+        '
+        Me.DataGridViewTextBoxColumn59.HeaderText = "Drug QTY"
+        Me.DataGridViewTextBoxColumn59.Name = "DataGridViewTextBoxColumn59"
+        Me.DataGridViewTextBoxColumn59.ReadOnly = True
+        Me.DataGridViewTextBoxColumn59.Width = 200
         '
         'TabPage4
         '
@@ -4679,20 +4594,21 @@ Partial Class Form1
         'Label44
         '
         Me.Label44.AutoSize = True
-        Me.Label44.Location = New System.Drawing.Point(1000, 506)
+        Me.Label44.Location = New System.Drawing.Point(942, 521)
         Me.Label44.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label44.Name = "Label44"
-        Me.Label44.Size = New System.Drawing.Size(190, 18)
+        Me.Label44.Size = New System.Drawing.Size(260, 18)
         Me.Label44.TabIndex = 11
-        Me.Label44.Text = "VB.NET, Visual Studio 2022"
+        Me.Label44.Text = "WinForm, VB.NET, Visual Studio 2022"
         '
         'Label35
         '
         Me.Label35.AutoSize = True
-        Me.Label35.Location = New System.Drawing.Point(999, 528)
+        Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label35.Location = New System.Drawing.Point(1000, 545)
         Me.Label35.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(185, 18)
+        Me.Label35.Size = New System.Drawing.Size(153, 15)
         Me.Label35.TabIndex = 10
         Me.Label35.Text = "Developed by Ken and JPJ"
         '
@@ -4704,7 +4620,7 @@ Partial Class Form1
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(151, 18)
         Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 5, Revision 5"
+        Me.Label43.Text = "Release 5, Revision 6"
         '
         'GroupBox5
         '
@@ -4714,7 +4630,7 @@ Partial Class Form1
         Me.GroupBox5.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox5.Size = New System.Drawing.Size(470, 192)
+        Me.GroupBox5.Size = New System.Drawing.Size(484, 192)
         Me.GroupBox5.TabIndex = 8
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Database Management"
@@ -4808,7 +4724,7 @@ Partial Class Form1
         '
         'btnRestart
         '
-        Me.btnRestart.Location = New System.Drawing.Point(848, 567)
+        Me.btnRestart.Location = New System.Drawing.Point(845, 615)
         Me.btnRestart.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRestart.Name = "btnRestart"
         Me.btnRestart.Size = New System.Drawing.Size(134, 46)
@@ -5213,99 +5129,6 @@ Partial Class Form1
         Me.lblQuote.TabIndex = 5
         Me.lblQuote.Text = "          "
         '
-        'Label59
-        '
-        Me.Label59.AutoSize = True
-        Me.Label59.Location = New System.Drawing.Point(714, 24)
-        Me.Label59.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label59.Name = "Label59"
-        Me.Label59.Size = New System.Drawing.Size(111, 18)
-        Me.Label59.TabIndex = 9
-        Me.Label59.Text = "Total Quantity : "
-        '
-        'lblDrugTotalQty
-        '
-        Me.lblDrugTotalQty.AutoSize = True
-        Me.lblDrugTotalQty.Location = New System.Drawing.Point(829, 24)
-        Me.lblDrugTotalQty.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.lblDrugTotalQty.Name = "lblDrugTotalQty"
-        Me.lblDrugTotalQty.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.lblDrugTotalQty.Size = New System.Drawing.Size(28, 18)
-        Me.lblDrugTotalQty.TabIndex = 10
-        Me.lblDrugTotalQty.Text = "     "
-        '
-        'DataGridViewTextBoxColumn43
-        '
-        Me.DataGridViewTextBoxColumn43.HeaderText = "No"
-        Me.DataGridViewTextBoxColumn43.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn43.Name = "DataGridViewTextBoxColumn43"
-        Me.DataGridViewTextBoxColumn43.ReadOnly = True
-        Me.DataGridViewTextBoxColumn43.Width = 45
-        '
-        'DataGridViewTextBoxColumn44
-        '
-        Me.DataGridViewTextBoxColumn44.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.DataGridViewTextBoxColumn44.HeaderText = "ID"
-        Me.DataGridViewTextBoxColumn44.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn44.Name = "DataGridViewTextBoxColumn44"
-        Me.DataGridViewTextBoxColumn44.ReadOnly = True
-        Me.DataGridViewTextBoxColumn44.Width = 47
-        '
-        'DataGridViewTextBoxColumn45
-        '
-        Me.DataGridViewTextBoxColumn45.HeaderText = "Date"
-        Me.DataGridViewTextBoxColumn45.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn45.Name = "DataGridViewTextBoxColumn45"
-        Me.DataGridViewTextBoxColumn45.ReadOnly = True
-        Me.DataGridViewTextBoxColumn45.Width = 125
-        '
-        'DataGridViewTextBoxColumn46
-        '
-        Me.DataGridViewTextBoxColumn46.HeaderText = "Name"
-        Me.DataGridViewTextBoxColumn46.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn46.Name = "DataGridViewTextBoxColumn46"
-        Me.DataGridViewTextBoxColumn46.ReadOnly = True
-        Me.DataGridViewTextBoxColumn46.Width = 350
-        '
-        'DataGridViewTextBoxColumn47
-        '
-        Me.DataGridViewTextBoxColumn47.HeaderText = "IC No."
-        Me.DataGridViewTextBoxColumn47.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn47.Name = "DataGridViewTextBoxColumn47"
-        Me.DataGridViewTextBoxColumn47.ReadOnly = True
-        Me.DataGridViewTextBoxColumn47.Width = 170
-        '
-        'DataGridViewTextBoxColumn48
-        '
-        Me.DataGridViewTextBoxColumn48.HeaderText = "Date Collection"
-        Me.DataGridViewTextBoxColumn48.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn48.Name = "DataGridViewTextBoxColumn48"
-        Me.DataGridViewTextBoxColumn48.ReadOnly = True
-        Me.DataGridViewTextBoxColumn48.Width = 260
-        '
-        'DataGridViewTextBoxColumn49
-        '
-        Me.DataGridViewTextBoxColumn49.HeaderText = "Date See Doctor"
-        Me.DataGridViewTextBoxColumn49.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn49.Name = "DataGridViewTextBoxColumn49"
-        Me.DataGridViewTextBoxColumn49.ReadOnly = True
-        Me.DataGridViewTextBoxColumn49.Width = 260
-        '
-        'DataGridViewTextBoxColumn50
-        '
-        Me.DataGridViewTextBoxColumn50.HeaderText = "Timestamp"
-        Me.DataGridViewTextBoxColumn50.MinimumWidth = 6
-        Me.DataGridViewTextBoxColumn50.Name = "DataGridViewTextBoxColumn50"
-        Me.DataGridViewTextBoxColumn50.ReadOnly = True
-        Me.DataGridViewTextBoxColumn50.Width = 215
-        '
-        'DrugQTY
-        '
-        Me.DrugQTY.HeaderText = "Drug QTY"
-        Me.DrugQTY.Name = "DrugQTY"
-        Me.DrugQTY.ReadOnly = True
-        Me.DrugQTY.Width = 200
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -5371,16 +5194,12 @@ Partial Class Form1
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
         CType(Me.dgvRecords, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage7.ResumeLayout(False)
-        Me.TabPage7.PerformLayout()
-        Me.TabControl3.ResumeLayout(False)
-        Me.TabPage8.ResumeLayout(False)
-        CType(Me.dgvLatestRecord, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage9.ResumeLayout(False)
-        CType(Me.dgvPreviousRecords, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage10.ResumeLayout(False)
         Me.TabPage10.PerformLayout()
         CType(Me.dgvDrugQty, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage11.ResumeLayout(False)
+        Me.TabPage11.PerformLayout()
+        CType(Me.dgvAllDrugsQty, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
         CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).EndInit()
@@ -5735,32 +5554,6 @@ Partial Class Form1
     Friend WithEvents lblLogPrevPatientDateSeeDoctor As Label
     Friend WithEvents lblLogPrevPatientDateCollection As Label
     Friend WithEvents LinkLabel2 As LinkLabel
-    Friend WithEvents TabPage7 As TabPage
-    Friend WithEvents Label53 As Label
-    Friend WithEvents cboxSearchbyDrug As ComboBox
-    Friend WithEvents dgvLatestRecord As DataGridView
-    Friend WithEvents TabControl3 As TabControl
-    Friend WithEvents TabPage8 As TabPage
-    Friend WithEvents TabPage9 As TabPage
-    Friend WithEvents dgvPreviousRecords As DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn30 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn31 As DataGridViewTextBoxColumn
-    Friend WithEvents dgvColLatestDate As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn32 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn33 As DataGridViewTextBoxColumn
-    Friend WithEvents dgvColLatestDateCollect As DataGridViewTextBoxColumn
-    Friend WithEvents dgvColLatestDateSeeDoctor As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn39 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn34 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn35 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn36 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn37 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn38 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn40 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn41 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn42 As DataGridViewTextBoxColumn
-    Friend WithEvents Label54 As Label
-    Friend WithEvents cboxSearchbyDrugPatientName As ComboBox
     Friend WithEvents cboxIOU As CheckBox
     Friend WithEvents btnClearAll As Button
     Friend WithEvents btnSave As Button
@@ -5806,6 +5599,8 @@ Partial Class Form1
     Friend WithEvents btnCopyDurationtoDoctor As Button
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents TabPage10 As TabPage
+    Friend WithEvents lblDrugTotalQty As Label
+    Friend WithEvents Label59 As Label
     Friend WithEvents Label57 As Label
     Friend WithEvents dtpDrugQty2 As DateTimePicker
     Friend WithEvents Label58 As Label
@@ -5813,15 +5608,22 @@ Partial Class Form1
     Friend WithEvents dgvDrugQty As DataGridView
     Friend WithEvents Label56 As Label
     Friend WithEvents cbDrugQty As ComboBox
-    Friend WithEvents lblDrugTotalQty As Label
-    Friend WithEvents Label59 As Label
+    Friend WithEvents TabPage11 As TabPage
+    Friend WithEvents Label60 As Label
+    Friend WithEvents dtpAllDrugsQty2 As DateTimePicker
+    Friend WithEvents Label61 As Label
+    Friend WithEvents dtpAllDrugsQty1 As DateTimePicker
+    Friend WithEvents dgvAllDrugsQty As DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn54 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn59 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn43 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn44 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn45 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn46 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn47 As DataGridViewTextBoxColumn
+    Friend WithEvents DrugQTY As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn48 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn49 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn50 As DataGridViewTextBoxColumn
-    Friend WithEvents DrugQTY As DataGridViewTextBoxColumn
+    Friend WithEvents btnOpenStatistics As Button
 End Class
