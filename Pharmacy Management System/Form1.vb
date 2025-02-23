@@ -9,6 +9,8 @@ Imports System.Globalization
 Imports System.Runtime.InteropServices
 Imports System.Threading.Tasks
 Imports System.Threading
+Imports System.Net.Http
+Imports Newtonsoft.Json.Linq
 
 
 Public Class Form1
@@ -109,11 +111,16 @@ Public Class Form1
         ' Enable double buffering
         Me.SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint, True)
         Me.UpdateStyles()
+
     End Sub
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Form Initialization / First Load
+        'Utility.FitFormToScreen(Me, 1200, 1920)
+        'Me.CenterToScreen()
+
+
         InitializeAll()
 
         'First Function, Check for DB Connection Status
@@ -141,6 +148,8 @@ Public Class Form1
     End Sub
 
     Public Sub InitializeAll()
+
+        dtpDateSeeDoctor.Value = Today
 
         dtpRecordsDateSelector.Value = Today
         dtpRecordsDateSelector.MaxDate = Today
@@ -182,6 +191,18 @@ Public Class Form1
 
 
         DevMode()
+        ' Inside form load event
+        ' Send the width and height of the screen you designed the form for
+        populateDosageForms()
+
+        SetupTooltips()
+
+        'DataGridViewInsulin.Columns("Insulin Name").DefaultCellStyle.WrapMode = DataGridViewTriState.True
+
+        ' Optionally, adjust row height to fit wrapped text
+        DataGridViewInsulin.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+
+
 
     End Sub
 
@@ -311,6 +332,16 @@ Public Class Form1
         End Try
     End Function
 
+    Public Sub SetupTooltips()
+        ToolTip1.SetToolTip(btnCopyDurationtoDoctor, "Click here to Copy Collection Date to Doctor Date")
+
+        ToolTip1.SetToolTip(btnCheckICMySPR, "Press CTRL+V at SPR IC Form to paste IC No")
+        ToolTip1.SetToolTip(btnIOU, "Paste the latest Patient Past Medication record to application")
+        ToolTip1.SetToolTip(btnSave, "Saves Patient Data to Database and Print if Enabled")
+        ToolTip1.SetToolTip(cboxIOU, "Tick here if Patient is IOU")
+        ToolTip1.SetToolTip(btnClearAll, "Reset all the input forms")
+    End Sub
+
     Private Sub GetDefaultPrinterName()
         Dim printerSettings As New PrinterSettings()
         Dim defaultPrinterName As String = printerSettings.PrinterName
@@ -437,10 +468,14 @@ Public Class Form1
         'Set Fonts
         Dim fontsize1 As Single = Math.Round(8 * RationalizedScale)
         Dim fontsize2 As Single = Math.Round(13 * RationalizedScale)
+        Dim fontsize3 As Single = Math.Round(6 * RationalizedScale)
+        Dim fontsize4 As Single = Math.Round(5 * RationalizedScale)
         'Dim fontsize3 As Single = Math.Round(8 * RationalizedScale)
         Dim f8 As New Font("Arial", fontsize1, FontStyle.Italic)
         Dim f8a As New Font("Arial", fontsize1, FontStyle.Bold)
         Dim f8b As New Font("Arial", fontsize2, FontStyle.Bold)
+        Dim f4 As New Font("Arial", fontsize3, FontStyle.Bold)
+        Dim f4b As New Font("Arial", fontsize4, FontStyle.Bold)
         'Set Alignments
         Dim left As New StringFormat
         Dim centre As New StringFormat
@@ -478,7 +513,9 @@ Public Class Form1
 
         Dim Rect9 As New Rectangle(Math.Round(201 * ScaleWidth), Math.Round(167 * ScaleHeight), Math.Round(75 * ScaleWidth), Math.Round(12 * ScaleHeight)) 'Jumlah
 
+        Dim Rect10 As New Rectangle(Math.Round(10 * ScaleWidth), Math.Round(169 * ScaleHeight), Math.Round(100 * ScaleWidth), Math.Round(12 * ScaleHeight)) 'Ubat Terkawal
 
+        Dim Rect11 As New Rectangle(Math.Round(110 * ScaleWidth), Math.Round(166 * ScaleHeight), Math.Round(75 * ScaleWidth), Math.Round(14 * ScaleHeight)) 'Jauhi daripada Kanak-Kanak
 
         Try
             If cbDrug1.Text = "" Then
@@ -495,6 +532,7 @@ Public Class Form1
             e.Graphics.DrawRectangle(Pens.Black, Rect7)
             e.Graphics.DrawRectangle(Pens.White, Rect8) 'Remark margin
             e.Graphics.DrawRectangle(Pens.White, Rect9)
+
 
             'e.Graphics.Clear(Color.White)
 
@@ -531,9 +569,17 @@ Public Class Form1
 
 
                     e.Graphics.DrawString(cbDrug1.Text, f8a, Brushes.Black, Rect4, centre)
-                    e.Graphics.DrawString(ConsumeMethodD1 & consumedosefinal & ConsumeUnitD1 & txtFreqD1.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    ' Only execute if either ConsumeMethodD1 or ConsumeUnitD1 is not empty
+                    If Not String.IsNullOrEmpty(ConsumeMethodD1) Or Not String.IsNullOrEmpty(ConsumeUnitD1) Then
+                        e.Graphics.DrawString(ConsumeMethodD1 & consumedosefinal & ConsumeUnitD1 & txtFreqD1.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
+                    End If
+
+
                     e.Graphics.DrawString(RemarkD1, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD1.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
+
 
                 Case 2
                     'Check for Blank Selection of Drug
@@ -557,6 +603,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD2 & consumedosefinal & ConsumeUnitD2 & txtFreqD2.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD2, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD2.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 3
                     'Check for Blank Selection of Drug
                     If cbDrug4.Text = "" Then
@@ -566,7 +614,7 @@ Public Class Form1
 
                     End If
                     Dim consumedosefinal As String = ""
-                    If ConsumeMethodD3.Contains("Minum ") And ConsumeUnitD3.Contains("ml") Then
+                    If ConsumeMethodD3.Contains("Minum ") And ConsumeUnitD3.Contains("ml") Then 
                         Dim consumedose = txtDoseD3.Text / lblStrD3.Text
                         consumedosefinal = Math.Round(consumedose, 1)
                     ElseIf ConsumeMethodD3.Contains("Sapu ") Then
@@ -580,6 +628,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD3 & consumedosefinal & ConsumeUnitD3 & txtFreqD3.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD3, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD3.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 4
                     'Check for Blank Selection of Drug
                     If cbDrug5.Text = "" Then
@@ -603,6 +653,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD4 & consumedosefinal & ConsumeUnitD4 & txtFreqD4.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD4, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD4.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 5
                     'Check for Blank Selection of Drug
                     If cbDrug6.Text = "" Then
@@ -626,6 +678,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD5 & consumedosefinal & ConsumeUnitD5 & txtFreqD5.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD5, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD5.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 6
                     'Check for Blank Selection of Drug
                     If cbDrug7.Text = "" Then
@@ -649,6 +703,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD6 & consumedosefinal & ConsumeUnitD6 & txtFreqD6.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD6, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD6.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 7
                     'Check for Blank Selection of Drug
                     If cbDrug8.Text = "" Then
@@ -672,6 +728,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD7 & consumedosefinal & ConsumeUnitD7 & txtFreqD7.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD7, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD7.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 8
                     'Check for Blank Selection of Drug
                     If cbDrug9.Text = "" Then
@@ -695,6 +753,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD8 & consumedosefinal & ConsumeUnitD8 & txtFreqD8.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD8, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD8.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 9
                     'Check for Blank Selection of Drug
                     If cbDrug10.Text = "" Then
@@ -718,6 +778,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD9 & consumedosefinal & ConsumeUnitD9 & txtFreqD9.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD9, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD9.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
                 Case 10
                     Dim consumedosefinal As String = ""
                     If ConsumeMethodD10.Contains("Minum ") And ConsumeUnitD10.Contains("ml") Then
@@ -735,6 +797,8 @@ Public Class Form1
                     e.Graphics.DrawString(ConsumeMethodD10 & consumedosefinal & ConsumeUnitD10 & txtFreqD10.Text & " kali sehari", f8b, Brushes.Black, Rect6, centre)
                     e.Graphics.DrawString(RemarkD10, f8a, Brushes.Black, Rect8, centre)
                     e.Graphics.DrawString("Jumlah: " & txtQTYD10.Text, f8a, Brushes.Black, Rect9, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
 
             End Select
             ' Increment the page counter
@@ -797,6 +861,8 @@ Public Class Form1
 
             Dim fontscale1 As Single = Math.Round(RationalizedScale * 8)
             Dim fontscale2 As Single = Math.Round(RationalizedScale * 10)
+            Dim fontscale3 As Single = Math.Round(6 * RationalizedScale)
+            Dim fontscale4 As Single = Math.Round(5 * RationalizedScale)
 
             'Perform checking on insulin selections
             If Insulin1Selected = False Then
@@ -816,6 +882,8 @@ Public Class Form1
             Dim f8 As New Font("Arial", fontscale1, FontStyle.Italic)
             Dim f8a As New Font("Arial", fontscale1, FontStyle.Bold)
             Dim f8b As New Font("Arial", fontscale2, FontStyle.Bold)
+            Dim f4 As New Font("Arial", fontscale3, FontStyle.Bold)
+            Dim f4b As New Font("Arial", fontscale4, FontStyle.Bold)
             'Set Alignments
             Dim left As New StringFormat
             Dim centre As New StringFormat
@@ -837,7 +905,12 @@ Public Class Form1
             Dim Rect8a As New Rectangle(Math.Round(7 * ScaleWidth), Math.Round(145 * ScaleHeight), Math.Round(290 * ScaleWidth), Math.Round(18 * ScaleHeight)) 'Remark margin
 
 
-            Dim Rect9a As New Rectangle(Math.Round(170 * ScaleWidth), Math.Round(168 * ScaleHeight), Math.Round(110 * ScaleWidth), Math.Round(15 * ScaleHeight)) 'Jumlah
+            Dim Rect9a As New Rectangle(Math.Round(190 * ScaleWidth), Math.Round(170 * ScaleHeight), Math.Round(105 * ScaleWidth), Math.Round(14 * ScaleHeight)) 'Jumlah
+
+            Dim Rect10 As New Rectangle(Math.Round(10 * ScaleWidth), Math.Round(171 * ScaleHeight), Math.Round(100 * ScaleWidth), Math.Round(12 * ScaleHeight)) 'Ubat Terkawal
+
+            Dim Rect11 As New Rectangle(Math.Round(110 * ScaleWidth), Math.Round(168 * ScaleHeight), Math.Round(75 * ScaleWidth), Math.Round(14 * ScaleHeight)) 'Jauhi daripada Kanak-Kanak
+
             'Insulin 1
             Dim combinedwords As String
             Dim comamorning As String = " "
@@ -1001,6 +1074,8 @@ Public Class Form1
                     e.Graphics.DrawString(combinedwords, f8b, Brushes.Black, Rect6a, centre)
                     e.Graphics.DrawString(RemarkIn1, f8a, Brushes.Black, Rect8a, centre)
                     e.Graphics.DrawString("Jumlah Katrij: " & txtIn1CartQTY.Text, f8a, Brushes.Black, Rect9a, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
 
                 Case 2
 
@@ -1008,6 +1083,8 @@ Public Class Form1
                     e.Graphics.DrawString(combinedwords2, f8b, Brushes.Black, Rect6a, centre)
                     e.Graphics.DrawString(RemarkIn2, f8a, Brushes.Black, Rect8a, centre)
                     e.Graphics.DrawString("Jumlah Katrij: " & txtIn2CartQTY.Text, f8a, Brushes.Black, Rect9a, left)
+                    e.Graphics.DrawString("UBAT TERKAWAL", f4, Brushes.Black, Rect10, left)
+                    e.Graphics.DrawString("JAUHI DARIPADA KANAK - KANAK", f4b, Brushes.Black, Rect11, left)
 
             End Select
 
@@ -1029,46 +1106,7 @@ Public Class Form1
 
         End Try
     End Sub
-    Public Sub checkforItemsToCount()
-        NoOfItemsRecord = 0
-        NoOfItemsRecordInsulin = 0
-        If cbDrug1.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug2.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug3.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug4.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug5.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug6.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug7.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug8.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug9.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbDrug10.SelectedIndex > 0 Then
-            NoOfItemsRecord += 1
-        End If
-        If cbInsulin1.SelectedIndex > 0 Then
-            NoOfItemsRecordInsulin += 1
-        End If
-        If cbInsulin2.SelectedIndex > 0 Then
-            NoOfItemsRecordInsulin += 1
-        End If
-    End Sub
+
     Public Sub printInsulin()
         Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
         Dim LabelWidth As Double = (80 - 2) / 25.4 * 100
@@ -1171,108 +1209,70 @@ Public Class Form1
         Return True
     End Function
 
+
+
+
+
+    ' Reusable function to validate drug inputs
+    Private Function ValidateDrug(drugNumber As Integer, selectedIndex As Integer, drugText As String, doseText As String, freqText As String, durationText As String, qtyText As String) As Boolean
+        If selectedIndex >= 0 Then
+            If doseText.Length <= 0 Or freqText.Length <= 0 Or durationText.Length <= 0 Or qtyText.Length <= 0 Or qtyText.Length <= 0 Then
+                MsgBox("Drug " & drugNumber & " Error input")
+                Return False
+            End If
+        ElseIf drugText.Length > 0 Then
+            MsgBox("Drug " & drugNumber & " No Selection")
+            Return False
+        End If
+        Return True
+    End Function
+
+    ' Reusable function to validate insulin inputs
+    Private Function ValidateInsulin(insulinNumber As Integer, selectedIndex As Integer, totalDoseText As String, cartQtyText As String) As Boolean
+        If selectedIndex >= 0 Then
+            If totalDoseText.Length <= 0 Or totalDoseText.Length <= 0 Or cartQtyText.Length <= 0 Then
+                MsgBox("Insulin " & insulinNumber & " input error")
+                Return False
+            End If
+        End If
+        Return True
+    End Function
+
+    ' Main validation function
     Public Function checkDrugsInput() As Boolean
         Try
-            'Patient Drug Prescription Validation
-            If cbDrug1.SelectedIndex >= 0 Then
-                If txtDoseD1.Text = "" Or txtFreqD1.Text = "" Or txtDurationD1.Text = "" Or txtQTYD1.Text = "" Or CDbl(txtQTYD1.Text) = 0 Then
-                    MsgBox("Drug 1 Error input")
-                    Return False
-                End If
-            End If
-            If cbDrug2.SelectedIndex >= 0 Then
-                If txtDoseD2.Text = "" Or txtFreqD2.Text = "" Or txtDurationD2.Text = "" Or txtQTYD2.Text = "" Or CDbl(txtQTYD2.Text) = 0 Then
-                    MsgBox("Drug 2 Error input")
-                    Return False
-                End If
-            End If
-            If cbDrug3.SelectedIndex >= 0 Then
-                If txtDoseD3.Text = "" Or txtFreqD3.Text = "" Or txtDurationD3.Text = "" Or txtQTYD3.Text = "" Or CDbl(txtQTYD3.Text) = 0 Then
-                    MsgBox("Drug 3 Error input")
-                    Return False
-                End If
+            ' Validate drugs 1 to 10
+            If Not ValidateDrug(1, cbDrug1.SelectedIndex, cbDrug1.Text, txtDoseD1.Text, txtFreqD1.Text, txtDurationD1.Text, txtQTYD1.Text) Then Return False
+            If Not ValidateDrug(2, cbDrug2.SelectedIndex, cbDrug2.Text, txtDoseD2.Text, txtFreqD2.Text, txtDurationD2.Text, txtQTYD2.Text) Then Return False
+            If Not ValidateDrug(3, cbDrug3.SelectedIndex, cbDrug3.Text, txtDoseD3.Text, txtFreqD3.Text, txtDurationD3.Text, txtQTYD3.Text) Then Return False
+            If Not ValidateDrug(4, cbDrug4.SelectedIndex, cbDrug4.Text, txtDoseD4.Text, txtFreqD4.Text, txtDurationD4.Text, txtQTYD4.Text) Then Return False
+            If Not ValidateDrug(5, cbDrug5.SelectedIndex, cbDrug5.Text, txtDoseD5.Text, txtFreqD5.Text, txtDurationD5.Text, txtQTYD5.Text) Then Return False
+            If Not ValidateDrug(6, cbDrug6.SelectedIndex, cbDrug6.Text, txtDoseD6.Text, txtFreqD6.Text, txtDurationD6.Text, txtQTYD6.Text) Then Return False
+            If Not ValidateDrug(7, cbDrug7.SelectedIndex, cbDrug7.Text, txtDoseD7.Text, txtFreqD7.Text, txtDurationD7.Text, txtQTYD7.Text) Then Return False
+            If Not ValidateDrug(8, cbDrug8.SelectedIndex, cbDrug8.Text, txtDoseD8.Text, txtFreqD8.Text, txtDurationD8.Text, txtQTYD8.Text) Then Return False
+            If Not ValidateDrug(9, cbDrug9.SelectedIndex, cbDrug9.Text, txtDoseD9.Text, txtFreqD9.Text, txtDurationD9.Text, txtQTYD9.Text) Then Return False
+            If Not ValidateDrug(10, cbDrug10.SelectedIndex, cbDrug10.Text, txtDoseD10.Text, txtFreqD10.Text, txtDurationD10.Text, txtQTYD10.Text) Then Return False
+
+            ' Check if at least one drug or insulin is selected
+            If cbDrug1.SelectedIndex < 0 And cbDrug2.SelectedIndex < 0 And cbDrug3.SelectedIndex < 0 And
+           cbDrug4.SelectedIndex < 0 And cbDrug5.SelectedIndex < 0 And cbDrug6.SelectedIndex < 0 And
+           cbDrug7.SelectedIndex < 0 And cbDrug8.SelectedIndex < 0 And cbDrug9.SelectedIndex < 0 And
+           cbDrug10.SelectedIndex < 0 And cbInsulin1.SelectedIndex < 0 And cbInsulin2.SelectedIndex < 0 Then
+                MsgBox("No Drug or Insulin selected")
+                Return False
             End If
 
-            If cbDrug4.SelectedIndex >= 0 Then
-                If txtDoseD4.Text = "" Or txtFreqD4.Text = "" Or txtDurationD4.Text = "" Or txtQTYD4.Text = "" Or CDbl(txtQTYD4.Text) = 0 Then
-                    MsgBox("Drug 4 Error input")
-                    Return False
-                End If
-            End If
-            If cbDrug5.SelectedIndex >= 0 Then
-                If txtDoseD5.Text = "" Or txtFreqD5.Text = "" Or txtDurationD5.Text = "" Or txtQTYD5.Text = "" Or CDbl(txtQTYD5.Text) = 0 Then
-                    MsgBox("Drug 5 Error input")
-                    Return False
-                End If
-
-            End If
-            If cbDrug6.SelectedIndex >= 0 Then
-                If txtDoseD6.Text = "" Or txtFreqD6.Text = "" Or txtDurationD6.Text = "" Or txtQTYD6.Text = "" Or CDbl(txtQTYD6.Text) = 0 Then
-                    MsgBox("Drug 6 Error input")
-                    Return False
-                End If
-
-            End If
-            If cbDrug7.SelectedIndex >= 0 Then
-                If txtDoseD7.Text = "" Or txtFreqD7.Text = "" Or txtDurationD7.Text = "" Or txtQTYD7.Text = "" Or CDbl(txtQTYD7.Text) = 0 Then
-                    MsgBox("Drug 7 Error input")
-                    Return False
-                End If
-
-            End If
-            If cbDrug8.SelectedIndex >= 0 Then
-                If txtDoseD8.Text = "" Or txtFreqD8.Text = "" Or txtDurationD8.Text = "" Or txtQTYD8.Text = "" Or CDbl(txtQTYD8.Text) = 0 Then
-                    MsgBox("Drug 8 Error input")
-                    Return False
-                End If
-
-            End If
-            If cbDrug9.SelectedIndex >= 0 Then
-                If txtDoseD9.Text = "" Or txtFreqD9.Text = "" Or txtDurationD9.Text = "" Or txtQTYD9.Text = "" Or CDbl(txtQTYD9.Text) = 0 Then
-                    MsgBox("Drug 9 Error input")
-                    Return False
-                End If
-
-            End If
-            If cbDrug10.SelectedIndex >= 0 Then
-                If txtDoseD10.Text = "" Or txtFreqD10.Text = "" Or txtDurationD10.Text = "" Or txtQTYD10.Text = "" Or CDbl(txtQTYD10.Text) = 0 Then
-                    MsgBox("Drug 10 Error input")
-                    Return False
-                End If
-            End If
-
-        Catch ex As Exception
-            MsgBox("Drug input error")
-            Return False
-        End Try
-
-        Try
-            If cbInsulin1.SelectedIndex >= 0 Then
-                If txtIn1TotalDose.Text = "" Or txtIn1TotalDose.Text = 0 Or txtIn1CartQTY.Text = "" Then
-                    MsgBox("Insulin 1 input error")
-                    Return False
-                End If
-            End If
-            If cbInsulin2.SelectedIndex >= 0 Then
-                If txtIn2TotalDose.Text = "" Or txtIn2TotalDose.Text = 0 Or txtIn2CartQTY.Text = "" Then
-                    MsgBox("Insulin 2 input error")
-                    Return False
-                End If
-            End If
-            If cbInsulin1.SelectedIndex < 0 Then
-                If cbDrug1.SelectedIndex < 0 Then
-                    MessageBox.Show("No Drug or Insulin selected", "Error")
-                    Return False
-                End If
-            End If
+            ' Validate insulin inputs
+            If Not ValidateInsulin(1, cbInsulin1.SelectedIndex, txtIn1TotalDose.Text, txtIn1CartQTY.Text) Then Return False
+            If Not ValidateInsulin(2, cbInsulin2.SelectedIndex, txtIn2TotalDose.Text, txtIn2CartQTY.Text) Then Return False
 
             Return True
+
         Catch ex As Exception
-            MsgBox("Insulin input error")
+            MsgBox("Input error: " & ex.Message)
             Return False
         End Try
     End Function
-
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         'NEW PATIENT TAB
@@ -1781,7 +1781,44 @@ Redo:
         Dim IOUBool As Integer = 0
         'MsgBox("Drug Items : " & NoOfItemsRecord)
         'MsgBox("Insulin Items : " & NoOfItemsRecordInsulin)
-        checkforItemsToCount()
+        NoOfItemsRecord = 0
+        NoOfItemsRecordInsulin = 0
+        If cbDrug1.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug2.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug3.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug4.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug5.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug6.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug7.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug8.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug9.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbDrug10.SelectedIndex > 0 Then
+            NoOfItemsRecord += 1
+        End If
+        If cbInsulin1.SelectedIndex > 0 Then
+            NoOfItemsRecordInsulin += 1
+        End If
+        If cbInsulin2.SelectedIndex > 0 Then
+            NoOfItemsRecordInsulin += 1
+        End If
         Dim totalitems As Integer = NoOfItemsRecord + NoOfItemsRecordInsulin
         If cboxIOU.Checked Then
             IOUBool = 1
@@ -1816,11 +1853,14 @@ Redo:
         End Try
 
     End Sub
+
     Public Sub loadDGVRecords()
         dgvRecords.Rows.Clear()
-        'Data Grid View Method to Get Data from MYSQL Database
+        dgvRecords.Visible = False ' Hide the DataGridView
+
+        ' Data Grid View Method to Get Data from MYSQL Database
         Dim count As Integer = 0
-        'Parse the input date string
+        ' Parse the input date string
         dtpRecordsDateSelectorEnd.MinDate = dtpRecordsDateSelector.Value
         Dim originalDateString As String = dtpRecordsDateSelector.Value
         Dim parsedDate As DateTime = DateTime.Parse(originalDateString)
@@ -1829,13 +1869,12 @@ Redo:
         Dim originalDateString2 As String = dtpRecordsDateSelectorEnd.Value
         Dim parsedDate2 As DateTime = DateTime.Parse(originalDateString2)
         Dim enddate As String = parsedDate2.ToString("yyyy-MM-dd")
-        'Declare initial count variables for new patients, iou, no of items
+        ' Declare initial count variables for new patients, iou, no of items
         Dim newpatientcount = 0
         Dim ioucount = 0
         Dim noofitems = 0
 
         Try
-
             conn.Open()
             Dim cmd As New MySqlCommand("SELECT * FROM `records` WHERE (CAST(Timestamp AS date) BETWEEN '" & startdate & "' AND '" & enddate & "')", conn)
             dr = cmd.ExecuteReader
@@ -1852,13 +1891,14 @@ Redo:
             lblIOUTotal.Text = ioucount
             lblNoOfItemsTotal.Text = noofitems
 
-
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
             conn.Close()
+            dgvRecords.Visible = True ' Show the DataGridView after processing
         End Try
     End Sub
+
     Public Function getNumeric(value As String) As String
         Dim output As StringBuilder = New StringBuilder
         For i = 0 To value.Length - 1
@@ -1877,6 +1917,11 @@ Redo:
                 Return
             End If
 
+            If cboxDosageForm.SelectedIndex = -1 Then
+                ' Display an error message if no item is selected
+                MessageBox.Show("Please select the Dosage Form from the list.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+
             conn.Open()
 
             Dim cmd As New MySqlCommand("INSERT INTO `drugtable` (`DrugName`,`Strength`,`Unit`,`DosageForm`,`PrescriberCategory`,`DefaultMaxQTY`,`Remark`) VALUES (@DrugName,@Strength,@Unit,@DosageForm,@PrescriberCategory,@DefaultMaxQTY,@Remark)", conn)
@@ -1884,7 +1929,7 @@ Redo:
             cmd.Parameters.AddWithValue("@DrugName", txtDrugName.Text)
             cmd.Parameters.AddWithValue("@Strength", CDbl(txtStrength.Text))
             cmd.Parameters.AddWithValue("@Unit", txtUnit.Text)
-            cmd.Parameters.AddWithValue("@DosageForm", txtDosageForm.Text)
+            cmd.Parameters.AddWithValue("@DosageForm", cboxDosageForm.SelectedItem.ToString())
             cmd.Parameters.AddWithValue("@PrescriberCategory", txtPrescriberCategory.Text)
             cmd.Parameters.AddWithValue("@DefaultMaxQTY", txtDefaultMaxQTY.Text)
             cmd.Parameters.AddWithValue("@Remark", txtRemark.Text)
@@ -1916,7 +1961,7 @@ Redo:
         txtDrugName.Clear()
         txtStrength.Clear()
         txtUnit.Clear()
-        txtDosageForm.Clear()
+        cboxDosageForm.SelectedIndex = -1
         txtPrescriberCategory.Clear()
         txtDefaultMaxQTY.Clear()
         txtRemark.Clear()
@@ -1965,7 +2010,7 @@ Redo:
             cmd.Parameters.AddWithValue("@DrugName", txtDrugName.Text)
             cmd.Parameters.AddWithValue("@Strength", CDec(txtStrength.Text))
             cmd.Parameters.AddWithValue("@Unit", txtUnit.Text)
-            cmd.Parameters.AddWithValue("@DosageForm", txtDosageForm.Text)
+            cmd.Parameters.AddWithValue("@DosageForm", cboxDosageForm.SelectedItem.ToString())
             cmd.Parameters.AddWithValue("@PrescriberCategory", txtPrescriberCategory.Text)
             cmd.Parameters.AddWithValue("@DefaultMaxQTY", txtDefaultMaxQTY.Text)
             cmd.Parameters.AddWithValue("@Remark", txtRemark.Text)
@@ -2012,7 +2057,7 @@ Redo:
                 txtDrugName.Text = DataGridView1.CurrentRow.Cells(0).Value
                 txtStrength.Text = DataGridView1.CurrentRow.Cells(1).Value
                 txtUnit.Text = DataGridView1.CurrentRow.Cells(2).Value
-                txtDosageForm.Text = DataGridView1.CurrentRow.Cells(3).Value
+                cboxDosageForm.SelectedItem = DataGridView1.CurrentRow.Cells(3).Value.ToString()
                 txtPrescriberCategory.Text = DataGridView1.CurrentRow.Cells(4).Value
                 txtDefaultMaxQTY.Text = DataGridView1.CurrentRow.Cells(5).Value
                 txtRemark.Text = DataGridView1.CurrentRow.Cells(6).Value
@@ -2143,11 +2188,67 @@ Redo:
             End While
             conn.Close()
         Catch ex As Exception
-
+            conn.Close()
         End Try
 
 
 
+    End Sub
+
+    Public Sub checkNamefromDB()
+        Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE Name = @name", conn)
+        cmd.Parameters.AddWithValue("@name", txtPatientName.Text.ToString()) ' Use parameterized query
+
+        Try
+            conn.Open()
+            Using dr As MySqlDataReader = cmd.ExecuteReader()
+                If dr.Read() Then ' Move to the first row
+                    txtICNo.Text = dr("ICNo").ToString()
+                    btnIOU.Enabled = True
+                    lblExistingPatient.Text = "Existing Patient Found!"
+
+                Else
+                    lblExistingPatient.Text = "No matching record found."
+                End If
+            End Using ' This ensures the reader is closed properly
+            dr.Close()
+            conn.Close()
+
+        Catch ex As Exception
+            conn.Close()
+            ' MsgBox("Error: " & ex.Message) ' Show error message for debugging
+        End Try
+
+        ' Ensure IC number check happens after database operations
+        If txtICNo.TextLength = 14 Then
+            Try
+                btnCheckICMySPR.Enabled = True
+                Dim DOB As String = ExtractDOB()
+                Dim DOBDate As Date = DateTime.Parse(DOB)
+                Dim currentDate As Date = Date.Today
+                Dim age As Integer = currentDate.Year - DOBDate.Year
+
+                ' Adjust if birthday hasn't occurred yet this year
+                If currentDate < DOBDate.AddYears(age) Then
+                    age -= 1
+                End If
+
+                lblAge.Text = "Age: " & age
+                lblGender.Text = "Gender: " & ExtractGender()
+
+            Catch ex As Exception
+                MsgBox("Error processing DOB/Gender: " & ex.Message)
+            End Try
+        End If
+    End Sub
+
+
+    Private Sub txtPatientName_TextChanged(sender As Object, e As EventArgs) Handles txtPatientName.TextChanged
+        btnIOU.Enabled = False
+        lblExistingPatient.Text = ""
+        lblAge.Text = "Age"
+        lblGender.Text = "Gender"
+        checkNamefromDB()
     End Sub
     Public Sub loadInsulindatafromdb()
         Dim tempcbInsulin1 = cbInsulin1.SelectedIndex
@@ -2195,8 +2296,10 @@ Redo:
 
     Public Sub loadDrugNamestoCboxSearch()
         Dim tempcbSearchDrug = cboxSearchbyDrug.SelectedIndex
+        Dim tempcbDrugQty = cbDrugQty.SelectedIndex ' Store the current index of cbDrugQty
         Try
             cboxSearchbyDrug.Items.Clear()
+            cbDrugQty.Items.Clear() ' Clear the cbDrugQty ComboBox
             conn.Open()
             Dim cmd As New MySqlCommand("SELECT DrugName FROM drugtable", conn)
             Dim dt As New DataTable
@@ -2208,6 +2311,7 @@ Redo:
                 col.Add(dt.Rows(i)("DrugName").ToString())
                 drugnamedb = dt.Rows(i)("DrugName").ToString()
                 cboxSearchbyDrug.Items.Add(drugnamedb)
+                cbDrugQty.Items.Add(drugnamedb) ' Add drug names to cbDrugQty
             Next
             conn.Close()
             da.Dispose()
@@ -2215,6 +2319,11 @@ Redo:
             cboxSearchbyDrug.AutoCompleteCustomSource = col
             cboxSearchbyDrug.AutoCompleteMode = AutoCompleteMode.Suggest
             cboxSearchbyDrug.SelectedIndex = tempcbSearchDrug
+
+            cbDrugQty.AutoCompleteSource = AutoCompleteSource.CustomSource
+            cbDrugQty.AutoCompleteCustomSource = col
+            cbDrugQty.AutoCompleteMode = AutoCompleteMode.Suggest
+            cbDrugQty.SelectedIndex = tempcbDrugQty ' Restore the previous index of cbDrugQty
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -2329,6 +2438,28 @@ Redo:
         End Try
 
     End Sub
+
+    Public Sub populateDosageForms()
+
+        ' Set the combo box to only allow selection of predefined items
+        cboxDosageForm.DropDownStyle = ComboBoxStyle.DropDownList
+
+        ' Clear the combo box before adding new items (optional)
+        cboxDosageForm.Items.Clear()
+
+        ' Add items to the combo box
+        cboxDosageForm.Items.Add("Tablet")
+        cboxDosageForm.Items.Add("Fridge Item")
+        cboxDosageForm.Items.Add("Syrup")
+        cboxDosageForm.Items.Add("Gargle")
+        cboxDosageForm.Items.Add("Inhaler")
+        cboxDosageForm.Items.Add("Internal")
+        cboxDosageForm.Items.Add("Cream")
+        cboxDosageForm.Items.Add("Dropper")
+        cboxDosageForm.Items.Add("Suppository")
+        cboxDosageForm.Items.Add("")
+    End Sub
+
     Public Sub populatevaluesInsulin1()
         Try
             If cbInsulin1.Text Is "" Then
@@ -2401,656 +2532,95 @@ Redo:
         End Try
 
     End Sub
-    Public Sub populatevaluesD1()
+
+    Public Sub populateValues(ByVal drugName As String, ByRef lblStrength As Label, ByRef lblUnit As Label,
+                          ByRef lblPrescriberCategory As Label, ByRef consumeMethod As String,
+                          ByRef consumeUnit As String, ByRef remark As String,
+                          ByRef defaultMaxQty As Integer)
 
         Try
-
-            If cbDrug1.Text Is "" Then
-                lblStrD1.Text = ""
+            ' If the drug name is empty, clear labels and exit
+            If drugName = "" Then
+                lblStrength.Text = ""
+                lblUnit.Text = ""
+                lblPrescriberCategory.Text = ""
                 Return
             End If
 
+            ' Open the database connection
             conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug1.Text & "'", conn)
-            dr = cmd.ExecuteReader
+            ' Prepare the SQL command to fetch data based on the provided drug name
+            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = @DrugName", conn)
+            cmd.Parameters.AddWithValue("@DrugName", drugName)
+            dr = cmd.ExecuteReader()
+
+            ' Read the data from the database
             While dr.Read()
+                ' Populate labels and variables based on the database values
+                lblStrength.Text = dr.Item("Strength").ToString()
+                lblUnit.Text = dr.Item("Unit").ToString()
+                lblPrescriberCategory.Text = dr.Item("PrescriberCategory").ToString()
+                remark = dr.Item("Remark").ToString()
 
-                lblStrD1.Text = dr.Item("Strength")
-                lblUnitD1.Text = dr.Item("Unit")
-                lblPreCatagoryD1.Text = dr.Item("PrescriberCategory")
-                RemarkD1 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD1 = "Makan "
-                    ConsumeUnitD1 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD1 = "Suntik "
-                    ConsumeUnitD1 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD1 = "Minum "
-                    ConsumeUnitD1 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD1 = "Kumur "
-                    ConsumeUnitD1 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD1 = "Ambil "
-                    ConsumeUnitD1 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD1 = "Minum "
-                    ConsumeUnitD1 = " paket "
-                ElseIf dr.Item("DosageForm") = "Packet" Then
-                    ConsumeMethodD1 = "Minum "
-                    ConsumeUnitD1 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD1 = "Sapu "
-                    ConsumeUnitD1 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD1 = ""
-                    ConsumeUnitD1 = " titis "
+                ' Determine consumption method and unit based on DosageForm
+                Select Case dr.Item("DosageForm").ToString()
+                    Case "Tablet"
+                        consumeMethod = "Makan "
+                        consumeUnit = " biji "
+                    Case "Fridge Item"
+                        consumeMethod = "Suntik "
+                        consumeUnit = " unit "
+                    Case "Syrup"
+                        consumeMethod = "Minum "
+                        consumeUnit = " ml "
+                    Case "Gargle"
+                        consumeMethod = "Kumur "
+                        consumeUnit = " ml "
+                    Case "Inhaler"
+                        consumeMethod = "Ambil "
+                        consumeUnit = " sedutan "
+                    Case "Internal", "Packet"
+                        consumeMethod = "Minum "
+                        consumeUnit = " paket "
+                    Case "Cream"
+                        consumeMethod = "Sapu "
+                        consumeUnit = ""
+                    Case "Dropper"
+                        consumeMethod = ""
+                        consumeUnit = " titis "
+                    Case "Suppository"
+                        consumeMethod = "Ambil "
+                        consumeUnit = " biji "
+                    Case Else
+                        consumeMethod = ""
+                        consumeUnit = ""
+                End Select
 
+                ' Check for default max QTY and set the value
+                If dr.Item("DefaultMaxQTY").ToString() <> "" Then
+                    defaultMaxQty = CInt(dr.Item("DefaultMaxQTY"))
+                Else
+                    defaultMaxQty = 0
                 End If
-
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD1 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD1 = 0
-                End If
-
             End While
+
             dr.Close()
 
-
         Catch ex As Exception
+            ' Handle errors and clear labels if necessary
             MsgBox(ex.Message)
-            lblStrD1.Text = ""
-            lblUnitD1.Text = ""
+            lblStrength.Text = ""
+            lblUnit.Text = ""
+            lblPrescriberCategory.Text = ""
 
         Finally
+            ' Clean up resources
             dr.Dispose()
             conn.Close()
         End Try
-
-    End Sub
-
-    Public Sub populatevaluesD2()
-
-        Try
-
-            If cbDrug2.Text Is "" Then
-                lblStrD2.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug2.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD2.Text = dr.Item("Strength")
-                lblUnitD2.Text = dr.Item("Unit")
-                lblPreCatagoryD2.Text = dr.Item("PrescriberCategory")
-                RemarkD2 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD2 = "Makan "
-                    ConsumeUnitD2 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD2 = "Suntik "
-                    ConsumeUnitD2 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD2 = "Minum "
-                    ConsumeUnitD2 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD2 = "Kumur "
-                    ConsumeUnitD2 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD2 = "Ambil "
-                    ConsumeUnitD2 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD2 = "Minum "
-                    ConsumeUnitD2 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD2 = "Sapu "
-                    ConsumeUnitD2 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD2 = ""
-                    ConsumeUnitD2 = " titis "
-                End If
-
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD2 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD2 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD2.Text = ""
-            lblUnitD2.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
     End Sub
 
 
-    Public Sub PopulatevaluesD3()
-
-        Try
-
-            If cbDrug3.Text Is "" Then
-                lblStrD3.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug3.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD3.Text = dr.Item("Strength")
-
-                lblUnitD3.Text = dr.Item("Unit")
-                lblPreCatagoryD3.Text = dr.Item("PrescriberCategory")
-                RemarkD3 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD3 = "Makan "
-                    ConsumeUnitD3 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD3 = "Suntik "
-                    ConsumeUnitD3 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD3 = "Minum "
-                    ConsumeUnitD3 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD3 = "Kumur "
-                    ConsumeUnitD3 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD3 = "Ambil "
-                    ConsumeUnitD3 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD3 = "Minum "
-                    ConsumeUnitD3 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD3 = "Sapu "
-                    ConsumeUnitD3 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD3 = ""
-                    ConsumeUnitD3 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD3 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD3 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD3.Text = ""
-
-            lblUnitD3.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
-
-    Public Sub populatevaluesD4()
-
-        Try
-
-            If cbDrug4.Text Is "" Then
-                lblStrD4.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug4.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD4.Text = dr.Item("Strength")
-                lblUnitD4.Text = dr.Item("Unit")
-                lblPreCatagoryD4.Text = dr.Item("PrescriberCategory")
-                RemarkD4 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD4 = "Makan "
-                    ConsumeUnitD4 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD4 = "Suntik "
-                    ConsumeUnitD4 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD4 = "Minum "
-                    ConsumeUnitD4 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD4 = "Kumur "
-                    ConsumeUnitD4 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD4 = "Ambil "
-                    ConsumeUnitD4 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD4 = "Minum "
-                    ConsumeUnitD4 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD4 = "Sapu "
-                    ConsumeUnitD4 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD4 = ""
-                    ConsumeUnitD4 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD4 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD4 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD4.Text = ""
-            lblUnitD4.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
-
-    Public Sub populatevaluesD5()
-
-        Try
-
-            If cbDrug5.Text Is "" Then
-                lblStrD5.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug5.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD5.Text = dr.Item("Strength")
-                lblUnitD5.Text = dr.Item("Unit")
-                lblPreCatagoryD5.Text = dr.Item("PrescriberCategory")
-                RemarkD5 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD5 = "Makan "
-                    ConsumeUnitD5 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD5 = "Suntik "
-                    ConsumeUnitD5 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD5 = "Minum "
-                    ConsumeUnitD5 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD5 = "Kumur "
-                    ConsumeUnitD5 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD5 = "Ambil "
-                    ConsumeUnitD5 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD5 = "Minum "
-                    ConsumeUnitD5 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD5 = "Sapu "
-                    ConsumeUnitD5 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD5 = ""
-                    ConsumeUnitD5 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD5 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD5 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD5.Text = ""
-            lblUnitD5.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
-
-    Public Sub populatevaluesD6()
-
-        Try
-
-            If cbDrug6.Text Is "" Then
-                lblStrD6.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug6.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD6.Text = dr.Item("Strength")
-                lblUnitD6.Text = dr.Item("Unit")
-                lblPreCatagoryD6.Text = dr.Item("PrescriberCategory")
-                RemarkD6 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD6 = "Makan "
-                    ConsumeUnitD6 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD6 = "Suntik "
-                    ConsumeUnitD6 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD6 = "Minum "
-                    ConsumeUnitD6 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD6 = "Kumur "
-                    ConsumeUnitD6 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD6 = "Ambil "
-                    ConsumeUnitD6 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD6 = "Minum "
-                    ConsumeUnitD6 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD6 = "Sapu "
-                    ConsumeUnitD6 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD6 = ""
-                    ConsumeUnitD6 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD6 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD6 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD6.Text = ""
-            lblUnitD6.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
-
-    Public Sub populatevaluesD7()
-
-        Try
-
-            If cbDrug7.Text Is "" Then
-                lblStrD7.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug7.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD7.Text = dr.Item("Strength")
-                lblUnitD7.Text = dr.Item("Unit")
-                lblPreCatagoryD7.Text = dr.Item("PrescriberCategory")
-                RemarkD7 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD7 = "Makan "
-                    ConsumeUnitD7 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD7 = "Suntik "
-                    ConsumeUnitD7 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD7 = "Minum "
-                    ConsumeUnitD7 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD7 = "Kumur "
-                    ConsumeUnitD7 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD7 = "Ambil "
-                    ConsumeUnitD7 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD7 = "Minum "
-                    ConsumeUnitD7 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD7 = "Sapu "
-                    ConsumeUnitD7 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD7 = ""
-                    ConsumeUnitD7 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD7 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD7 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD7.Text = ""
-            lblUnitD7.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
-
-    Public Sub populatevaluesD8()
-
-        Try
-
-            If cbDrug8.Text Is "" Then
-                lblStrD8.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug8.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD8.Text = dr.Item("Strength")
-                lblUnitD8.Text = dr.Item("Unit")
-                lblPreCatagoryD8.Text = dr.Item("PrescriberCategory")
-                RemarkD8 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD8 = "Makan "
-                    ConsumeUnitD8 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD8 = "Suntik "
-                    ConsumeUnitD8 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD8 = "Minum "
-                    ConsumeUnitD8 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD8 = "Kumur "
-                    ConsumeUnitD8 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD8 = "Ambil "
-                    ConsumeUnitD8 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD8 = "Minum "
-                    ConsumeUnitD8 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD8 = "Sapu "
-                    ConsumeUnitD8 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD8 = ""
-                    ConsumeUnitD8 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD8 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD8 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD8.Text = ""
-            lblUnitD8.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
-
-    Public Sub populatevaluesD9()
-
-        Try
-
-            If cbDrug9.Text Is "" Then
-                lblStrD9.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug9.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD9.Text = dr.Item("Strength")
-                lblUnitD9.Text = dr.Item("Unit")
-                lblPreCatagoryD9.Text = dr.Item("PrescriberCategory")
-                RemarkD9 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD9 = "Makan "
-                    ConsumeUnitD9 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD9 = "Suntik "
-                    ConsumeUnitD9 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD9 = "Minum "
-                    ConsumeUnitD9 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD9 = "Kumur "
-                    ConsumeUnitD9 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD9 = "Ambil "
-                    ConsumeUnitD9 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD9 = "Minum "
-                    ConsumeUnitD9 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD9 = "Sapu "
-                    ConsumeUnitD9 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD9 = ""
-                    ConsumeUnitD9 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD9 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD9 = 0
-                End If
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD9.Text = ""
-            lblUnitD9.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
-
-    Public Sub populatevaluesD10()
-
-        Try
-
-            If cbDrug10.Text Is "" Then
-                lblStrD10.Text = ""
-                Return
-            End If
-
-            conn.Open()
-            Dim cmd As New MySqlCommand("SELECT * FROM drugtable WHERE DrugName = '" & cbDrug10.Text & "'", conn)
-            dr = cmd.ExecuteReader
-            While dr.Read()
-
-                lblStrD10.Text = dr.Item("Strength")
-                lblUnitD10.Text = dr.Item("Unit")
-                lblPreCatagoryD10.Text = dr.Item("PrescriberCategory")
-                RemarkD10 = dr.Item("Remark")
-                If dr.Item("DosageForm") = "Tablet" Then
-                    ConsumeMethodD10 = "Makan "
-                    ConsumeUnitD10 = " biji "
-                ElseIf dr.Item("DosageForm") = "Fridge Item" Then
-                    ConsumeMethodD10 = "Suntik "
-                    ConsumeUnitD10 = " unit "
-                ElseIf dr.Item("DosageForm") = "Syrup" Then
-                    ConsumeMethodD10 = "Minum "
-                    ConsumeUnitD10 = " ml "
-                ElseIf dr.Item("DosageForm") = "Gargle" Then
-                    ConsumeMethodD10 = "Kumur "
-                    ConsumeUnitD10 = " ml "
-                ElseIf dr.Item("DosageForm") = "Inhaler" Then
-                    ConsumeMethodD10 = "Ambil "
-                    ConsumeUnitD10 = " sedutan "
-                ElseIf dr.Item("DosageForm") = "Internal" Then
-                    ConsumeMethodD10 = "Minum "
-                    ConsumeUnitD10 = " paket "
-                ElseIf dr.Item("DosageForm") = "Cream" Then
-                    ConsumeMethodD10 = "Sapu "
-                    ConsumeUnitD10 = ""
-                ElseIf dr.Item("DosageForm") = "Dropper" Then
-                    ConsumeMethodD10 = ""
-                    ConsumeUnitD10 = " titis "
-                End If
-                'check for max default QTY if present
-                If dr.Item("DefaultMaxQTY") <> "" Then
-                    DefaultMaxQTYD10 = CInt(dr.Item("DefaultMaxQTY"))
-                Else DefaultMaxQTYD10 = 0
-                End If
-
-            End While
-            dr.Close()
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            lblStrD10.Text = ""
-            lblUnitD10.Text = ""
-
-        Finally
-            dr.Dispose()
-            conn.Close()
-        End Try
-
-    End Sub
 
     Public Sub calculatedrugD1()
         Dim TotalQTYD1 As Double
@@ -3650,11 +3220,27 @@ Redo:
         'MsgBox("Executed")
         cbDrug1.SelectionLength = 0
     End Sub
+    'All Drugs
+    Public Sub PopulateAllDrugValues()
+        ' Call populateValues for each drug and its respective labels
+        populateValues(cbDrug1.Text, lblStrD1, lblUnitD1, lblPreCatagoryD1, ConsumeMethodD1, ConsumeUnitD1, RemarkD1, DefaultMaxQTYD1)
+        populateValues(cbDrug2.Text, lblStrD2, lblUnitD2, lblPreCatagoryD2, ConsumeMethodD2, ConsumeUnitD2, RemarkD2, DefaultMaxQTYD2)
+        populateValues(cbDrug3.Text, lblStrD3, lblUnitD3, lblPreCatagoryD3, ConsumeMethodD3, ConsumeUnitD3, RemarkD3, DefaultMaxQTYD3)
+        populateValues(cbDrug4.Text, lblStrD4, lblUnitD4, lblPreCatagoryD4, ConsumeMethodD4, ConsumeUnitD4, RemarkD4, DefaultMaxQTYD4)
+        populateValues(cbDrug5.Text, lblStrD5, lblUnitD5, lblPreCatagoryD5, ConsumeMethodD5, ConsumeUnitD5, RemarkD5, DefaultMaxQTYD5)
+        populateValues(cbDrug6.Text, lblStrD6, lblUnitD6, lblPreCatagoryD6, ConsumeMethodD6, ConsumeUnitD6, RemarkD6, DefaultMaxQTYD6)
+        populateValues(cbDrug7.Text, lblStrD7, lblUnitD7, lblPreCatagoryD7, ConsumeMethodD7, ConsumeUnitD7, RemarkD7, DefaultMaxQTYD7)
+        populateValues(cbDrug8.Text, lblStrD8, lblUnitD8, lblPreCatagoryD8, ConsumeMethodD8, ConsumeUnitD8, RemarkD8, DefaultMaxQTYD8)
+        populateValues(cbDrug9.Text, lblStrD9, lblUnitD9, lblPreCatagoryD9, ConsumeMethodD9, ConsumeUnitD9, RemarkD9, DefaultMaxQTYD9)
+        populateValues(cbDrug10.Text, lblStrD10, lblUnitD10, lblPreCatagoryD10, ConsumeMethodD10, ConsumeUnitD10, RemarkD10, DefaultMaxQTYD10)
+    End Sub
+
     'Drug 1
     Private Sub cbDrug1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug1.SelectedIndexChanged
         cbDrug1.SelectionLength = cbDrug1.Text.Length
         unhighlightallcb()
-        populatevaluesD1()
+        populateValues(cbDrug1.Text, lblStrD1, lblUnitD1, lblPreCatagoryD1, ConsumeMethodD1, ConsumeUnitD1, RemarkD1, DefaultMaxQTYD1)
+
         calculatedrugD1()
         calculateDurationD1()
         Drug1Selected = True
@@ -3667,7 +3253,8 @@ Redo:
     End Sub
     'Drug 2
     Private Sub cbDrug2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug2.SelectedIndexChanged
-        populatevaluesD2()
+        populateValues(cbDrug2.Text, lblStrD2, lblUnitD2, lblPreCatagoryD2, ConsumeMethodD2, ConsumeUnitD2, RemarkD2, DefaultMaxQTYD2)
+
         calculatedrugD2()
         unhighlightallcb()
         calculateDurationD2()
@@ -3681,7 +3268,8 @@ Redo:
     End Sub
     'Drug 3
     Private Sub cbDrug3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug3.SelectedIndexChanged
-        PopulatevaluesD3()
+        populateValues(cbDrug3.Text, lblStrD3, lblUnitD3, lblPreCatagoryD3, ConsumeMethodD3, ConsumeUnitD3, RemarkD3, DefaultMaxQTYD3)
+
         calculatedrugD3()
         unhighlightallcb()
         calculateDurationD3()
@@ -3695,7 +3283,8 @@ Redo:
 
     'Drug 4
     Private Sub cbDrug4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug4.SelectedIndexChanged
-        populatevaluesD4()
+        populateValues(cbDrug4.Text, lblStrD4, lblUnitD4, lblPreCatagoryD4, ConsumeMethodD4, ConsumeUnitD4, RemarkD4, DefaultMaxQTYD4)
+
         calculatedrugD4()
         lbDrugNumber4.Focus()
         unhighlightallcb()
@@ -3710,7 +3299,8 @@ Redo:
     End Sub
     'Drug 5
     Private Sub cbDrug5_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug5.SelectedIndexChanged
-        populatevaluesD5()
+        populateValues(cbDrug5.Text, lblStrD5, lblUnitD5, lblPreCatagoryD5, ConsumeMethodD5, ConsumeUnitD5, RemarkD5, DefaultMaxQTYD5)
+
         calculatedrugD5()
         unhighlightallcb()
         calculateDurationD5()
@@ -3724,7 +3314,8 @@ Redo:
     End Sub
     'Drug 6
     Private Sub cbDrug6_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug6.SelectedIndexChanged
-        populatevaluesD6()
+        populateValues(cbDrug6.Text, lblStrD6, lblUnitD6, lblPreCatagoryD6, ConsumeMethodD6, ConsumeUnitD6, RemarkD6, DefaultMaxQTYD6)
+
         calculatedrugD6()
         unhighlightallcb()
         calculateDurationD6()
@@ -3738,7 +3329,8 @@ Redo:
     End Sub
     'Drug 7
     Private Sub cbDrug7_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug7.SelectedIndexChanged
-        populatevaluesD7()
+        populateValues(cbDrug7.Text, lblStrD7, lblUnitD7, lblPreCatagoryD7, ConsumeMethodD7, ConsumeUnitD7, RemarkD7, DefaultMaxQTYD7)
+
         calculatedrugD7()
         unhighlightallcb()
         calculateDurationD7()
@@ -3752,7 +3344,8 @@ Redo:
     End Sub
     'Drug 8
     Private Sub cbDrug8_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug8.SelectedIndexChanged
-        populatevaluesD8()
+        populateValues(cbDrug8.Text, lblStrD8, lblUnitD8, lblPreCatagoryD8, ConsumeMethodD8, ConsumeUnitD8, RemarkD8, DefaultMaxQTYD8)
+
         calculatedrugD8()
         unhighlightallcb()
         calculateDurationD8()
@@ -3766,7 +3359,8 @@ Redo:
 
     'Drug 9
     Private Sub cbDrug9_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug9.SelectedIndexChanged
-        populatevaluesD9()
+        populateValues(cbDrug9.Text, lblStrD9, lblUnitD9, lblPreCatagoryD9, ConsumeMethodD9, ConsumeUnitD9, RemarkD9, DefaultMaxQTYD9)
+
         calculatedrugD9()
         unhighlightallcb()
         calculateDurationD9()
@@ -3780,7 +3374,8 @@ Redo:
     End Sub
     'Drug 10
     Private Sub cbDrug10_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrug10.SelectedIndexChanged
-        populatevaluesD10()
+        populateValues(cbDrug10.Text, lblStrD10, lblUnitD10, lblPreCatagoryD10, ConsumeMethodD10, ConsumeUnitD10, RemarkD10, DefaultMaxQTYD10)
+
         calculatedrugD10()
         unhighlightallcb()
         calculateDurationD10()
@@ -3805,128 +3400,47 @@ Redo:
         cbInsulin1.SelectedIndex = -1
         cbInsulin2.SelectedIndex = -1
     End Sub
-    Public Sub checkforselecteddrugs()
-        If cbDrug1.SelectedIndex >= 0 Then
-            Drug1Selected = True
-            cbDrug2.Enabled = True
-        Else Drug1Selected = False
 
-        End If
-        If cbDrug2.SelectedIndex >= 0 Then
-            Drug2Selected = True
-            cbDrug2.Enabled = True
-            cbDrug3.Enabled = True
-        Else Drug2Selected = False
-            cbDrug2.Enabled = False
+    Public Sub CheckForSelectedDrugsnew()
+        ' Arrays for drug ComboBoxes and their corresponding selection flags
+        Dim drugComboBoxes = {cbDrug1, cbDrug2, cbDrug3, cbDrug4, cbDrug5, cbDrug6, cbDrug7, cbDrug8, cbDrug9, cbDrug10}
+        Dim drugSelectedFlags = {Drug1Selected, Drug2Selected, Drug3Selected, Drug4Selected, Drug5Selected, Drug6Selected, Drug7Selected, Drug8Selected, Drug9Selected, Drug10Selected}
 
-        End If
-        If cbDrug3.SelectedIndex >= 0 Then
-            Drug3Selected = True
-            cbDrug3.Enabled = True
-            cbDrug4.Enabled = True
-        Else Drug3Selected = False
-            cbDrug3.Enabled = False
+        ' Loop through the drug ComboBoxes
+        For i As Integer = 0 To drugComboBoxes.Length - 1
+            ' Check if the ComboBox is selected
+            If drugComboBoxes(i).SelectedIndex >= 0 Then
+                drugSelectedFlags(i) = True
 
-        End If
-        If cbDrug4.SelectedIndex >= 0 Then
-            Drug4Selected = True
-            cbDrug4.Enabled = True
-            cbDrug5.Enabled = True
-        Else Drug4Selected = False
-            cbDrug4.Enabled = False
 
-        End If
-        If cbDrug5.SelectedIndex >= 0 Then
-            Drug5Selected = True
-            cbDrug5.Enabled = True
-            cbDrug6.Enabled = True
-        Else Drug5Selected = False
-            cbDrug5.Enabled = False
+                drugComboBoxes(i + 1).Enabled = True
 
-        End If
-        If cbDrug6.SelectedIndex >= 0 Then
-            Drug6Selected = True
-            cbDrug6.Enabled = True
-            cbDrug7.Enabled = True
-        Else Drug6Selected = False
-            cbDrug6.Enabled = False
+            Else
+                drugSelectedFlags(i) = False
 
-        End If
-        If cbDrug7.SelectedIndex >= 0 Then
-            Drug7Selected = True
-            cbDrug7.Enabled = True
-            cbDrug8.Enabled = True
-        End If
-        If cbDrug8.SelectedIndex >= 0 Then
-            Drug8Selected = True
-            cbDrug8.Enabled = True
-            cbDrug9.Enabled = True
-        Else Drug8Selected = False
-            cbDrug8.Enabled = False
+            End If
+        Next
 
-        End If
-        If cbDrug9.SelectedIndex >= 0 Then
-            Drug9Selected = True
-            cbDrug9.Enabled = True
-            cbDrug10.Enabled = True
-        Else Drug9Selected = False
-            cbDrug9.Enabled = False
-
-        End If
-        If cbDrug10.SelectedIndex >= 0 Then
-            Drug10Selected = True
-            cbDrug10.Enabled = True
-        Else Drug10Selected = False
-            cbDrug10.Enabled = False
-
-        End If
+        ' Handle insulin ComboBoxes
         If cbInsulin1.SelectedIndex >= 0 Then
             Insulin1Selected = True
-            cbInsulin1.Enabled = True
             cbInsulin2.Enabled = True
-        Else Insulin1Selected = False
-            'cbInsulin1.Enabled = False
-
+        Else
+            Insulin1Selected = False
+            cbInsulin2.Enabled = False
         End If
+
         If cbInsulin2.SelectedIndex >= 0 Then
             Insulin2Selected = True
-            cbInsulin2.Enabled = True
-        Else Insulin2Selected = False
-            cbInsulin2.Enabled = False
-
-        End If
-        'Enable next drug selection
-        If cbDrug1.SelectedIndex >= 0 Then
-            cbDrug2.Enabled = True
-        End If
-        If cbDrug2.SelectedIndex >= 0 Then
-            cbDrug3.Enabled = True
-        End If
-        If cbDrug3.SelectedIndex >= 0 Then
-            cbDrug4.Enabled = True
-        End If
-        If cbDrug4.SelectedIndex >= 0 Then
-            cbDrug5.Enabled = True
-        End If
-        If cbDrug5.SelectedIndex >= 0 Then
-            cbDrug6.Enabled = True
-        End If
-        If cbDrug6.SelectedIndex >= 0 Then
-            cbDrug7.Enabled = True
-        End If
-        If cbDrug7.SelectedIndex >= 0 Then
-            cbDrug8.Enabled = True
-        End If
-        If cbDrug8.SelectedIndex >= 0 Then
-            cbDrug9.Enabled = True
-        End If
-        If cbDrug9.SelectedIndex >= 0 Then
-            cbDrug10.Enabled = True
-        End If
-        If cbInsulin1.SelectedIndex >= 0 Then
-            cbInsulin2.Enabled = True
+        Else
+            Insulin2Selected = False
         End If
     End Sub
+
+
+
+
+
 
 
     'Check for Validations 'START
@@ -4376,7 +3890,7 @@ Redo:
         cbInsulin1.Text = ""
         cbInsulin2.Text = ""
         resetselecteddrugindex()
-        checkforselecteddrugs()
+        CheckForSelectedDrugsnew()
         disabledrug2to10()
 
         txtDurationD1.Clear()
@@ -4450,6 +3964,25 @@ Redo:
             If txtICNo.TextLength = 14 Then
                 Try
                     checkICfromDB()
+                    'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE Name = '" & txtPatientName.Text.ToString() & "'", conn)
+                    Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE Name = @name", conn)
+                    cmd.Parameters.AddWithValue("@name", txtPatientName.Text.ToString()) ' Use parameterized query
+
+                    Try
+                        conn.Open()
+                        dr = cmd.ExecuteReader
+                        While dr.Read()
+                            If dr.Item("Name").ToString() = txtPatientName.Text.ToString() And dr.Item("ICNo") = txtICNo.Text Then
+                                btnIOU.Enabled = True
+                                lblExistingPatient.Text = "Existing Patient Found!"
+                                'txtICNo.Text = dr.Item("ICNo")
+                            End If
+                        End While
+                        conn.Close()
+                    Catch ex As Exception
+                        conn.Close()
+                    End Try
+
                     Dim ICRegexPattern As String = "^((\d{2}(?!0229))|([02468][048]|[13579][26])(?=0229))(0[1-9]|1[0-2])(0[1-9]|[12]\d|(?<!02)30|(?<!02|4|6|9|11)31)-(\d{2})-(\d{4})$"
                     If Regex.IsMatch(txtICNo.Text, ICRegexPattern) = False Then
                         MsgBox("IC Number incorrect Regex format. Please check again.")
@@ -4487,13 +4020,22 @@ Redo:
 
 
     Private Sub txtICNo_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtICNo.KeyPress
-        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Not IsNumeric(e.KeyChar) Then
+        ' Only allow numeric input and handle Backspace
+        If Asc(e.KeyChar) <> 13 AndAlso Asc(e.KeyChar) <> 8 AndAlso Not IsNumeric(e.KeyChar) AndAlso Not chboxNoICNumber.Checked Then
             e.Handled = True
         End If
+
+        ' Handle Backspace to prevent disabling text change
         If Asc(e.KeyChar) = 8 Then
             disableTextChanged = True
         End If
+
+        ' Automatically convert to uppercase if it's a letter
+        If Char.IsLetter(e.KeyChar) Then
+            e.KeyChar = Char.ToUpper(e.KeyChar)
+        End If
     End Sub
+
 
 
 
@@ -4805,28 +4347,28 @@ Redo:
         'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
         Dim count As Integer = 0
         Dim cmd As New MySqlCommand(" SELECT 
-    ID,
-    Date,
-    Name,
-    ICNo,
-    DateCollection,
-    DateSeeDoctor,
-    Timestamp
-FROM 
-    `prescribeddrugs`
-WHERE 
-    Drug1Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
-    OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
-    OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
+        ID,
+        Date,
+        Name,
+      ICNo,
+       DateCollection,
+       DateSeeDoctor,
+      Timestamp
+        FROM 
+       `prescribeddrugs`
+        WHERE 
+      Drug1Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
+      OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
+      OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
         Try
 
             conn.Open()
@@ -4851,36 +4393,151 @@ WHERE
         End Try
     End Sub
 
+    Public Sub loadDrugQtyDGV()
+        dgvDrugQty.Rows.Clear() ' Clear the dgvDrugQty DataGridView
+
+        Dim dt As New DataTable
+        Dim count As Integer = 0
+        Dim totalQty As Integer = 0 ' Initialize total quantity
+        Dim startDate As String = dtpDrugQty1.Value.ToString("yyyy-MM-dd HH:mm:ss")
+        Dim endDate As String = dtpDrugQty2.Value.ToString("yyyy-MM-dd HH:mm:ss")
+        Dim cmd As New MySqlCommand("SELECT 
+        ID,
+        Date,
+        Name,
+        ICNo,
+        DateCollection,
+        DateSeeDoctor,
+        Timestamp,
+        Drug1Name,
+        Drug1TotalQTY,
+        Drug2Name,
+        Drug2TotalQTY,
+        Drug3Name,
+        Drug3TotalQTY,
+        Drug4Name,
+        Drug4TotalQTY,
+        Drug5Name,
+        Drug5TotalQTY,
+        Drug6Name,
+        Drug6TotalQTY,
+        Drug7Name,
+        Drug7TotalQTY,
+        Drug8Name,
+        Drug8TotalQTY,
+        Drug9Name,
+        Drug9TotalQTY,
+        Drug10Name,
+        Drug10TotalQTY,
+        Insulin1Name,
+        Insulin1CartQTY,
+        Insulin2Name,
+        Insulin2CartQTY
+        FROM 
+        `prescribeddrugs`
+        WHERE 
+        (Drug1Name = '" & cbDrugQty.Text & "' 
+        OR Drug2Name = '" & cbDrugQty.Text & "' 
+        OR Drug3Name = '" & cbDrugQty.Text & "' 
+        OR Drug4Name = '" & cbDrugQty.Text & "' 
+        OR Drug5Name = '" & cbDrugQty.Text & "' 
+        OR Drug6Name = '" & cbDrugQty.Text & "' 
+        OR Drug7Name = '" & cbDrugQty.Text & "' 
+        OR Drug8Name = '" & cbDrugQty.Text & "' 
+        OR Drug9Name = '" & cbDrugQty.Text & "' 
+        OR Drug10Name = '" & cbDrugQty.Text & "' 
+        OR Insulin1Name = '" & cbDrugQty.Text & "' 
+        OR Insulin2Name = '" & cbDrugQty.Text & "') 
+        AND Timestamp BETWEEN '" & startDate & "' AND '" & endDate & "'", conn)
+        Try
+            conn.Open()
+            dr = cmd.ExecuteReader
+
+            While dr.Read()
+                count += 1
+                Dim currentQty As Integer = 0
+
+                ' Determine which drug matches and get its total quantity
+                If dr.Item("Drug1Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug1TotalQTY")
+                ElseIf dr.Item("Drug2Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug2TotalQTY")
+                ElseIf dr.Item("Drug3Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug3TotalQTY")
+                ElseIf dr.Item("Drug4Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug4TotalQTY")
+                ElseIf dr.Item("Drug5Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug5TotalQTY")
+                ElseIf dr.Item("Drug6Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug6TotalQTY")
+                ElseIf dr.Item("Drug7Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug7TotalQTY")
+                ElseIf dr.Item("Drug8Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug8TotalQTY")
+                ElseIf dr.Item("Drug9Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug9TotalQTY")
+                ElseIf dr.Item("Drug10Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Drug10TotalQTY")
+                ElseIf dr.Item("Insulin1Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Insulin1CartQTY")
+                ElseIf dr.Item("Insulin2Name") = cbDrugQty.Text Then
+                    currentQty = dr.Item("Insulin2CartQTY")
+                End If
+
+                ' Add the current quantity to the total
+                totalQty += currentQty
+
+                ' Add the main data and the matching drug's total quantity to the dgvDrugQty DataGridView
+                dgvDrugQty.Rows.Add(count, dr.Item("ID"), dr.Item("Date"), dr.Item("Name"), dr.Item("ICNo"), dr.Item("DateCollection"), dr.Item("DateSeeDoctor"), dr.Item("Timestamp"), currentQty)
+            End While
+
+            ' Update the label with the total quantity
+            lblDrugTotalQty.Text = totalQty
+
+            dr.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message) ' Handle exceptions if necessary
+        Finally
+            dr.Dispose()
+            conn.Close()
+        End Try
+    End Sub
+
     Public Sub loadSearchPreviousDrugDGV()
         dgvPreviousRecords.Rows.Clear()
+        If cboxSearchbyDrug.Text Is "" Then
+            Return
+            'MessageBox.Show("error")
+        End If
+
         'conn.Open()
         Dim dt As New DataTable
         'SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752' UNION SELECT * FROM prescribeddrugs  WHERE ICNo = '111111-11-1115' and Timestamp = '2024-05-17 03:18:57.995752'
         'Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & lblPrevSavedICNo.Text & "'", conn)
         Dim count As Integer = 0
         Dim cmd As New MySqlCommand(" SELECT 
-    ID,
-    Date,
-    Name,
-    ICNo,
-    DateCollection,
-    DateSeeDoctor,
-    Timestamp
-FROM 
-    `prescribeddrugshistory`
-WHERE 
-    Drug1Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
-    OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
-    OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
-    OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
+        ID,
+      Date,
+      Name,
+      ICNo,
+       DateCollection,
+       DateSeeDoctor,
+       Timestamp
+       FROM 
+       `prescribeddrugshistory`
+      WHERE 
+      Drug1Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug2Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug3Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug4Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug5Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug6Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug7Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug8Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug9Name = '" & cboxSearchbyDrug.Text & "' 
+      OR Drug10Name = '" & cboxSearchbyDrug.Text & "'
+       OR Insulin1Name = '" & cboxSearchbyDrug.Text & "'
+      OR Insulin2Name = '" & cboxSearchbyDrug.Text & "'", conn)
         Dim da As New MySqlDataAdapter(cmd)
         Dim col As New AutoCompleteStringCollection
         Dim PatientName As String
@@ -5692,6 +5349,7 @@ WHERE
     Public Sub deletePatientDB()
         Select Case MsgBox("Do you want to Delete the Selected Row? This operation cannot be undone.", MsgBoxStyle.YesNoCancel, "Confirmation")
             Case MsgBoxResult.Yes
+
                 Dim timestamp As String = dgvDateSelector.CurrentRow.Cells(5).Value
                 Dim inputTime As String = timestamp
                 Dim format As String = "d/M/yyyy h:mm:ss tt"
@@ -5883,5 +5541,98 @@ WHERE
             dr.Dispose()
             conn.Close()
         End Try
+    End Sub
+
+    Private Sub dtpDateSeeDoctor_ValueChanged(sender As Object, e As EventArgs) Handles dtpDateSeeDoctor.ValueChanged
+        ' Calculate the difference in days between the two dates
+        Dim duration As TimeSpan = dtpDateSeeDoctor.Value - dtpDateSaved.Value
+        ' Add 1 to the number of days and concatenate with "days"
+        txtDurationDoctor.Text = (duration.Days + 1).ToString() & " days"
+    End Sub
+
+    Private Async Sub btnGetQuote_Click(sender As Object, e As EventArgs) Handles btnGetQuote.Click
+        Dim quote As String = Await GetMotivationalQuote()
+        If Not String.IsNullOrEmpty(quote) Then
+            lblQuote.Text = quote
+        Else
+            lblQuote.Text = "No quote found."
+        End If
+    End Sub
+
+    Private Async Function GetMotivationalQuote() As Task(Of String)
+        Dim quote As String = ""
+        Try
+            ' Create an HttpClient instance
+            Dim client As New HttpClient()
+
+            ' Make a GET request to the ZenQuotes API
+            Dim response As HttpResponseMessage = Await client.GetAsync("https://zenquotes.io/api/random")
+
+            If response.IsSuccessStatusCode Then
+                ' Read the response content
+                Dim jsonString As String = Await response.Content.ReadAsStringAsync()
+
+                ' Parse the JSON response
+                Dim jsonArray As JArray = JArray.Parse(jsonString)
+                Dim quoteText As String = jsonArray(0)("q").ToString()
+                Dim author As String = jsonArray(0)("a").ToString()
+
+                ' Construct the final quote and format it to break lines
+                quote = $"""{InsertNewLines(quoteText, 100)}""" & vbCrLf & $"- {author}"
+            Else
+                quote = "Failed to fetch the quote."
+            End If
+        Catch ex As Exception
+            'MessageBox.Show("Error fetching quote: " & ex.Message)
+            quote = "Failed to fetch the quote." & "Error: " & ex.Message
+        End Try
+        Return quote
+    End Function
+
+    ' Function to insert new lines after a certain number of characters
+    Private Function InsertNewLines(text As String, maxLineLength As Integer) As String
+        Dim result As New System.Text.StringBuilder()
+
+        Dim words As String() = text.Split(" "c)
+        Dim currentLineLength As Integer = 0
+
+        For Each word In words
+            ' If adding the next word exceeds the line limit, add a new line
+            If currentLineLength + word.Length + 1 > maxLineLength Then
+                result.AppendLine()
+                currentLineLength = 0
+            End If
+
+            ' Append the word to the result
+            result.Append(word & " ")
+            currentLineLength += word.Length + 1 ' Account for space
+        Next
+
+        Return result.ToString().TrimEnd() ' Remove any trailing spaces or line breaks
+    End Function
+
+    Private Sub btnCopyDurationtoDoctor_Click(sender As Object, e As EventArgs) Handles btnCopyDurationtoDoctor.Click
+        dtpDateSeeDoctor.Value = dtpDateCollection.Value
+    End Sub
+
+    Private Sub cbDrugQty_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDrugQty.SelectedIndexChanged
+        loadDrugQtyDGV()
+    End Sub
+
+    Private Sub dtpDrugQty2_ValueChanged(sender As Object, e As EventArgs) Handles dtpDrugQty2.ValueChanged
+        If notyetinitialize Then
+            Return
+        Else
+            loadDrugQtyDGV()
+        End If
+    End Sub
+
+    Private Sub dtpDrugQty1_ValueChanged(sender As Object, e As EventArgs) Handles dtpDrugQty1.ValueChanged
+        If notyetinitialize Then
+            Return
+        Else
+            loadDrugQtyDGV()
+        End If
+
     End Sub
 End Class

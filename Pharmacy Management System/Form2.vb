@@ -26,8 +26,14 @@ Public Class Form2
         DataGridView2.AllowUserToResizeColumns = False
         DataGridView2.AllowUserToResizeRows = False
         loadpastmedintoDGV()
+        DataGridView2.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+
 
     End Sub
+
+
+
+
     Private Sub InitializeDB()
 
         Server = Form1.txtDBServerAddress.Text
@@ -129,23 +135,27 @@ Public Class Form2
                 Form1.txtIn2POM.Text = dr.Item("Insulin2POM")
                 Form1.txtIn2CartQTY.Text = dr.Item("Insulin2CartQTY")
 
-                lblDatePastMed.Text = dr.Item("Date")
+                lblDatePastMed.Text = Convert.ToDateTime(dr.Item("Date")).ToString("dddd, dd MMMM yyyy")
 
-                Form1.checkforselecteddrugs()
+                lblDateCollection.Text = dr.Item("DateCollection")
+
+                lblDateSeeDoctor.Text = dr.Item("DateSeeDoctor")
+
+                lblPatientName.Text = dr.Item("Name")
 
 
-                Form1.populatevaluesD1()
-                Form1.populatevaluesD2()
-                Form1.PopulatevaluesD3()
-                Form1.populatevaluesD4()
-                Form1.populatevaluesD5()
-                Form1.populatevaluesD6()
-                Form1.populatevaluesD7()
-                Form1.populatevaluesD8()
-                Form1.populatevaluesD9()
-                Form1.populatevaluesD10()
+
+
+                'Form1.PopulateAllDrugValues()
+
+
                 Form1.populatevaluesInsulin1()
                 Form1.populatevaluesInsulin2()
+
+                Form1.CheckForSelectedDrugsnew()
+
+
+
 
             End While
             dr.Close()
