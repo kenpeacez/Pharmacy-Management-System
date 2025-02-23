@@ -23,7 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -429,6 +429,7 @@ Partial Class Form1
         Me.lblDate = New System.Windows.Forms.Label()
         Me.lblQuote = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Label53 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
@@ -535,7 +536,7 @@ Partial Class Form1
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(2)
         Me.TabPage1.Size = New System.Drawing.Size(1206, 693)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "NEW PATIENT"
+        Me.TabPage1.Text = "New Patient"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'btnCopyDurationtoDoctor
@@ -2902,7 +2903,7 @@ Partial Class Form1
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(2)
         Me.TabPage2.Size = New System.Drawing.Size(1206, 693)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "DRUGS"
+        Me.TabPage2.Text = "Manage Drugs"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'Label50
@@ -3284,7 +3285,7 @@ Partial Class Form1
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(2)
         Me.TabPage3.Size = New System.Drawing.Size(1206, 693)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "LOG"
+        Me.TabPage3.Text = "Log & Stats"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'TabControl2
@@ -3302,7 +3303,7 @@ Partial Class Form1
         '
         'TabPage5
         '
-        Me.TabPage5.BackColor = System.Drawing.Color.MistyRose
+        Me.TabPage5.BackColor = System.Drawing.Color.Snow
         Me.TabPage5.Controls.Add(Me.lblLogPrevPatientDateSeeDoctor)
         Me.TabPage5.Controls.Add(Me.lblLogPrevPatientDateCollection)
         Me.TabPage5.Controls.Add(Me.Label52)
@@ -3388,14 +3389,14 @@ Partial Class Form1
         Me.DataGridViewInsulin.AllowUserToResizeRows = False
         Me.DataGridViewInsulin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridViewInsulin.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewInsulin.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewInsulin.DefaultCellStyle = DataGridViewCellStyle8
         Me.DataGridViewInsulin.Location = New System.Drawing.Point(10, 474)
         Me.DataGridViewInsulin.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridViewInsulin.Name = "DataGridViewInsulin"
@@ -3660,7 +3661,7 @@ Partial Class Form1
         '
         'btnOpenStatistics
         '
-        Me.btnOpenStatistics.Location = New System.Drawing.Point(5, 5)
+        Me.btnOpenStatistics.Location = New System.Drawing.Point(564, 10)
         Me.btnOpenStatistics.Name = "btnOpenStatistics"
         Me.btnOpenStatistics.Size = New System.Drawing.Size(88, 27)
         Me.btnOpenStatistics.TabIndex = 15
@@ -3774,7 +3775,7 @@ Partial Class Form1
         'Label36
         '
         Me.Label36.AutoSize = True
-        Me.Label36.Location = New System.Drawing.Point(364, 43)
+        Me.Label36.Location = New System.Drawing.Point(364, 54)
         Me.Label36.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(26, 18)
@@ -3783,7 +3784,7 @@ Partial Class Form1
         '
         'dtpRecordsDateSelectorEnd
         '
-        Me.dtpRecordsDateSelectorEnd.Location = New System.Drawing.Point(399, 40)
+        Me.dtpRecordsDateSelectorEnd.Location = New System.Drawing.Point(399, 51)
         Me.dtpRecordsDateSelectorEnd.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpRecordsDateSelectorEnd.MaxDate = New Date(2024, 5, 20, 0, 0, 0, 0)
         Me.dtpRecordsDateSelectorEnd.Name = "dtpRecordsDateSelectorEnd"
@@ -3794,7 +3795,7 @@ Partial Class Form1
         'Label31
         '
         Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(5, 43)
+        Me.Label31.Location = New System.Drawing.Point(5, 54)
         Me.Label31.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(96, 18)
@@ -3803,7 +3804,7 @@ Partial Class Form1
         '
         'dtpRecordsDateSelector
         '
-        Me.dtpRecordsDateSelector.Location = New System.Drawing.Point(102, 40)
+        Me.dtpRecordsDateSelector.Location = New System.Drawing.Point(102, 51)
         Me.dtpRecordsDateSelector.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpRecordsDateSelector.Name = "dtpRecordsDateSelector"
         Me.dtpRecordsDateSelector.Size = New System.Drawing.Size(253, 24)
@@ -4111,7 +4112,7 @@ Partial Class Form1
         'Label60
         '
         Me.Label60.AutoSize = True
-        Me.Label60.Location = New System.Drawing.Point(364, 57)
+        Me.Label60.Location = New System.Drawing.Point(430, 63)
         Me.Label60.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label60.Name = "Label60"
         Me.Label60.Size = New System.Drawing.Size(26, 18)
@@ -4120,7 +4121,7 @@ Partial Class Form1
         '
         'dtpAllDrugsQty2
         '
-        Me.dtpAllDrugsQty2.Location = New System.Drawing.Point(399, 54)
+        Me.dtpAllDrugsQty2.Location = New System.Drawing.Point(465, 60)
         Me.dtpAllDrugsQty2.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpAllDrugsQty2.MaxDate = New Date(2199, 5, 20, 0, 0, 0, 0)
         Me.dtpAllDrugsQty2.Name = "dtpAllDrugsQty2"
@@ -4131,7 +4132,7 @@ Partial Class Form1
         'Label61
         '
         Me.Label61.AutoSize = True
-        Me.Label61.Location = New System.Drawing.Point(5, 57)
+        Me.Label61.Location = New System.Drawing.Point(71, 63)
         Me.Label61.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label61.Name = "Label61"
         Me.Label61.Size = New System.Drawing.Size(96, 18)
@@ -4140,7 +4141,7 @@ Partial Class Form1
         '
         'dtpAllDrugsQty1
         '
-        Me.dtpAllDrugsQty1.Location = New System.Drawing.Point(102, 54)
+        Me.dtpAllDrugsQty1.Location = New System.Drawing.Point(168, 60)
         Me.dtpAllDrugsQty1.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpAllDrugsQty1.Name = "dtpAllDrugsQty1"
         Me.dtpAllDrugsQty1.Size = New System.Drawing.Size(253, 24)
@@ -4560,6 +4561,7 @@ Partial Class Form1
         '
         'TabPage4a
         '
+        Me.TabPage4a.Controls.Add(Me.Label53)
         Me.TabPage4a.Controls.Add(Me.LinkLabel2)
         Me.TabPage4a.Controls.Add(Me.Label44)
         Me.TabPage4a.Controls.Add(Me.Label35)
@@ -4583,7 +4585,7 @@ Partial Class Form1
         'LinkLabel2
         '
         Me.LinkLabel2.AutoSize = True
-        Me.LinkLabel2.Location = New System.Drawing.Point(1000, 567)
+        Me.LinkLabel2.Location = New System.Drawing.Point(979, 567)
         Me.LinkLabel2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(204, 18)
@@ -4594,18 +4596,19 @@ Partial Class Form1
         'Label44
         '
         Me.Label44.AutoSize = True
-        Me.Label44.Location = New System.Drawing.Point(942, 521)
+        Me.Label44.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.Location = New System.Drawing.Point(979, 498)
         Me.Label44.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label44.Name = "Label44"
-        Me.Label44.Size = New System.Drawing.Size(260, 18)
+        Me.Label44.Size = New System.Drawing.Size(216, 15)
         Me.Label44.TabIndex = 11
-        Me.Label44.Text = "WinForm, VB.NET, Visual Studio 2022"
+        Me.Label44.Text = "WinForm, VB.NET, Visual Studio 2022,"
         '
         'Label35
         '
         Me.Label35.AutoSize = True
         Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label35.Location = New System.Drawing.Point(1000, 545)
+        Me.Label35.Location = New System.Drawing.Point(979, 545)
         Me.Label35.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label35.Name = "Label35"
         Me.Label35.Size = New System.Drawing.Size(153, 15)
@@ -4615,7 +4618,7 @@ Partial Class Form1
         'Label43
         '
         Me.Label43.AutoSize = True
-        Me.Label43.Location = New System.Drawing.Point(1000, 643)
+        Me.Label43.Location = New System.Drawing.Point(979, 643)
         Me.Label43.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(151, 18)
@@ -4658,7 +4661,7 @@ Partial Class Form1
         'LinkLabel1
         '
         Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Location = New System.Drawing.Point(999, 590)
+        Me.LinkLabel1.Location = New System.Drawing.Point(978, 590)
         Me.LinkLabel1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(133, 18)
@@ -4669,7 +4672,7 @@ Partial Class Form1
         'Label33
         '
         Me.Label33.AutoSize = True
-        Me.Label33.Location = New System.Drawing.Point(999, 618)
+        Me.Label33.Location = New System.Drawing.Point(978, 618)
         Me.Label33.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(106, 18)
@@ -4724,7 +4727,7 @@ Partial Class Form1
         '
         'btnRestart
         '
-        Me.btnRestart.Location = New System.Drawing.Point(845, 615)
+        Me.btnRestart.Location = New System.Drawing.Point(838, 615)
         Me.btnRestart.Margin = New System.Windows.Forms.Padding(2)
         Me.btnRestart.Name = "btnRestart"
         Me.btnRestart.Size = New System.Drawing.Size(134, 46)
@@ -5123,11 +5126,22 @@ Partial Class Form1
         '
         Me.lblQuote.AutoSize = True
         Me.lblQuote.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblQuote.Location = New System.Drawing.Point(373, 6)
+        Me.lblQuote.Location = New System.Drawing.Point(427, 3)
         Me.lblQuote.Name = "lblQuote"
         Me.lblQuote.Size = New System.Drawing.Size(37, 15)
         Me.lblQuote.TabIndex = 5
         Me.lblQuote.Text = "          "
+        '
+        'Label53
+        '
+        Me.Label53.AutoSize = True
+        Me.Label53.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label53.Location = New System.Drawing.Point(979, 521)
+        Me.Label53.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label53.Name = "Label53"
+        Me.Label53.Size = New System.Drawing.Size(47, 15)
+        Me.Label53.TabIndex = 13
+        Me.Label53.Text = "MySQL"
         '
         'Form1
         '
@@ -5626,4 +5640,5 @@ Partial Class Form1
     Friend WithEvents DataGridViewTextBoxColumn49 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn50 As DataGridViewTextBoxColumn
     Friend WithEvents btnOpenStatistics As Button
+    Friend WithEvents Label53 As Label
 End Class

@@ -5482,7 +5482,7 @@ Redo:
                 Dim author As String = jsonArray(0)("a").ToString()
 
                 ' Construct the final quote and format it to break lines
-                quote = $"""{InsertNewLines(quoteText, 100)}""" & vbCrLf & $"- {author}"
+                quote = $"""{InsertNewLines(quoteText, 90)}""" & vbCrLf & $"- {author}"
             Else
                 quote = "Failed to fetch the quote."
             End If

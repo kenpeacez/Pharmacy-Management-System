@@ -98,6 +98,7 @@ Partial Class Form2
         Me.DateCollection = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timestamp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -367,7 +368,7 @@ Partial Class Form2
         '
         Me.lblDatePastMed.AutoSize = True
         Me.lblDatePastMed.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDatePastMed.Location = New System.Drawing.Point(133, 0)
+        Me.lblDatePastMed.Location = New System.Drawing.Point(160, 0)
         Me.lblDatePastMed.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblDatePastMed.Name = "lblDatePastMed"
         Me.lblDatePastMed.Size = New System.Drawing.Size(25, 15)
@@ -382,9 +383,9 @@ Partial Class Form2
         Me.Label1.Location = New System.Drawing.Point(2, 0)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(127, 13)
+        Me.Label1.Size = New System.Drawing.Size(154, 13)
         Me.Label1.TabIndex = 6
-        Me.Label1.Text = "Date of Past Medication :"
+        Me.Label1.Text = "Date of Past Medication :         "
         '
         'Label2
         '
@@ -394,15 +395,15 @@ Partial Class Form2
         Me.Label2.Location = New System.Drawing.Point(2, 0)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(97, 13)
+        Me.Label2.Size = New System.Drawing.Size(139, 13)
         Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Date of Collection :"
+        Me.Label2.Text = "Date of Collection :              "
         '
         'lblDateCollection
         '
         Me.lblDateCollection.AutoSize = True
         Me.lblDateCollection.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDateCollection.Location = New System.Drawing.Point(103, 0)
+        Me.lblDateCollection.Location = New System.Drawing.Point(145, 0)
         Me.lblDateCollection.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblDateCollection.Name = "lblDateCollection"
         Me.lblDateCollection.Size = New System.Drawing.Size(25, 15)
@@ -435,7 +436,7 @@ Partial Class Form2
         '
         Me.lblDateSeeDoctor.AutoSize = True
         Me.lblDateSeeDoctor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDateSeeDoctor.Location = New System.Drawing.Point(99, 0)
+        Me.lblDateSeeDoctor.Location = New System.Drawing.Point(150, 0)
         Me.lblDateSeeDoctor.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblDateSeeDoctor.Name = "lblDateSeeDoctor"
         Me.lblDateSeeDoctor.Size = New System.Drawing.Size(25, 15)
@@ -450,9 +451,9 @@ Partial Class Form2
         Me.Label5.Location = New System.Drawing.Point(2, 0)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(93, 13)
+        Me.Label5.Size = New System.Drawing.Size(144, 13)
         Me.Label5.TabIndex = 11
-        Me.Label5.Text = "Date See Doctor :"
+        Me.Label5.Text = "Date See Doctor :                 "
         '
         'TabControl1
         '
@@ -466,6 +467,7 @@ Partial Class Form2
         '
         'TabPage1
         '
+        Me.TabPage1.BackColor = System.Drawing.Color.Snow
         Me.TabPage1.Controls.Add(Me.FlowLayoutPanel5)
         Me.TabPage1.Controls.Add(Me.FlowLayoutPanel4)
         Me.TabPage1.Controls.Add(Me.FlowLayoutPanel3)
@@ -478,7 +480,6 @@ Partial Class Form2
         Me.TabPage1.Size = New System.Drawing.Size(945, 588)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Current Past Medication"
-        Me.TabPage1.UseVisualStyleBackColor = True
         '
         'FlowLayoutPanel5
         '
@@ -486,7 +487,7 @@ Partial Class Form2
         Me.FlowLayoutPanel5.Controls.Add(Me.lblDateSeeDoctor)
         Me.FlowLayoutPanel5.Location = New System.Drawing.Point(454, 94)
         Me.FlowLayoutPanel5.Name = "FlowLayoutPanel5"
-        Me.FlowLayoutPanel5.Size = New System.Drawing.Size(170, 37)
+        Me.FlowLayoutPanel5.Size = New System.Drawing.Size(205, 37)
         Me.FlowLayoutPanel5.TabIndex = 17
         '
         'FlowLayoutPanel4
@@ -495,7 +496,7 @@ Partial Class Form2
         Me.FlowLayoutPanel4.Controls.Add(Me.lblDateCollection)
         Me.FlowLayoutPanel4.Location = New System.Drawing.Point(454, 49)
         Me.FlowLayoutPanel4.Name = "FlowLayoutPanel4"
-        Me.FlowLayoutPanel4.Size = New System.Drawing.Size(170, 37)
+        Me.FlowLayoutPanel4.Size = New System.Drawing.Size(205, 37)
         Me.FlowLayoutPanel4.TabIndex = 16
         '
         'FlowLayoutPanel3
@@ -504,7 +505,7 @@ Partial Class Form2
         Me.FlowLayoutPanel3.Controls.Add(Me.lblDatePastMed)
         Me.FlowLayoutPanel3.Location = New System.Drawing.Point(454, 6)
         Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
-        Me.FlowLayoutPanel3.Size = New System.Drawing.Size(170, 37)
+        Me.FlowLayoutPanel3.Size = New System.Drawing.Size(205, 37)
         Me.FlowLayoutPanel3.TabIndex = 15
         '
         'FlowLayoutPanel2
@@ -528,6 +529,8 @@ Partial Class Form2
         '
         'TabPage2
         '
+        Me.TabPage2.BackColor = System.Drawing.Color.Snow
+        Me.TabPage2.Controls.Add(Me.Label3)
         Me.TabPage2.Controls.Add(Me.dgvPatientInsulinHistory)
         Me.TabPage2.Controls.Add(Me.dgvPatientDrugHistory)
         Me.TabPage2.Controls.Add(Me.dgvDateSelector)
@@ -537,7 +540,6 @@ Partial Class Form2
         Me.TabPage2.Size = New System.Drawing.Size(945, 588)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "All Past Medications"
-        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'dgvPatientInsulinHistory
         '
@@ -753,14 +755,14 @@ Partial Class Form2
         Me.dgvDateSelector.AllowUserToResizeRows = False
         Me.dgvDateSelector.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvDateSelector.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.ID, Me.DateAdded, Me.DateCollection, Me.DateSeeDoctor, Me.Timestamp})
-        Me.dgvDateSelector.Location = New System.Drawing.Point(4, 14)
+        Me.dgvDateSelector.Location = New System.Drawing.Point(4, 25)
         Me.dgvDateSelector.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvDateSelector.Name = "dgvDateSelector"
         Me.dgvDateSelector.ReadOnly = True
         Me.dgvDateSelector.RowHeadersVisible = False
         Me.dgvDateSelector.RowHeadersWidth = 51
         Me.dgvDateSelector.RowTemplate.Height = 24
-        Me.dgvDateSelector.Size = New System.Drawing.Size(932, 160)
+        Me.dgvDateSelector.Size = New System.Drawing.Size(932, 157)
         Me.dgvDateSelector.TabIndex = 1
         '
         'No
@@ -811,18 +813,31 @@ Partial Class Form2
         Me.Timestamp.ReadOnly = True
         Me.Timestamp.Width = 200
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label3.Location = New System.Drawing.Point(655, 7)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(281, 13)
+        Me.Label3.TabIndex = 13
+        Me.Label3.Text = "Note: Double Click on Selection to load into Main Window"
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.BackColor = System.Drawing.Color.Snow
         Me.ClientSize = New System.Drawing.Size(953, 629)
         Me.Controls.Add(Me.TabControl1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Form2"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Search for Past Medications"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
@@ -840,6 +855,7 @@ Partial Class Form2
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
         CType(Me.dgvPatientInsulinHistory, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvPatientDrugHistory, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvDateSelector, System.ComponentModel.ISupportInitialize).EndInit()
@@ -920,4 +936,5 @@ Partial Class Form2
     Friend WithEvents DateCollection As DataGridViewTextBoxColumn
     Friend WithEvents DateSeeDoctor As DataGridViewTextBoxColumn
     Friend WithEvents Timestamp As DataGridViewTextBoxColumn
+    Friend WithEvents Label3 As Label
 End Class
