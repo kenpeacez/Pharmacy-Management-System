@@ -68,6 +68,7 @@ Partial Class Form2
         Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.dgvPatientInsulinHistory = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -98,7 +99,6 @@ Partial Class Form2
         Me.DateCollection = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timestamp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -249,14 +249,14 @@ Partial Class Form2
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridView2.DefaultCellStyle = DataGridViewCellStyle1
-        Me.DataGridView2.Location = New System.Drawing.Point(6, 328)
+        Me.DataGridView2.Location = New System.Drawing.Point(6, 320)
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.ReadOnly = True
         Me.DataGridView2.RowHeadersVisible = False
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(932, 87)
+        Me.DataGridView2.Size = New System.Drawing.Size(932, 118)
         Me.DataGridView2.TabIndex = 10
         '
         'DataGridViewTextBoxColumn1
@@ -541,6 +541,17 @@ Partial Class Form2
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "All Past Medications"
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Label3.Location = New System.Drawing.Point(655, 7)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(281, 13)
+        Me.Label3.TabIndex = 13
+        Me.Label3.Text = "Note: Double Click on Selection to load into Main Window"
+        '
         'dgvPatientInsulinHistory
         '
         Me.dgvPatientInsulinHistory.AllowUserToResizeRows = False
@@ -554,14 +565,14 @@ Partial Class Form2
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgvPatientInsulinHistory.DefaultCellStyle = DataGridViewCellStyle2
-        Me.dgvPatientInsulinHistory.Location = New System.Drawing.Point(4, 479)
+        Me.dgvPatientInsulinHistory.Location = New System.Drawing.Point(4, 460)
         Me.dgvPatientInsulinHistory.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPatientInsulinHistory.Name = "dgvPatientInsulinHistory"
         Me.dgvPatientInsulinHistory.ReadOnly = True
         Me.dgvPatientInsulinHistory.RowHeadersVisible = False
         Me.dgvPatientInsulinHistory.RowHeadersWidth = 51
         Me.dgvPatientInsulinHistory.RowTemplate.Height = 24
-        Me.dgvPatientInsulinHistory.Size = New System.Drawing.Size(932, 103)
+        Me.dgvPatientInsulinHistory.Size = New System.Drawing.Size(932, 122)
         Me.dgvPatientInsulinHistory.TabIndex = 12
         '
         'DataGridViewTextBoxColumn9
@@ -673,14 +684,14 @@ Partial Class Form2
         '
         Me.dgvPatientDrugHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvPatientDrugHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn22, Me.DataGridViewTextBoxColumn23, Me.DataGridViewTextBoxColumn24, Me.DataGridViewTextBoxColumn25, Me.DataGridViewTextBoxColumn26, Me.DataGridViewTextBoxColumn27, Me.DataGridViewTextBoxColumn28, Me.DataGridViewTextBoxColumn29})
-        Me.dgvPatientDrugHistory.Location = New System.Drawing.Point(5, 186)
+        Me.dgvPatientDrugHistory.Location = New System.Drawing.Point(4, 167)
         Me.dgvPatientDrugHistory.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPatientDrugHistory.Name = "dgvPatientDrugHistory"
         Me.dgvPatientDrugHistory.ReadOnly = True
         Me.dgvPatientDrugHistory.RowHeadersVisible = False
         Me.dgvPatientDrugHistory.RowHeadersWidth = 51
         Me.dgvPatientDrugHistory.RowTemplate.Height = 24
-        Me.dgvPatientDrugHistory.Size = New System.Drawing.Size(931, 289)
+        Me.dgvPatientDrugHistory.Size = New System.Drawing.Size(932, 289)
         Me.dgvPatientDrugHistory.TabIndex = 11
         '
         'DataGridViewTextBoxColumn22
@@ -762,7 +773,7 @@ Partial Class Form2
         Me.dgvDateSelector.RowHeadersVisible = False
         Me.dgvDateSelector.RowHeadersWidth = 51
         Me.dgvDateSelector.RowTemplate.Height = 24
-        Me.dgvDateSelector.Size = New System.Drawing.Size(932, 157)
+        Me.dgvDateSelector.Size = New System.Drawing.Size(932, 138)
         Me.dgvDateSelector.TabIndex = 1
         '
         'No
@@ -812,17 +823,6 @@ Partial Class Form2
         Me.Timestamp.Name = "Timestamp"
         Me.Timestamp.ReadOnly = True
         Me.Timestamp.Width = 200
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label3.Location = New System.Drawing.Point(655, 7)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(281, 13)
-        Me.Label3.TabIndex = 13
-        Me.Label3.Text = "Note: Double Click on Selection to load into Main Window"
         '
         'Form2
         '

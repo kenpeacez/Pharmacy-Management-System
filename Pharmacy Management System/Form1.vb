@@ -927,10 +927,7 @@ Public Class Form1
             Dim Rect11 As New Rectangle(Math.Round(110 * ScaleWidth), Math.Round(168 * ScaleHeight), Math.Round(75 * ScaleWidth), Math.Round(14 * ScaleHeight)) 'Jauhi daripada Kanak-Kanak
 
             'Insulin 1
-            Dim combinedwords As String
-            Dim comamorning As String = " "
-            Dim comanoon As String = " "
-            Dim comaafternoon As String = " "
+            Dim combinedwords As String = "Suntik "
             Dim unitpagi As String = " unit pagi"
             Dim unittghari As String = " unit tengahari"
             Dim unitpetang As String = " unit petang"
@@ -941,63 +938,38 @@ Public Class Form1
             Dim In1AfterNoonDose = txtIn1AfterNoonDose.Text
             Dim In1NightDose = txtIn1NightDose.Text
 
-            If In1MorDose <> "" Then
-                If In1NoonDose <> "" Then
-                    comamorning = ", "
-                End If
-                If In1AfterNoonDose <> "" Then
-                    comamorning = ", "
-                End If
-                If In1NightDose <> "" Then
-                    comamorning = ", "
-                End If
+            Dim doses As New List(Of String)
 
+            ' Add doses to the list if they are not zero or empty
+            If In1MorDose <> "" AndAlso Val(In1MorDose) > 0 Then
+                doses.Add(In1MorDose & unitpagi)
             End If
-            If In1NoonDose <> "" Then
-                If In1AfterNoonDose <> "" Then
-                    comanoon = ", " & vbNewLine
-                End If
-                If In1NightDose <> "" Then
-                    comanoon = ", " & vbNewLine
-                End If
-            End If
-            If In1AfterNoonDose <> "" Then
-                If In1NightDose <> "" Then
-                    comaafternoon = ", "
-                End If
-            End If
-            unitpagi = unitpagi & comamorning
-            unittghari = unittghari & comanoon
-            unitpetang = unitpetang & comaafternoon
 
-            combinedwords = "Suntik " & In1MorDose & unitpagi & In1NoonDose & unittghari & In1AfterNoonDose & unitpetang & In1NightDose & unitmalam
+            If In1NoonDose <> "" AndAlso Val(In1NoonDose) > 0 Then
+                doses.Add(In1NoonDose & unittghari)
+            End If
 
-            If In1MorDose = "" Then
-                unitpagi = Nothing
-                In1MorDose = Nothing
-                combinedwords = "Suntik " & In1NoonDose & unittghari & In1AfterNoonDose & unitpetang & In1NightDose & unitmalam
+            If In1AfterNoonDose <> "" AndAlso Val(In1AfterNoonDose) > 0 Then
+                doses.Add(In1AfterNoonDose & unitpetang)
             End If
-            If In1NoonDose = "" Then
-                unittghari = Nothing
-                In1NoonDose = Nothing
-                combinedwords = "Suntik " & In1MorDose & unitpagi & In1AfterNoonDose & unitpetang & In1NightDose & unitmalam
+
+            If In1NightDose <> "" AndAlso Val(In1NightDose) > 0 Then
+                doses.Add(In1NightDose & unitmalam)
             End If
-            If In1AfterNoonDose = "" Then
-                unitpetang = Nothing
-                In1AfterNoonDose = Nothing
-                combinedwords = "Suntik " & In1MorDose & unitpagi & In1NoonDose & unittghari & In1NightDose & unitmalam
+
+            ' Join the doses with a comma, except for the last one
+            combinedwords &= String.Join(", ", doses)
+
+            ' If no doses are added, set combinedwords to an empty string
+            If combinedwords = "Suntik " Then
+                combinedwords = ""
             End If
-            If In1NightDose = "" Then
-                unitmalam = Nothing
-                In1NightDose = Nothing
-                combinedwords = "Suntik " & In1MorDose & unitpagi & In1NoonDose & unittghari & In1AfterNoonDose & unitpetang
-            End If
+
+
             'Insulin 2
 
-            Dim combinedwords2 As String
-            Dim comamorning2 As String = " "
-            Dim comanoon2 As String = " "
-            Dim comaafternoon2 As String = " "
+            'Insulin 2
+            Dim combinedwords2 As String = "Suntik "
             Dim unitpagi2 As String = " unit pagi"
             Dim unittghari2 As String = " unit tengahari"
             Dim unitpetang2 As String = " unit petang"
@@ -1008,63 +980,38 @@ Public Class Form1
             Dim In2AfterNoonDose = txtIn2AfterNoonDose.Text
             Dim In2NightDose = txtIn2NightDose.Text
 
-            If In2MorDose <> "" Then
-                If In2NoonDose <> "" Then
-                    comamorning2 = ", "
-                End If
-                If In2AfterNoonDose <> "" Then
-                    comamorning2 = ", "
-                End If
-                If In2NightDose <> "" Then
-                    comamorning2 = ", "
-                End If
+            Dim doses2 As New List(Of String)
 
+            ' Add doses to the list if they are not zero or empty
+            If In2MorDose <> "" AndAlso Val(In2MorDose) > 0 Then
+                doses2.Add(In2MorDose & unitpagi2)
             End If
-            If In2NoonDose <> "" Then
-                If In2AfterNoonDose <> "" Then
-                    comanoon2 = ", " & vbNewLine
-                End If
-                If In2NightDose <> "" Then
-                    comanoon2 = ", " & vbNewLine
-                End If
-            End If
-            If In2AfterNoonDose <> "" Then
-                If In2NightDose <> "" Then
-                    comaafternoon2 = ", "
-                End If
-            End If
-            unitpagi2 = unitpagi2 & comamorning2
-            unittghari2 = unittghari2 & comanoon2
-            unitpetang2 = unitpetang2 & comaafternoon2
 
-            combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2NoonDose & unittghari2 & In2AfterNoonDose & unitpetang2 & In2NightDose & unitmalam2
+            If In2NoonDose <> "" AndAlso Val(In2NoonDose) > 0 Then
+                doses2.Add(In2NoonDose & unittghari2)
+            End If
 
-            If In2MorDose = "" Then
-                unitpagi2 = Nothing
-                In2MorDose = Nothing
-                combinedwords2 = "Suntik " & In2NoonDose & unittghari2 & In2AfterNoonDose & unitpetang2 & In2NightDose & unitmalam2
+            If In2AfterNoonDose <> "" AndAlso Val(In2AfterNoonDose) > 0 Then
+                doses2.Add(In2AfterNoonDose & unitpetang2)
             End If
-            If In2NoonDose = "" Then
-                unittghari2 = Nothing
-                In2NoonDose = Nothing
-                combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2AfterNoonDose & unitpetang2 & In2NightDose & unitmalam2
+
+            If In2NightDose <> "" AndAlso Val(In2NightDose) > 0 Then
+                doses2.Add(In2NightDose & unitmalam2)
             End If
-            If In2AfterNoonDose = "" Then
-                unitpetang2 = Nothing
-                In2AfterNoonDose = Nothing
-                combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2NoonDose & unittghari2 & In2NightDose & unitmalam2
-            End If
-            If In2NightDose = "" Then
-                unitmalam2 = Nothing
-                In2NightDose = Nothing
-                combinedwords2 = "Suntik " & In2MorDose & unitpagi2 & In2NoonDose & unittghari2 & In2AfterNoonDose & unitpetang2
+
+            ' Join the doses with a comma, except for the last one
+            combinedwords2 &= String.Join(", ", doses2)
+
+            ' If no doses are added, set combinedwords2 to an empty string
+            If combinedwords2 = "Suntik " Then
+                combinedwords2 = ""
             End If
 
 
 
 
-            e.Graphics.DrawRectangle(Pens.Black, Rect1a)
-            e.Graphics.DrawRectangle(Pens.Black, Rect2a)
+            e.Graphics.DrawRectangle(Pens.Black, Rect1a) 'clinic name, 
+            e.Graphics.DrawRectangle(Pens.Black, Rect2a) 'patient name
             e.Graphics.DrawRectangle(Pens.Black, Rect3a) 'insulin rectangle
             e.Graphics.DrawRectangle(Pens.White, Rect4a) 'insulin name margin
             e.Graphics.DrawRectangle(Pens.Black, Rect5a) 'Cara 
