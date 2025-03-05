@@ -23,10 +23,13 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.btnCancelUndo = New System.Windows.Forms.Button()
+        Me.lblIDNoTemp = New System.Windows.Forms.Label()
+        Me.btnUndoSave = New System.Windows.Forms.Button()
         Me.btnCopyDurationtoDoctor = New System.Windows.Forms.Button()
         Me.btnGetQuote = New System.Windows.Forms.Button()
         Me.txtDurationDoctor = New System.Windows.Forms.TextBox()
@@ -374,6 +377,7 @@ Partial Class Form1
         Me.DateSeeDoctor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timestamp = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage4a = New System.Windows.Forms.TabPage()
+        Me.Label53 = New System.Windows.Forms.Label()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label44 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
@@ -429,7 +433,6 @@ Partial Class Form1
         Me.lblDate = New System.Windows.Forms.Label()
         Me.lblQuote = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Label53 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.groupInsulin.SuspendLayout()
@@ -496,6 +499,9 @@ Partial Class Form1
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.btnCancelUndo)
+        Me.TabPage1.Controls.Add(Me.lblIDNoTemp)
+        Me.TabPage1.Controls.Add(Me.btnUndoSave)
         Me.TabPage1.Controls.Add(Me.btnCopyDurationtoDoctor)
         Me.TabPage1.Controls.Add(Me.btnGetQuote)
         Me.TabPage1.Controls.Add(Me.txtDurationDoctor)
@@ -538,6 +544,38 @@ Partial Class Form1
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "New Patient"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'btnCancelUndo
+        '
+        Me.btnCancelUndo.BackColor = System.Drawing.Color.Tomato
+        Me.btnCancelUndo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCancelUndo.Location = New System.Drawing.Point(417, 645)
+        Me.btnCancelUndo.Name = "btnCancelUndo"
+        Me.btnCancelUndo.Size = New System.Drawing.Size(108, 31)
+        Me.btnCancelUndo.TabIndex = 49
+        Me.btnCancelUndo.Text = "Cancel Update"
+        Me.btnCancelUndo.UseVisualStyleBackColor = False
+        Me.btnCancelUndo.Visible = False
+        '
+        'lblIDNoTemp
+        '
+        Me.lblIDNoTemp.AutoSize = True
+        Me.lblIDNoTemp.Location = New System.Drawing.Point(414, 650)
+        Me.lblIDNoTemp.Name = "lblIDNoTemp"
+        Me.lblIDNoTemp.Size = New System.Drawing.Size(44, 18)
+        Me.lblIDNoTemp.TabIndex = 48
+        Me.lblIDNoTemp.Text = "         "
+        Me.lblIDNoTemp.Visible = False
+        '
+        'btnUndoSave
+        '
+        Me.btnUndoSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUndoSave.Location = New System.Drawing.Point(575, 644)
+        Me.btnUndoSave.Name = "btnUndoSave"
+        Me.btnUndoSave.Size = New System.Drawing.Size(89, 34)
+        Me.btnUndoSave.TabIndex = 47
+        Me.btnUndoSave.Text = "Update Previous"
+        Me.btnUndoSave.UseVisualStyleBackColor = True
         '
         'btnCopyDurationtoDoctor
         '
@@ -825,7 +863,7 @@ Partial Class Form1
         Me.lblStrInsulin2.Name = "lblStrInsulin2"
         Me.lblStrInsulin2.Size = New System.Drawing.Size(60, 23)
         Me.lblStrInsulin2.TabIndex = 43
-        Me.lblStrInsulin2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrInsulin2.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'lblUnitInsulin2
         '
@@ -1006,7 +1044,7 @@ Partial Class Form1
         Me.lblStrInsulin1.Name = "lblStrInsulin1"
         Me.lblStrInsulin1.Size = New System.Drawing.Size(60, 20)
         Me.lblStrInsulin1.TabIndex = 41
-        Me.lblStrInsulin1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblStrInsulin1.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'cbInsulin1
         '
@@ -2955,7 +2993,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 98.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 165.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 173.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2973,10 +3011,10 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(327, 2)
+        Me.btnDelete.Location = New System.Drawing.Point(319, 2)
         Me.btnDelete.Margin = New System.Windows.Forms.Padding(2)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(162, 26)
+        Me.btnDelete.Size = New System.Drawing.Size(170, 26)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2990,7 +3028,7 @@ Partial Class Form1
         Me.btnAddDrug.Location = New System.Drawing.Point(2, 2)
         Me.btnAddDrug.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(145, 26)
+        Me.btnAddDrug.Size = New System.Drawing.Size(140, 26)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -3000,7 +3038,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(229, 2)
+        Me.btnClear.Location = New System.Drawing.Point(221, 2)
         Me.btnClear.Margin = New System.Windows.Forms.Padding(2)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(94, 26)
@@ -3013,10 +3051,10 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(151, 2)
+        Me.btnUpdate.Location = New System.Drawing.Point(146, 2)
         Me.btnUpdate.Margin = New System.Windows.Forms.Padding(2)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(74, 26)
+        Me.btnUpdate.Size = New System.Drawing.Size(71, 26)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -3389,14 +3427,14 @@ Partial Class Form1
         Me.DataGridViewInsulin.AllowUserToResizeRows = False
         Me.DataGridViewInsulin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridViewInsulin.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.NoonDose, Me.AfternoonDose, Me.NightDose, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.TotalDose, Me.POM, Me.DataGridViewTextBoxColumn8})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewInsulin.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewInsulin.DefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridViewInsulin.Location = New System.Drawing.Point(10, 474)
         Me.DataGridViewInsulin.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridViewInsulin.Name = "DataGridViewInsulin"
@@ -4582,6 +4620,17 @@ Partial Class Form1
         Me.TabPage4a.Text = "Settings"
         Me.TabPage4a.UseVisualStyleBackColor = True
         '
+        'Label53
+        '
+        Me.Label53.AutoSize = True
+        Me.Label53.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label53.Location = New System.Drawing.Point(979, 521)
+        Me.Label53.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label53.Name = "Label53"
+        Me.Label53.Size = New System.Drawing.Size(47, 15)
+        Me.Label53.TabIndex = 13
+        Me.Label53.Text = "MySQL"
+        '
         'LinkLabel2
         '
         Me.LinkLabel2.AutoSize = True
@@ -4623,7 +4672,7 @@ Partial Class Form1
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(151, 18)
         Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 5, Revision 6"
+        Me.Label43.Text = "Release 1, Revision 1"
         '
         'GroupBox5
         '
@@ -4677,7 +4726,7 @@ Partial Class Form1
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(106, 18)
         Me.Label33.TabIndex = 4
-        Me.Label33.Text = "Version 1.0.0.5"
+        Me.Label33.Text = "Version 2.0.0.1"
         '
         'GroupBox4
         '
@@ -5132,17 +5181,6 @@ Partial Class Form1
         Me.lblQuote.TabIndex = 5
         Me.lblQuote.Text = "          "
         '
-        'Label53
-        '
-        Me.Label53.AutoSize = True
-        Me.Label53.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label53.Location = New System.Drawing.Point(979, 521)
-        Me.Label53.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label53.Name = "Label53"
-        Me.Label53.Size = New System.Drawing.Size(47, 15)
-        Me.Label53.TabIndex = 13
-        Me.Label53.Text = "MySQL"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -5160,7 +5198,7 @@ Partial Class Form1
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Form1"
-        Me.Text = "Pharmacy Management System"
+        Me.Text = "Pharmacy Management System V2"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -5641,4 +5679,7 @@ Partial Class Form1
     Friend WithEvents DataGridViewTextBoxColumn50 As DataGridViewTextBoxColumn
     Friend WithEvents btnOpenStatistics As Button
     Friend WithEvents Label53 As Label
+    Friend WithEvents btnUndoSave As Button
+    Friend WithEvents lblIDNoTemp As Label
+    Friend WithEvents btnCancelUndo As Button
 End Class

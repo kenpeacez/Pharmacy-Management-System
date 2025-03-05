@@ -141,7 +141,7 @@ Public Class Form2
                 Form1.txtIn1NightDose.Text = dr.Item("Insulin1NightDose")
                 Form1.txtIn1TotalDose.Text = dr.Item("Insulin1TotalDose")
                 Form1.txtIn1POM.Text = dr.Item("Insulin1POM")
-                Form1.txtIn1CartQTY.Text = dr.Item("Insulin1CartQTY")
+                ' Form1.txtIn1CartQTY.Text = dr.Item("Insulin1CartQTY")
 
                 Form1.txtIn2MorDose.Text = dr.Item("Insulin2MorDose")
                 Form1.txtIn2NoonDose.Text = dr.Item("Insulin2NoonDose")
@@ -149,7 +149,7 @@ Public Class Form2
                 Form1.txtIn2NightDose.Text = dr.Item("Insulin2NightDose")
                 Form1.txtIn2TotalDose.Text = dr.Item("Insulin2TotalDose")
                 Form1.txtIn2POM.Text = dr.Item("Insulin2POM")
-                Form1.txtIn2CartQTY.Text = dr.Item("Insulin2CartQTY")
+                ' Form1.txtIn2CartQTY.Text = dr.Item("Insulin2CartQTY")
 
                 lblDatePastMed.Text = Convert.ToDateTime(dr.Item("Date")).ToString("dddd, dd MMMM yyyy")
 
