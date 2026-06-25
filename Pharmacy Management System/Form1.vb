@@ -133,6 +133,7 @@ Public Class Form1
         If checkDB() = False Then
             Return 'Exit from Function due to Database Initialization error
         End If
+        migrateDB()
         'Load windows forms data
         'Method to Tabulate Data from Database to Drug Tab Table
         DGV_Load()
@@ -447,6 +448,23 @@ Public Class Form1
             conn.Close()
         End Try
     End Function
+
+    Private Sub migrateDB()
+        Try
+            conn.Open()
+            Dim cmdAdd As New MySqlCommand("ALTER TABLE `prescribeddrugs` ADD COLUMN IF NOT EXISTS `Phone` VARCHAR(20) NULL DEFAULT NULL AFTER `ICNo`", conn)
+            cmdAdd.ExecuteNonQuery()
+            Dim cmdMove As New MySqlCommand("ALTER TABLE `prescribeddrugs` MODIFY COLUMN `Phone` VARCHAR(20) NULL DEFAULT NULL AFTER `ICNo`", conn)
+            cmdMove.ExecuteNonQuery()
+            Dim cmdHistAdd As New MySqlCommand("ALTER TABLE `prescribeddrugshistory` ADD COLUMN IF NOT EXISTS `Phone` VARCHAR(20) NULL DEFAULT NULL AFTER `ICNo`", conn)
+            cmdHistAdd.ExecuteNonQuery()
+            Dim cmdHistMove As New MySqlCommand("ALTER TABLE `prescribeddrugshistory` MODIFY COLUMN `Phone` VARCHAR(20) NULL DEFAULT NULL AFTER `ICNo`", conn)
+            cmdHistMove.ExecuteNonQuery()
+            conn.Close()
+        Catch ex As Exception
+            conn.Close()
+        End Try
+    End Sub
 
     Public Sub SetupTooltips()
         ToolTip1.SetToolTip(btnCopyDurationtoDoctor, "Click here to Copy Collection Date to Doctor Date")
@@ -1385,7 +1403,7 @@ Public Class Form1
             conn.Open()
 
             Dim cmd As New MySqlCommand("INSERT INTO `prescribeddrugs`
-            (`Name`,`ICNo`,`Date`,`DateCollection`,`DateSeeDoctor`,
+            (`Name`,`ICNo`,`Phone`,`Date`,`DateCollection`,`DateSeeDoctor`,
             `Drug1Name`,`Drug1Strength`,`Drug1Unit`,`Drug1Dose`,`Drug1Freq`,`Drug1Duration`,`Drug1TotalQTY`,
             `Drug2Name`,`Drug2Strength`,`Drug2Unit`,`Drug2Dose`,`Drug2Freq`,`Drug2Duration`,`Drug2TotalQTY`,
             `Drug3Name`,`Drug3Strength`,`Drug3Unit`,`Drug3Dose`,`Drug3Freq`,`Drug3Duration`,`Drug3TotalQTY`,
@@ -1399,7 +1417,7 @@ Public Class Form1
             `Insulin1Name`,`Insulin1Strength`,`Insulin1Unit`,`Insulin1MorDose`,`Insulin1NoonDose`,`Insulin1AfternoonDose`,`Insulin1NightDose`,`Insulin1Freq`,`Insulin1Duration`,`Insulin1TotalDose`,`Insulin1POM`,`Insulin1CartQTY`,
             `Insulin2Name`,`Insulin2Strength`,`Insulin2Unit`,`Insulin2MorDose`,`Insulin2NoonDose`,`Insulin2AfternoonDose`,`Insulin2NightDose`,`Insulin2Freq`,`Insulin2Duration`,`Insulin2TotalDose`,`Insulin2POM`,`Insulin2CartQTY`)
                                          VALUES
-            (@Name,@ICNo,@Date,@DateCollection,@DateSeeDoctor,
+            (@Name,@ICNo,@Phone,@Date,@DateCollection,@DateSeeDoctor,
             @Drug1Name,@Drug1Strength,@Drug1Unit,@Drug1Dose,@Drug1Freq,@Drug1Duration,@Drug1TotalQTY,
             @Drug2Name,@Drug2Strength,@Drug2Unit,@Drug2Dose,@Drug2Freq,@Drug2Duration,@Drug2TotalQTY,
             @Drug3Name,@Drug3Strength,@Drug3Unit,@Drug3Dose,@Drug3Freq,@Drug3Duration,@Drug3TotalQTY,
@@ -1417,6 +1435,7 @@ Public Class Form1
             cmd.Parameters.Clear()
             cmd.Parameters.AddWithValue("@Name", txtPatientName.Text)
             cmd.Parameters.AddWithValue("@ICNo", txtICNo.Text)
+            cmd.Parameters.AddWithValue("@Phone", If(txtPhone.Text.Trim() = "", DBNull.Value, CObj(txtPhone.Text.Trim())))
             cmd.Parameters.AddWithValue("@Date", dtpDateSaved.Text)
             cmd.Parameters.AddWithValue("@DateCollection", dtpDateCollection.Text)
             cmd.Parameters.AddWithValue("@DateSeeDoctor", dtpDateSeeDoctor.Text)
@@ -1665,7 +1684,7 @@ Redo:
                             'UPDATE `prescribeddrugshistory` SET `ID` = '4' WHERE `prescribeddrugshistory`.`ID` = 5;
                             '"UPDATE `drugtable` SET `Strength`=@Strength,`Unit`=@Unit,`DosageForm`=@DosageForm,`PrescriberCategory`=@PrescriberCategory,`Remark`=@Remark WHERE `DrugName`=@DrugName", conn
                             Dim cmd2 As New MySqlCommand("UPDATE `prescribeddrugs` SET
-                            `Name`=@Name,`Date`=@Date,`DateCollection`=@DateCollection,`DateSeeDoctor`=@DateSeeDoctor,
+                            `Name`=@Name,`Phone`=@Phone,`Date`=@Date,`DateCollection`=@DateCollection,`DateSeeDoctor`=@DateSeeDoctor,
                             `Drug1Name`=@Drug1Name,`Drug1Strength`=@Drug1Strength,`Drug1Unit`=@Drug1Unit,`Drug1Dose`=@Drug1Dose,`Drug1Freq`=@Drug1Freq,`Drug1Duration`=@Drug1Duration,`Drug1TotalQTY`=@Drug1TotalQTY,
                             `Drug2Name`=@Drug2Name,`Drug2Strength`=@Drug2Strength,`Drug2Unit`=@Drug2Unit,`Drug2Dose`=@Drug2Dose,`Drug2Freq`=@Drug2Freq,`Drug2Duration`=@Drug2Duration,`Drug2TotalQTY`=@Drug2TotalQTY,
                             `Drug3Name`=@Drug3Name,`Drug3Strength`=@Drug3Strength,`Drug3Unit`=@Drug3Unit,`Drug3Dose`=@Drug3Dose,`Drug3Freq`=@Drug3Freq,`Drug3Duration`=@Drug3Duration,`Drug3TotalQTY`=@Drug3TotalQTY,
@@ -1681,6 +1700,7 @@ Redo:
                             cmd2.Parameters.Clear()
                             cmd2.Parameters.AddWithValue("@Name", txtPatientName.Text)
                             cmd2.Parameters.AddWithValue("@ICNo", txtICNo.Text)
+                            cmd2.Parameters.AddWithValue("@Phone", If(txtPhone.Text.Trim() = "", DBNull.Value, CObj(txtPhone.Text.Trim())))
                             cmd2.Parameters.AddWithValue("@Date", dtpDateSaved.Text)
                             cmd2.Parameters.AddWithValue("@DateCollection", dtpDateCollection.Text)
                             cmd2.Parameters.AddWithValue("@DateSeeDoctor", dtpDateSeeDoctor.Text)
@@ -2245,6 +2265,7 @@ Redo:
                     btnIOU.Enabled = True
                     lblExistingPatient.Text = "Existing Patient Found!"
                     txtPatientName.Text = dr.Item("Name")
+                    If Not IsDBNull(dr.Item("Phone")) Then txtPhone.Text = dr.Item("Phone").ToString() Else txtPhone.Clear()
                 End If
             End While
             conn.Close()
@@ -2262,7 +2283,10 @@ Redo:
             conn.Open()
             Using dr As MySqlDataReader = cmd.ExecuteReader()
                 If dr.Read() Then ' Move to the first row
-                    txtICNo.Text = dr("ICNo").ToString()
+                    Dim loadedIC As String = dr("ICNo").ToString()
+                    Dim loadedPhone As String = If(dr.IsDBNull(dr.GetOrdinal("Phone")), "", dr("Phone").ToString())
+                    txtICNo.Text = loadedIC  ' may trigger txtICNo_TextChanged and close conn
+                    txtPhone.Text = loadedPhone
                     btnIOU.Enabled = True
                     lblExistingPatient.Text = "Existing Patient Found!"
                 Else
@@ -3831,6 +3855,7 @@ Redo:
     Public Sub clearall()
         txtPatientName.Clear()
         txtICNo.Clear()
+        txtPhone.Clear()
         cbAddDays.SelectedIndex = 3
         chboxNoICNumber.Checked = False
         cleardruginputsD1()
@@ -3984,6 +4009,30 @@ Redo:
             End If
         End If
 
+    End Sub
+
+    Private Sub txtPhone_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtPhone.KeyPress
+        If Asc(e.KeyChar) = 8 Then Return
+        If e.KeyChar = "+"c Then Return
+        If e.KeyChar = "-"c Then
+            If txtPhone.Text.Contains("-") Then e.Handled = True
+            Return
+        End If
+        If Not IsNumeric(e.KeyChar) Then e.Handled = True
+    End Sub
+
+    Private Sub txtPhone_TextChanged(sender As Object, e As EventArgs) Handles txtPhone.TextChanged
+        btnWhatsApp.Enabled = txtPhone.Text.Trim() <> ""
+    End Sub
+
+    Private Sub btnWhatsApp_Click(sender As Object, e As EventArgs) Handles btnWhatsApp.Click
+        Dim phone As String = txtPhone.Text.Trim()
+        Dim digits As String = New String(phone.Where(Function(c) Char.IsDigit(c)).ToArray())
+        If digits = "" Then Return
+        ' Malaysian local format starts with 0 (e.g. 011-..., 012-..., 03-...)
+        ' Prepend 6 so 0XXXXXXXXX becomes 60XXXXXXXXX for wa.me
+        If digits.StartsWith("0") Then digits = "6" & digits
+        Process.Start("https://wa.me/" & digits)
     End Sub
 
     Private Sub txtICNo_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtICNo.KeyPress

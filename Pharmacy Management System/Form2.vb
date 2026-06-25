@@ -70,9 +70,11 @@ Public Class Form2
 
         Dim cmd As New MySqlCommand("SELECT * FROM prescribeddrugs WHERE ICNo = '" & txtSearchPatientIC.Text & "'", conn)
         Try
+            Dim savedPhone As String = Form1.txtPhone.Text
             Form1.clearSelectionIndex()
             Form1.clearall()
             Form1.txtICNo.Text = txtSearchPatientIC.Text
+            If Form1.txtPhone.Text = "" AndAlso savedPhone <> "" Then Form1.txtPhone.Text = savedPhone
             conn.Open()
             dr = cmd.ExecuteReader
             While dr.Read()
@@ -269,9 +271,11 @@ Public Class Form2
 
         Dim cmd As New MySqlCommand(" SELECT * FROM `prescribeddrugs` WHERE ICNo = '" & txtSearchPatientIC.Text & "'" & " AND " & "Timestamp = '" & outputTime & "'" & " UNION " & "SELECT * FROM `prescribeddrugshistory` WHERE ICNo = '" & txtSearchPatientIC.Text & "'" & " AND " & "Timestamp ='" & outputTime & "' LIMIT 1", conn)
         Try
+            Dim savedPhone As String = Form1.txtPhone.Text
             Form1.clearSelectionIndex()
             Form1.clearall()
             Form1.txtICNo.Text = txtSearchPatientIC.Text
+            If Form1.txtPhone.Text = "" AndAlso savedPhone <> "" Then Form1.txtPhone.Text = savedPhone
             conn.Open()
             dr = cmd.ExecuteReader
             While dr.Read()

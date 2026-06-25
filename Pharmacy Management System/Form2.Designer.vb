@@ -383,9 +383,9 @@ Partial Class Form2
         Me.Label1.Location = New System.Drawing.Point(453, 5)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(244, 20)
+        Me.Label1.Size = New System.Drawing.Size(204, 20)
         Me.Label1.TabIndex = 6
-        Me.Label1.Text = "Date of Past Medication :         "
+        Me.Label1.Text = "Date of Past Medication : "
         '
         'Label2
         '
@@ -395,9 +395,9 @@ Partial Class Form2
         Me.Label2.Location = New System.Drawing.Point(454, 52)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(223, 20)
+        Me.Label2.Size = New System.Drawing.Size(158, 20)
         Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Date of Collection :              "
+        Me.Label2.Text = "Date of Collection : "
         '
         'lblDateCollection
         '
@@ -451,9 +451,9 @@ Partial Class Form2
         Me.Label5.Location = New System.Drawing.Point(453, 99)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(230, 20)
+        Me.Label5.Size = New System.Drawing.Size(150, 20)
         Me.Label5.TabIndex = 11
-        Me.Label5.Text = "Date See Doctor :                 "
+        Me.Label5.Text = "Date See Doctor : "
         '
         'TabControl1
         '
