@@ -173,7 +173,7 @@ Namespace My
                 Me("DevMode") = value
             End Set
         End Property
-        
+
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
@@ -183,6 +183,18 @@ Namespace My
             End Get
             Set
                 Me("EnableTime") = value
+            End Set
+        End Property
+
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Landscape")>  _
+        Public Property LabelOrientation() As String
+            Get
+                Return CType(Me("LabelOrientation"),String)
+            End Get
+            Set
+                Me("LabelOrientation") = value
             End Set
         End Property
     End Class

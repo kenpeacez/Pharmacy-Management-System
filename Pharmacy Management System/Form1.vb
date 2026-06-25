@@ -172,6 +172,7 @@ Public Class Form1
 
         txtLabelHeight.Text = My.Settings.LabelHeight
         txtLabelWidth.Text = My.Settings.LabelWidth
+        cboxLabelOrientation.SelectedItem = My.Settings.LabelOrientation
 
         btnIOU.Enabled = False
         cbAddDays.SelectedIndex = 3
@@ -279,6 +280,10 @@ Public Class Form1
         LabelWidthNew = txtLabelWidth.Text
         My.Settings.LabelWidth = LabelWidthNew
 
+        Dim LabelOrientationNew As String
+        LabelOrientationNew = cboxLabelOrientation.SelectedItem
+        My.Settings.LabelOrientation = LabelOrientationNew
+
         My.Settings.Save()
         'Set Default Printer
         Dim selectedPrinter As String = cboxDefaultPrinters.SelectedItem
@@ -382,7 +387,7 @@ Public Class Form1
 
         If Drug1Selected Then
             PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height in inch, 1 inch = 1000, 78mm = 3.07 inch, 48mm = 1.89 inch
-            PrintDoc.DefaultPageSettings.Landscape = True
+            PrintDoc.DefaultPageSettings.Landscape = (My.Settings.LabelOrientation = "Landscape")
 
             CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
             PPD.Document = PrintDoc
@@ -428,7 +433,7 @@ Public Class Form1
         If Drug1Selected Then
 
             PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
-            PrintDoc.DefaultPageSettings.Landscape = True
+            PrintDoc.DefaultPageSettings.Landscape = (My.Settings.LabelOrientation = "Landscape")
 
             PrintDoc.DefaultPageSettings.Margins = New Margins(1, 1, 1, 1)
             PrintDoc.OriginAtMargins = True
@@ -1053,7 +1058,7 @@ Public Class Form1
         Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
 
         PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Insulin Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
-        PrintDocInsulin.DefaultPageSettings.Landscape = True
+        PrintDocInsulin.DefaultPageSettings.Landscape = (My.Settings.LabelOrientation = "Landscape")
 
         PrintDocInsulin.DefaultPageSettings.Margins = New Margins(1, 1, 1, 1)
         PrintDocInsulin.OriginAtMargins = True
@@ -1077,7 +1082,7 @@ Public Class Form1
         Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
 
         PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelHeightScaled, LabelWidthScaled) 'width, height
-        PrintDocInsulin.DefaultPageSettings.Landscape = True
+        PrintDocInsulin.DefaultPageSettings.Landscape = (My.Settings.LabelOrientation = "Landscape")
 
         CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
         PPD.Document = PrintDocInsulin

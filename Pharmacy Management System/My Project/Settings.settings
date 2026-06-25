@@ -35,5 +35,8 @@
     <Setting Name="EnableTime" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="LabelOrientation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Landscape</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
