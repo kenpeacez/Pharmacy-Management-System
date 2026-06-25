@@ -5236,11 +5236,22 @@ Redo:
                                            Dim dataReader As MySqlDataReader = dataCmd.ExecuteReader()
 
                                            If dataReader.HasRows Then
-                                               ' Build column name list
                                                Dim colNames As New List(Of String)
                                                For col As Integer = 0 To dataReader.FieldCount - 1
                                                    colNames.Add("`" & dataReader.GetName(col) & "`")
                                                Next
+                                               Dim colHeader As String = "INSERT INTO `" & tableName & "` (" & String.Join(", ", colNames) & ") VALUES"
+                                               Const batchSize As Integer = 100
+                                               Dim batch As New List(Of String)
+
+                                               Dim flushBatch = Sub()
+                                                                    If batch.Count = 0 Then Return
+                                                                    writer.WriteLine(colHeader)
+                                                                    For bi As Integer = 0 To batch.Count - 1
+                                                                        writer.WriteLine(batch(bi) & If(bi < batch.Count - 1, ",", ";"))
+                                                                    Next
+                                                                    batch.Clear()
+                                                                End Sub
 
                                                While dataReader.Read()
                                                    Dim values As New List(Of String)
@@ -5258,15 +5269,15 @@ Redo:
                                                            ElseIf colType = GetType(Byte()) Then
                                                                Dim bytes() As Byte = CType(dataReader.GetValue(col), Byte())
                                                                values.Add("0x" & BitConverter.ToString(bytes).Replace("-", ""))
-                                                           ElseIf colType = GetType(Decimal) OrElse colType = GetType(Double) OrElse colType = GetType(Single) Then
-                                                               values.Add(dataReader.GetValue(col).ToString())
                                                            Else
                                                                values.Add(dataReader.GetValue(col).ToString())
                                                            End If
                                                        End If
                                                    Next
-                                                   writer.WriteLine("INSERT INTO `" & tableName & "` (" & String.Join(",", colNames) & ") VALUES (" & String.Join(",", values) & ");")
+                                                   batch.Add("(" & String.Join(", ", values) & ")")
+                                                   If batch.Count >= batchSize Then flushBatch()
                                                End While
+                                               flushBatch()
                                            End If
 
                                            dataReader.Close()
@@ -5368,7 +5379,8 @@ Redo:
 
             If importError = "" Then
                 stlbMainStatus.Text = "Import completed successfully."
-                MsgBox("Database imported successfully!", MsgBoxStyle.Information, "Import Successful")
+                MsgBox("Database imported successfully! The application will now restart.", MsgBoxStyle.Information, "Import Successful")
+                Application.Restart()
             Else
                 stlbMainStatus.Text = "Import failed."
                 MsgBox("Import failed:" & vbCrLf & importError, MsgBoxStyle.Critical, "Import Failed")
