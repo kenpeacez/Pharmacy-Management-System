@@ -381,7 +381,6 @@ Partial Class Form1
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label44 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.Label43 = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.btnDeleteAllPatientRecords = New System.Windows.Forms.Button()
@@ -420,6 +419,8 @@ Partial Class Form1
         Me.txtClinicName = New System.Windows.Forms.TextBox()
         Me.cboxLabelOrientation = New System.Windows.Forms.ComboBox()
         Me.lblLabelOrientation = New System.Windows.Forms.Label()
+        Me.cboxLabelRotation = New System.Windows.Forms.ComboBox()
+        Me.lblLabelRotation = New System.Windows.Forms.Label()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.stlbDatabaseConnection = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pbrDatabaseConnection = New System.Windows.Forms.ToolStripProgressBar()
@@ -539,7 +540,7 @@ Partial Class Form1
         Me.TabPage1.Controls.Add(Me.btnSave)
         Me.TabPage1.Location = New System.Drawing.Point(4, 35)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage1.Size = New System.Drawing.Size(1813, 1045)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "New Patient"
@@ -550,7 +551,7 @@ Partial Class Form1
         Me.btnCancelUndo.BackColor = System.Drawing.Color.Tomato
         Me.btnCancelUndo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancelUndo.Location = New System.Drawing.Point(626, 968)
-        Me.btnCancelUndo.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnCancelUndo.Margin = New System.Windows.Forms.Padding(4)
         Me.btnCancelUndo.Name = "btnCancelUndo"
         Me.btnCancelUndo.Size = New System.Drawing.Size(162, 46)
         Me.btnCancelUndo.TabIndex = 49
@@ -573,7 +574,7 @@ Partial Class Form1
         '
         Me.btnUndoSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnUndoSave.Location = New System.Drawing.Point(862, 966)
-        Me.btnUndoSave.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnUndoSave.Margin = New System.Windows.Forms.Padding(4)
         Me.btnUndoSave.Name = "btnUndoSave"
         Me.btnUndoSave.Size = New System.Drawing.Size(134, 51)
         Me.btnUndoSave.TabIndex = 47
@@ -584,7 +585,7 @@ Partial Class Form1
         'btnCopyDurationtoDoctor
         '
         Me.btnCopyDurationtoDoctor.Location = New System.Drawing.Point(826, 147)
-        Me.btnCopyDurationtoDoctor.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnCopyDurationtoDoctor.Margin = New System.Windows.Forms.Padding(4)
         Me.btnCopyDurationtoDoctor.Name = "btnCopyDurationtoDoctor"
         Me.btnCopyDurationtoDoctor.Size = New System.Drawing.Size(40, 34)
         Me.btnCopyDurationtoDoctor.TabIndex = 46
@@ -595,7 +596,7 @@ Partial Class Form1
         '
         Me.btnGetQuote.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGetQuote.Location = New System.Drawing.Point(1473, 14)
-        Me.btnGetQuote.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnGetQuote.Margin = New System.Windows.Forms.Padding(4)
         Me.btnGetQuote.Name = "btnGetQuote"
         Me.btnGetQuote.Size = New System.Drawing.Size(105, 34)
         Me.btnGetQuote.TabIndex = 45
@@ -754,7 +755,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label22.AutoSize = True
         Me.Label22.Location = New System.Drawing.Point(933, 506)
-        Me.Label22.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.Label22.Margin = New System.Windows.Forms.Padding(8)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(0, 26)
         Me.Label22.TabIndex = 30
@@ -845,7 +846,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrInsulin2.AutoSize = True
         Me.lblStrInsulin2.Location = New System.Drawing.Point(686, 8)
-        Me.lblStrInsulin2.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrInsulin2.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrInsulin2.Name = "lblStrInsulin2"
         Me.lblStrInsulin2.Size = New System.Drawing.Size(89, 34)
         Me.lblStrInsulin2.TabIndex = 43
@@ -858,7 +859,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitInsulin2.AutoSize = True
         Me.lblUnitInsulin2.Location = New System.Drawing.Point(791, 8)
-        Me.lblUnitInsulin2.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitInsulin2.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitInsulin2.Name = "lblUnitInsulin2"
         Me.lblUnitInsulin2.Size = New System.Drawing.Size(80, 34)
         Me.lblUnitInsulin2.TabIndex = 44
@@ -1015,7 +1016,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrInsulin1.AutoSize = True
         Me.lblStrInsulin1.Location = New System.Drawing.Point(686, 50)
-        Me.lblStrInsulin1.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrInsulin1.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrInsulin1.Name = "lblStrInsulin1"
         Me.lblStrInsulin1.Size = New System.Drawing.Size(89, 29)
         Me.lblStrInsulin1.TabIndex = 41
@@ -1136,7 +1137,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitInsulin1.AutoSize = True
         Me.lblUnitInsulin1.Location = New System.Drawing.Point(791, 50)
-        Me.lblUnitInsulin1.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitInsulin1.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitInsulin1.Name = "lblUnitInsulin1"
         Me.lblUnitInsulin1.Size = New System.Drawing.Size(80, 29)
         Me.lblUnitInsulin1.TabIndex = 42
@@ -1420,7 +1421,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD10.AutoSize = True
         Me.lblStrD10.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD10.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD10.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD10.Name = "lblStrD10"
         Me.lblStrD10.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD10.TabIndex = 40
@@ -1433,7 +1434,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD10.AutoSize = True
         Me.lblUnitD10.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD10.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD10.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD10.Name = "lblUnitD10"
         Me.lblUnitD10.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD10.TabIndex = 49
@@ -1547,7 +1548,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD8.AutoSize = True
         Me.lblStrD8.Location = New System.Drawing.Point(849, 8)
-        Me.lblStrD8.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD8.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD8.Name = "lblStrD8"
         Me.lblStrD8.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD8.TabIndex = 38
@@ -1560,7 +1561,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD8.AutoSize = True
         Me.lblUnitD8.Location = New System.Drawing.Point(960, 8)
-        Me.lblUnitD8.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD8.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD8.Name = "lblUnitD8"
         Me.lblUnitD8.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD8.TabIndex = 47
@@ -1674,7 +1675,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD9.AutoSize = True
         Me.lblStrD9.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD9.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD9.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD9.Name = "lblStrD9"
         Me.lblStrD9.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD9.TabIndex = 39
@@ -1687,7 +1688,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD9.AutoSize = True
         Me.lblUnitD9.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD9.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD9.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD9.Name = "lblUnitD9"
         Me.lblUnitD9.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD9.TabIndex = 48
@@ -1788,7 +1789,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD6.AutoSize = True
         Me.lblStrD6.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD6.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD6.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD6.Name = "lblStrD6"
         Me.lblStrD6.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD6.TabIndex = 36
@@ -1801,7 +1802,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD6.AutoSize = True
         Me.lblUnitD6.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD6.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD6.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD6.Name = "lblUnitD6"
         Me.lblUnitD6.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD6.TabIndex = 45
@@ -1915,7 +1916,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD7.AutoSize = True
         Me.lblStrD7.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD7.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD7.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD7.Name = "lblStrD7"
         Me.lblStrD7.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD7.TabIndex = 37
@@ -1941,7 +1942,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD7.AutoSize = True
         Me.lblUnitD7.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD7.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD7.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD7.Name = "lblUnitD7"
         Me.lblUnitD7.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD7.TabIndex = 46
@@ -2041,7 +2042,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD4.AutoSize = True
         Me.lblStrD4.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD4.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD4.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD4.Name = "lblStrD4"
         Me.lblStrD4.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD4.TabIndex = 34
@@ -2054,7 +2055,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD4.AutoSize = True
         Me.lblUnitD4.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD4.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD4.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD4.Name = "lblUnitD4"
         Me.lblUnitD4.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD4.TabIndex = 43
@@ -2164,7 +2165,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD5.AutoSize = True
         Me.lblStrD5.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD5.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD5.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD5.Name = "lblStrD5"
         Me.lblStrD5.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD5.TabIndex = 35
@@ -2177,7 +2178,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD5.AutoSize = True
         Me.lblUnitD5.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD5.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD5.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD5.Name = "lblUnitD5"
         Me.lblUnitD5.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD5.TabIndex = 44
@@ -2277,7 +2278,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD3.AutoSize = True
         Me.lblStrD3.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD3.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD3.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD3.Name = "lblStrD3"
         Me.lblStrD3.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD3.TabIndex = 30
@@ -2290,7 +2291,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD3.AutoSize = True
         Me.lblUnitD3.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD3.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD3.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD3.Name = "lblUnitD3"
         Me.lblUnitD3.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD3.TabIndex = 31
@@ -2433,7 +2434,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD2.AutoSize = True
         Me.lblStrD2.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD2.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD2.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD2.Name = "lblStrD2"
         Me.lblStrD2.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD2.TabIndex = 32
@@ -2455,7 +2456,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD2.AutoSize = True
         Me.lblUnitD2.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD2.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD2.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD2.Name = "lblUnitD2"
         Me.lblUnitD2.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD2.TabIndex = 41
@@ -2523,7 +2524,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblStrD1.AutoSize = True
         Me.lblStrD1.Location = New System.Drawing.Point(850, 8)
-        Me.lblStrD1.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblStrD1.Margin = New System.Windows.Forms.Padding(8)
         Me.lblStrD1.Name = "lblStrD1"
         Me.lblStrD1.Size = New System.Drawing.Size(95, 29)
         Me.lblStrD1.TabIndex = 27
@@ -2536,7 +2537,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblUnitD1.AutoSize = True
         Me.lblUnitD1.Location = New System.Drawing.Point(961, 8)
-        Me.lblUnitD1.Margin = New System.Windows.Forms.Padding(8, 8, 8, 8)
+        Me.lblUnitD1.Margin = New System.Windows.Forms.Padding(8)
         Me.lblUnitD1.Name = "lblUnitD1"
         Me.lblUnitD1.Size = New System.Drawing.Size(72, 29)
         Me.lblUnitD1.TabIndex = 28
@@ -2795,7 +2796,7 @@ Partial Class Form1
         Me.TabPage2.Controls.Add(Me.DataGridView1)
         Me.TabPage2.Location = New System.Drawing.Point(4, 35)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(1813, 1045)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Manage Drugs"
@@ -2846,7 +2847,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 261.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 263.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2863,9 +2864,9 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(477, 3)
+        Me.btnDelete.Location = New System.Drawing.Point(475, 3)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(256, 39)
+        Me.btnDelete.Size = New System.Drawing.Size(258, 39)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2878,7 +2879,7 @@ Partial Class Form1
         Me.btnAddDrug.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAddDrug.Location = New System.Drawing.Point(3, 3)
         Me.btnAddDrug.Name = "btnAddDrug"
-        Me.btnAddDrug.Size = New System.Drawing.Size(209, 39)
+        Me.btnAddDrug.Size = New System.Drawing.Size(207, 39)
         Me.btnAddDrug.TabIndex = 7
         Me.btnAddDrug.Text = "ADD"
         Me.btnAddDrug.UseVisualStyleBackColor = False
@@ -2888,7 +2889,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(330, 3)
+        Me.btnClear.Location = New System.Drawing.Point(328, 3)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(141, 39)
         Me.btnClear.TabIndex = 12
@@ -2900,7 +2901,7 @@ Partial Class Form1
         Me.btnUpdate.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
-        Me.btnUpdate.Location = New System.Drawing.Point(218, 3)
+        Me.btnUpdate.Location = New System.Drawing.Point(216, 3)
         Me.btnUpdate.Name = "btnUpdate"
         Me.btnUpdate.Size = New System.Drawing.Size(106, 39)
         Me.btnUpdate.TabIndex = 11
@@ -3047,7 +3048,7 @@ Partial Class Form1
         '
         Me.cboxDosageForm.FormattingEnabled = True
         Me.cboxDosageForm.Location = New System.Drawing.Point(749, 40)
-        Me.cboxDosageForm.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.cboxDosageForm.Margin = New System.Windows.Forms.Padding(4)
         Me.cboxDosageForm.Name = "cboxDosageForm"
         Me.cboxDosageForm.Size = New System.Drawing.Size(156, 34)
         Me.cboxDosageForm.TabIndex = 18
@@ -3153,7 +3154,7 @@ Partial Class Form1
         Me.TabPage3.Controls.Add(Me.TabControl2)
         Me.TabPage3.Location = New System.Drawing.Point(4, 35)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage3.Size = New System.Drawing.Size(1813, 1045)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Log & Stats"
@@ -3188,7 +3189,7 @@ Partial Class Form1
         Me.TabPage5.Controls.Add(Me.Label26)
         Me.TabPage5.Location = New System.Drawing.Point(4, 35)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage5.Size = New System.Drawing.Size(1789, 975)
         Me.TabPage5.TabIndex = 0
         Me.TabPage5.Text = "Previous Patient"
@@ -3509,7 +3510,7 @@ Partial Class Form1
         Me.TabPage6.Controls.Add(Me.dgvRecords)
         Me.TabPage6.Location = New System.Drawing.Point(4, 35)
         Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage6.Size = New System.Drawing.Size(1789, 975)
         Me.TabPage6.TabIndex = 1
         Me.TabPage6.Text = "Records"
@@ -3518,7 +3519,7 @@ Partial Class Form1
         'btnOpenStatistics
         '
         Me.btnOpenStatistics.Location = New System.Drawing.Point(846, 15)
-        Me.btnOpenStatistics.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnOpenStatistics.Margin = New System.Windows.Forms.Padding(4)
         Me.btnOpenStatistics.Name = "btnOpenStatistics"
         Me.btnOpenStatistics.Size = New System.Drawing.Size(132, 40)
         Me.btnOpenStatistics.TabIndex = 15
@@ -3763,7 +3764,7 @@ Partial Class Form1
         Me.TabPage10.Controls.Add(Me.Label56)
         Me.TabPage10.Controls.Add(Me.cbDrugQty)
         Me.TabPage10.Location = New System.Drawing.Point(4, 35)
-        Me.TabPage10.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TabPage10.Margin = New System.Windows.Forms.Padding(4)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Size = New System.Drawing.Size(1789, 975)
         Me.TabPage10.TabIndex = 3
@@ -3939,7 +3940,7 @@ Partial Class Form1
         Me.TabPage11.Controls.Add(Me.dtpAllDrugsQty1)
         Me.TabPage11.Controls.Add(Me.dgvAllDrugsQty)
         Me.TabPage11.Location = New System.Drawing.Point(4, 35)
-        Me.TabPage11.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TabPage11.Margin = New System.Windows.Forms.Padding(4)
         Me.TabPage11.Name = "TabPage11"
         Me.TabPage11.Size = New System.Drawing.Size(1789, 975)
         Me.TabPage11.TabIndex = 4
@@ -4029,7 +4030,7 @@ Partial Class Form1
         Me.TabPage4.Controls.Add(Me.dgvDateSelector)
         Me.TabPage4.Location = New System.Drawing.Point(4, 35)
         Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage4.Size = New System.Drawing.Size(1813, 1045)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Database"
@@ -4385,7 +4386,6 @@ Partial Class Form1
         Me.TabPage4a.Controls.Add(Me.LinkLabel2)
         Me.TabPage4a.Controls.Add(Me.Label44)
         Me.TabPage4a.Controls.Add(Me.Label35)
-        Me.TabPage4a.Controls.Add(Me.Label43)
         Me.TabPage4a.Controls.Add(Me.GroupBox5)
         Me.TabPage4a.Controls.Add(Me.LinkLabel1)
         Me.TabPage4a.Controls.Add(Me.Label33)
@@ -4395,7 +4395,7 @@ Partial Class Form1
         Me.TabPage4a.Controls.Add(Me.GroupBox3)
         Me.TabPage4a.Location = New System.Drawing.Point(4, 35)
         Me.TabPage4a.Name = "TabPage4a"
-        Me.TabPage4a.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage4a.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage4a.Size = New System.Drawing.Size(1813, 1045)
         Me.TabPage4a.TabIndex = 4
         Me.TabPage4a.Text = "Settings"
@@ -4440,15 +4440,6 @@ Partial Class Form1
         Me.Label35.Size = New System.Drawing.Size(227, 22)
         Me.Label35.TabIndex = 10
         Me.Label35.Text = "Developed by Ken and JPJ"
-        '
-        'Label43
-        '
-        Me.Label43.AutoSize = True
-        Me.Label43.Location = New System.Drawing.Point(1468, 964)
-        Me.Label43.Name = "Label43"
-        Me.Label43.Size = New System.Drawing.Size(224, 26)
-        Me.Label43.TabIndex = 9
-        Me.Label43.Text = "Release 1, Revision 1"
         '
         'GroupBox5
         '
@@ -4496,7 +4487,7 @@ Partial Class Form1
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(158, 26)
         Me.Label33.TabIndex = 4
-        Me.Label33.Text = "Version 2.0.0.1"
+        Me.Label33.Text = "Version 2.0.0.2"
         '
         'GroupBox4
         '
@@ -4679,6 +4670,8 @@ Partial Class Form1
         Me.GroupBox3.Controls.Add(Me.txtClinicName)
         Me.GroupBox3.Controls.Add(Me.cboxLabelOrientation)
         Me.GroupBox3.Controls.Add(Me.lblLabelOrientation)
+        Me.GroupBox3.Controls.Add(Me.cboxLabelRotation)
+        Me.GroupBox3.Controls.Add(Me.lblLabelRotation)
         Me.GroupBox3.Location = New System.Drawing.Point(27, 348)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(726, 492)
@@ -4813,7 +4806,7 @@ Partial Class Form1
         Me.cboxLabelOrientation.Items.AddRange(New Object() {"Landscape", "Portrait"})
         Me.cboxLabelOrientation.Location = New System.Drawing.Point(252, 373)
         Me.cboxLabelOrientation.Name = "cboxLabelOrientation"
-        Me.cboxLabelOrientation.Size = New System.Drawing.Size(463, 34)
+        Me.cboxLabelOrientation.Size = New System.Drawing.Size(243, 34)
         Me.cboxLabelOrientation.TabIndex = 10
         '
         'lblLabelOrientation
@@ -4821,9 +4814,27 @@ Partial Class Form1
         Me.lblLabelOrientation.AutoSize = True
         Me.lblLabelOrientation.Location = New System.Drawing.Point(21, 376)
         Me.lblLabelOrientation.Name = "lblLabelOrientation"
-        Me.lblLabelOrientation.Size = New System.Drawing.Size(196, 26)
+        Me.lblLabelOrientation.Size = New System.Drawing.Size(189, 26)
         Me.lblLabelOrientation.TabIndex = 9
         Me.lblLabelOrientation.Text = "Label Orientation :"
+        '
+        'cboxLabelRotation
+        '
+        Me.cboxLabelRotation.FormattingEnabled = True
+        Me.cboxLabelRotation.Items.AddRange(New Object() {"0°", "90°", "180°", "270°"})
+        Me.cboxLabelRotation.Location = New System.Drawing.Point(252, 428)
+        Me.cboxLabelRotation.Name = "cboxLabelRotation"
+        Me.cboxLabelRotation.Size = New System.Drawing.Size(243, 34)
+        Me.cboxLabelRotation.TabIndex = 12
+        '
+        'lblLabelRotation
+        '
+        Me.lblLabelRotation.AutoSize = True
+        Me.lblLabelRotation.Location = New System.Drawing.Point(21, 431)
+        Me.lblLabelRotation.Name = "lblLabelRotation"
+        Me.lblLabelRotation.Size = New System.Drawing.Size(164, 26)
+        Me.lblLabelRotation.TabIndex = 11
+        Me.lblLabelRotation.Text = "Label Rotation :"
         '
         'StatusStrip1
         '
@@ -5304,7 +5315,6 @@ Partial Class Form1
     Friend WithEvents btnDeleteAllPatientRecords As Button
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents Label42 As Label
-    Friend WithEvents Label43 As Label
     Friend WithEvents Label35 As Label
     Friend WithEvents Number As DataGridViewTextBoxColumn
     Friend WithEvents IDRecords As DataGridViewTextBoxColumn
@@ -5438,4 +5448,6 @@ Partial Class Form1
     Friend WithEvents btnCancelUndo As Button
     Friend WithEvents cboxLabelOrientation As ComboBox
     Friend WithEvents lblLabelOrientation As Label
+    Friend WithEvents cboxLabelRotation As ComboBox
+    Friend WithEvents lblLabelRotation As Label
 End Class

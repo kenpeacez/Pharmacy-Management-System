@@ -151,6 +151,30 @@ Public Class Form1
 
     Public Sub InitializeAll()
 
+        ' Reload settings from provider to pick up latest user.config
+        Try
+            My.Settings.Reload()
+        Catch
+            ' ignore reload errors
+        End Try
+
+        ' If LabelRotation property missing, try to back up and remove user.config so settings can regenerate
+        Try
+            If My.Settings.Properties("LabelRotation") Is Nothing Then
+                Dim userConfigPath = IO.Path.Combine(Application.UserAppDataPath, "user.config")
+                If IO.File.Exists(userConfigPath) Then
+                    Dim backupPath = userConfigPath & ".bak"
+                    IO.File.Copy(userConfigPath, backupPath, True)
+                    IO.File.Delete(userConfigPath)
+                    MessageBox.Show("Old user.config was backed up and removed; the app will restart to recreate settings.")
+                    Application.Restart()
+                    Application.Exit()
+                End If
+            End If
+        Catch
+            ' ignore errors during migration
+        End Try
+
         SetDoubleBuffered(dgvRecords)
 
         dtpDateSeeDoctor.Value = Today
@@ -173,8 +197,16 @@ Public Class Form1
         txtLabelHeight.Text = My.Settings.LabelHeight
         txtLabelWidth.Text = My.Settings.LabelWidth
         cboxLabelOrientation.SelectedItem = My.Settings.LabelOrientation
+        If My.Settings.Properties("LabelRotation") IsNot Nothing Then
+            cboxLabelRotation.Text = My.Settings.LabelRotation.ToString() & "°"
+        Else
+            cboxLabelRotation.Text = "0°"
+        End If
+        AddHandler cboxLabelRotation.Leave, AddressOf cboxLabelRotation_Leave
 
         btnIOU.Enabled = False
+
+
         cbAddDays.SelectedIndex = 3
         GetDefaultPrinterName()
         getDefaultPrinters()
@@ -210,6 +242,60 @@ Public Class Form1
         ' Optionally, adjust row height to fit wrapped text
         DataGridViewInsulin.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
+    End Sub
+
+    Private Sub SaveLabelRotationFallback(value As Integer)
+        Try
+            Dim dir As String = Application.UserAppDataPath
+            If Not IO.Directory.Exists(dir) Then IO.Directory.CreateDirectory(dir)
+            Dim path As String = IO.Path.Combine(dir, "label_rotation.txt")
+            IO.File.WriteAllText(path, value.ToString())
+        Catch
+            ' ignore IO errors
+        End Try
+    End Sub
+
+    Private Function LoadLabelRotationFallback() As Integer?
+        Try
+            Dim path As String = IO.Path.Combine(Application.UserAppDataPath, "label_rotation.txt")
+            If IO.File.Exists(path) Then
+                Dim s As String = IO.File.ReadAllText(path).Trim()
+                Dim v As Integer
+                If Integer.TryParse(s, v) Then Return v
+            End If
+        Catch
+            ' ignore IO errors
+        End Try
+        Return Nothing
+    End Function
+
+    Private Sub cboxLabelRotation_Leave(sender As Object, e As EventArgs)
+        Dim cb As System.Windows.Forms.ComboBox = TryCast(sender, System.Windows.Forms.ComboBox)
+        If cb Is Nothing Then Return
+
+        Dim txt As String = cb.Text.Trim()
+        If txt.EndsWith("°") Then
+            txt = txt.Substring(0, txt.Length - 1).Trim()
+        End If
+
+        Dim digits As String = System.Text.RegularExpressions.Regex.Match(txt, "^-?\d+").Value
+        If digits = "" Then digits = "0"
+
+        Dim value As Integer = 0
+        Integer.TryParse(digits, value)
+        ' Normalize to 0 - 359
+        value = ((value Mod 360) + 360) Mod 360
+
+        cb.Text = value.ToString() & "°"
+
+        Dim idx As Integer = -1
+        For i As Integer = 0 To cb.Items.Count - 1
+            If cb.Items(i).ToString() = cb.Text Then
+                idx = i
+                Exit For
+            End If
+        Next
+        cb.SelectedIndex = idx
     End Sub
 
     Private Sub SetandSaveDBSettings()
@@ -284,7 +370,25 @@ Public Class Form1
         LabelOrientationNew = cboxLabelOrientation.SelectedItem
         My.Settings.LabelOrientation = LabelOrientationNew
 
-        My.Settings.Save()
+        Dim LabelRotationNew As Integer
+        Dim rotationText As String = cboxLabelRotation.Text.Trim()
+        If rotationText.EndsWith("°") Then
+            rotationText = rotationText.Substring(0, rotationText.Length - 1).Trim()
+        End If
+        Dim rotationDigits As String = System.Text.RegularExpressions.Regex.Match(rotationText, "^-?\d+").Value
+        If rotationDigits = "" Then rotationDigits = "0"
+        LabelRotationNew = CInt(rotationDigits)
+        If My.Settings.Properties("LabelRotation") IsNot Nothing Then
+            My.Settings.LabelRotation = LabelRotationNew
+        Else
+            SaveLabelRotationFallback(LabelRotationNew)
+        End If
+
+        Try
+            My.Settings.Save()
+        Catch
+            ' ignore save errors for settings provider
+        End Try
         'Set Default Printer
         Dim selectedPrinter As String = cboxDefaultPrinters.SelectedItem
         If selectedPrinter IsNot Nothing Then
@@ -531,6 +635,18 @@ Public Class Form1
                 e.HasMorePages = False
                 Return
             End If
+
+            'Apply rotation if set
+            Dim rotation As Integer
+            Dim fallbackRotation = LoadLabelRotationFallback()
+            If My.Settings.Properties("LabelRotation") IsNot Nothing Then
+                rotation = My.Settings.LabelRotation
+            ElseIf fallbackRotation.HasValue Then
+                rotation = fallbackRotation.Value
+            Else
+                rotation = 0
+            End If
+            ApplyRotation(e, rotation, LabelWidthScaled, LabelHeightScaled)
 
             e.Graphics.DrawRectangle(Pens.Black, Rect1)
             e.Graphics.DrawRectangle(Pens.Black, Rect2)
@@ -846,6 +962,25 @@ Public Class Form1
         End If
     End Function
 
+    Private Sub ApplyRotation(e As PrintPageEventArgs, rotation As Integer, pageWidth As Double, pageHeight As Double)
+        Select Case rotation
+            Case 0
+                ' No rotation
+            Case 90
+                ' Rotate 90 degrees clockwise: translate by height on X axis so content stays in bounds
+                e.Graphics.TranslateTransform(pageHeight, 0)
+                e.Graphics.RotateTransform(90)
+            Case 180
+                ' Rotate 180 degrees
+                e.Graphics.TranslateTransform(pageWidth, pageHeight)
+                e.Graphics.RotateTransform(180)
+            Case 270
+                ' Rotate 270 degrees (90 counter-clockwise): translate by width on Y axis
+                e.Graphics.TranslateTransform(0, pageWidth)
+                e.Graphics.RotateTransform(270)
+        End Select
+    End Sub
+
     Private Sub PrintDocInsulin_PrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintDocInsulin.PrintPage
         Try
             Dim LabelHeight As Double = (50 - 2) / 25.4 * 100
@@ -988,6 +1123,18 @@ Public Class Form1
             If combinedwords2 = "Suntik " Then
                 combinedwords2 = ""
             End If
+
+            'Apply rotation if set
+            Dim rotation As Integer
+            Dim fallbackRotationInsulin = LoadLabelRotationFallback()
+            If My.Settings.Properties("LabelRotation") IsNot Nothing Then
+                rotation = My.Settings.LabelRotation
+            ElseIf fallbackRotationInsulin.HasValue Then
+                rotation = fallbackRotationInsulin.Value
+            Else
+                rotation = 0
+            End If
+            ApplyRotation(e, rotation, LabelWidthScaled, LabelHeightScaled)
 
             e.Graphics.DrawRectangle(Pens.Black, Rect1a) 'clinic name,
             e.Graphics.DrawRectangle(Pens.Black, Rect2a) 'patient name
