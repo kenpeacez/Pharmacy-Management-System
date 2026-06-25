@@ -5154,6 +5154,7 @@ Redo:
             pbrDatabaseConnection.Style = ProgressBarStyle.Marquee
 
             Dim exportError As String = ""
+            Dim exportTableStats As New List(Of String)
 
             Await Task.Run(Sub()
                                Try
@@ -5232,8 +5233,11 @@ Redo:
                                            writer.WriteLine("LOCK TABLES `" & tableName & "` WRITE;")
                                            writer.WriteLine("/*!40000 ALTER TABLE `" & tableName & "` DISABLE KEYS */;")
 
+                                           Me.Invoke(Sub() stlbMainStatus.Text = "Exporting table: " & tableName & "...")
+
                                            Dim dataCmd As New MySqlCommand("SELECT * FROM `" & tableName & "`", exportConn)
                                            Dim dataReader As MySqlDataReader = dataCmd.ExecuteReader()
+                                           Dim rowCount As Integer = 0
 
                                            If dataReader.HasRows Then
                                                Dim colNames As New List(Of String)
@@ -5254,6 +5258,7 @@ Redo:
                                                                 End Sub
 
                                                While dataReader.Read()
+                                                   rowCount += 1
                                                    Dim values As New List(Of String)
                                                    For col As Integer = 0 To dataReader.FieldCount - 1
                                                        If dataReader.IsDBNull(col) Then
@@ -5281,6 +5286,7 @@ Redo:
                                            End If
 
                                            dataReader.Close()
+                                           exportTableStats.Add(tableName & ": " & rowCount & " rows")
                                            writer.WriteLine("/*!40000 ALTER TABLE `" & tableName & "` ENABLE KEYS */;")
                                            writer.WriteLine("UNLOCK TABLES;")
                                            writer.WriteLine()
@@ -5300,7 +5306,12 @@ Redo:
 
             If exportError = "" Then
                 stlbMainStatus.Text = "Export completed: " & IO.Path.GetFileName(filePath)
-                MsgBox("Database exported successfully!" & vbCrLf & vbCrLf & "Saved to:" & vbCrLf & filePath, MsgBoxStyle.Information, "Export Successful")
+                Dim statsLines As String = String.Join(vbCrLf, exportTableStats)
+                Dim exportTotalRows As Integer = exportTableStats.Sum(Function(s) Integer.Parse(s.Split(":")(1).Trim().Split(" ")(0)))
+                MsgBox("Database exported successfully!" & vbCrLf & vbCrLf &
+                       "Tables exported:" & vbCrLf & statsLines & vbCrLf &
+                       "Total: " & exportTotalRows & " rows" & vbCrLf & vbCrLf &
+                       "Saved to:" & vbCrLf & filePath, MsgBoxStyle.Information, "Export Successful")
             Else
                 stlbMainStatus.Text = "Export failed."
                 If IO.File.Exists(filePath) Then IO.File.Delete(filePath)
@@ -5333,9 +5344,28 @@ Redo:
 
             Dim filePath As String = ofd.FileName
 
+            ' Count rows per table from the SQL file
+            Dim importStats As New Dictionary(Of String, Integer)
+            Dim currentTable As String = ""
+            Dim tablePattern As New System.Text.RegularExpressions.Regex("^INSERT INTO `([^`]+)`", System.Text.RegularExpressions.RegexOptions.Compiled)
+            For Each line As String In IO.File.ReadLines(filePath, Encoding.UTF8)
+                Dim m = tablePattern.Match(line)
+                If m.Success Then
+                    currentTable = m.Groups(1).Value
+                    If Not importStats.ContainsKey(currentTable) Then importStats(currentTable) = 0
+                ElseIf currentTable <> "" AndAlso line.TrimStart().StartsWith("(") Then
+                    importStats(currentTable) += 1
+                End If
+            Next
+
+            Dim importStatsLines As String = String.Join(vbCrLf, importStats.Select(Function(kv) "  " & kv.Key & ": " & kv.Value & " rows"))
+            Dim importTotalRows As Integer = importStats.Values.Sum()
+
             Dim confirm As MsgBoxResult = MsgBox(
                 "Importing will overwrite existing data in the database." & vbCrLf & vbCrLf &
                 "File: " & IO.Path.GetFileName(filePath) & vbCrLf & vbCrLf &
+                "Tables to import:" & vbCrLf & importStatsLines & vbCrLf &
+                "Total: " & importTotalRows & " rows" & vbCrLf & vbCrLf &
                 "Are you sure you want to continue?",
                 MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Confirm Import")
 
