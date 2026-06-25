@@ -384,6 +384,10 @@ Partial Class Form1
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.Label42 = New System.Windows.Forms.Label()
         Me.btnDeleteAllPatientRecords = New System.Windows.Forms.Button()
+        Me.lblExportDatabase = New System.Windows.Forms.Label()
+        Me.btnExportDatabase = New System.Windows.Forms.Button()
+        Me.lblImportDatabase = New System.Windows.Forms.Label()
+        Me.btnImportDatabase = New System.Windows.Forms.Button()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
@@ -4445,6 +4449,10 @@ Partial Class Form1
         '
         Me.GroupBox5.Controls.Add(Me.Label42)
         Me.GroupBox5.Controls.Add(Me.btnDeleteAllPatientRecords)
+        Me.GroupBox5.Controls.Add(Me.lblImportDatabase)
+        Me.GroupBox5.Controls.Add(Me.btnImportDatabase)
+        Me.GroupBox5.Controls.Add(Me.lblExportDatabase)
+        Me.GroupBox5.Controls.Add(Me.btnExportDatabase)
         Me.GroupBox5.Location = New System.Drawing.Point(813, 42)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(726, 288)
@@ -4469,6 +4477,42 @@ Partial Class Form1
         Me.btnDeleteAllPatientRecords.TabIndex = 7
         Me.btnDeleteAllPatientRecords.Text = "Delete"
         Me.btnDeleteAllPatientRecords.UseVisualStyleBackColor = True
+        '
+        'lblExportDatabase
+        '
+        Me.lblExportDatabase.AutoSize = True
+        Me.lblExportDatabase.Location = New System.Drawing.Point(27, 120)
+        Me.lblExportDatabase.Name = "lblExportDatabase"
+        Me.lblExportDatabase.Size = New System.Drawing.Size(440, 26)
+        Me.lblExportDatabase.TabIndex = 9
+        Me.lblExportDatabase.Text = "Export Full MySQL Database Backup (.sql)"
+        '
+        'btnExportDatabase
+        '
+        Me.btnExportDatabase.Location = New System.Drawing.Point(480, 107)
+        Me.btnExportDatabase.Name = "btnExportDatabase"
+        Me.btnExportDatabase.Size = New System.Drawing.Size(201, 54)
+        Me.btnExportDatabase.TabIndex = 10
+        Me.btnExportDatabase.Text = "Export"
+        Me.btnExportDatabase.UseVisualStyleBackColor = True
+        '
+        'lblImportDatabase
+        '
+        Me.lblImportDatabase.AutoSize = True
+        Me.lblImportDatabase.Location = New System.Drawing.Point(27, 194)
+        Me.lblImportDatabase.Name = "lblImportDatabase"
+        Me.lblImportDatabase.Size = New System.Drawing.Size(440, 26)
+        Me.lblImportDatabase.TabIndex = 11
+        Me.lblImportDatabase.Text = "Import MySQL Database Backup (.sql)"
+        '
+        'btnImportDatabase
+        '
+        Me.btnImportDatabase.Location = New System.Drawing.Point(480, 181)
+        Me.btnImportDatabase.Name = "btnImportDatabase"
+        Me.btnImportDatabase.Size = New System.Drawing.Size(201, 54)
+        Me.btnImportDatabase.TabIndex = 12
+        Me.btnImportDatabase.Text = "Import"
+        Me.btnImportDatabase.UseVisualStyleBackColor = True
         '
         'LinkLabel1
         '
@@ -5315,6 +5359,10 @@ Partial Class Form1
     Friend WithEvents btnDeleteAllPatientRecords As Button
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents Label42 As Label
+    Friend WithEvents lblExportDatabase As Label
+    Friend WithEvents btnExportDatabase As Button
+    Friend WithEvents lblImportDatabase As Label
+    Friend WithEvents btnImportDatabase As Button
     Friend WithEvents Label35 As Label
     Friend WithEvents Number As DataGridViewTextBoxColumn
     Friend WithEvents IDRecords As DataGridViewTextBoxColumn

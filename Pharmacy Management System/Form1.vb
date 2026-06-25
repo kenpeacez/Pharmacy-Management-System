@@ -5131,6 +5131,343 @@ Redo:
 
     End Sub
 
+    Private Async Sub btnExportDatabase_Click(sender As Object, e As EventArgs) Handles btnExportDatabase.Click
+        Await ExportDatabaseBackupAsync()
+    End Sub
+
+    Public Async Function ExportDatabaseBackupAsync() As Task
+        Dim filePath As String = ""
+        Try
+            Dim desktopPath As String = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            Dim backupFolder As String = IO.Path.Combine(desktopPath, "PharmacyDatabase")
+
+            If Not IO.Directory.Exists(backupFolder) Then
+                IO.Directory.CreateDirectory(backupFolder)
+            End If
+
+            Dim timestamp As String = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")
+            filePath = IO.Path.Combine(backupFolder, "pharmacy_backup_" & timestamp & ".sql")
+
+            btnExportDatabase.Enabled = False
+            btnExportDatabase.Text = "Exporting..."
+            stlbMainStatus.Text = "Exporting database, please wait..."
+            pbrDatabaseConnection.Style = ProgressBarStyle.Marquee
+
+            Dim exportError As String = ""
+
+            Await Task.Run(Sub()
+                               Try
+                                   Dim exportConn As New MySqlConnection(myConnectionString)
+                                   exportConn.Open()
+
+                                   Dim serverVersion As String = ""
+                                   Dim serverVersionCmd As New MySqlCommand("SELECT VERSION()", exportConn)
+                                   serverVersion = serverVersionCmd.ExecuteScalar().ToString()
+
+                                   Dim generationTime As DateTime = DateTime.Now
+
+                                   Using writer As New IO.StreamWriter(filePath, False, New UTF8Encoding(False))
+                                       writer.NewLine = vbLf
+
+                                       ' phpMyAdmin quick export header
+                                       writer.WriteLine("-- phpMyAdmin SQL Dump")
+                                       writer.WriteLine("-- version 5.2.1")
+                                       writer.WriteLine("-- https://www.phpmyadmin.net/")
+                                       writer.WriteLine("--")
+                                       writer.WriteLine("-- Host: localhost")
+                                       writer.WriteLine("-- Generation Time: " & generationTime.ToString("MMM dd, yyyy") & " at " & generationTime.ToString("hh:mm tt"))
+                                       writer.WriteLine("-- Server version: " & serverVersion)
+                                       writer.WriteLine("-- PHP Version: 8.2.0")
+                                       writer.WriteLine()
+                                       writer.WriteLine("SET SQL_MODE = ""NO_AUTO_VALUE_ON_ZERO"";")
+                                       writer.WriteLine("START TRANSACTION;")
+                                       writer.WriteLine("SET time_zone = ""+00:00"";")
+                                       writer.WriteLine()
+                                       writer.WriteLine("/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;")
+                                       writer.WriteLine("/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;")
+                                       writer.WriteLine("/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;")
+                                       writer.WriteLine("/*!40101 SET NAMES utf8mb4 */;")
+                                       writer.WriteLine()
+                                       writer.WriteLine("--")
+                                       writer.WriteLine("-- Database: `database_pharmacy`")
+                                       writer.WriteLine("--")
+                                       writer.WriteLine()
+
+                                       ' Get all tables
+                                       Dim tables As New List(Of String)
+                                       Dim tblCmd As New MySqlCommand("SHOW TABLES", exportConn)
+                                       Dim tblReader As MySqlDataReader = tblCmd.ExecuteReader()
+                                       While tblReader.Read()
+                                           tables.Add(tblReader.GetString(0))
+                                       End While
+                                       tblReader.Close()
+
+                                       For Each tableName As String In tables
+                                           ' Table structure
+                                           writer.WriteLine("-- --------------------------------------------------------")
+                                           writer.WriteLine()
+                                           writer.WriteLine("--")
+                                           writer.WriteLine("-- Table structure for table `" & tableName & "`")
+                                           writer.WriteLine("--")
+                                           writer.WriteLine()
+                                           writer.WriteLine("DROP TABLE IF EXISTS `" & tableName & "`;")
+                                           writer.WriteLine("/*!40101 SET @saved_cs_client     = @@character_set_client */;")
+                                           writer.WriteLine("/*!40101 SET character_set_client = utf8 */;")
+
+                                           Dim createCmd As New MySqlCommand("SHOW CREATE TABLE `" & tableName & "`", exportConn)
+                                           Dim createReader As MySqlDataReader = createCmd.ExecuteReader()
+                                           If createReader.Read() Then
+                                               writer.WriteLine(createReader.GetString(1) & ";")
+                                           End If
+                                           createReader.Close()
+
+                                           writer.WriteLine("/*!40101 SET character_set_client = @saved_cs_client */;")
+                                           writer.WriteLine()
+
+                                           ' Table data
+                                           writer.WriteLine("--")
+                                           writer.WriteLine("-- Dumping data for table `" & tableName & "`")
+                                           writer.WriteLine("--")
+                                           writer.WriteLine()
+                                           writer.WriteLine("LOCK TABLES `" & tableName & "` WRITE;")
+                                           writer.WriteLine("/*!40000 ALTER TABLE `" & tableName & "` DISABLE KEYS */;")
+
+                                           Dim dataCmd As New MySqlCommand("SELECT * FROM `" & tableName & "`", exportConn)
+                                           Dim dataReader As MySqlDataReader = dataCmd.ExecuteReader()
+
+                                           If dataReader.HasRows Then
+                                               ' Build column name list
+                                               Dim colNames As New List(Of String)
+                                               For col As Integer = 0 To dataReader.FieldCount - 1
+                                                   colNames.Add("`" & dataReader.GetName(col) & "`")
+                                               Next
+
+                                               While dataReader.Read()
+                                                   Dim values As New List(Of String)
+                                                   For col As Integer = 0 To dataReader.FieldCount - 1
+                                                       If dataReader.IsDBNull(col) Then
+                                                           values.Add("NULL")
+                                                       Else
+                                                           Dim colType As Type = dataReader.GetFieldType(col)
+                                                           If colType = GetType(String) OrElse colType = GetType(Char) Then
+                                                               values.Add("'" & dataReader.GetString(col).Replace("\", "\\").Replace("'", "\'").Replace(vbCr, "\r").Replace(vbLf, "\n").Replace(Chr(26), "\Z") & "'")
+                                                           ElseIf colType = GetType(DateTime) Then
+                                                               values.Add("'" & dataReader.GetDateTime(col).ToString("yyyy-MM-dd HH:mm:ss") & "'")
+                                                           ElseIf colType = GetType(Boolean) Then
+                                                               values.Add(If(dataReader.GetBoolean(col), "1", "0"))
+                                                           ElseIf colType = GetType(Byte()) Then
+                                                               Dim bytes() As Byte = CType(dataReader.GetValue(col), Byte())
+                                                               values.Add("0x" & BitConverter.ToString(bytes).Replace("-", ""))
+                                                           ElseIf colType = GetType(Decimal) OrElse colType = GetType(Double) OrElse colType = GetType(Single) Then
+                                                               values.Add(dataReader.GetValue(col).ToString())
+                                                           Else
+                                                               values.Add(dataReader.GetValue(col).ToString())
+                                                           End If
+                                                       End If
+                                                   Next
+                                                   writer.WriteLine("INSERT INTO `" & tableName & "` (" & String.Join(",", colNames) & ") VALUES (" & String.Join(",", values) & ");")
+                                               End While
+                                           End If
+
+                                           dataReader.Close()
+                                           writer.WriteLine("/*!40000 ALTER TABLE `" & tableName & "` ENABLE KEYS */;")
+                                           writer.WriteLine("UNLOCK TABLES;")
+                                           writer.WriteLine()
+                                       Next
+
+                                       writer.WriteLine("/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;")
+                                       writer.WriteLine("/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;")
+                                       writer.WriteLine("/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;")
+                                       writer.WriteLine("COMMIT;")
+                                   End Using
+
+                                   exportConn.Close()
+                               Catch ex As Exception
+                                   exportError = ex.Message
+                               End Try
+                           End Sub)
+
+            If exportError = "" Then
+                stlbMainStatus.Text = "Export completed: " & IO.Path.GetFileName(filePath)
+                MsgBox("Database exported successfully!" & vbCrLf & vbCrLf & "Saved to:" & vbCrLf & filePath, MsgBoxStyle.Information, "Export Successful")
+            Else
+                stlbMainStatus.Text = "Export failed."
+                If IO.File.Exists(filePath) Then IO.File.Delete(filePath)
+                MsgBox("Export failed:" & vbCrLf & exportError, MsgBoxStyle.Critical, "Export Failed")
+            End If
+
+        Catch ex As Exception
+            stlbMainStatus.Text = "Export error."
+            MsgBox("Error during export: " & ex.Message, MsgBoxStyle.Critical, "Export Error")
+        Finally
+            btnExportDatabase.Enabled = True
+            btnExportDatabase.Text = "Export"
+            pbrDatabaseConnection.Style = ProgressBarStyle.Blocks
+            pbrDatabaseConnection.Value = 100
+        End Try
+    End Function
+
+    Private Async Sub btnImportDatabase_Click(sender As Object, e As EventArgs) Handles btnImportDatabase.Click
+        Await ImportDatabaseBackupAsync()
+    End Sub
+
+    Public Async Function ImportDatabaseBackupAsync() As Task
+        Try
+            Dim ofd As New OpenFileDialog()
+            ofd.Title = "Select SQL Backup File"
+            ofd.Filter = "SQL Files (*.sql)|*.sql|All Files (*.*)|*.*"
+            ofd.InitialDirectory = IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PharmacyDatabase")
+
+            If ofd.ShowDialog() <> DialogResult.OK Then Return
+
+            Dim filePath As String = ofd.FileName
+
+            Dim confirm As MsgBoxResult = MsgBox(
+                "Importing will overwrite existing data in the database." & vbCrLf & vbCrLf &
+                "File: " & IO.Path.GetFileName(filePath) & vbCrLf & vbCrLf &
+                "Are you sure you want to continue?",
+                MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Confirm Import")
+
+            If confirm <> MsgBoxResult.Yes Then Return
+
+            btnImportDatabase.Enabled = False
+            btnImportDatabase.Text = "Importing..."
+            stlbMainStatus.Text = "Importing database, please wait..."
+            pbrDatabaseConnection.Style = ProgressBarStyle.Marquee
+
+            Dim importError As String = ""
+
+            Await Task.Run(Sub()
+                               Try
+                                   Dim sqlContent As String = IO.File.ReadAllText(filePath, Encoding.UTF8)
+
+                                   Dim builder As New MySqlConnectionStringBuilder(myConnectionString)
+                                   Dim dbName As String = If(builder.Database, "database_pharmacy")
+                                   builder.Database = ""
+                                   Dim importConn As New MySqlConnection(builder.ConnectionString)
+                                   importConn.Open()
+
+                                   Dim createCmd As New MySqlCommand("CREATE DATABASE IF NOT EXISTS `" & dbName & "` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci", importConn)
+                                   createCmd.ExecuteNonQuery()
+                                   Dim useCmd As New MySqlCommand("USE `" & dbName & "`", importConn)
+                                   useCmd.ExecuteNonQuery()
+
+                                   For Each stmt As String In SplitSqlStatements(sqlContent)
+                                       Dim trimmed As String = stmt.Trim()
+                                       If trimmed.Length = 0 Then Continue For
+                                       Dim stmtCmd As New MySqlCommand(trimmed, importConn)
+                                       stmtCmd.CommandTimeout = 300
+                                       stmtCmd.ExecuteNonQuery()
+                                   Next
+
+                                   importConn.Close()
+                               Catch ex As Exception
+                                   importError = ex.Message
+                               End Try
+                           End Sub)
+
+            If importError = "" Then
+                stlbMainStatus.Text = "Import completed successfully."
+                MsgBox("Database imported successfully!", MsgBoxStyle.Information, "Import Successful")
+            Else
+                stlbMainStatus.Text = "Import failed."
+                MsgBox("Import failed:" & vbCrLf & importError, MsgBoxStyle.Critical, "Import Failed")
+            End If
+
+        Catch ex As Exception
+            stlbMainStatus.Text = "Import error."
+            MsgBox("Error during import: " & ex.Message, MsgBoxStyle.Critical, "Import Error")
+        Finally
+            btnImportDatabase.Enabled = True
+            btnImportDatabase.Text = "Import"
+            pbrDatabaseConnection.Style = ProgressBarStyle.Blocks
+            pbrDatabaseConnection.Value = 100
+        End Try
+    End Function
+
+    Private Function SplitSqlStatements(sql As String) As List(Of String)
+        Dim statements As New List(Of String)
+        Dim current As New System.Text.StringBuilder()
+        Dim i As Integer = 0
+
+        While i < sql.Length
+            Dim c As Char = sql(i)
+
+            ' Line comment: -- ... skip to end of line
+            If c = "-"c AndAlso i + 1 < sql.Length AndAlso sql(i + 1) = "-"c Then
+                While i < sql.Length AndAlso sql(i) <> vbLf(0)
+                    i += 1
+                End While
+                Continue While
+            End If
+
+            ' Block comment: /* ... */ (including /*!...*/)
+            If c = "/"c AndAlso i + 1 < sql.Length AndAlso sql(i + 1) = "*"c Then
+                i += 2
+                While i + 1 < sql.Length AndAlso Not (sql(i) = "*"c AndAlso sql(i + 1) = "/"c)
+                    i += 1
+                End While
+                i += 2
+                Continue While
+            End If
+
+            ' Single-quoted string
+            If c = "'"c Then
+                current.Append(c)
+                i += 1
+                While i < sql.Length
+                    Dim sc As Char = sql(i)
+                    current.Append(sc)
+                    If sc = "\"c AndAlso i + 1 < sql.Length Then
+                        i += 1
+                        current.Append(sql(i))
+                    ElseIf sc = "'"c Then
+                        Exit While
+                    End If
+                    i += 1
+                End While
+                i += 1
+                Continue While
+            End If
+
+            ' Double-quoted string
+            If c = """"c Then
+                current.Append(c)
+                i += 1
+                While i < sql.Length
+                    Dim sc As Char = sql(i)
+                    current.Append(sc)
+                    If sc = "\"c AndAlso i + 1 < sql.Length Then
+                        i += 1
+                        current.Append(sql(i))
+                    ElseIf sc = """"c Then
+                        Exit While
+                    End If
+                    i += 1
+                End While
+                i += 1
+                Continue While
+            End If
+
+            ' Statement terminator
+            If c = ";"c Then
+                Dim stmt As String = current.ToString().Trim()
+                If stmt.Length > 0 Then statements.Add(stmt)
+                current.Clear()
+                i += 1
+                Continue While
+            End If
+
+            current.Append(c)
+            i += 1
+        End While
+
+        Dim last As String = current.ToString().Trim()
+        If last.Length > 0 Then statements.Add(last)
+
+        Return statements
+    End Function
+
     Public Sub deleteAllPatientRecords()
         Select Case MsgBox("Do you want to Delete All the Patient Records? This operation cannot be undone. This will restart the application after completed.", MsgBoxStyle.YesNoCancel, "Confirmation")
             Case MsgBoxResult.Yes
