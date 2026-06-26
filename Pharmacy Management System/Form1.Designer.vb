@@ -424,8 +424,7 @@ Partial Class Form1
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.txtClinicName = New System.Windows.Forms.TextBox()
-        Me.cboxLabelOrientation = New System.Windows.Forms.ComboBox()
-        Me.lblLabelOrientation = New System.Windows.Forms.Label()
+
         Me.cboxLabelRotation = New System.Windows.Forms.ComboBox()
         Me.lblLabelRotation = New System.Windows.Forms.Label()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
@@ -4773,8 +4772,7 @@ Partial Class Form1
         Me.GroupBox3.Controls.Add(Me.Button1)
         Me.GroupBox3.Controls.Add(Me.Label23)
         Me.GroupBox3.Controls.Add(Me.txtClinicName)
-        Me.GroupBox3.Controls.Add(Me.cboxLabelOrientation)
-        Me.GroupBox3.Controls.Add(Me.lblLabelOrientation)
+
         Me.GroupBox3.Controls.Add(Me.cboxLabelRotation)
         Me.GroupBox3.Controls.Add(Me.lblLabelRotation)
         Me.GroupBox3.Location = New System.Drawing.Point(27, 348)
@@ -4904,24 +4902,6 @@ Partial Class Form1
         Me.txtClinicName.Name = "txtClinicName"
         Me.txtClinicName.Size = New System.Drawing.Size(562, 32)
         Me.txtClinicName.TabIndex = 0
-        '
-        'cboxLabelOrientation
-        '
-        Me.cboxLabelOrientation.FormattingEnabled = True
-        Me.cboxLabelOrientation.Items.AddRange(New Object() {"Landscape", "Portrait"})
-        Me.cboxLabelOrientation.Location = New System.Drawing.Point(252, 373)
-        Me.cboxLabelOrientation.Name = "cboxLabelOrientation"
-        Me.cboxLabelOrientation.Size = New System.Drawing.Size(243, 34)
-        Me.cboxLabelOrientation.TabIndex = 10
-        '
-        'lblLabelOrientation
-        '
-        Me.lblLabelOrientation.AutoSize = True
-        Me.lblLabelOrientation.Location = New System.Drawing.Point(21, 376)
-        Me.lblLabelOrientation.Name = "lblLabelOrientation"
-        Me.lblLabelOrientation.Size = New System.Drawing.Size(189, 26)
-        Me.lblLabelOrientation.TabIndex = 9
-        Me.lblLabelOrientation.Text = "Label Orientation :"
         '
         'cboxLabelRotation
         '
@@ -5556,8 +5536,7 @@ Partial Class Form1
     Friend WithEvents btnUndoSave As Button
     Friend WithEvents lblIDNoTemp As Label
     Friend WithEvents btnCancelUndo As Button
-    Friend WithEvents cboxLabelOrientation As ComboBox
-    Friend WithEvents lblLabelOrientation As Label
+
     Friend WithEvents cboxLabelRotation As ComboBox
     Friend WithEvents lblLabelRotation As Label
     Friend WithEvents txtPhone As TextBox
