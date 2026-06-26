@@ -10,13 +10,13 @@ Imports System.Globalization
 Public Class Form2
 
     Dim conn As New MySql.Data.MySqlClient.MySqlConnection
-    Dim myConnectionString As String
+    Dim myConnectionString As String = ""
     Dim dr As MySqlDataReader
 
-    Dim Server As String
-    Dim UID As String
-    Dim PWD As String
-    Dim DBName As String
+    Dim Server As String = ""
+    Dim UID As String = ""
+    Dim PWD As String = ""
+    Dim DBName As String = ""
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeDB()
         txtSearchPatientIC.Text = Form1.txtICNo.Text

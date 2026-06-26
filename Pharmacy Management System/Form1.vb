@@ -15,15 +15,16 @@ Imports System.Reflection
 Public Class Form1
 
     Dim conn As New MySql.Data.MySqlClient.MySqlConnection
-    Dim myConnectionString As String
+    Dim myConnectionString As String = ""
     Dim dr As MySqlDataReader
 
-    Dim Server As String
-    Dim UID As String
-    Dim PWD As String
-    Dim DBName As String
+    Dim Server As String = ""
+    Dim UID As String = ""
+    Dim PWD As String = ""
+    Dim DBName As String = ""
 
-    Dim DBStatus As Boolean
+    Dim DBStatus As Boolean = False
+    Dim DBMissingError As Boolean = False
 
     Private currentPage As Integer = 1
     Private currentPageInsulin As Integer = 1
@@ -31,18 +32,18 @@ Public Class Form1
     Dim NoOfItemsRecord As Integer = 0
     Dim NoOfItemsRecordInsulin As Integer = 0
 
-    Dim RemarkD1 As String
-    Dim RemarkD2 As String
-    Dim RemarkD3 As String
-    Dim RemarkD4 As String
-    Dim RemarkD5 As String
-    Dim RemarkD6 As String
-    Dim RemarkD7 As String
-    Dim RemarkD8 As String
-    Dim RemarkD9 As String
-    Dim RemarkD10 As String
-    Dim RemarkIn1 As String
-    Dim RemarkIn2 As String
+    Dim RemarkD1 As String = ""
+    Dim RemarkD2 As String = ""
+    Dim RemarkD3 As String = ""
+    Dim RemarkD4 As String = ""
+    Dim RemarkD5 As String = ""
+    Dim RemarkD6 As String = ""
+    Dim RemarkD7 As String = ""
+    Dim RemarkD8 As String = ""
+    Dim RemarkD9 As String = ""
+    Dim RemarkD10 As String = ""
+    Dim RemarkIn1 As String = ""
+    Dim RemarkIn2 As String = ""
 
     Dim DefaultMaxQTYD1 As Integer = 0
     Dim DefaultMaxQTYD2 As Integer = 0
@@ -55,30 +56,30 @@ Public Class Form1
     Dim DefaultMaxQTYD9 As Integer = 0
     Dim DefaultMaxQTYD10 As Integer = 0
 
-    Dim ConsumeMethodD1 As String
-    Dim ConsumeUnitD1 As String
-    Dim ConsumeMethodD2 As String
-    Dim ConsumeUnitD2 As String
-    Dim ConsumeMethodD3 As String
-    Dim ConsumeUnitD3 As String
-    Dim ConsumeMethodD4 As String
-    Dim ConsumeUnitD4 As String
-    Dim ConsumeMethodD5 As String
-    Dim ConsumeUnitD5 As String
-    Dim ConsumeMethodD6 As String
-    Dim ConsumeUnitD6 As String
-    Dim ConsumeMethodD7 As String
-    Dim ConsumeUnitD7 As String
-    Dim ConsumeMethodD8 As String
-    Dim ConsumeUnitD8 As String
-    Dim ConsumeMethodD9 As String
-    Dim ConsumeUnitD9 As String
-    Dim ConsumeMethodD10 As String
-    Dim ConsumeUnitD10 As String
-    Dim ConsumeMethodIn1 As String
-    Dim ConsumeUnitIn1 As String
-    Dim ConsumeMethodIn2 As String
-    Dim ConsumeUnitIn2 As String
+    Dim ConsumeMethodD1 As String = ""
+    Dim ConsumeUnitD1 As String = ""
+    Dim ConsumeMethodD2 As String = ""
+    Dim ConsumeUnitD2 As String = ""
+    Dim ConsumeMethodD3 As String = ""
+    Dim ConsumeUnitD3 As String = ""
+    Dim ConsumeMethodD4 As String = ""
+    Dim ConsumeUnitD4 As String = ""
+    Dim ConsumeMethodD5 As String = ""
+    Dim ConsumeUnitD5 As String = ""
+    Dim ConsumeMethodD6 As String = ""
+    Dim ConsumeUnitD6 As String = ""
+    Dim ConsumeMethodD7 As String = ""
+    Dim ConsumeUnitD7 As String = ""
+    Dim ConsumeMethodD8 As String = ""
+    Dim ConsumeUnitD8 As String = ""
+    Dim ConsumeMethodD9 As String = ""
+    Dim ConsumeUnitD9 As String = ""
+    Dim ConsumeMethodD10 As String = ""
+    Dim ConsumeUnitD10 As String = ""
+    Dim ConsumeMethodIn1 As String = ""
+    Dim ConsumeUnitIn1 As String = ""
+    Dim ConsumeMethodIn2 As String = ""
+    Dim ConsumeUnitIn2 As String = ""
 
     Dim Drug1Selected As Boolean = False
     Dim Drug2Selected As Boolean = False
@@ -100,8 +101,8 @@ Public Class Form1
 
     Dim overwriten As Boolean = False
 
-    Dim UndoSaveID As String
-    Dim UndoSaveRecordID As String
+    Dim UndoSaveID As String = ""
+    Dim UndoSaveRecordID As String = ""
 
     Dim UpdateMode As Boolean = False
 
@@ -122,32 +123,45 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Form Initialization / First Load
-        'Utility.FitFormToScreen(Me, 1200, 1920)
-        'Me.CenterToScreen()
+        Try
+            InitializeAll()
 
-        InitializeAll()
+            checkDB()
+            If checkDB() = False Then
+                If DBMissingError Then
+                    Dim result As MsgBoxResult = MsgBox(
+                        "The pharmacy database '" & DBName & "' does not exist." & vbCrLf & vbCrLf &
+                        "Would you like to initialize it now from a backup or setup file?",
+                        MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "Database Not Found")
+                    If result = MsgBoxResult.Yes Then
+                        Me.BeginInvoke(Async Sub() Await ImportDatabaseBackupAsync(isFirstSetup:=True))
+                    End If
+                End If
+                Return
+            End If
+            migrateDB()
+            DGV_Load()
+            loadDBDataforPatientInfo()
+            loadAllDrugsFromDB()
+            loadLogDGV()
+            loadDGVRecords()
 
-        'First Function, Check for DB Connection Status
-        checkDB()
-        If checkDB() = False Then
-            Return 'Exit from Function due to Database Initialization error
-        End If
-        migrateDB()
-        'Load windows forms data
-        'Method to Tabulate Data from Database to Drug Tab Table
-        DGV_Load()
-        'Method to load autocomplete for Patient Name and IC No
-        loadDBDataforPatientInfo()
-        'Method to load autocomplete and drug names into Drug Combo Boxes
-        loadAllDrugsFromDB()
-        'Method to load Log Datagridview for previous patient
-        loadLogDGV()
-        'Method to load Log > Records tab for Daily Records Data
-        loadDGVRecords()
-        '
-
-        notyetinitialize = False
+            notyetinitialize = False
+        Catch ex As Exception
+            Dim logPath As String = IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PMS_StartupError.txt")
+            Try
+                IO.File.WriteAllText(logPath,
+                    "Startup error at: " & DateTime.Now.ToString() & Environment.NewLine &
+                    "Message: " & ex.Message & Environment.NewLine &
+                    "Stack: " & ex.StackTrace)
+            Catch
+            End Try
+            MessageBox.Show(
+                "The application failed to start:" & Environment.NewLine & Environment.NewLine &
+                ex.Message & Environment.NewLine & Environment.NewLine &
+                "A log has been saved to your Desktop: PMS_StartupError.txt",
+                "Startup Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Public Sub InitializeAll()
@@ -436,13 +450,22 @@ Public Class Form1
     End Sub
 
     Private Function checkDB() As Boolean
+        DBMissingError = False
         Try
             conn.Open()
             pbrDatabaseConnection.Value = 100
             Return True
         Catch ex As MySql.Data.MySqlClient.MySqlException
-            MessageBox.Show(ex.Message)
             pbrDatabaseConnection.Value = 0
+            If ex.Number = 1049 Then
+                DBMissingError = True
+                MessageBox.Show(
+                    "The pharmacy database '" & DBName & "' does not exist." & Environment.NewLine & Environment.NewLine &
+                    "The application will now offer to initialize it for you.",
+                    "Database Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Else
+                MessageBox.Show(ex.Message, "Database Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
             Return False
         Finally
             conn.Close()
@@ -5382,12 +5405,23 @@ Redo:
         Await ImportDatabaseBackupAsync()
     End Sub
 
-    Public Async Function ImportDatabaseBackupAsync() As Task
+    Public Async Function ImportDatabaseBackupAsync(Optional isFirstSetup As Boolean = False) As Task
         Try
             Dim ofd As New OpenFileDialog()
-            ofd.Title = "Select SQL Backup File"
+            ofd.Title = If(isFirstSetup, "Select Setup SQL File to Initialize Database", "Select SQL Backup File")
             ofd.Filter = "SQL Files (*.sql)|*.sql|All Files (*.*)|*.*"
-            ofd.InitialDirectory = IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PharmacyDatabase")
+            Dim defaultDir As String = IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "PharmacyDatabase")
+            If isFirstSetup Then
+                Dim appDir As String = IO.Path.GetDirectoryName(Application.ExecutablePath)
+                If IO.File.Exists(IO.Path.Combine(appDir, "database_pharmacy.sql")) Then
+                    ofd.InitialDirectory = appDir
+                    ofd.FileName = "database_pharmacy.sql"
+                Else
+                    ofd.InitialDirectory = If(IO.Directory.Exists(defaultDir), defaultDir, appDir)
+                End If
+            Else
+                ofd.InitialDirectory = defaultDir
+            End If
 
             If ofd.ShowDialog() <> DialogResult.OK Then Return
 
@@ -5410,15 +5444,16 @@ Redo:
             Dim importStatsLines As String = String.Join(vbCrLf, importStats.Select(Function(kv) "  " & kv.Key & ": " & kv.Value & " rows"))
             Dim importTotalRows As Integer = importStats.Values.Sum()
 
-            Dim confirm As MsgBoxResult = MsgBox(
-                "Importing will overwrite existing data in the database." & vbCrLf & vbCrLf &
-                "File: " & IO.Path.GetFileName(filePath) & vbCrLf & vbCrLf &
-                "Tables to import:" & vbCrLf & importStatsLines & vbCrLf &
-                "Total: " & importTotalRows & " rows" & vbCrLf & vbCrLf &
-                "Are you sure you want to continue?",
-                MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Confirm Import")
-
-            If confirm <> MsgBoxResult.Yes Then Return
+            If Not isFirstSetup Then
+                Dim confirm As MsgBoxResult = MsgBox(
+                    "Importing will overwrite existing data in the database." & vbCrLf & vbCrLf &
+                    "File: " & IO.Path.GetFileName(filePath) & vbCrLf & vbCrLf &
+                    "Tables to import:" & vbCrLf & importStatsLines & vbCrLf &
+                    "Total: " & importTotalRows & " rows" & vbCrLf & vbCrLf &
+                    "Are you sure you want to continue?",
+                    MsgBoxStyle.YesNo Or MsgBoxStyle.Exclamation, "Confirm Import")
+                If confirm <> MsgBoxResult.Yes Then Return
+            End If
 
             btnImportDatabase.Enabled = False
             btnImportDatabase.Text = "Importing..."

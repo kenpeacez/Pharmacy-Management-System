@@ -2912,7 +2912,7 @@ Partial Class Form1
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.64103!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.35897!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 268.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 269.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.btnDelete, 3, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnAddDrug, 0, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.btnClear, 2, 0)
@@ -2929,9 +2929,9 @@ Partial Class Form1
         Me.btnDelete.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.BackColor = System.Drawing.Color.Red
-        Me.btnDelete.Location = New System.Drawing.Point(470, 3)
+        Me.btnDelete.Location = New System.Drawing.Point(469, 3)
         Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(263, 39)
+        Me.btnDelete.Size = New System.Drawing.Size(264, 39)
         Me.btnDelete.TabIndex = 13
         Me.btnDelete.Text = "DELETE"
         Me.btnDelete.UseVisualStyleBackColor = False
@@ -2954,7 +2954,7 @@ Partial Class Form1
         Me.btnClear.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnClear.BackColor = System.Drawing.Color.DodgerBlue
-        Me.btnClear.Location = New System.Drawing.Point(323, 3)
+        Me.btnClear.Location = New System.Drawing.Point(322, 3)
         Me.btnClear.Name = "btnClear"
         Me.btnClear.Size = New System.Drawing.Size(141, 39)
         Me.btnClear.TabIndex = 12
@@ -2968,7 +2968,7 @@ Partial Class Form1
         Me.btnUpdate.BackColor = System.Drawing.Color.Orange
         Me.btnUpdate.Location = New System.Drawing.Point(213, 3)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(104, 39)
+        Me.btnUpdate.Size = New System.Drawing.Size(103, 39)
         Me.btnUpdate.TabIndex = 11
         Me.btnUpdate.Text = "UPDATE"
         Me.btnUpdate.UseVisualStyleBackColor = False
@@ -4692,7 +4692,7 @@ Partial Class Form1
         Me.txtDBPassword.Location = New System.Drawing.Point(222, 95)
         Me.txtDBPassword.MaxLength = 20
         Me.txtDBPassword.Name = "txtDBPassword"
-        Me.txtDBPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(49)
+        Me.txtDBPassword.PasswordChar = Convert.ToChar(49)
         Me.txtDBPassword.Size = New System.Drawing.Size(463, 32)
         Me.txtDBPassword.TabIndex = 6
         Me.txtDBPassword.UseSystemPasswordChar = True
@@ -4957,20 +4957,20 @@ Partial Class Form1
         Me.stlbDatabaseConnection.BackColor = System.Drawing.Color.Transparent
         Me.stlbDatabaseConnection.Font = New System.Drawing.Font("Segoe UI", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.stlbDatabaseConnection.Name = "stlbDatabaseConnection"
-        Me.stlbDatabaseConnection.Size = New System.Drawing.Size(113, 30)
+        Me.stlbDatabaseConnection.Size = New System.Drawing.Size(113, 49)
         Me.stlbDatabaseConnection.Text = "DB Connection"
         '
         'pbrDatabaseConnection
         '
         Me.pbrDatabaseConnection.Name = "pbrDatabaseConnection"
-        Me.pbrDatabaseConnection.Size = New System.Drawing.Size(60, 29)
+        Me.pbrDatabaseConnection.Size = New System.Drawing.Size(60, 48)
         '
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent
         Me.ToolStripStatusLabel2.Font = New System.Drawing.Font("Segoe UI", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(122, 30)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(122, 49)
         Me.ToolStripStatusLabel2.Text = "Default Printer : "
         '
         'stlbPrinterName
@@ -4978,7 +4978,7 @@ Partial Class Form1
         Me.stlbPrinterName.BackColor = System.Drawing.Color.Transparent
         Me.stlbPrinterName.Font = New System.Drawing.Font("Segoe UI", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.stlbPrinterName.Name = "stlbPrinterName"
-        Me.stlbPrinterName.Size = New System.Drawing.Size(22, 30)
+        Me.stlbPrinterName.Size = New System.Drawing.Size(22, 49)
         Me.stlbPrinterName.Text = "   "
         Me.stlbPrinterName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -4987,7 +4987,7 @@ Partial Class Form1
         Me.ToolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent
         Me.ToolStripStatusLabel1.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(91, 30)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(91, 49)
         Me.ToolStripStatusLabel1.Text = "| Status: "
         '
         'stlbMainStatus
@@ -4995,7 +4995,7 @@ Partial Class Form1
         Me.stlbMainStatus.BackColor = System.Drawing.Color.Transparent
         Me.stlbMainStatus.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.stlbMainStatus.Name = "stlbMainStatus"
-        Me.stlbMainStatus.Size = New System.Drawing.Size(74, 30)
+        Me.stlbMainStatus.Size = New System.Drawing.Size(74, 49)
         Me.stlbMainStatus.Text = "Ready."
         '
         'PrintDoc
@@ -5060,6 +5060,7 @@ Partial Class Form1
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackColor = System.Drawing.Color.LightPink
         Me.ClientSize = New System.Drawing.Size(1848, 1136)
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.Add(Me.lblQuote)
         Me.Controls.Add(Me.lblDate)
         Me.Controls.Add(Me.lblTime)
