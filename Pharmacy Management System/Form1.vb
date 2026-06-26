@@ -528,7 +528,7 @@ Public Class Form1
         End If
 
         If Drug1Selected Then
-            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelWidthScaled, LabelHeightScaled)
+            PrintDoc.DefaultPageSettings.PaperSize = GetLabelPaperSize("Label Size", LabelWidthScaled, LabelHeightScaled)
             PrintDoc.DefaultPageSettings.Landscape = False
 
             CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
@@ -574,7 +574,7 @@ Public Class Form1
 
         If Drug1Selected Then
 
-            PrintDoc.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelWidthScaled, LabelHeightScaled)
+            PrintDoc.DefaultPageSettings.PaperSize = GetLabelPaperSize("Label Size", LabelWidthScaled, LabelHeightScaled)
             PrintDoc.DefaultPageSettings.Landscape = False
 
             PrintDoc.DefaultPageSettings.Margins = New Margins(1, 1, 1, 1)
@@ -1000,6 +1000,20 @@ Public Class Form1
         End If
     End Function
 
+    Private Function GetLabelPaperSize(name As String, w As Double, h As Double) As PaperSize
+        Dim rotation As Integer = 0
+        If My.Settings.Properties("LabelRotation") IsNot Nothing Then
+            rotation = My.Settings.LabelRotation
+        Else
+            Dim fb = LoadLabelRotationFallback()
+            If fb.HasValue Then rotation = fb.Value
+        End If
+        If rotation = 90 OrElse rotation = 270 Then
+            Return New PaperSize(name, h, w)
+        End If
+        Return New PaperSize(name, w, h)
+    End Function
+
     Private Sub ApplyRotation(e As PrintPageEventArgs, rotation As Integer, pageWidth As Double, pageHeight As Double)
         Select Case rotation
             Case 0
@@ -1242,7 +1256,7 @@ Public Class Form1
         Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
         Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
 
-        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Insulin Label Size", LabelWidthScaled, LabelHeightScaled)
+        PrintDocInsulin.DefaultPageSettings.PaperSize = GetLabelPaperSize("Insulin Label Size", LabelWidthScaled, LabelHeightScaled)
         PrintDocInsulin.DefaultPageSettings.Landscape = False
 
         PrintDocInsulin.DefaultPageSettings.Margins = New Margins(1, 1, 1, 1)
@@ -1266,7 +1280,7 @@ Public Class Form1
         Dim LabelHeightScaled As Double = LabelHeight * ScaleHeight
         Dim LabelWidthScaled As Double = LabelWidth * ScaleWidth
 
-        PrintDocInsulin.DefaultPageSettings.PaperSize = New PaperSize("Label Size", LabelWidthScaled, LabelHeightScaled)
+        PrintDocInsulin.DefaultPageSettings.PaperSize = GetLabelPaperSize("Label Size", LabelWidthScaled, LabelHeightScaled)
         PrintDocInsulin.DefaultPageSettings.Landscape = False
 
         CType(PPD.Controls(1), ToolStrip).Items(0).Enabled = False
